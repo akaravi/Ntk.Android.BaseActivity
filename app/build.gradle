@@ -1,0 +1,78 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        applicationId "ntk.android.base"
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+    }
+    signingConfigs {
+        release {
+            storeFile file('..\\..\\keys\\key.jks')
+            storePassword "APPstorePassword"
+            keyAlias "APPkeyAlias"
+            keyPassword "APPkeyPassword"
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    //for configHeader
+    implementation 'com.google.firebase:firebase-messaging:21.0.0'
+    //for base
+    implementation 'com.github.akaravi:ntk.android.base:1.0.57'
+    //butterKnife
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    //image loader
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    //rxjava
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    //room
+    implementation 'androidx.room:room-runtime:2.2.5'
+    annotationProcessor 'androidx.room:room-compiler:2.2.5'
+    implementation 'androidx.room:room-rxjava2:2.2.5'
+    //compact
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    //for retrofit
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    //eventbus
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    //custom Toast
+    implementation 'com.github.GrenderG:Toasty:1.4.0'
+    //Lottie
+    implementation 'com.airbnb.android:lottie:3.4.2'
+    //for ripple
+    implementation 'com.balysv:material-ripple:1.0.2'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}

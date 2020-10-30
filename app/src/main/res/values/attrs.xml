@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorMenu" format="color|reference" />
+    <!--    for base-->
+    colorMenu
+    <!--   for splash-->
+    <attr name="ntk_splash" format="reference" />
+    <attr name="ntk_logo" format="reference" />
+    <attr name="ntk_loading" format="reference" />
+
+    <attr name="colorTextIcon" format="color|reference" />
+    <attr name="colorDivider" format="color|reference" />
+    <attr name="colorTextPrimary" format="color|reference" />
+    <attr name="colorTextSecondary" format="color|reference" />
+    <attr name="colorPrimaryText" format="color|reference" />
+    <attr name="colorSecondaryText" format="color|reference" />
+    <attr name="colorRipple" format="color|reference" />
+    <attr name="colorDrawerBg" format="color" />
+    <attr name="appLogo" format="reference" />
+    <attr name="circular_in_colors_white" format="reference" />
+    <attr name="background_edit_text" format="reference" />
+    <attr name="button_background" format="reference" />
+
+    <attr name="TransParentActivity" format="reference" />
+</resources>

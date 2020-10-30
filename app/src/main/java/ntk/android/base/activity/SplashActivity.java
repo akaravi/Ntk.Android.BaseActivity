@@ -21,9 +21,9 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import ntk.android.base.BuildConfig;
 import ntk.android.base.NTKBASEApplication;
 import ntk.android.base.R;
+import ntk.android.base.R2;
 import ntk.android.base.config.ConfigRestHeader;
 import ntk.android.base.config.ConfigStaticValue;
 import ntk.android.base.utill.AppUtill;
@@ -38,7 +38,7 @@ import ntk.base.api.utill.RetrofitManager;
 public abstract class SplashActivity extends BaseActivity {
 
 
-    @BindView(R.id.lblVersionActSplash)
+    @BindView(R2.id.lblVersionActSplash)
     TextView Lbl;
 
     long startTime;
@@ -56,7 +56,8 @@ public abstract class SplashActivity extends BaseActivity {
     @SuppressLint("SetTextI18n")
     private void init() {
         Lbl.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Lbl.setText("نسخه  " + (int) Float.parseFloat(BuildConfig.VERSION_NAME) + "." + BuildConfig.VERSION_CODE);
+        Lbl.setText("نسخه  " + (int) Float.parseFloat(NTKBASEApplication.get().getApplicationParameter().VERSION_NAME())
+                + "." + NTKBASEApplication.get().getApplicationParameter().VERSION_CODE());
 
     }
 
@@ -201,7 +202,7 @@ public abstract class SplashActivity extends BaseActivity {
     /**
      * handle click of try again
      */
-    @OnClick(R.id.btnTryAgain)
+    @OnClick(R2.id.btnTryAgain)
     public void ClickRefresh() {
         switcher.showProgressView();
         getData();

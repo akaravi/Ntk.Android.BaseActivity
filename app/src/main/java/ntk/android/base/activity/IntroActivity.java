@@ -26,6 +26,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKBASEApplication;
 import ntk.android.base.R;
+import ntk.android.base.R2;
 import ntk.android.base.config.ConfigRestHeader;
 import ntk.android.base.config.ConfigStaticValue;
 import ntk.android.base.utill.AppUtill;
@@ -38,10 +39,10 @@ import ntk.base.api.utill.RetrofitManager;
 
 public class IntroActivity extends BaseActivity {
 
-    @BindViews({R.id.lblTitleActIntro, R.id.lblDescriptionActIntro, R.id.lblBtnAfterActIntro})
+    @BindViews({R2.id.lblTitleActIntro, R2.id.lblDescriptionActIntro, R2.id.lblBtnAfterActIntro})
     List<TextView> Lbls;
 
-    @BindView(R.id.imgPhotoActIntro)
+    @BindView(R2.id.imgPhotoActIntro)
     ImageView Img;
 
     private ApplicationIntroResponse Intro = new ApplicationIntroResponse();
@@ -140,7 +141,7 @@ public class IntroActivity extends BaseActivity {
         switcher.showContentView();
     }
 
-    @OnClick(R.id.btnBeforeActIntro)
+    @OnClick(R2.id.btnBeforeActIntro)
     public void ClickBefore() {
         if (CountIntro > 0) {
             CountIntro = CountIntro - 1;
@@ -152,7 +153,7 @@ public class IntroActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.btnAfterActIntro)
+    @OnClick(R2.id.btnAfterActIntro)
     public void ClickAfter() {
         if (Intro.ListItems == null)
             return;

@@ -31,8 +31,8 @@ public class ConfigRestHeader {
         headers.put("Language", "FA");
         headers.put("SimCard", manager.getSimOperatorName());
         headers.put("PackageName", NTKBASEApplication.get().getApplicationParameter().PACKAGE_NAME());
-        headers.put("AppBuildVer", String.valueOf(BuildConfig.VERSION_CODE));
-        headers.put("AppSourceVer", BuildConfig.VERSION_NAME);
+        headers.put("AppBuildVer", String.valueOf(NTKBASEApplication.get().getApplicationParameter().VERSION_CODE()));//String.valueOf(BuildConfig.VERSION_CODE));
+        headers.put("AppSourceVer", NTKBASEApplication.get().getApplicationParameter().VERSION_NAME());
         String NotId= EasyPreference.with(context).getString("NotificationId", "null");
 
         if (NotId != null && !NotId.isEmpty() && !NotId.toLowerCase().equals("null")) {

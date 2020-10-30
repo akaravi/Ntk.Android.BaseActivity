@@ -40,6 +40,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKBASEApplication;
 import ntk.android.base.R;
+import ntk.android.base.R2;
 import ntk.android.base.config.ConfigRestHeader;
 import ntk.android.base.config.ConfigStaticValue;
 import ntk.android.base.event.MessageEvent;
@@ -54,15 +55,15 @@ import ntk.base.api.utill.RetrofitManager;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    @BindView(R.id.progressActRegister)
+    @BindView(R2.id.progressActRegister)
     ProgressBar Loading;
 
-    @BindView(R.id.txtActRegister)
+    @BindView(R2.id.txtActRegister)
     EditText Txt;
 
-    @BindViews({R.id.lblVerificationActRegister,
-            R.id.lblNoPhoneActRegister,
-            R.id.lblCounterActRegister})
+    @BindViews({R2.id.lblVerificationActRegister,
+            R2.id.lblNoPhoneActRegister,
+            R2.id.lblCounterActRegister})
     List<TextView> Lbls;
 
     private CountDownTimer Timer;
@@ -90,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
         ((Button) findViewById(R.id.btnActRegister)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
     }
 
-    @OnClick(R.id.btnActRegister)
+    @OnClick(R2.id.btnActRegister)
     public void ClickBtn() {
         if (((Button) findViewById(R.id.btnActRegister)).getText().equals("تایید شماره")) {
             if (Txt.getText().toString().isEmpty()) {
@@ -257,12 +258,12 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.lblCounterActRegister)
+    @OnClick(R2.id.lblCounterActRegister)
     public void ClickCounter() {
         Register();
     }
 
-    @OnClick(R.id.RowNoPhoneActRegister)
+    @OnClick(R2.id.RowNoPhoneActRegister)
     public void ClickNoPhone() {
         EasyPreference.with(this).addBoolean("register_not_interested", true);
         startActivity(new Intent(this,NTKBASEApplication.getApplicationStyle().getMainActivity()));

@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ntk.android.base.NTKBASEApplication;
 import ntk.android.base.R;
+import ntk.android.base.R2;
 import ntk.android.base.adapter.AdInbox;
 import ntk.android.base.event.notificationEvent;
 import ntk.android.base.model.NotificationModel;
@@ -25,7 +26,7 @@ import ntk.android.base.room.RoomDb;
 
 public class NotificationsActivity extends AppCompatActivity {
 
-    @BindView(R.id.recyclerInbox)
+    @BindView(R2.id.recyclerInbox)
     RecyclerView Rv;
 
     private ArrayList<NotificationModel> notifies = new ArrayList<>();
@@ -79,7 +80,7 @@ public class NotificationsActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.imgBackActInbox)
+    @OnClick(R2.id.imgBackActInbox)
     public void ClickBack() {
         finish();
     }

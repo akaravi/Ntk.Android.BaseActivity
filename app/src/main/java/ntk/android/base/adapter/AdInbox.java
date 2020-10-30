@@ -27,6 +27,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import ntk.android.base.R;
+import ntk.android.base.R2;
 import ntk.android.base.model.NotificationModel;
 import ntk.android.base.room.RoomDb;
 import ntk.android.base.utill.FontManager;
@@ -113,13 +114,13 @@ public class AdInbox extends RecyclerView.Adapter<ntk.android.base.adapter.AdInb
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindViews({R.id.lblTitleInbox, R.id.lblMessageInbox, R.id.lblDetailInbox})
+        @BindViews({R2.id.lblTitleInbox, R2.id.lblMessageInbox, R2.id.lblDetailInbox})
         List<TextView> Lbls;
-        @BindView(R.id.imgRemoveInbox)
+        @BindView(R2.id.imgRemoveInbox)
         ImageView ImgCancle;
-        @BindView(R.id.imgInbox)
+        @BindView(R2.id.imgInbox)
         ImageView ImgInbox;
-        @BindViews({R.id.rootInbox, R.id.rowDetailInbox})
+        @BindViews({R2.id.rootInbox, R2.id.rowDetailInbox})
         List<ViewGroup> Root;
 
         public ViewHolder(View view) {

@@ -24,26 +24,23 @@ import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKBASEApplication;
 import ntk.android.base.R;
 import ntk.android.base.config.ConfigRestHeader;
-import ntk.android.base.config.ConfigStaticValue;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EasyPreference;
 import ntk.android.base.utill.FontManager;
 import ntk.base.api.application.interfase.IApplication;
 import ntk.base.api.application.model.ApplicationIntroRequest;
 import ntk.base.api.application.model.ApplicationIntroResponse;
-import ntk.android.base.config.RetrofitManager;
+import ntk.base.config.RetrofitManager;
 
 public class IntroActivity extends BaseActivity {
 
+    public int Help = 0;
     List<TextView> Lbls;
-
     ImageView Img;
-
+    long startTime;
     private ApplicationIntroResponse Intro = new ApplicationIntroResponse();
     private int CountIntro = 0;
     private Handler handler = new Handler();
-    long startTime;
-    public int Help = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,8 +80,7 @@ public class IntroActivity extends BaseActivity {
     private void getdata() {
         if (AppUtill.isNetworkAvailable(this)) {
             switcher.showProgressView();
-            RetrofitManager manager = new RetrofitManager(this);
-            IApplication iApplication = manager.getCachedRetrofit(new ConfigStaticValue(this).GetApiBaseUrl()).create(IApplication.class);
+            IApplication iApplication = new RetrofitManager(this).getCachedRetrofit().create(IApplication.class);
             Map<String, String> headers = new ConfigRestHeader().GetHeaders(this);
             ApplicationIntroRequest request = new ApplicationIntroRequest();
             Observable<ApplicationIntroResponse> Call = iApplication.GetApplicationIntro(headers, request);

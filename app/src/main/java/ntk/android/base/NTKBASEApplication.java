@@ -20,6 +20,9 @@ import ntk.android.base.utill.FontManager;
  */
 public abstract class NTKBASEApplication extends MultiDexApplication implements ApplicationParamProvider {
     public static boolean Inbox = false;
+    //@Notify please note that not change this value to True
+    public static boolean DEBUG = false;
+
     private static NTKBASEApplication instance;
      static ApplicationStyle applicationStyle;
 

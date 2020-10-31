@@ -37,7 +37,6 @@ import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKBASEApplication;
 import ntk.android.base.R;
 import ntk.android.base.config.ConfigRestHeader;
-import ntk.android.base.config.ConfigStaticValue;
 import ntk.android.base.event.MessageEvent;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EasyPreference;
@@ -45,7 +44,7 @@ import ntk.android.base.utill.FontManager;
 import ntk.base.api.core.interfase.ICore;
 import ntk.base.api.core.model.CoreUserRegisterByMobileRequest;
 import ntk.base.api.core.model.CoreUserResponse;
-import ntk.android.base.config.RetrofitManager;
+import ntk.base.config.RetrofitManager;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -131,8 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (AppUtill.isNetworkAvailable(this)) {
             Loading.setVisibility(View.VISIBLE);
             findViewById(R.id.cardActRegister).setVisibility(View.GONE);
-            RetrofitManager manager = new RetrofitManager(this);
-            ICore iCore = manager.getCachedRetrofit(new ConfigStaticValue(this).GetApiBaseUrl()).create(ICore.class);
+            ICore iCore = new RetrofitManager(this).getCachedRetrofit().create(ICore.class);
             Map<String, String> headers = new ConfigRestHeader().GetHeaders(this);
 
             CoreUserRegisterByMobileRequest request = new CoreUserRegisterByMobileRequest();
@@ -190,8 +188,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (AppUtill.isNetworkAvailable(this)) {
             Loading.setVisibility(View.VISIBLE);
             findViewById(R.id.cardActRegister).setVisibility(View.GONE);
-            RetrofitManager manager = new RetrofitManager(this);
-            ICore iCore = manager.getCachedRetrofit(new ConfigStaticValue(this).GetApiBaseUrl()).create(ICore.class);
+            ICore iCore = new RetrofitManager(this).getCachedRetrofit().create(ICore.class);
             Map<String, String> headers = new ConfigRestHeader().GetHeaders(this);
 
             CoreUserRegisterByMobileRequest request = new CoreUserRegisterByMobileRequest();

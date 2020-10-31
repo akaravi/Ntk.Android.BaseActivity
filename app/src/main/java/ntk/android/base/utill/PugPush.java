@@ -44,14 +44,14 @@ public class PugPush {
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent = PendingIntent.getActivity(context, 0, i, 0);
         if (notification.ContentType == 0) {
-            mBuilder.setSmallIcon(R.attr.ntk_logo)
+            mBuilder.setSmallIcon(R.attr.ntk_base_logo)
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(notification.Content))
                     .setContentTitle(notification.Title)
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setContentIntent(intent)
                     .setContentText(notification.Content);
         } else if (notification.ContentType == 5) {
-            mBuilder.setSmallIcon(R.attr.ntk_logo)
+            mBuilder.setSmallIcon(R.attr.ntk_base_logo)
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setContentIntent(intent)
                     .setStyle(new NotificationCompat.BigPictureStyle()

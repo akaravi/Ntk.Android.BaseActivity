@@ -28,7 +28,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_margin="10dp"
-                    android:src="?attr/ntk_logo" />
+                    android:src="?attr/ntk_base_logo" />
 
                 <ImageView
                     android:id="@+id/imgRemoveInbox"

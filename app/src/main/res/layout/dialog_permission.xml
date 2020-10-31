@@ -16,7 +16,7 @@
             android:layout_height="57dp"
             android:layout_marginTop="10dp"
             android:contentDescription="@null"
-            android:src="?attr/ntk_logo" />
+            android:src="?attr/ntk_base_logo" />
 
         <TextView
             android:id="@+id/lbl1PernissionDialog"

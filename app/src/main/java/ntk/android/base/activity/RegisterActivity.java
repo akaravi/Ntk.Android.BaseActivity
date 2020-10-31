@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -25,13 +24,10 @@ import androidx.core.app.ActivityCompat;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.BindViews;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -40,12 +36,10 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKBASEApplication;
 import ntk.android.base.R;
-import ntk.android.base.R2;
 import ntk.android.base.config.ConfigRestHeader;
 import ntk.android.base.config.ConfigStaticValue;
 import ntk.android.base.event.MessageEvent;
 import ntk.android.base.utill.AppUtill;
-import ntk.android.base.utill.ColorUtils;
 import ntk.android.base.utill.EasyPreference;
 import ntk.android.base.utill.FontManager;
 import ntk.base.api.core.interfase.ICore;
@@ -55,15 +49,8 @@ import ntk.base.api.utill.RetrofitManager;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    @BindView(R2.id.progressActRegister)
     ProgressBar Loading;
-
-    @BindView(R2.id.txtActRegister)
     EditText Txt;
-
-    @BindViews({R2.id.lblVerificationActRegister,
-            R2.id.lblNoPhoneActRegister,
-            R2.id.lblCounterActRegister})
     List<TextView> Lbls;
 
     private CountDownTimer Timer;
@@ -78,20 +65,37 @@ public class RegisterActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_register);
-        ButterKnife.bind(this);
+        initView();
         init();
     }
 
+    private void initView() {
+
+        Lbls = new ArrayList() {
+            {
+                add(findViewById(R.id.lblVerificationActRegister));
+                add(findViewById(R.id.lblNoPhoneActRegister));
+                add(findViewById(R.id.lblCounterActRegister));
+            }
+        };
+
+        Loading = findViewById(R.id.progressActRegister);
+        Txt = findViewById(R.id.txtActRegister);
+        findViewById(R.id.btnActRegister).setOnClickListener(v -> ClickBtn());
+        findViewById(R.id.lblCounterActRegister).setOnClickListener(v -> ClickCounter());
+        findViewById(R.id.RowNoPhoneActRegister).setOnClickListener(v -> ClickNoPhone());
+    }
+
     private void init() {
-        Loading.getIndeterminateDrawable().setColorFilter(getResources().getColor(ColorUtils.FETCH_Attr_COLOR(this,R.attr.colorAccent)), PorterDuff.Mode.SRC_IN);
         Loading.setVisibility(View.GONE);
+//        Loading.getIndeterminateDrawable().setColorFilter(getResources().getColor(ColorUtils.FETCH_Attr_COLOR(this, R.attr.colorAccent)), PorterDuff.Mode.SRC_IN);
+
         Txt.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
         Lbls.get(0).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
         Lbls.get(1).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
         ((Button) findViewById(R.id.btnActRegister)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
     }
 
-    @OnClick(R2.id.btnActRegister)
     public void ClickBtn() {
         if (((Button) findViewById(R.id.btnActRegister)).getText().equals("تایید شماره")) {
             if (Txt.getText().toString().isEmpty()) {
@@ -258,15 +262,15 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R2.id.lblCounterActRegister)
+
     public void ClickCounter() {
         Register();
     }
 
-    @OnClick(R2.id.RowNoPhoneActRegister)
+
     public void ClickNoPhone() {
         EasyPreference.with(this).addBoolean("register_not_interested", true);
-        startActivity(new Intent(this,NTKBASEApplication.getApplicationStyle().getMainActivity()));
+        startActivity(new Intent(this, NTKBASEApplication.getApplicationStyle().getMainActivity()));
         finish();
     }
 

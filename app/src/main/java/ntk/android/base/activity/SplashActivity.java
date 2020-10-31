@@ -12,9 +12,6 @@ import com.google.gson.Gson;
 
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -23,7 +20,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKBASEApplication;
 import ntk.android.base.R;
-import ntk.android.base.R2;
 import ntk.android.base.config.ConfigRestHeader;
 import ntk.android.base.config.ConfigStaticValue;
 import ntk.android.base.utill.AppUtill;
@@ -37,8 +33,6 @@ import ntk.base.api.utill.RetrofitManager;
 
 public abstract class SplashActivity extends BaseActivity {
 
-
-    @BindView(R2.id.lblVersionActSplash)
     TextView Lbl;
 
     long startTime;
@@ -47,10 +41,15 @@ public abstract class SplashActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_splash);
-        ButterKnife.bind(this);
+        initView();
         init();
         getData();
         startTime = System.currentTimeMillis();
+    }
+
+    private void initView() {
+        Lbl = findViewById(R.id.lblVersionActSplash);
+        findViewById(R.id.btnTryAgain).setOnClickListener(v -> ClickRefresh());
     }
 
     @SuppressLint("SetTextI18n")
@@ -202,7 +201,7 @@ public abstract class SplashActivity extends BaseActivity {
     /**
      * handle click of try again
      */
-    @OnClick(R2.id.btnTryAgain)
+
     public void ClickRefresh() {
         switcher.showProgressView();
         getData();

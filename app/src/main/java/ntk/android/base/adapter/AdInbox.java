@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.text.Layout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +22,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.BindViews;
-import butterknife.ButterKnife;
 import ntk.android.base.R;
-import ntk.android.base.R2;
 import ntk.android.base.model.NotificationModel;
 import ntk.android.base.room.RoomDb;
 import ntk.android.base.utill.FontManager;
@@ -114,18 +109,28 @@ public class AdInbox extends RecyclerView.Adapter<ntk.android.base.adapter.AdInb
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindViews({R2.id.lblTitleInbox, R2.id.lblMessageInbox, R2.id.lblDetailInbox})
+
         List<TextView> Lbls;
-        @BindView(R2.id.imgRemoveInbox)
         ImageView ImgCancle;
-        @BindView(R2.id.imgInbox)
         ImageView ImgInbox;
-        @BindViews({R2.id.rootInbox, R2.id.rowDetailInbox})
         List<ViewGroup> Root;
 
         public ViewHolder(View view) {
             super(view);
-            ButterKnife.bind(this, view);
+            Lbls = new ArrayList() {{
+                add(view.findViewById(R.id.lblTitleInbox));
+                add(view.findViewById(R.id.lblMessageInbox));
+                add(view.findViewById(R.id.lblDetailInbox));
+
+            }};
+            ImgCancle = view.findViewById(R.id.imgRemoveInbox);
+            ImgInbox = view.findViewById(R.id.imgInbox);
+            ImgInbox = view.findViewById(R.id.imgInbox);
+            Root = new ArrayList() {{
+                add(view.findViewById(R.id.rootInbox));
+                add(view.findViewById(R.id.rowDetailInbox));
+
+            }};
             Lbls.get(0).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
             Lbls.get(1).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
             Lbls.get(2).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));

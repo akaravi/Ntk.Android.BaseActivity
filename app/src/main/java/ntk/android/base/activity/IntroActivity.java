@@ -11,13 +11,10 @@ import androidx.annotation.Nullable;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.BindViews;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -26,7 +23,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKBASEApplication;
 import ntk.android.base.R;
-import ntk.android.base.R2;
 import ntk.android.base.config.ConfigRestHeader;
 import ntk.android.base.config.ConfigStaticValue;
 import ntk.android.base.utill.AppUtill;
@@ -39,10 +35,8 @@ import ntk.base.api.utill.RetrofitManager;
 
 public class IntroActivity extends BaseActivity {
 
-    @BindViews({R2.id.lblTitleActIntro, R2.id.lblDescriptionActIntro, R2.id.lblBtnAfterActIntro})
     List<TextView> Lbls;
 
-    @BindView(R2.id.imgPhotoActIntro)
     ImageView Img;
 
     private ApplicationIntroResponse Intro = new ApplicationIntroResponse();
@@ -55,9 +49,23 @@ public class IntroActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_intro);
-        ButterKnife.bind(this);
+
         startTime = System.currentTimeMillis();
+        initView();
         init();
+    }
+
+    private void initView() {
+
+        Lbls = new ArrayList() {{
+            add(findViewById(R.id.lblTitleActIntro));
+            add(findViewById(R.id.lblDescriptionActIntro));
+            add(findViewById(R.id.lblBtnAfterActIntro));
+        }};
+        Img = findViewById(R.id.imgPhotoActIntro);
+
+        findViewById(R.id.btnBeforeActIntro).setOnClickListener(v -> ClickBefore());
+        findViewById(R.id.btnAfterActIntro).setOnClickListener(v -> ClickAfter());
     }
 
     private void init() {
@@ -141,7 +149,7 @@ public class IntroActivity extends BaseActivity {
         switcher.showContentView();
     }
 
-    @OnClick(R2.id.btnBeforeActIntro)
+
     public void ClickBefore() {
         if (CountIntro > 0) {
             CountIntro = CountIntro - 1;
@@ -153,7 +161,7 @@ public class IntroActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R2.id.btnAfterActIntro)
+
     public void ClickAfter() {
         if (Intro.ListItems == null)
             return;

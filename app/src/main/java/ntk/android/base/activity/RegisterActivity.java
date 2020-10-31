@@ -45,7 +45,7 @@ import ntk.android.base.utill.FontManager;
 import ntk.base.api.core.interfase.ICore;
 import ntk.base.api.core.model.CoreUserRegisterByMobileRequest;
 import ntk.base.api.core.model.CoreUserResponse;
-import ntk.base.api.utill.RetrofitManager;
+import ntk.android.base.config.RetrofitManager;
 
 public class RegisterActivity extends AppCompatActivity {
 

@@ -31,7 +31,7 @@ import ntk.android.base.utill.FontManager;
 import ntk.base.api.application.interfase.IApplication;
 import ntk.base.api.application.model.ApplicationIntroRequest;
 import ntk.base.api.application.model.ApplicationIntroResponse;
-import ntk.base.api.utill.RetrofitManager;
+import ntk.android.base.config.RetrofitManager;
 
 public class IntroActivity extends BaseActivity {
 

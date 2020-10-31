@@ -47,8 +47,8 @@ dependencies {
     //for configHeader
     implementation 'com.google.firebase:firebase-messaging:21.0.0'
     //for base
-    implementation 'com.github.akaravi:ntk.android.base:1.0.57'
-
+//    implementation 'com.github.akaravi:ntk.android.base:1.0.57'
+    implementation project(path: ':baseModel')
     //image loader
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     //rxjava
@@ -64,6 +64,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     //for retrofit
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
     //eventbus
     implementation 'org.greenrobot:eventbus:3.1.1'
     //custom Toast

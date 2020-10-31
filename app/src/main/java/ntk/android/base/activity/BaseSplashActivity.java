@@ -29,9 +29,9 @@ import ntk.base.api.core.entity.CoreMain;
 import ntk.base.api.core.entity.CoreTheme;
 import ntk.base.api.core.interfase.ICore;
 import ntk.base.api.core.model.MainCoreResponse;
-import ntk.base.api.utill.RetrofitManager;
+import ntk.android.base.config.RetrofitManager;
 
-public abstract class SplashActivity extends BaseActivity {
+public abstract class BaseSplashActivity extends BaseActivity {
 
     TextView Lbl;
 
@@ -79,7 +79,7 @@ public abstract class SplashActivity extends BaseActivity {
     private void getThemeData() {
 
         RetrofitManager manager = new RetrofitManager(this);
-        ICore iCore = manager.getCachedRetrofit(new ConfigStaticValue(this).GetApiBaseUrl()).create(ICore.class);
+        ICore iCore = manager.getCachedRetrofit().create(ICore.class);
         Map<String, String> headers = new ConfigRestHeader().GetHeaders(this);
         Observable<CoreTheme> call = iCore.GetThemeCore(headers);
         call.subscribeOn(Schedulers.io())
@@ -93,7 +93,7 @@ public abstract class SplashActivity extends BaseActivity {
                     @Override
                     public void onNext(CoreTheme theme) {
                         //todo check successfully on coreTheme
-                        EasyPreference.with(ntk.android.base.activity.SplashActivity.this).addString("Theme", new Gson().toJson(theme.Item.ThemeConfigJson));
+                        EasyPreference.with(BaseSplashActivity.this).addString("Theme", new Gson().toJson(theme.Item.ThemeConfigJson));
                         //now can get main response
                         requestMainData();
                     }
@@ -131,7 +131,7 @@ public abstract class SplashActivity extends BaseActivity {
                         if (!mainCoreResponse.IsSuccess) {
                             switcher.showErrorView();
                             //replace with layout
-                            Toasty.warning(ntk.android.base.activity.SplashActivity.this, mainCoreResponse.ErrorMessage, Toasty.LENGTH_LONG, true).show();
+                            Toasty.warning(BaseSplashActivity.this, mainCoreResponse.ErrorMessage, Toasty.LENGTH_LONG, true).show();
                             return;
 
                         }
@@ -144,7 +144,7 @@ public abstract class SplashActivity extends BaseActivity {
                     public void onError(Throwable e) {
                         //replace with layout
                         switcher.showErrorView();
-                        Toasty.warning(ntk.android.base.activity.SplashActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
+                        Toasty.warning(BaseSplashActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
 
                     }
 
@@ -161,39 +161,39 @@ public abstract class SplashActivity extends BaseActivity {
      */
     private void HandelDataAction(CoreMain model) {
 
-        EasyPreference.with(ntk.android.base.activity.SplashActivity.this).addLong("MemberUserId", model.MemberUserId);
-        EasyPreference.with(ntk.android.base.activity.SplashActivity.this).addLong("UserId", model.UserId);
-        EasyPreference.with(ntk.android.base.activity.SplashActivity.this).addLong("SiteId", model.SiteId);
-        EasyPreference.with(ntk.android.base.activity.SplashActivity.this).addString("configapp", new Gson().toJson(model));
+        EasyPreference.with(BaseSplashActivity.this).addLong("MemberUserId", model.MemberUserId);
+        EasyPreference.with(BaseSplashActivity.this).addLong("UserId", model.UserId);
+        EasyPreference.with(BaseSplashActivity.this).addLong("SiteId", model.SiteId);
+        EasyPreference.with(BaseSplashActivity.this).addString("configapp", new Gson().toJson(model));
         if (model.UserId <= 0)
-            EasyPreference.with(ntk.android.base.activity.SplashActivity.this).addBoolean("Registered", false);
+            EasyPreference.with(BaseSplashActivity.this).addBoolean("Registered", false);
 
 //        Loading.cancelAnimation();
 //        Loading.setVisibility(View.GONE);
 
-        if (!EasyPreference.with(ntk.android.base.activity.SplashActivity.this).getBoolean("Intro", false)) {
+        if (!EasyPreference.with(BaseSplashActivity.this).getBoolean("Intro", false)) {
             new Handler().postDelayed(() -> {
 //                Loading.setVisibility(View.GONE);
-                startActivity(new Intent(ntk.android.base.activity.SplashActivity.this, IntroActivity.class));
+                startActivity(new Intent(BaseSplashActivity.this, IntroActivity.class));
                 finish();
             }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - System.currentTimeMillis() - startTime);
             return;
         }
-        if (!EasyPreference.with(ntk.android.base.activity.SplashActivity.this).getBoolean("Registered", false)) {
+        if (!EasyPreference.with(BaseSplashActivity.this).getBoolean("Registered", false)) {
             new Handler().postDelayed(() -> {
 //                Loading.setVisibility(View.GONE);
                 boolean register_not_interested = EasyPreference.with(this).getBoolean("register_not_interested", false);
                 if (register_not_interested)
-                    startActivity(new Intent(ntk.android.base.activity.SplashActivity.this, NTKBASEApplication.getApplicationStyle().getMainActivity()));
+                    startActivity(new Intent(BaseSplashActivity.this, NTKBASEApplication.getApplicationStyle().getMainActivity()));
                 else
-                    startActivity(new Intent(ntk.android.base.activity.SplashActivity.this, RegisterActivity.class));
+                    startActivity(new Intent(BaseSplashActivity.this, RegisterActivity.class));
                 finish();
             }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - System.currentTimeMillis() - startTime);
             return;
         }
         new Handler().postDelayed(() -> {
 //            Loading.setVisibility(View.GONE);
-            startActivity(new Intent(ntk.android.base.activity.SplashActivity.this, NTKBASEApplication.getApplicationStyle().getMainActivity()));
+            startActivity(new Intent(BaseSplashActivity.this, NTKBASEApplication.getApplicationStyle().getMainActivity()));
             finish();
         }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - System.currentTimeMillis() - startTime);
     }

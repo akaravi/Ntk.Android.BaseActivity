@@ -1,6 +1,5 @@
 plugins {
     id 'com.android.library'
-    id 'com.jakewharton.butterknife'
 }
 
 android {
@@ -48,9 +47,8 @@ dependencies {
     //for configHeader
     implementation 'com.google.firebase:firebase-messaging:21.0.0'
     //for base
-    implementation 'com.github.akaravi:ntk.android.base:1.0.57'
-    //butterKnife
-    implementation 'com.jakewharton:butterknife:10.0.0'
+//    implementation 'com.github.akaravi:ntk.android.base:1.0.57'
+    implementation project(path: ':base')
     //image loader
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     //rxjava

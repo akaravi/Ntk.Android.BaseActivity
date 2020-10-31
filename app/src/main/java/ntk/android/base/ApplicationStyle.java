@@ -3,7 +3,7 @@ package ntk.android.base;
 import java.util.HashMap;
 
 import ntk.android.base.activity.RegisterActivity;
-import ntk.android.base.activity.SplashActivity;
+import ntk.android.base.activity.BaseSplashActivity;
 import ntk.android.base.styles.BaseModuleStyle;
 import ntk.android.base.styles.StyleHelper;
 
@@ -20,7 +20,7 @@ public abstract class ApplicationStyle extends StyleHelper {
     public boolean SIGNING_REQUIRED = false;
 
     //@deprecated replace with loginStyle
-    public Class<? extends SplashActivity> LoginActivity;
+    public Class<? extends BaseSplashActivity> LoginActivity;
     //@deprecated replace with RegisterStyle
     public Class<? extends RegisterActivity> RegisterActivity;
     public HashMap<String, BaseModuleStyle> modules;

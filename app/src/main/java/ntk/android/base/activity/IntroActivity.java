@@ -11,13 +11,10 @@ import androidx.annotation.Nullable;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.BindViews;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -26,38 +23,46 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKBASEApplication;
 import ntk.android.base.R;
-import ntk.android.base.R2;
 import ntk.android.base.config.ConfigRestHeader;
-import ntk.android.base.config.ConfigStaticValue;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EasyPreference;
 import ntk.android.base.utill.FontManager;
 import ntk.base.api.application.interfase.IApplication;
 import ntk.base.api.application.model.ApplicationIntroRequest;
 import ntk.base.api.application.model.ApplicationIntroResponse;
-import ntk.base.api.utill.RetrofitManager;
+import ntk.base.config.RetrofitManager;
 
 public class IntroActivity extends BaseActivity {
 
-    @BindViews({R2.id.lblTitleActIntro, R2.id.lblDescriptionActIntro, R2.id.lblBtnAfterActIntro})
+    public int Help = 0;
     List<TextView> Lbls;
-
-    @BindView(R2.id.imgPhotoActIntro)
     ImageView Img;
-
+    long startTime;
     private ApplicationIntroResponse Intro = new ApplicationIntroResponse();
     private int CountIntro = 0;
     private Handler handler = new Handler();
-    long startTime;
-    public int Help = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_intro);
-        ButterKnife.bind(this);
+
         startTime = System.currentTimeMillis();
+        initView();
         init();
+    }
+
+    private void initView() {
+
+        Lbls = new ArrayList() {{
+            add(findViewById(R.id.lblTitleActIntro));
+            add(findViewById(R.id.lblDescriptionActIntro));
+            add(findViewById(R.id.lblBtnAfterActIntro));
+        }};
+        Img = findViewById(R.id.imgPhotoActIntro);
+
+        findViewById(R.id.btnBeforeActIntro).setOnClickListener(v -> ClickBefore());
+        findViewById(R.id.btnAfterActIntro).setOnClickListener(v -> ClickAfter());
     }
 
     private void init() {
@@ -75,8 +80,7 @@ public class IntroActivity extends BaseActivity {
     private void getdata() {
         if (AppUtill.isNetworkAvailable(this)) {
             switcher.showProgressView();
-            RetrofitManager manager = new RetrofitManager(this);
-            IApplication iApplication = manager.getCachedRetrofit(new ConfigStaticValue(this).GetApiBaseUrl()).create(IApplication.class);
+            IApplication iApplication = new RetrofitManager(this).getCachedRetrofit().create(IApplication.class);
             Map<String, String> headers = new ConfigRestHeader().GetHeaders(this);
             ApplicationIntroRequest request = new ApplicationIntroRequest();
             Observable<ApplicationIntroResponse> Call = iApplication.GetApplicationIntro(headers, request);
@@ -141,7 +145,7 @@ public class IntroActivity extends BaseActivity {
         switcher.showContentView();
     }
 
-    @OnClick(R2.id.btnBeforeActIntro)
+
     public void ClickBefore() {
         if (CountIntro > 0) {
             CountIntro = CountIntro - 1;
@@ -153,7 +157,7 @@ public class IntroActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R2.id.btnAfterActIntro)
+
     public void ClickAfter() {
         if (Intro.ListItems == null)
             return;

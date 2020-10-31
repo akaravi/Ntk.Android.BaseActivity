@@ -20,6 +20,9 @@ import ntk.android.base.utill.FontManager;
  */
 public abstract class NTKBASEApplication extends MultiDexApplication implements ApplicationParamProvider {
     public static boolean Inbox = false;
+    //@Notify please note that not change this value to True
+    public static boolean DEBUG = false;
+
     private static NTKBASEApplication instance;
      static ApplicationStyle applicationStyle;
 
@@ -49,11 +52,12 @@ public abstract class NTKBASEApplication extends MultiDexApplication implements 
 
 
     public String generateAppName() {
-        String appname = provideAppParam().PACKAGE_NAME();
+        String appname = getApplicationParameter().PACKAGE_NAME();
         return appname.substring(appname.lastIndexOf(".") + 1, appname.length());
     }
     @Override
     public void onCreate() {
+        instance=this;
         super.onCreate();
         if (!new File(getCacheDir(), "image").exists()) {
             new File(getCacheDir(), "image").mkdirs();
@@ -72,5 +76,5 @@ public abstract class NTKBASEApplication extends MultiDexApplication implements 
                 .setTextSize(14).apply();
     }
 
-   public abstract ApplicationParameter getApplicationParameter();
+//   public abstract ApplicationParameter getApplicationParameter();
 }

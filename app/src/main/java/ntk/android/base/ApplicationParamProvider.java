@@ -1,5 +1,5 @@
 package ntk.android.base;
 
 interface ApplicationParamProvider {
- public ApplicationParameter provideAppParam();
+ public ApplicationParameter getApplicationParameter();
 }

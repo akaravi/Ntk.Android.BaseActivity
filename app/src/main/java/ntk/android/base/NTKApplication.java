@@ -2,9 +2,7 @@ package ntk.android.base;
 
 import android.content.Context;
 
-
-import androidx.multidex.MultiDexApplication;
-
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -18,50 +16,28 @@ import ntk.android.base.utill.FontManager;
 /**
  *
  */
-public abstract class NTKBASEApplication extends MultiDexApplication implements ApplicationParamProvider {
+public abstract class NTKApplication extends BaseNtkApplication implements ApplicationParamProvider {
     public static boolean Inbox = false;
     //@Notify please note that not change this value to True
-    public static boolean DEBUG = false;
 
-    private static NTKBASEApplication instance;
-     static ApplicationStyle applicationStyle;
+    static ApplicationStyle applicationStyle;
 
-    public static NTKBASEApplication get() {
-        return instance;
-    }
+
 
     public static ApplicationStyle getApplicationStyle() {
         return applicationStyle;
     }
-
-    /**
-     * when attach process to system , init Bug reporting
-     *
-     * @param base
-     */
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-    }
-
-
-    public static Context getAppContext() {
-        return instance.getApplicationContext();
-    }
-
 
 
     public String generateAppName() {
         String appname = getApplicationParameter().PACKAGE_NAME();
         return appname.substring(appname.lastIndexOf(".") + 1, appname.length());
     }
+
     @Override
     public void onCreate() {
-        instance=this;
         super.onCreate();
-        if (!new File(getCacheDir(), "image").exists()) {
-            new File(getCacheDir(), "image").mkdirs();
-        }
+        instance=this;
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .diskCache(new UnlimitedDiskCache(new File(getCacheDir(), "image")))
                 .diskCacheFileNameGenerator(imageUri -> {
@@ -76,5 +52,9 @@ public abstract class NTKBASEApplication extends MultiDexApplication implements 
                 .setTextSize(14).apply();
     }
 
+    @Override
+    public void bindFireBase() {
+        FirebaseMessaging.getInstance().subscribeToTopic(getApplicationParameter().PACKAGE_NAME());
+    }
 //   public abstract ApplicationParameter getApplicationParameter();
 }

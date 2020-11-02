@@ -21,16 +21,17 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import ntk.android.base.NTKBASEApplication;
+import ntk.android.base.BaseNtkApplication;
+import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.config.ConfigRestHeader;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EasyPreference;
 import ntk.android.base.utill.FontManager;
-import ntk.base.api.application.interfase.IApplication;
-import ntk.base.api.application.model.ApplicationIntroRequest;
-import ntk.base.api.application.model.ApplicationIntroResponse;
-import ntk.base.config.RetrofitManager;
+import ntk.android.base.api.application.interfase.IApplication;
+import ntk.android.base.api.application.model.ApplicationIntroRequest;
+import ntk.android.base.api.application.model.ApplicationIntroResponse;
+import ntk.android.base.config.RetrofitManager;
 
 public class IntroActivity extends BaseActivity {
 
@@ -100,14 +101,14 @@ public class IntroActivity extends BaseActivity {
                                     HandelIntro();
                                 } else {
                                     if (Help != 0) {
-                                        startActivity(new Intent(ntk.android.base.activity.IntroActivity.this, NTKBASEApplication.getApplicationStyle().getMainActivity()));
+                                        startActivity(new Intent(ntk.android.base.activity.IntroActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                                         finish();
                                     } else {
                                         EasyPreference.with(ntk.android.base.activity.IntroActivity.this).addBoolean("Intro", true);
 
                                         if (EasyPreference.with(ntk.android.base.activity.IntroActivity.this).getBoolean("Registered", false)) {
                                             new Handler().postDelayed(() -> {
-                                                startActivity(new Intent(ntk.android.base.activity.IntroActivity.this, NTKBASEApplication.getApplicationStyle().getMainActivity()));
+                                                startActivity(new Intent(ntk.android.base.activity.IntroActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                                                 finish();
                                             }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - System.currentTimeMillis() - startTime);
                                         } else {

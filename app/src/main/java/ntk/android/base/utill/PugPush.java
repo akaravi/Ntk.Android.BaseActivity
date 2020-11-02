@@ -15,7 +15,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.greenrobot.eventbus.EventBus;
 
-import ntk.android.base.NTKBASEApplication;
+import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseSplashActivity;
 import ntk.android.base.event.notificationEvent;
@@ -61,7 +61,7 @@ public class PugPush {
         }
 
         notificationManager.notify(notification.ID, mBuilder.build());
-        if (NTKBASEApplication.Inbox) {
+        if (NTKApplication.Inbox) {
             EventBus.getDefault().post(new notificationEvent(true));
         }
     }

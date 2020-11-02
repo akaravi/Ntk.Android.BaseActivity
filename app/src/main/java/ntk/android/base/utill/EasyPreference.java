@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import java.util.Set;
 
-import ntk.android.base.NTKBASEApplication;
+import ntk.android.base.BaseNtkApplication;
 
 //import ntk.android.base.BuildConfig;
 
@@ -24,7 +24,7 @@ public class EasyPreference {
         SharedPreferences.Editor editor;
 
         public Builder(Context context) {
-            preferences = context.getSharedPreferences(NTKBASEApplication.get().getApplicationParameter().PACKAGE_NAME(), Context.MODE_PRIVATE);
+            preferences = context.getSharedPreferences(BaseNtkApplication.get().getApplicationParameter().PACKAGE_NAME(), Context.MODE_PRIVATE);
             editor = preferences.edit();
         }
 

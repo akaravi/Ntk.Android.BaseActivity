@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import ntk.android.base.NTKBASEApplication;
+import ntk.android.base.BaseNtkApplication;
 import ntk.android.base.model.NotificationModel;
 
 
@@ -19,7 +19,7 @@ public abstract class RoomDb extends RoomDatabase {
 
     public static RoomDb getRoomDb(Context context) {
         if (Instance == null) {
-            Instance = Room.databaseBuilder(context.getApplicationContext(), RoomDb.class, NTKBASEApplication.get().getApplicationParameter().APPLICATION_ID())
+            Instance = Room.databaseBuilder(context.getApplicationContext(), RoomDb.class, BaseNtkApplication.get().getApplicationParameter().APPLICATION_ID())
                     .allowMainThreadQueries()
                     .build();
         }

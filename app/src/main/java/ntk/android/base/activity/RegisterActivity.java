@@ -34,17 +34,18 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import ntk.android.base.NTKBASEApplication;
+import ntk.android.base.BaseNtkApplication;
+import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.config.ConfigRestHeader;
 import ntk.android.base.event.MessageEvent;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EasyPreference;
 import ntk.android.base.utill.FontManager;
-import ntk.base.api.core.interfase.ICore;
-import ntk.base.api.core.model.CoreUserRegisterByMobileRequest;
-import ntk.base.api.core.model.CoreUserResponse;
-import ntk.base.config.RetrofitManager;
+import ntk.android.base.api.core.interfase.ICore;
+import ntk.android.base.api.core.model.CoreUserRegisterByMobileRequest;
+import ntk.android.base.api.core.model.CoreUserResponse;
+import ntk.android.base.config.RetrofitManager;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -59,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Boolean Registered = EasyPreference.with(ntk.android.base.activity.RegisterActivity.this).getBoolean("Registered", false);
         if (Registered) {
-            startActivity(new Intent(ntk.android.base.activity.RegisterActivity.this, NTKBASEApplication.getApplicationStyle().getMainActivity()));
+            startActivity(new Intent(ntk.android.base.activity.RegisterActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
             finish();
         }
         super.onCreate(savedInstanceState);
@@ -159,7 +160,7 @@ public class RegisterActivity extends AppCompatActivity {
                             EasyPreference.with(ntk.android.base.activity.RegisterActivity.this).addLong("SiteId", response.Item.SiteId);
                             EasyPreference.with(ntk.android.base.activity.RegisterActivity.this).addBoolean("Registered", true);
 
-                            startActivity(new Intent(ntk.android.base.activity.RegisterActivity.this, NTKBASEApplication.getApplicationStyle().getMainActivity()));
+                            startActivity(new Intent(ntk.android.base.activity.RegisterActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                             finish();
 
                         }
@@ -267,7 +268,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void ClickNoPhone() {
         EasyPreference.with(this).addBoolean("register_not_interested", true);
-        startActivity(new Intent(this, NTKBASEApplication.getApplicationStyle().getMainActivity()));
+        startActivity(new Intent(this, NTKApplication.getApplicationStyle().getMainActivity()));
         finish();
     }
 

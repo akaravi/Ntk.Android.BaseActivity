@@ -14,7 +14,8 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 
 
-import ntk.android.base.NTKBASEApplication;
+import ntk.android.base.BaseNtkApplication;
+import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.adapter.AdInbox;
 import ntk.android.base.event.notificationEvent;
@@ -62,14 +63,14 @@ public class NotificationsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        NTKBASEApplication.Inbox = true;
+        NTKApplication.Inbox = true;
         EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        NTKBASEApplication.Inbox = false;
+        NTKApplication.Inbox = false;
         EventBus.getDefault().unregister(this);
     }
 

@@ -18,17 +18,18 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import ntk.android.base.NTKBASEApplication;
+import ntk.android.base.BaseNtkApplication;
+import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.config.ConfigRestHeader;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EasyPreference;
 import ntk.android.base.utill.FontManager;
-import ntk.base.api.core.entity.CoreMain;
-import ntk.base.api.core.entity.CoreTheme;
-import ntk.base.api.core.interfase.ICore;
-import ntk.base.api.core.model.MainCoreResponse;
-import ntk.base.config.RetrofitManager;
+import ntk.android.base.api.core.entity.CoreMain;
+import ntk.android.base.api.core.entity.CoreTheme;
+import ntk.android.base.api.core.interfase.ICore;
+import ntk.android.base.api.core.model.MainCoreResponse;
+import ntk.android.base.config.RetrofitManager;
 
 public abstract class BaseSplashActivity extends BaseActivity {
 
@@ -54,8 +55,8 @@ public abstract class BaseSplashActivity extends BaseActivity {
     @SuppressLint("SetTextI18n")
     private void init() {
         Lbl.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Lbl.setText("نسخه  " + (int) Float.parseFloat(NTKBASEApplication.get().getApplicationParameter().VERSION_NAME())
-                + "." + NTKBASEApplication.get().getApplicationParameter().VERSION_CODE());
+        Lbl.setText("نسخه  " + (int) Float.parseFloat(BaseNtkApplication.get().getApplicationParameter().VERSION_NAME())
+                + "." + BaseNtkApplication.get().getApplicationParameter().VERSION_CODE());
 
     }
 
@@ -181,7 +182,7 @@ public abstract class BaseSplashActivity extends BaseActivity {
 //                Loading.setVisibility(View.GONE);
                 boolean register_not_interested = EasyPreference.with(this).getBoolean("register_not_interested", false);
                 if (register_not_interested)
-                    startActivity(new Intent(BaseSplashActivity.this, NTKBASEApplication.getApplicationStyle().getMainActivity()));
+                    startActivity(new Intent(BaseSplashActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                 else
                     startActivity(new Intent(BaseSplashActivity.this, RegisterActivity.class));
                 finish();
@@ -190,7 +191,7 @@ public abstract class BaseSplashActivity extends BaseActivity {
         }
         new Handler().postDelayed(() -> {
 //            Loading.setVisibility(View.GONE);
-            startActivity(new Intent(BaseSplashActivity.this, NTKBASEApplication.getApplicationStyle().getMainActivity()));
+            startActivity(new Intent(BaseSplashActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
             finish();
         }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - System.currentTimeMillis() - startTime);
     }

@@ -22,6 +22,7 @@ import ntk.android.base.BaseNtkApplication;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.config.ConfigRestHeader;
+import ntk.android.base.services.core.CoreAuthService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EasyPreference;
 import ntk.android.base.utill.FontManager;
@@ -66,11 +67,16 @@ public abstract class BaseSplashActivity extends BaseActivity {
      */
     private void getData() {
         if (AppUtill.isNetworkAvailable(this)) {
-            getThemeData();
+            getTokenDevice();
+//            getThemeData();
 
         } else {
             switcher.showErrorView();
         }
+    }
+
+    private void getTokenDevice() {
+        new CoreAuthService(this).getTokenDevice();
     }
 
     /**

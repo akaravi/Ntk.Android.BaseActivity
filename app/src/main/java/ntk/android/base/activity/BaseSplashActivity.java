@@ -68,7 +68,7 @@ public abstract class BaseSplashActivity extends BaseActivity {
     private void getData() {
         if (AppUtill.isNetworkAvailable(this)) {
             getTokenDevice();
-//            getThemeData();
+            getThemeData();
 
         } else {
             switcher.showErrorView();

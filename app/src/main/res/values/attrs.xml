@@ -6,5 +6,8 @@
     <attr name="ntk_splash_logo" format="reference" />
     <attr name="ntk_splash_loading" format="reference" />
     <attr name="ntk_notification_color" format="color|reference" />
+    <attr name="Theme_NTKIntro" format="reference" />
+    <attr name="Theme_NTKRegister" format="reference" />
+    <attr name="Theme_NTKNotification" format="reference" />
 
 </resources>

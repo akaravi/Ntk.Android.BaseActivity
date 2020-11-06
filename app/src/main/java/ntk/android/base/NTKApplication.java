@@ -20,7 +20,7 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
     public static boolean Inbox = false;
     //@Notify please note that not change this value to True
 
-    static ApplicationStyle applicationStyle;
+    protected  static ApplicationStyle applicationStyle;
 
 
 

@@ -17,17 +17,17 @@
         <activity
             android:name=".activity.IntroActivity"
             android:screenOrientation="portrait"
-            android:theme="@attr/Theme_NTKIntro" />
+            android:theme="?attr/Theme_NTKIntro" />
 
         <activity
             android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait"
-            android:theme="@attr/Theme_NTKRegister"  />
+            android:theme="?attr/Theme_NTKRegister"  />
 
         <activity
             android:name=".activity.NotificationsActivity"
             android:screenOrientation="portrait"
-            android:theme="@attr/Theme_NTKNotification" />
+            android:theme="?attr/Theme_NTKNotification" />
 
         <service
             android:name=".service.FirebaseService"

@@ -1,7 +1,5 @@
 package ntk.android.base;
 
-import android.content.Context;
-
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -20,8 +18,7 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
     public static boolean Inbox = false;
     //@Notify please note that not change this value to True
 
-    protected  static ApplicationStyle applicationStyle;
-
+    protected static ApplicationStyle applicationStyle;
 
 
     public static ApplicationStyle getApplicationStyle() {
@@ -37,7 +34,7 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
     @Override
     public void onCreate() {
         super.onCreate();
-        instance=this;
+        instance = this;
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .diskCache(new UnlimitedDiskCache(new File(getCacheDir(), "image")))
                 .diskCacheFileNameGenerator(imageUri -> {
@@ -50,6 +47,13 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
         Toasty.Config.getInstance()
                 .setToastTypeface(FontManager.GetTypeface(getApplicationContext(), FontManager.IranSans))
                 .setTextSize(14).apply();
+    }
+
+    @Override
+    protected ApplicationStaticParameter getConfig() {
+        ApplicationStaticParameter applicationStaticParameter = new ApplicationStaticParameter();
+        applicationStaticParameter.URL = "http://dd9ecb640aee.ngrok.io/";
+        return applicationStaticParameter;
     }
 
     @Override

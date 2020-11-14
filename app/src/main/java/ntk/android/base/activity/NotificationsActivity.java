@@ -13,8 +13,6 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
-
-import ntk.android.base.BaseNtkApplication;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.adapter.AdInbox;

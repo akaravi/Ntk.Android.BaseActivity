@@ -2,8 +2,8 @@ package ntk.android.base;
 
 import java.util.HashMap;
 
-import ntk.android.base.activity.RegisterActivity;
 import ntk.android.base.activity.BaseSplashActivity;
+import ntk.android.base.activity.RegisterActivity;
 import ntk.android.base.styles.BaseModuleStyle;
 import ntk.android.base.styles.StyleHelper;
 

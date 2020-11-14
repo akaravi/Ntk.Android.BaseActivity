@@ -21,16 +21,16 @@ import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.BaseNtkApplication;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
-import ntk.android.base.config.ConfigRestHeader;
-import ntk.android.base.services.core.CoreAuthService;
-import ntk.android.base.utill.AppUtill;
-import ntk.android.base.utill.EasyPreference;
-import ntk.android.base.utill.FontManager;
 import ntk.android.base.api.core.entity.CoreMain;
 import ntk.android.base.api.core.entity.CoreTheme;
 import ntk.android.base.api.core.interfase.ICore;
 import ntk.android.base.api.core.model.MainCoreResponse;
+import ntk.android.base.config.ConfigRestHeader;
 import ntk.android.base.config.RetrofitManager;
+import ntk.android.base.services.core.CoreAuthService;
+import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.EasyPreference;
+import ntk.android.base.utill.FontManager;
 
 public abstract class BaseSplashActivity extends BaseActivity {
 

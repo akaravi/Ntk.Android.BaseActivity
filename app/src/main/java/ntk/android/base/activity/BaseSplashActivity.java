@@ -14,19 +14,21 @@ import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.BaseNtkApplication;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
-import ntk.android.base.api.core.entity.CoreMain;
-import ntk.android.base.api.core.entity.CoreTheme;
 import ntk.android.base.api.core.interfase.ICore;
 import ntk.android.base.api.core.model.MainCoreResponse;
 import ntk.android.base.config.ConfigRestHeader;
+import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.RetrofitManager;
+import ntk.android.base.dtomodel.application.MainResponseDtoModel;
+import ntk.android.base.dtomodel.application.ThemeDtoModel;
+import ntk.android.base.entitymodel.base.ErrorException;
+import ntk.android.base.services.application.ApplicationAppService;
 import ntk.android.base.services.core.CoreAuthService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EasyPreference;
@@ -83,20 +85,11 @@ public abstract class BaseSplashActivity extends BaseActivity {
      * get theme from server
      */
     private void getThemeData() {
-
-        ICore iCore = new RetrofitManager(this).getCachedRetrofit().create(ICore.class);
-        Map<String, String> headers = new ConfigRestHeader().GetHeaders(this);
-        Observable<CoreTheme> call = iCore.GetThemeCore(headers);
-        call.subscribeOn(Schedulers.io())
+        new ApplicationAppService(this).getAppTheme().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<CoreTheme>() {
+                .subscribe(new NtkObserver<ErrorException<ThemeDtoModel>>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(CoreTheme theme) {
+                    public void onNext(@NonNull ErrorException<ThemeDtoModel> theme) {
                         //todo check successfully on coreTheme
                         EasyPreference.with(BaseSplashActivity.this).addString("Theme", new Gson().toJson(theme.Item.ThemeConfigJson));
                         //now can get main response
@@ -104,13 +97,8 @@ public abstract class BaseSplashActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onError(@NonNull Throwable e) {
                         switcher.showErrorView();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 });
     }
@@ -122,16 +110,11 @@ public abstract class BaseSplashActivity extends BaseActivity {
         ICore iCore = new RetrofitManager(this).getCachedRetrofit().create(ICore.class);
         Map<String, String> headers = new ConfigRestHeader().GetHeaders(this);
         Observable<MainCoreResponse> observable = iCore.GetResponseMain(headers);
-        observable.observeOn(AndroidSchedulers.mainThread())
+        new ApplicationAppService(this).getResponseMain().observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<MainCoreResponse>() {
+                .subscribe(new NtkObserver<ErrorException<MainResponseDtoModel>>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(MainCoreResponse mainCoreResponse) {
+                    public void onNext(@NonNull ErrorException<MainResponseDtoModel> mainCoreResponse) {
                         if (!mainCoreResponse.IsSuccess) {
                             switcher.showErrorView();
                             //replace with layout
@@ -143,17 +126,11 @@ public abstract class BaseSplashActivity extends BaseActivity {
 
                     }
 
-
                     @Override
-                    public void onError(Throwable e) {
+                    public void onError(@NonNull Throwable e) {
                         //replace with layout
                         switcher.showErrorView();
                         Toasty.warning(BaseSplashActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
-
-                    }
-
-                    @Override
-                    public void onComplete() {
 
                     }
                 });
@@ -163,7 +140,7 @@ public abstract class BaseSplashActivity extends BaseActivity {
     /**
      * @param model get from response
      */
-    private void HandelDataAction(CoreMain model) {
+    private void HandelDataAction(MainResponseDtoModel model) {
 
         EasyPreference.with(BaseSplashActivity.this).addLong("MemberUserId", model.MemberUserId);
         EasyPreference.with(BaseSplashActivity.this).addLong("UserId", model.UserId);

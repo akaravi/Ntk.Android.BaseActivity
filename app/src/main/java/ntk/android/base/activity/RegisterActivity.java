@@ -139,48 +139,48 @@ public class RegisterActivity extends AppCompatActivity {
 
             AuthUserSignUpModel request = new AuthUserSignUpModel();
             request.mobile = PhoneNumber;
-            request.Code = Txt.getText().toString();
+//            request.Code = Txt.getText().toString(); todo
 
-            Observable<CoreUserResponse> observable = iCore.RegisterWithMobile(headers, request);
-            observable.observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(new Observer<CoreUserResponse>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onNext(CoreUserResponse response) {
-                            Loading.setVisibility(View.GONE);
-                            if (!response.IsSuccess) {
-                                Toasty.warning(ntk.android.base.activity.RegisterActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
-                                findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
-                                return;
-                            }
-                            EasyPreference.with(ntk.android.base.activity.RegisterActivity.this).addLong("UserId", response.Item.UserId);
-                            EasyPreference.with(ntk.android.base.activity.RegisterActivity.this).addLong("MemberUserId", response.Item.MemberId);
-                            EasyPreference.with(ntk.android.base.activity.RegisterActivity.this).addLong("SiteId", response.Item.SiteId);
-                            EasyPreference.with(ntk.android.base.activity.RegisterActivity.this).addBoolean("Registered", true);
-
-                            startActivity(new Intent(ntk.android.base.activity.RegisterActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
-                            finish();
-
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
-                            Loading.setVisibility(View.GONE);
-                            Toasty.warning(ntk.android.base.activity.RegisterActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
-
-                        }
-
-                        @Override
-                        public void onComplete() {
-
-                        }
-                    });
+//            Observable<CoreUserResponse> observable = iCore.RegisterWithMobile(headers, request);
+//            observable.observeOn(AndroidSchedulers.mainThread())
+//                    .subscribeOn(Schedulers.io())
+//                    .subscribe(new Observer<CoreUserResponse>() {
+//                        @Override
+//                        public void onSubscribe(Disposable d) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onNext(CoreUserResponse response) {
+//                            Loading.setVisibility(View.GONE);
+//                            if (!response.IsSuccess) {
+//                                Toasty.warning(ntk.android.base.activity.RegisterActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
+//                                findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
+//                                return;
+//                            }
+//                            EasyPreference.with(ntk.android.base.activity.RegisterActivity.this).addLong("UserId", response.Item.UserId);
+//                            EasyPreference.with(ntk.android.base.activity.RegisterActivity.this).addLong("MemberUserId", response.Item.MemberId);
+//                            EasyPreference.with(ntk.android.base.activity.RegisterActivity.this).addLong("SiteId", response.Item.SiteId);
+//                            EasyPreference.with(ntk.android.base.activity.RegisterActivity.this).addBoolean("Registered", true);
+//
+//                            startActivity(new Intent(ntk.android.base.activity.RegisterActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
+//                            finish();
+//
+//                        }
+//
+//                        @Override
+//                        public void onError(Throwable e) {
+//                            findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
+//                            Loading.setVisibility(View.GONE);
+//                            Toasty.warning(ntk.android.base.activity.RegisterActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
+//
+//                        }
+//
+//                        @Override
+//                        public void onComplete() {
+//
+//                        }
+//                    });
         } else {
             Loading.setVisibility(View.GONE);
             Toasty.warning(this, "عدم دسترسی به اینترنت", Toasty.LENGTH_LONG, true).show();
@@ -192,9 +192,6 @@ public class RegisterActivity extends AppCompatActivity {
         if (AppUtill.isNetworkAvailable(this)) {
             Loading.setVisibility(View.VISIBLE);
             findViewById(R.id.cardActRegister).setVisibility(View.GONE);
-            ICore iCore = new RetrofitManager(this).getCachedRetrofit().create(ICore.class);
-            Map<String, String> headers = new ConfigRestHeader().GetHeaders(this);
-
             AuthUserSignUpModel request = new AuthUserSignUpModel();
             if (PhoneNumber.length() == 0) {
                 PhoneNumber = Txt.getText().toString();

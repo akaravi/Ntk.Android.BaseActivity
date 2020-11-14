@@ -36,15 +36,19 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
+import ntk.android.base.api.core.interfase.ICore;
+import ntk.android.base.api.core.model.CoreUserResponse;
 import ntk.android.base.config.ConfigRestHeader;
+import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.RetrofitManager;
+import ntk.android.base.dtomodel.core.AuthUserSignUpModel;
+import ntk.android.base.entitymodel.base.ErrorException;
+import ntk.android.base.entitymodel.core.CoreUserModel;
 import ntk.android.base.event.MessageEvent;
+import ntk.android.base.services.core.CoreAuthService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EasyPreference;
 import ntk.android.base.utill.FontManager;
-import ntk.android.base.api.core.interfase.ICore;
-import ntk.android.base.api.core.model.CoreUserRegisterByMobileRequest;
-import ntk.android.base.api.core.model.CoreUserResponse;
-import ntk.android.base.config.RetrofitManager;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -133,8 +137,8 @@ public class RegisterActivity extends AppCompatActivity {
             ICore iCore = new RetrofitManager(this).getCachedRetrofit().create(ICore.class);
             Map<String, String> headers = new ConfigRestHeader().GetHeaders(this);
 
-            CoreUserRegisterByMobileRequest request = new CoreUserRegisterByMobileRequest();
-            request.Mobile = PhoneNumber;
+            AuthUserSignUpModel request = new AuthUserSignUpModel();
+            request.mobile = PhoneNumber;
             request.Code = Txt.getText().toString();
 
             Observable<CoreUserResponse> observable = iCore.RegisterWithMobile(headers, request);
@@ -191,23 +195,17 @@ public class RegisterActivity extends AppCompatActivity {
             ICore iCore = new RetrofitManager(this).getCachedRetrofit().create(ICore.class);
             Map<String, String> headers = new ConfigRestHeader().GetHeaders(this);
 
-            CoreUserRegisterByMobileRequest request = new CoreUserRegisterByMobileRequest();
+            AuthUserSignUpModel request = new AuthUserSignUpModel();
             if (PhoneNumber.length() == 0) {
                 PhoneNumber = Txt.getText().toString();
             }
-            request.Mobile = PhoneNumber;
-
-            Observable<CoreUserResponse> observable = iCore.RegisterWithMobile(headers, request);
-            observable.observeOn(AndroidSchedulers.mainThread())
+            request.mobile = PhoneNumber;
+            new CoreAuthService(this).signUpUser(request)
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .subscribe(new Observer<CoreUserResponse>() {
+                    .subscribe(new NtkObserver<ErrorException<CoreUserModel>>() {
                         @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onNext(CoreUserResponse response) {
+                        public void onNext(@io.reactivex.annotations.NonNull ErrorException<CoreUserModel> response) {
                             Loading.setVisibility(View.GONE);
                             if (!response.IsSuccess) {
                                 Toasty.warning(ntk.android.base.activity.RegisterActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
@@ -241,15 +239,10 @@ public class RegisterActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onError(Throwable e) {
+                        public void onError(@io.reactivex.annotations.NonNull Throwable e) {
                             Loading.setVisibility(View.GONE);
                             Toasty.warning(ntk.android.base.activity.RegisterActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
                             findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
-
-                        }
-
-                        @Override
-                        public void onComplete() {
 
                         }
                     });

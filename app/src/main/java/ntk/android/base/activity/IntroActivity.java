@@ -13,24 +13,21 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
-import ntk.android.base.config.ConfigRestHeader;
+import ntk.android.base.config.NtkObserver;
+import ntk.android.base.entitymodel.application.ApplicationIntroModel;
+import ntk.android.base.entitymodel.base.ErrorException;
+import ntk.android.base.entitymodel.base.FilterDataModel;
+import ntk.android.base.services.application.ApplicationIntroService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EasyPreference;
 import ntk.android.base.utill.FontManager;
-import ntk.android.base.api.application.interfase.IApplication;
-import ntk.android.base.api.application.model.ApplicationIntroRequest;
-import ntk.android.base.api.application.model.ApplicationIntroResponse;
-import ntk.android.base.config.RetrofitManager;
 
 public class IntroActivity extends BaseActivity {
 
@@ -38,7 +35,7 @@ public class IntroActivity extends BaseActivity {
     List<TextView> Lbls;
     ImageView Img;
     long startTime;
-    private ApplicationIntroResponse Intro = new ApplicationIntroResponse();
+    List<ApplicationIntroModel> IntroModels = new ArrayList<>();
     private int CountIntro = 0;
     private Handler handler = new Handler();
 
@@ -80,23 +77,20 @@ public class IntroActivity extends BaseActivity {
     private void getdata() {
         if (AppUtill.isNetworkAvailable(this)) {
             switcher.showProgressView();
-            IApplication iApplication = new RetrofitManager(this).getCachedRetrofit().create(IApplication.class);
-            Map<String, String> headers = new ConfigRestHeader().GetHeaders(this);
-            ApplicationIntroRequest request = new ApplicationIntroRequest();
-            Observable<ApplicationIntroResponse> Call = iApplication.GetApplicationIntro(headers, request);
-            Call.observeOn(AndroidSchedulers.mainThread())
+            new ApplicationIntroService(this).getAll(new FilterDataModel())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .subscribe(new Observer<ApplicationIntroResponse>() {
+                    .subscribe(new NtkObserver<ErrorException<ApplicationIntroModel>>() {
                         @Override
                         public void onSubscribe(Disposable d) {
 
                         }
 
                         @Override
-                        public void onNext(ApplicationIntroResponse response) {
+                        public void onNext(ErrorException<ApplicationIntroModel> response) {
                             if (response.IsSuccess) {
-                                if (Intro.ListItems != null && response.ListItems.size() != 0) {
-                                    Intro.ListItems = response.ListItems;
+                                if (response.ListItems != null && response.ListItems.size() != 0) {
+                                    IntroModels = response.ListItems;
                                     HandelIntro();
                                 } else {
                                     if (Help != 0) {
@@ -139,9 +133,9 @@ public class IntroActivity extends BaseActivity {
     }
 
     private void HandelIntro() {
-        ImageLoader.getInstance().displayImage(Intro.ListItems.get(CountIntro).MainImageSrc, Img);
-        Lbls.get(0).setText(Intro.ListItems.get(CountIntro).Title);
-        Lbls.get(1).setText(Intro.ListItems.get(CountIntro).Description);
+        ImageLoader.getInstance().displayImage(IntroModels.get(CountIntro).mainImageSrc, Img);
+        Lbls.get(0).setText(IntroModels.get(CountIntro).title);
+        Lbls.get(1).setText(IntroModels.get(CountIntro).description);
         switcher.showContentView();
     }
 
@@ -159,13 +153,13 @@ public class IntroActivity extends BaseActivity {
 
 
     public void ClickAfter() {
-        if (Intro.ListItems == null)
+        if (IntroModels == null)
             return;
-        if (CountIntro < (Intro.ListItems.size() - 1)) {
+        if (CountIntro < (IntroModels.size() - 1)) {
             CountIntro = CountIntro + 1;
             findViewById(R.id.btnBeforeActIntro).setVisibility(View.VISIBLE);
             HandelIntro();
-            if (CountIntro == Intro.ListItems.size()) {
+            if (CountIntro == IntroModels.size()) {
                 Lbls.get(2).setText("شروع");
             }
         } else {

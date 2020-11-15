@@ -138,7 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
             Map<String, String> headers = new ConfigRestHeader().GetHeaders(this);
 
             AuthUserSignUpModel request = new AuthUserSignUpModel();
-            request.mobile = PhoneNumber;
+            request.Mobile = PhoneNumber;
 //            request.Code = Txt.getText().toString(); todo
 
 //            Observable<CoreUserResponse> observable = iCore.RegisterWithMobile(headers, request);
@@ -196,7 +196,7 @@ public class RegisterActivity extends AppCompatActivity {
             if (PhoneNumber.length() == 0) {
                 PhoneNumber = Txt.getText().toString();
             }
-            request.mobile = PhoneNumber;
+            request.Mobile = PhoneNumber;
             new CoreAuthService(this).signUpUser(request)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())

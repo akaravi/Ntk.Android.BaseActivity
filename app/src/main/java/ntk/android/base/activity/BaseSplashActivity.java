@@ -25,8 +25,8 @@ import ntk.android.base.api.core.model.MainCoreResponse;
 import ntk.android.base.config.ConfigRestHeader;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.RetrofitManager;
+import ntk.android.base.dtomodel.application.AppThemeDtoModel;
 import ntk.android.base.dtomodel.application.MainResponseDtoModel;
-import ntk.android.base.dtomodel.application.ThemeDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.services.application.ApplicationAppService;
 import ntk.android.base.services.core.CoreAuthService;
@@ -87,9 +87,9 @@ public abstract class BaseSplashActivity extends BaseActivity {
     private void getThemeData() {
         new ApplicationAppService(this).getAppTheme().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new NtkObserver<ErrorException<ThemeDtoModel>>() {
+                .subscribe(new NtkObserver<ErrorException<AppThemeDtoModel>>() {
                     @Override
-                    public void onNext(@NonNull ErrorException<ThemeDtoModel> theme) {
+                    public void onNext(@NonNull ErrorException<AppThemeDtoModel> theme) {
                         //todo check successfully on coreTheme
                         EasyPreference.with(BaseSplashActivity.this).addString("Theme", new Gson().toJson(theme.Item.ThemeConfigJson));
                         //now can get main response

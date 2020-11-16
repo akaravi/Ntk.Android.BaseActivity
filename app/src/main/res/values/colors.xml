@@ -3,4 +3,7 @@
     <color name="colorTextBlack">#211c0e</color>
     <color name="colorWhite">#fff</color>
     <color name="colorGrayText">#363f45</color>
+    <color name="colorGreen">#4caf50</color>
+    <color name="colorOrang">#FFC107</color>
+    <color name="colorRed">#fe0000</color>
 </resources>

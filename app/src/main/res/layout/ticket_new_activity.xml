@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayoutActSendTicket"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/toolbarFrService"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:id="@+id/imgBackActSendTicket"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:contentDescription="@null"
+                android:rotation="180"
+                app:srcCompat="@drawable/ic_left"
+                app:tint="@color/colorGrayText" />
+
+            <TextView
+                android:id="@+id/lblTitleActSendTicket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/imgBackActSendTicket"
+                android:text="@string/SendTicket"
+                android:textColor="@color/colorGrayText"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+            <com.balysv.materialripple.MaterialRippleLayout
+                android:id="@+id/RippleAttachActSendTicket"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                app:mrl_rippleAlpha="0.05"
+                app:mrl_rippleColor="#10000000"
+                app:mrl_rippleRoundedCorners="100dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerInParent="true"
+                        android:alpha=".5"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_attach" />
+                </RelativeLayout>
+            </com.balysv.materialripple.MaterialRippleLayout>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/LineToolbarActMain"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/toolbarFrService"
+            android:background="@color/colorAccent" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true" />
+
+        <Button
+            android:id="@+id/btnSubmitActSendTicket"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentBottom="true"
+            android:background="#014efe"
+            android:text="@string/SendTicket"
+            android:textColor="@color/colorWhite"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            tools:ignore="MissingPrefix" />
+
+        <ScrollView
+            android:id="@+id/ScrollViewActSendTicket"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/btnSubmitActSendTicket"
+            android:layout_below="@id/LineToolbarActMain"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputNameFamilytActSendTicket"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
+                    android:theme="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/txtNameFamilyActSendTicket"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/background_edittext"
+                        android:hint="نام و نام خانوادگی"
+                        android:maxLines="1"
+                        android:paddingStart="15dp"
+                        android:textSize="14sp"
+                        tools:ignore="MissingPrefix,RtlSymmetry,TextFields" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputEmailtActSendTicket"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
+                    android:theme="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/txtEmailActSendTicket"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/background_edittext"
+                        android:hint="آدرس پست الکترونیکی"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:paddingStart="15dp"
+                        android:textSize="14sp"
+                        tools:ignore="MissingPrefix,RtlSymmetry,TextFields" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputPhoneNumberActSendTicket"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
+                    android:theme="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/txtPhoneNumberActSendTicket"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/background_edittext"
+                        android:hint="شماره همراه"
+                        android:inputType="phone"
+                        android:maxLength="12"
+                        android:maxLines="1"
+                        android:paddingStart="15dp"
+                        android:textSize="14sp"
+                        tools:ignore="MissingPrefix,RtlSymmetry,TextFields" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputSubjectActSendTicket"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
+                    android:theme="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/txtSubjectActSendTicket"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/background_edittext"
+                        android:hint="@string/Subject"
+                        android:maxLines="1"
+                        android:paddingStart="15dp"
+                        android:textSize="14sp"
+                        tools:ignore="MissingPrefix,RtlSymmetry,TextFields" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="15dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2.8">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2.5dp"
+                        android:layout_weight="1.2"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/lblImportantActSendTicket"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Inportant"
+                            android:textColor="@color/colorAccent"
+                            tools:ignore="MissingPrefix" />
+
+                        <Spinner
+                            android:id="@+id/SpinnerState"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="2.5dp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorGrayText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2.5dp"
+                        android:layout_marginRight="2.5dp"
+                        android:layout_weight="1.6"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/lblServiceActSendTicket"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/UserService"
+                            android:textColor="@color/colorAccent"
+                            tools:ignore="MissingPrefix" />
+
+                        <Spinner
+                            android:id="@+id/SpinnerService"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="2.5dp"
+                            android:layout_marginEnd="2.5dp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorGrayText" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputMessageActSendTicket"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:theme="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/txtMessageActSendTicket"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:background="@drawable/background_edittext"
+                        android:gravity="right|top"
+                        android:hint="متن درخواست"
+                        android:inputType="textMultiLine"
+                        android:paddingStart="15dp"
+                        android:textSize="14sp"
+                        tools:ignore="MissingPrefix,RtlSymmetry,TextFields" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/RecyclerAttach"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none" />
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

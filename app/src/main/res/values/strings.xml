@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">NTK.Android.BaseActivity</string>
+    <string-array name="StateTicket">
+        <item>معمولی</item>
+        <item>مهم</item>
+        <item>ضروری</item>
+    </string-array>
 </resources>

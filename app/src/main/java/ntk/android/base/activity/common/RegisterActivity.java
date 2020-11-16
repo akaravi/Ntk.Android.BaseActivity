@@ -1,4 +1,4 @@
-package ntk.android.base.activity;
+package ntk.android.base.activity.common;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -29,15 +29,11 @@ import java.util.List;
 import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.api.core.interfase.ICore;
-import ntk.android.base.api.core.model.CoreUserResponse;
 import ntk.android.base.config.ConfigRestHeader;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.RetrofitManager;
@@ -50,7 +46,7 @@ import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EasyPreference;
 import ntk.android.base.utill.FontManager;
 
-public class RegisterActivity extends AppCompatActivity {
+public class   RegisterActivity extends AppCompatActivity {
 
     ProgressBar Loading;
     EditText Txt;
@@ -61,13 +57,13 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        Boolean Registered = EasyPreference.with(ntk.android.base.activity.RegisterActivity.this).getBoolean("Registered", false);
+        Boolean Registered = EasyPreference.with(RegisterActivity.this).getBoolean("Registered", false);
         if (Registered) {
-            startActivity(new Intent(ntk.android.base.activity.RegisterActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
+            startActivity(new Intent(RegisterActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
             finish();
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_register);
+        setContentView(R.layout.comon_register_activity);
         initView();
         init();
     }
@@ -109,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (CheckPermission()) {
                         Register();
                     } else {
-                        ActivityCompat.requestPermissions(ntk.android.base.activity.RegisterActivity.this, new String[]{Manifest.permission.RECEIVE_SMS}, 100);
+                        ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.RECEIVE_SMS}, 100);
                     }
                 } else {
                     Toast.makeText(this, "عدم دسترسی به اینترنت", Toast.LENGTH_SHORT).show();
@@ -154,16 +150,16 @@ public class RegisterActivity extends AppCompatActivity {
 //                        public void onNext(CoreUserResponse response) {
 //                            Loading.setVisibility(View.GONE);
 //                            if (!response.IsSuccess) {
-//                                Toasty.warning(ntk.android.base.activity.RegisterActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
+//                                Toasty.warning(ntk.android.base.activity.common.RegisterActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
 //                                findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
 //                                return;
 //                            }
-//                            EasyPreference.with(ntk.android.base.activity.RegisterActivity.this).addLong("UserId", response.Item.UserId);
-//                            EasyPreference.with(ntk.android.base.activity.RegisterActivity.this).addLong("MemberUserId", response.Item.MemberId);
-//                            EasyPreference.with(ntk.android.base.activity.RegisterActivity.this).addLong("SiteId", response.Item.SiteId);
-//                            EasyPreference.with(ntk.android.base.activity.RegisterActivity.this).addBoolean("Registered", true);
+//                            EasyPreference.with(ntk.android.base.activity.common.RegisterActivity.this).addLong("UserId", response.Item.UserId);
+//                            EasyPreference.with(ntk.android.base.activity.common.RegisterActivity.this).addLong("MemberUserId", response.Item.MemberId);
+//                            EasyPreference.with(ntk.android.base.activity.common.RegisterActivity.this).addLong("SiteId", response.Item.SiteId);
+//                            EasyPreference.with(ntk.android.base.activity.common.RegisterActivity.this).addBoolean("Registered", true);
 //
-//                            startActivity(new Intent(ntk.android.base.activity.RegisterActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
+//                            startActivity(new Intent(ntk.android.base.activity.common.RegisterActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
 //                            finish();
 //
 //                        }
@@ -172,7 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
 //                        public void onError(Throwable e) {
 //                            findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
 //                            Loading.setVisibility(View.GONE);
-//                            Toasty.warning(ntk.android.base.activity.RegisterActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
+//                            Toasty.warning(ntk.android.base.activity.common.RegisterActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
 //
 //                        }
 //
@@ -205,7 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
                         public void onNext(@io.reactivex.annotations.NonNull ErrorException<CoreUserModel> response) {
                             Loading.setVisibility(View.GONE);
                             if (!response.IsSuccess) {
-                                Toasty.warning(ntk.android.base.activity.RegisterActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
+                                Toasty.warning(RegisterActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
                                 return;
                             }
                             findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
@@ -238,7 +234,7 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onError(@io.reactivex.annotations.NonNull Throwable e) {
                             Loading.setVisibility(View.GONE);
-                            Toasty.warning(ntk.android.base.activity.RegisterActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
+                            Toasty.warning(RegisterActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
                             findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
 
                         }

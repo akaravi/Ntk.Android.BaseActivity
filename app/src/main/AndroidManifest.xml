@@ -4,30 +4,43 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--    <uses-permission android:name="android.permission.RECEIVE_SMS" />-->
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-    <!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
-    <!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
     <uses-permission android:name="android.permission.VIBRATE" />
-    <application
 
-
-
-        >
+    <application>
         <activity
-            android:name=".activity.IntroActivity"
+            android:name=".activity.common.IntroActivity"
             android:screenOrientation="portrait"
-            android:theme="?attr/Theme_NTKIntro" />
-
+            android:theme="?attr/Theme_NTK_Intro" />
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name=".activity.common.RegisterActivity"
             android:screenOrientation="portrait"
-            android:theme="?attr/Theme_NTKRegister"  />
-
+            android:theme="?attr/Theme_NTK_Register" />
         <activity
-            android:name=".activity.NotificationsActivity"
+            android:name=".activity.common.NotificationsActivity"
             android:screenOrientation="portrait"
-            android:theme="?attr/Theme_NTKNotification" />
+            android:theme="?attr/Theme_NTK_Notification" />
+        <activity
+            android:name=".activity.ticketing.FaqActivity"
+            android:screenOrientation="portrait"
+            android:theme="?attr/Theme_NTK_Fag" />
+        <activity
+            android:name=".activity.ticketing.TicketAnswerActivity"
+            android:screenOrientation="portrait"
+            android:theme="?attr/Theme_NTK_Ticket_Answer" />
+        <activity
+            android:name=".activity.ticketing.TicketSearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="?attr/Theme_NTK_Ticket_Search" />
+        <activity
+            android:name=".activity.ticketing.TicketListActivity"
+            android:screenOrientation="portrait"
+            android:theme="?attr/Theme_NTK_Ticket_List" />
+        <activity
+            android:name=".activity.ticketing.FaqSearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="?attr/Theme_NTK_Faq_Search" />
 
         <service
             android:name=".service.FirebaseService"
@@ -36,6 +49,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
     </application>
+
 </manifest>

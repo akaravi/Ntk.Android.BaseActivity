@@ -27,19 +27,19 @@ import ntk.android.base.model.NotificationModel;
 import ntk.android.base.room.RoomDb;
 import ntk.android.base.utill.FontManager;
 
-public class AdInbox extends RecyclerView.Adapter<ntk.android.base.adapter.AdInbox.ViewHolder> {
+public class NotificationListAdapter extends RecyclerView.Adapter<NotificationListAdapter.ViewHolder> {
 
     private ArrayList<NotificationModel> arrayList;
     private Context context;
 
-    public AdInbox(Context context, ArrayList<NotificationModel> arrayList) {
+    public NotificationListAdapter(Context context, ArrayList<NotificationModel> arrayList) {
         this.arrayList = arrayList;
         this.context = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_recycler_inbox, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.notif_item_recycler, viewGroup, false);
         return new ViewHolder(view);
     }
 

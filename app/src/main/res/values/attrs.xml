@@ -6,8 +6,13 @@
     <attr name="ntk_splash_logo" format="reference" />
     <attr name="ntk_splash_loading" format="reference" />
     <attr name="ntk_notification_color" format="color|reference" />
-    <attr name="Theme_NTKIntro" format="reference" />
-    <attr name="Theme_NTKRegister" format="reference" />
-    <attr name="Theme_NTKNotification" format="reference" />
+    <attr name="Theme_NTK_Intro" format="reference" />
+    <attr name="Theme_NTK_Register" format="reference" />
+    <attr name="Theme_NTK_Notification" format="reference" />
+    <attr name="Theme_NTK_Fag" format="reference" />
+    <attr name="Theme_NTK_Ticket_Answer" format="reference" />
+    <attr name="Theme_NTK_Ticket_Search" format="reference" />
+    <attr name="Theme_NTK_Ticket_List" format="reference" />
+    <attr name="Theme_NTK_Faq_Search" format="reference" />
 
 </resources>

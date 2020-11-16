@@ -1,4 +1,4 @@
-package ntk.android.base.activity;
+package ntk.android.base.activity.common;
 
 import android.os.Bundle;
 import android.widget.Toast;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
-import ntk.android.base.adapter.AdInbox;
+import ntk.android.base.adapter.NotificationListAdapter;
 import ntk.android.base.event.notificationEvent;
 import ntk.android.base.model.NotificationModel;
 import ntk.android.base.room.RoomDb;
@@ -25,12 +25,12 @@ public class NotificationsActivity extends AppCompatActivity {
     RecyclerView Rv;
 
     private ArrayList<NotificationModel> notifies = new ArrayList<>();
-    private AdInbox adapter;
+    private NotificationListAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_inbox);
+        setContentView(R.layout.common_notification_activity);
 
         initView();
         init();
@@ -50,7 +50,7 @@ public class NotificationsActivity extends AppCompatActivity {
             Toast.makeText(this, "پیامی برای نمایش وجود ندارد", Toast.LENGTH_SHORT).show();
             finish();
         } else {
-            adapter = new AdInbox(this, notifies);
+            adapter = new NotificationListAdapter(this, notifies);
             Rv.post(() -> {
                 Rv.setAdapter(adapter);
                 adapter.notifyDataSetChanged();

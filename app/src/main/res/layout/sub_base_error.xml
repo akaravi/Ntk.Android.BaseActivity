@@ -36,4 +36,11 @@
         android:text="تلاش مجدد"
         android:textColor="@color/colorWhite"
         />
+    <View
+        android:id="@+id/debugModeView"
+        android:layout_width="200dp"
+        android:clickable="true"
+        android:layout_alignParentLeft="true"
+        android:background="@color/transparent"
+        android:layout_height="200dp" />
 </RelativeLayout>

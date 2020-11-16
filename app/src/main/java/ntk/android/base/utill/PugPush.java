@@ -17,7 +17,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
-import ntk.android.base.activity.BaseSplashActivity;
+import ntk.android.base.activity.common.BaseSplashActivity;
 import ntk.android.base.event.notificationEvent;
 import ntk.android.base.model.NotificationModel;
 

@@ -1,4 +1,4 @@
-package ntk.android.base.activity;
+package ntk.android.base.activity.common;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +20,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
+import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.entitymodel.application.ApplicationIntroModel;
 import ntk.android.base.entitymodel.base.ErrorException;
@@ -42,7 +43,7 @@ public class IntroActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_intro);
+        setContentView(R.layout.common_intro_activty);
 
         startTime = System.currentTimeMillis();
         initView();
@@ -94,19 +95,19 @@ public class IntroActivity extends BaseActivity {
                                     HandelIntro();
                                 } else {
                                     if (Help != 0) {
-                                        startActivity(new Intent(ntk.android.base.activity.IntroActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
+                                        startActivity(new Intent(IntroActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                                         finish();
                                     } else {
-                                        EasyPreference.with(ntk.android.base.activity.IntroActivity.this).addBoolean("Intro", true);
+                                        EasyPreference.with(IntroActivity.this).addBoolean("Intro", true);
 
-                                        if (EasyPreference.with(ntk.android.base.activity.IntroActivity.this).getBoolean("Registered", false)) {
+                                        if (EasyPreference.with(IntroActivity.this).getBoolean("Registered", false)) {
                                             new Handler().postDelayed(() -> {
-                                                startActivity(new Intent(ntk.android.base.activity.IntroActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
+                                                startActivity(new Intent(IntroActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                                                 finish();
                                             }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - System.currentTimeMillis() - startTime);
                                         } else {
                                             new Handler().postDelayed(() -> {
-                                                startActivity(new Intent(ntk.android.base.activity.IntroActivity.this, ntk.android.base.activity.RegisterActivity.class));
+                                                startActivity(new Intent(IntroActivity.this, RegisterActivity.class));
                                                 finish();
                                             }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - System.currentTimeMillis() - startTime);
                                         }
@@ -119,7 +120,7 @@ public class IntroActivity extends BaseActivity {
 
                         @Override
                         public void onError(Throwable e) {
-                            Toasty.error(ntk.android.base.activity.IntroActivity.this, "خطا در اتصال به مرکز", Toasty.LENGTH_LONG, true).show();
+                            Toasty.error(IntroActivity.this, "خطا در اتصال به مرکز", Toasty.LENGTH_LONG, true).show();
                         }
 
                         @Override
@@ -166,7 +167,7 @@ public class IntroActivity extends BaseActivity {
             handler.removeCallbacksAndMessages(null);
             if (Help == 0) {
                 EasyPreference.with(this).addBoolean("Intro", true);
-                startActivity(new Intent(ntk.android.base.activity.IntroActivity.this, ntk.android.base.activity.RegisterActivity.class));
+                startActivity(new Intent(IntroActivity.this, RegisterActivity.class));
                 finish();
             } else {
                 finish();

@@ -139,9 +139,6 @@ public abstract class BaseSplashActivity extends BaseActivity {
      * req main data
      */
     private void requestMainData() {
-        ICore iCore = new RetrofitManager(this).getCachedRetrofit().create(ICore.class);
-        Map<String, String> headers = new ConfigRestHeader().GetHeaders(this);
-        Observable<MainCoreResponse> observable = iCore.GetResponseMain(headers);
         new ApplicationAppService(this).getResponseMain().observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new NtkObserver<ErrorException<MainResponseDtoModel>>() {

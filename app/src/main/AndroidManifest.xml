@@ -41,6 +41,14 @@
             android:name=".activity.ticketing.FaqSearchActivity"
             android:screenOrientation="portrait"
             android:theme="?attr/Theme_NTK_Faq_Search" />
+        <activity
+            android:name="ntk.android.base.activity.poling.PoolingActivity"
+            android:screenOrientation="portrait"
+            android:theme="?attr/Theme_NTK_Poll" />
+        <activity
+            android:name="ntk.android.base.activity.poling.PoolingDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="?attr/Theme_NTK_Poll_Detail" />
 
         <service
             android:name=".service.FirebaseService"

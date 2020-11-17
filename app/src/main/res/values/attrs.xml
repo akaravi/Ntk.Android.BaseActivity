@@ -14,5 +14,7 @@
     <attr name="Theme_NTK_Ticket_Search" format="reference" />
     <attr name="Theme_NTK_Ticket_List" format="reference" />
     <attr name="Theme_NTK_Faq_Search" format="reference" />
+    <attr name="Theme_NTK_Poll" format="reference" />
+    <attr name="Theme_NTK_Poll_Detail" format="reference" />
 
 </resources>

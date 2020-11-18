@@ -82,10 +82,7 @@ public class IntroActivity extends BaseActivity {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(new NtkObserver<ErrorException<ApplicationIntroModel>>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
 
-                        }
 
                         @Override
                         public void onNext(ErrorException<ApplicationIntroModel> response) {

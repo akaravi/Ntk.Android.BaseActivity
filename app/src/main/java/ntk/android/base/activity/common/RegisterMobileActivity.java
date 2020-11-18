@@ -45,7 +45,7 @@ import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterMobileActivity extends AppCompatActivity {
 
     ProgressBar Loading;
     EditText Txt;
@@ -63,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Boolean Registered = Preferences.with(this).appVariableInfo().isRegistered();
         if (Registered) {
-            startActivity(new Intent(RegisterActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
+            startActivity(new Intent(RegisterMobileActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
             finish();
         }
         super.onCreate(savedInstanceState);
@@ -146,7 +146,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (CheckPermission()) {
                     Register();
                 } else {
-                    ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.RECEIVE_SMS}, 100);
+                    ActivityCompat.requestPermissions(RegisterMobileActivity.this, new String[]{Manifest.permission.RECEIVE_SMS}, 100);
                 }
             } else {
                 Toast.makeText(this, "عدم دسترسی به اینترنت", Toast.LENGTH_SHORT).show();
@@ -177,17 +177,17 @@ public class RegisterActivity extends AppCompatActivity {
                         public void onNext(@io.reactivex.annotations.NonNull ErrorException<CoreUserModel> response) {
                             Loading.setVisibility(View.GONE);
                             if (!response.IsSuccess) {
-                                Toasty.error(RegisterActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
+                                Toasty.error(RegisterMobileActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
                                 return;
                             }
-                            startActivity(new Intent(RegisterActivity.this, ConfirmMobileActivity.class));
+                            startActivity(new Intent(RegisterMobileActivity.this, ConfirmMobileActivity.class));
                         }
 
                         @Override
                         public void onError(@io.reactivex.annotations.NonNull Throwable e) {
                             callCaptchaApi();
                             Loading.setVisibility(View.GONE);
-                            Toasty.warning(RegisterActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
+                            Toasty.warning(RegisterMobileActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
                             findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
                             findViewById(R.id.cardPassRegister).setVisibility(View.VISIBLE);
                             findViewById(R.id.cardRePassRegister).setVisibility(View.VISIBLE);

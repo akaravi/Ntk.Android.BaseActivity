@@ -16,7 +16,6 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
@@ -104,7 +103,7 @@ public class IntroActivity extends BaseActivity {
                                             }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - System.currentTimeMillis() - startTime);
                                         } else {
                                             new Handler().postDelayed(() -> {
-                                                startActivity(new Intent(IntroActivity.this, RegisterActivity.class));
+                                                startActivity(new Intent(IntroActivity.this, RegisterMobileActivity.class));
                                                 finish();
                                             }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - System.currentTimeMillis() - startTime);
                                         }
@@ -164,7 +163,7 @@ public class IntroActivity extends BaseActivity {
             handler.removeCallbacksAndMessages(null);
             if (Help == 0) {
                 Preferences.with(this).appVariableInfo().setIntroSeen(true);
-                startActivity(new Intent(IntroActivity.this, RegisterActivity.class));
+                startActivity(new Intent(IntroActivity.this, RegisterMobileActivity.class));
                 finish();
             } else {
                 finish();

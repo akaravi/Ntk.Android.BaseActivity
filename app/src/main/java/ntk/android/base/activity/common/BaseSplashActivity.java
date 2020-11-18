@@ -187,7 +187,7 @@ public abstract class BaseSplashActivity extends BaseActivity {
 
         Preferences.with(this).UserInfo().setMemberUserId(model.MemberUserId);
         Preferences.with(this).UserInfo().setUserId(model.UserId);
-        Preferences.with(this).UserInfo().SiteId(model.SiteId);
+        Preferences.with(this).UserInfo().setSiteId(model.SiteId);
         Preferences.with(this).appVariableInfo().setConfigapp(new Gson().toJson(model));
         if (model.UserId <= 0)
             Preferences.with(this).appVariableInfo().setRegistered(false);
@@ -213,7 +213,7 @@ public abstract class BaseSplashActivity extends BaseActivity {
                     if (register_not_interested)
                         startActivity(new Intent(BaseSplashActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                     else
-                        startActivity(new Intent(BaseSplashActivity.this, RegisterActivity.class));
+                        startActivity(new Intent(BaseSplashActivity.this, RegisterMobileActivity.class));
                     finish();
                 }
             }, System.currentTimeMillis() - startTime >= 5000 ? 100 : 5000 - System.currentTimeMillis() - startTime);

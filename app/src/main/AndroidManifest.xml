@@ -14,7 +14,11 @@
             android:screenOrientation="portrait"
             android:theme="?attr/Theme_NTK_Intro" />
         <activity
-            android:name=".activity.common.RegisterActivity"
+            android:name=".activity.common.LoginMobileActivity"
+            android:screenOrientation="portrait"
+            android:theme="?attr/Theme_NTK_Register" />
+        <activity
+            android:name=".activity.common.RegisterMobileActivity"
             android:screenOrientation="portrait"
             android:theme="?attr/Theme_NTK_Register" />
         <activity

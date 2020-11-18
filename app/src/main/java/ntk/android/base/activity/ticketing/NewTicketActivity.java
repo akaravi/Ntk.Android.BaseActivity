@@ -59,9 +59,9 @@ import ntk.android.base.services.file.FileUploaderService;
 import ntk.android.base.services.ticketing.TicketingDepartemenService;
 import ntk.android.base.services.ticketing.TicketingTaskService;
 import ntk.android.base.utill.AppUtill;
-import ntk.android.base.utill.EasyPreference;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.Regex;
+import ntk.android.base.utill.prefrense.Preferences;
 
 public class NewTicketActivity extends BaseActivity {
     List<Spinner> spinners;
@@ -143,11 +143,11 @@ public class NewTicketActivity extends BaseActivity {
 
         Txts.get(0).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
         Txts.get(1).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Txts.get(2).setText(EasyPreference.with(this).getString("NameFamily", ""));
+        Txts.get(2).setText(Preferences.with(this).ticketVariableInfo().nameFamily());
         Txts.get(3).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Txts.get(3).setText(EasyPreference.with(this).getString("PhoneNumber", ""));
+        Txts.get(3).setText(Preferences.with(this).ticketVariableInfo().mobile());
         Txts.get(4).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Txts.get(4).setText(EasyPreference.with(this).getString("Email", ""));
+        Txts.get(4).setText(Preferences.with(this).ticketVariableInfo().email());
 
         Btn.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
 
@@ -214,7 +214,7 @@ public class NewTicketActivity extends BaseActivity {
             Toasty.warning(NewTicketActivity.this, "نام و نام خانوادگی را وارد کنید", Toasty.LENGTH_LONG, true).show();
             return;
         }
-        EasyPreference.with(this).addString("NameFamily", Txts.get(2).getText().toString());
+        Preferences.with(this).ticketVariableInfo().setNameFamily( Txts.get(2).getText().toString());
         if (Txts.get(3).getText().toString().isEmpty()) {
             YoYo.with(Techniques.Tada).duration(700).playOn(Txts.get(3));
             Toasty.warning(NewTicketActivity.this, "شماره تلفن همراه را وارد کنید", Toasty.LENGTH_LONG, true).show();
@@ -225,7 +225,7 @@ public class NewTicketActivity extends BaseActivity {
             Toasty.warning(NewTicketActivity.this, "شماره تلفن همراه را به صورت صحیح وارد کنید", Toasty.LENGTH_LONG, true).show();
             return;
         }
-        EasyPreference.with(this).addString("PhoneNumber", Txts.get(3).getText().toString());
+        Preferences.with(this).ticketVariableInfo().setMobile( Txts.get(3).getText().toString());
         if (Txts.get(4).getText().toString().isEmpty()) {
             YoYo.with(Techniques.Tada).duration(700).playOn(Txts.get(4));
             Toasty.warning(NewTicketActivity.this, "پست الکترونیک را وارد کنید", Toasty.LENGTH_LONG, true).show();
@@ -235,7 +235,7 @@ public class NewTicketActivity extends BaseActivity {
             Toasty.warning(this, "آدرس پست الکترونیکی صحیح نمیباشد", Toasty.LENGTH_LONG, true).show();
             return;
         }
-        EasyPreference.with(this).addString("Email", Txts.get(4).getText().toString());
+        Preferences.with(this).ticketVariableInfo().setEmail(Txts.get(4).getText().toString());
         if (AppUtill.isNetworkAvailable(this)) {
             //show dialog loading
             switcher.showLoadDialog(this, false);

@@ -27,8 +27,8 @@ import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.services.application.ApplicationIntroService;
 import ntk.android.base.utill.AppUtill;
-import ntk.android.base.utill.EasyPreference;
 import ntk.android.base.utill.FontManager;
+import ntk.android.base.utill.prefrense.Preferences;
 
 public class IntroActivity extends BaseActivity {
 
@@ -98,9 +98,9 @@ public class IntroActivity extends BaseActivity {
                                         startActivity(new Intent(IntroActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                                         finish();
                                     } else {
-                                        EasyPreference.with(IntroActivity.this).addBoolean("Intro", true);
+                                        Preferences.with(IntroActivity.this).appVariableInfo().setIntroSeen(true);
 
-                                        if (EasyPreference.with(IntroActivity.this).getBoolean("Registered", false)) {
+                                        if (Preferences.with(IntroActivity.this).appVariableInfo().isRegistered()) {
                                             new Handler().postDelayed(() -> {
                                                 startActivity(new Intent(IntroActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                                                 finish();
@@ -166,7 +166,7 @@ public class IntroActivity extends BaseActivity {
         } else {
             handler.removeCallbacksAndMessages(null);
             if (Help == 0) {
-                EasyPreference.with(this).addBoolean("Intro", true);
+                Preferences.with(this).appVariableInfo().setIntroSeen(true);
                 startActivity(new Intent(IntroActivity.this, RegisterActivity.class));
                 finish();
             } else {

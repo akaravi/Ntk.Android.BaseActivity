@@ -13,10 +13,7 @@ import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
 
-import java.util.Map;
-
 import es.dmoral.toasty.Toasty;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
@@ -25,19 +22,17 @@ import ntk.android.base.BaseNtkApplication;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
-import ntk.android.base.api.core.interfase.ICore;
-import ntk.android.base.api.core.model.MainCoreResponse;
-import ntk.android.base.config.ConfigRestHeader;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.RetrofitManager;
 import ntk.android.base.dtomodel.application.AppThemeDtoModel;
 import ntk.android.base.dtomodel.application.MainResponseDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
+import ntk.android.base.entitymodel.base.TokenInfoModel;
 import ntk.android.base.services.application.ApplicationAppService;
 import ntk.android.base.services.core.CoreAuthService;
 import ntk.android.base.utill.AppUtill;
-import ntk.android.base.utill.EasyPreference;
 import ntk.android.base.utill.FontManager;
+import ntk.android.base.utill.prefrense.Preferences;
 
 public abstract class BaseSplashActivity extends BaseActivity {
 
@@ -76,11 +71,12 @@ public abstract class BaseSplashActivity extends BaseActivity {
         ((EditText) d.findViewById(R.id.txtUrl)).setText(RetrofitManager.BASE_URL);
         ((EditText) d.findViewById(R.id.txtpackageName)).setText(BaseNtkApplication.get().getApplicationParameter().PACKAGE_NAME());
         d.findViewById(R.id.btn).setOnClickListener(v -> {
-            EasyPreference.with(this).addInt("NTK_TEST_COUNT", 20);
+
             ApplicationStaticParameter.URL = ((EditText) d.findViewById(R.id.txtUrl)).getText().toString();
             ApplicationStaticParameter.PACKAGE_NAME = ((EditText) d.findViewById(R.id.txtpackageName)).getText().toString();
-            EasyPreference.with(this).addString("NTK_TEST_URL", ApplicationStaticParameter.URL);
-            EasyPreference.with(this).addString("NTK_TEST_PACKAGENAME", ApplicationStaticParameter.PACKAGE_NAME);
+            Preferences.with(this).debugInfo().setCount(20);
+            Preferences.with(this).debugInfo().setUrl(ApplicationStaticParameter.URL);
+            Preferences.with(this).debugInfo().setPackageName(ApplicationStaticParameter.PACKAGE_NAME);
             d.dismiss();
             getData();
         });
@@ -102,7 +98,6 @@ public abstract class BaseSplashActivity extends BaseActivity {
     private void getData() {
         if (AppUtill.isNetworkAvailable(this)) {
             getTokenDevice();
-            getThemeData();
 
         } else {
             switcher.showErrorView();
@@ -110,7 +105,23 @@ public abstract class BaseSplashActivity extends BaseActivity {
     }
 
     private void getTokenDevice() {
-        new CoreAuthService(this).getTokenDevice();
+        new CoreAuthService(this).getTokenDevice()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
+                    @Override
+                    public void onNext(@NonNull ErrorException<TokenInfoModel> tokenInfoModelErrorException) {
+                        if (tokenInfoModelErrorException.IsSuccess)
+                            getThemeData();
+                        else
+                            switcher.showErrorView();
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        switcher.showErrorView();
+                    }
+                });
     }
 
     /**
@@ -123,9 +134,12 @@ public abstract class BaseSplashActivity extends BaseActivity {
                     @Override
                     public void onNext(@NonNull ErrorException<AppThemeDtoModel> theme) {
                         //todo check successfully on coreTheme
-                        EasyPreference.with(BaseSplashActivity.this).addString("Theme", new Gson().toJson(theme.Item.ThemeConfigJson));
+                        Preferences.with(BaseSplashActivity.this).UserInfo().seTheme( new Gson().toJson(theme.Item.ThemeConfigJson));
                         //now can get main response
-                        requestMainData();
+                        if (theme.IsSuccess)
+                            requestMainData();
+                        else
+                            switcher.showErrorView();
                     }
 
                     @Override
@@ -171,17 +185,17 @@ public abstract class BaseSplashActivity extends BaseActivity {
      */
     private void HandelDataAction(MainResponseDtoModel model) {
 
-        EasyPreference.with(BaseSplashActivity.this).addLong("MemberUserId", model.MemberUserId);
-        EasyPreference.with(BaseSplashActivity.this).addLong("UserId", model.UserId);
-        EasyPreference.with(BaseSplashActivity.this).addLong("SiteId", model.SiteId);
-        EasyPreference.with(BaseSplashActivity.this).addString("configapp", new Gson().toJson(model));
+        Preferences.with(this).UserInfo().setMemberUserId(model.MemberUserId);
+        Preferences.with(this).UserInfo().setUserId(model.UserId);
+        Preferences.with(this).UserInfo().SiteId(model.SiteId);
+        Preferences.with(this).appVariableInfo().setConfigapp(new Gson().toJson(model));
         if (model.UserId <= 0)
-            EasyPreference.with(BaseSplashActivity.this).addBoolean("Registered", false);
+            Preferences.with(this).appVariableInfo().setRegistered(false);
 
 //        Loading.cancelAnimation();
 //        Loading.setVisibility(View.GONE);
 
-        if (!EasyPreference.with(BaseSplashActivity.this).getBoolean("Intro", false)) {
+        if (!Preferences.with(this).appVariableInfo().IntroSeen()) {
             new Handler().postDelayed(() -> {
                 if (!inDebug) {
                     startActivity(new Intent(BaseSplashActivity.this, IntroActivity.class));
@@ -190,11 +204,12 @@ public abstract class BaseSplashActivity extends BaseActivity {
             }, System.currentTimeMillis() - startTime >= 5000 ? 100 : 5000 - System.currentTimeMillis() - startTime);
             return;
         }
-        if (!EasyPreference.with(BaseSplashActivity.this).getBoolean("Registered", false)) {
+        if (!Preferences.with(this).appVariableInfo().isRegistered()) {
             new Handler().postDelayed(() -> {
 //                Loading.setVisibility(View.GONE);
                 if (!inDebug) {
-                    boolean register_not_interested = EasyPreference.with(this).getBoolean("register_not_interested", false);
+                    boolean register_not_interested = Preferences.with(this).appVariableInfo().isRegistered();
+                    ;
                     if (register_not_interested)
                         startActivity(new Intent(BaseSplashActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                     else

@@ -7,8 +7,8 @@ import java.util.Objects;
 
 import ntk.android.base.model.NotificationModel;
 import ntk.android.base.room.RoomDb;
-import ntk.android.base.utill.EasyPreference;
 import ntk.android.base.utill.PugPush;
+import ntk.android.base.utill.prefrense.Preferences;
 
 /**
  * Created by Mehrdad Safari on 18-Jan-17.
@@ -20,7 +20,7 @@ public class FirebaseService extends FirebaseMessagingService {
     @Override
     public void onNewToken(String mToken) {
         super.onNewToken(mToken);
-        EasyPreference.with(this).addString("NotificationId", mToken);
+        Preferences.with(this).appVariableInfo().setNotificationId(mToken);
 
     }
 

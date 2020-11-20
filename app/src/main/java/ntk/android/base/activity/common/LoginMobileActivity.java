@@ -2,7 +2,6 @@ package ntk.android.base.activity.common;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.SingleLineTransformationMethod;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -23,6 +23,7 @@ import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.dialog.ForgetPassDialog;
 import ntk.android.base.dtomodel.core.AuthUserSignInModel;
 import ntk.android.base.entitymodel.base.CaptchaModel;
 import ntk.android.base.entitymodel.base.ErrorException;
@@ -37,9 +38,7 @@ public class LoginMobileActivity extends BaseActivity {
     EditText Txt;
     EditText CaptchaTxt;
     EditText passTxt;
-
-    private CountDownTimer Timer;
-    private String PhoneNumber = "";
+    
     CaptchaModel captcha;
 
     @Override
@@ -50,7 +49,7 @@ public class LoginMobileActivity extends BaseActivity {
             finish();
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.common_login);
+        setContentView(R.layout.common_login_with_mobile);
         initView();
         init();
 
@@ -73,7 +72,11 @@ public class LoginMobileActivity extends BaseActivity {
         findViewById(R.id.btnActRegister).setOnClickListener(v -> signIn());
         findViewById(R.id.imgCaptcha).setOnClickListener(v -> callCaptchaApi());
         findViewById(R.id.passToggle).setOnClickListener(v -> Toggle(findViewById(R.id.passToggle), findViewById(R.id.txtpass)));
-
+        findViewById(R.id.RowForgotPasswordActLogin).setOnClickListener(v -> {
+            FragmentManager fm = getSupportFragmentManager();
+            ForgetPassDialog editNameDialogFragment = new ForgetPassDialog();
+            editNameDialogFragment.show(fm, "fragment_edit_name");
+        });
     }
 
     private void Toggle(ImageView toogle, EditText et_input_pass) {

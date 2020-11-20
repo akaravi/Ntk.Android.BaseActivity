@@ -152,9 +152,8 @@
                 android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
 
-
         <LinearLayout
-            android:id="@+id/RowNoPhoneActRegister"
+            android:id="@+id/RowForgotPasswordActLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -162,12 +161,12 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/lblNoPhoneActRegister"
+                android:id="@+id/lblForgotPassActLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="10dp"
-                android:text="تمایلی ندارم"
+                android:text="فراموشی رمز عبور"
                 android:textColor="#a3a2a2"
                 tools:ignore="HardcodedText,RtlHardcoded" />
 
@@ -185,7 +184,6 @@
                     app:tint="#afafaf" />
             </RelativeLayout>
         </LinearLayout>
-
         <ProgressBar
             android:id="@+id/progressActRegister"
             android:layout_width="30dp"

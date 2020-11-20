@@ -90,6 +90,10 @@ public class RegisterMobileActivity extends AppCompatActivity {
         findViewById(R.id.btnActRegister).setOnClickListener(v -> ClickBtn());
         findViewById(R.id.RowNoPhoneActRegister).setOnClickListener(v -> ClickNoPhone());
         findViewById(R.id.imgCaptcha).setOnClickListener(v -> callCaptchaApi());
+        findViewById(R.id.rowLogin).setOnClickListener(v -> {
+            startActivity(new Intent(RegisterMobileActivity.this, LoginMobileActivity.class));
+            finish();
+        });
     }
 
     private void init() {

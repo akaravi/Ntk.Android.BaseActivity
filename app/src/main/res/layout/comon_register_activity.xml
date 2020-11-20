@@ -189,7 +189,38 @@
                 android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
 
+        <LinearLayout
+            android:id="@+id/rowLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/txtLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:text="ورود"
+                android:textColor="#a3a2a2"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/circle_gray_empty">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@null"
+                    app:srcCompat="@drawable/profile"
+                    app:tint="#afafaf" />
+            </RelativeLayout>
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/RowNoPhoneActRegister"
             android:layout_width="wrap_content"

@@ -13,18 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ *
  */
 
 public abstract class BaseRcAdapter<E> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    protected ArrayList<E> list;
+    protected List<E> list;
 
     public BaseRcAdapter(ArrayList<E> list) {
         this.list = list;
     }
 
     public BaseRcAdapter(List<E> list) {
-        this.list = new ArrayList<E>();
-        this.list.addAll(list);
+        this.list = list;
     }
 
     @Override
@@ -51,7 +51,7 @@ public abstract class BaseRcAdapter<E> extends RecyclerView.Adapter<RecyclerView
         notifyItemInserted(list.size() - 1);
     }
 
-    public ArrayList<E> List() {
+    public List<E> List() {
         return list;
     }
 

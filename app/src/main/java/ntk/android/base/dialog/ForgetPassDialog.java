@@ -62,7 +62,7 @@ public class ForgetPassDialog extends DialogFragment {
     }
 
     private void ForgetPass() {
-        Integer pos = ((ToggleSwitch) getView().findViewById(R.id.forgetPatternSw)).getCheckedPosition();
+        Integer pos =((ToggleSwitch) getView().findViewById(R.id.forgetPatternSw)).getCheckedPosition();
         if (pos == 0) {
             AuthUserForgetPasswordModel req = new AuthUserForgetPasswordModel();
             req.Email = ((EditText) getView().findViewById(R.id.txtActRegister)).getText().toString();

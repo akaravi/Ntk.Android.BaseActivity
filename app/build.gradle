@@ -78,6 +78,8 @@ dependencies {
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
     //for toggle switch
     implementation 'com.llollox:androidtoggleswitch:2.0.1'
+    //for java 8 features
+    implementation 'net.sourceforge.streamsupport:android-retrostreams:1.7.2'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

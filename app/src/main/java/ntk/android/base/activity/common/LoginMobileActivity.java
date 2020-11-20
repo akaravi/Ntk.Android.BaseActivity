@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.SingleLineTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -136,6 +137,7 @@ public class LoginMobileActivity extends BaseActivity {
                         Toasty.error(LoginMobileActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
                         return;
                     }
+                    Preferences.with(LoginMobileActivity.this).appVariableInfo().setIsLogin(true);
                     startActivity(new Intent(LoginMobileActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                 }
 

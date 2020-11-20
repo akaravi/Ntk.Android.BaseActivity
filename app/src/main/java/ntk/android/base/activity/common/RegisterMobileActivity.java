@@ -62,7 +62,8 @@ public class RegisterMobileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Boolean Registered = Preferences.with(this).appVariableInfo().isRegistered();
-        if (Registered) {
+        Boolean islogin = Preferences.with(this).appVariableInfo().isLogin();
+        if (Registered&&islogin) {
             startActivity(new Intent(RegisterMobileActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
             finish();
         }

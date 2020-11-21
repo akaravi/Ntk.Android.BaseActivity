@@ -213,7 +213,7 @@ public abstract class BaseSplashActivity extends BaseActivity {
                     if (register_not_interested)
                         startActivity(new Intent(BaseSplashActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                     else
-                        startActivity(new Intent(BaseSplashActivity.this, RegisterMobileActivity.class));
+                        startActivity(new Intent(BaseSplashActivity.this, AuthWithSmsActivity.class));
                     finish();
                 }
             }, System.currentTimeMillis() - startTime >= 5000 ? 100 : 5000 - System.currentTimeMillis() - startTime);

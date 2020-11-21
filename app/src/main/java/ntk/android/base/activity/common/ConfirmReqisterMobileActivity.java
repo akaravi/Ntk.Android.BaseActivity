@@ -28,17 +28,15 @@ import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
-import ntk.android.base.dtomodel.core.AuthEmailConfirmDtoModel;
 import ntk.android.base.dtomodel.core.AuthMobileConfirmDtoModel;
 import ntk.android.base.entitymodel.base.CaptchaModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
-import ntk.android.base.entitymodel.core.CoreUserModel;
 import ntk.android.base.services.core.CoreAuthService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.prefrense.Preferences;
 
-public class ConfirmMobileActivity extends BaseActivity {
+public class ConfirmReqisterMobileActivity extends BaseActivity {
     ProgressBar Loading;
     EditText Txt;
     EditText CaptchaTxt;
@@ -135,7 +133,7 @@ public class ConfirmMobileActivity extends BaseActivity {
                         public void onNext(@NonNull ErrorExceptionBase response) {
                             Loading.setVisibility(View.GONE);
                             if (!response.IsSuccess) {
-                                Toasty.warning(ConfirmMobileActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
+                                Toasty.warning(ConfirmReqisterMobileActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
                                 findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
                                 return;
                             }
@@ -144,7 +142,7 @@ public class ConfirmMobileActivity extends BaseActivity {
 //                            EasyPreference.with(RegisterActivity.this).addLong("SiteId", response.Item.SiteId);
 //                           Preferences.with(this).UserInfo().setRegisterd(true);
 
-                            startActivity(new Intent(ConfirmMobileActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
+                            startActivity(new Intent(ConfirmReqisterMobileActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                             finish();
                         }
 
@@ -154,7 +152,7 @@ public class ConfirmMobileActivity extends BaseActivity {
 //                            findViewById(R.id.cardPassRegister).setVisibility(View.VISIBLE);
 //                            findViewById(R.id.cardRePassRegister).setVisibility(View.VISIBLE);
                             Loading.setVisibility(View.GONE);
-                            Toasty.warning(ConfirmMobileActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
+                            Toasty.warning(ConfirmReqisterMobileActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
 //
                         }
                     });

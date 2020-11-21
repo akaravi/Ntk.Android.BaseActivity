@@ -2,8 +2,8 @@ package ntk.android.base;
 
 import java.util.HashMap;
 
+import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.activity.common.BaseSplashActivity;
-import ntk.android.base.activity.common.RegisterMobileActivity;
 import ntk.android.base.styles.BaseModuleStyle;
 import ntk.android.base.styles.StyleHelper;
 
@@ -22,7 +22,7 @@ public abstract class ApplicationStyle extends StyleHelper {
     //@deprecated replace with loginStyle
     public Class<? extends BaseSplashActivity> LoginActivity;
     //@deprecated replace with RegisterStyle
-    public Class<? extends RegisterMobileActivity> RegisterActivity;
+    public Class<? extends BaseActivity> RegisterActivity;
     public HashMap<String, BaseModuleStyle> modules;
 
     public BaseModuleStyle getModule(String key) {

@@ -103,7 +103,7 @@ public class IntroActivity extends BaseActivity {
                                             }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - System.currentTimeMillis() - startTime);
                                         } else {
                                             new Handler().postDelayed(() -> {
-                                                startActivity(new Intent(IntroActivity.this, RegisterMobileActivity.class));
+                                                startActivity(new Intent(IntroActivity.this, AuthWithSmsActivity.class));
                                                 finish();
                                             }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - System.currentTimeMillis() - startTime);
                                         }
@@ -163,7 +163,7 @@ public class IntroActivity extends BaseActivity {
             handler.removeCallbacksAndMessages(null);
             if (Help == 0) {
                 Preferences.with(this).appVariableInfo().setIntroSeen(true);
-                startActivity(new Intent(IntroActivity.this, RegisterMobileActivity.class));
+                startActivity(new Intent(IntroActivity.this, AuthWithSmsActivity.class));
                 finish();
             } else {
                 finish();

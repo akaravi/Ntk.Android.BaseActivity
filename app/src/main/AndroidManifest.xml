@@ -22,7 +22,7 @@
             android:screenOrientation="portrait"
             android:theme="?attr/Theme_NTK_Register" />
         <activity
-            android:name=".activity.common.ConfirmMobileActivity"
+            android:name=".activity.common.ConfirmReqisterMobileActivity"
             android:screenOrientation="portrait"
             android:theme="?attr/Theme_NTK_Register" />
         <activity
@@ -57,6 +57,8 @@
             android:name="ntk.android.base.activity.poling.PoolingDetailActivity"
             android:screenOrientation="portrait"
             android:theme="?attr/Theme_NTK_Poll_Detail" />
+        <activity android:name=".activity.common.AuthWithSmsActivity" />
+        <activity android:name=".activity.common.ConfirmAuthMobileActivity" />
 
 
         <service

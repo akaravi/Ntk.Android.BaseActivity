@@ -17,24 +17,21 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
+import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
-import ntk.android.base.dtomodel.core.AuthUserSignUpModel;
+import ntk.android.base.dtomodel.core.AuthUserSignInBySmsDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
-import ntk.android.base.entitymodel.core.CoreUserModel;
+import ntk.android.base.entitymodel.base.TokenInfoModel;
 import ntk.android.base.event.MessageEvent;
 import ntk.android.base.services.core.CoreAuthService;
 import ntk.android.base.utill.AppUtill;
@@ -42,15 +39,9 @@ import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
 import ntk.android.base.view.CaptchaView;
 
- class RegisterMobileActivity extends AppCompatActivity {
-
+public class AuthWithSmsActivity extends BaseActivity {
     ProgressBar Loading;
     EditText Txt;
-    EditText passTxt;
-    EditText rePassTxt;
-
-    List<TextView> Lbls;
-
     private String PhoneNumber = "";
 
 
@@ -59,35 +50,22 @@ import ntk.android.base.view.CaptchaView;
         Boolean Registered = Preferences.with(this).appVariableInfo().isRegistered();
         Boolean islogin = Preferences.with(this).appVariableInfo().isLogin();
         if (Registered && islogin) {
-            startActivity(new Intent(RegisterMobileActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
+            startActivity(new Intent(AuthWithSmsActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
             finish();
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.comon_register_activity);
+        setContentView(R.layout.comon_auth_activity);
         initView();
         init();
     }
 
     private void initView() {
 
-        Lbls = new ArrayList() {
-            {
-                add(findViewById(R.id.lblVerificationActRegister));
-                add(findViewById(R.id.lblNoPhoneActRegister));
-                add(findViewById(R.id.txtCaptcha));
-            }
-        };
 
         Loading = findViewById(R.id.progressActRegister);
         Txt = findViewById(R.id.txtActRegister);
-        passTxt = findViewById(R.id.txtpass);
-        rePassTxt = findViewById(R.id.txtRepass);
         findViewById(R.id.btnActRegister).setOnClickListener(v -> ClickBtn());
         findViewById(R.id.RowNoPhoneActRegister).setOnClickListener(v -> ClickNoPhone());
-        findViewById(R.id.rowLogin).setOnClickListener(v -> {
-            startActivity(new Intent(RegisterMobileActivity.this, LoginMobileActivity.class));
-            finish();
-        });
     }
 
     private void init() {
@@ -96,27 +74,16 @@ import ntk.android.base.view.CaptchaView;
         Loading.setVisibility(View.GONE);
 //        Loading.getIndeterminateDrawable().setColorFilter(getResources().getColor(ColorUtils.FETCH_Attr_COLOR(this, R.attr.colorAccent)), PorterDuff.Mode.SRC_IN);
         Txt.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        passTxt.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        rePassTxt.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Lbls.get(0).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Lbls.get(1).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Lbls.get(2).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        ((TextView) findViewById(R.id.lblVerificationActRegister)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
         ((Button) findViewById(R.id.btnActRegister)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        findViewById(R.id.passToggle).setOnClickListener(v -> Toggle(findViewById(R.id.passToggle), findViewById(R.id.txtpass)));
-        findViewById(R.id.repassToggle).setOnClickListener(v -> Toggle(findViewById(R.id.repassToggle), findViewById(R.id.txtRepass)));
     }
 
 
     public void ClickBtn() {
+        CaptchaView captchaView = (CaptchaView) findViewById(R.id.captchaView);
         if (Txt.getText().toString().isEmpty())
             Toast.makeText(this, "شماره موبایل خود را وارد نمایید", Toast.LENGTH_SHORT).show();
-        else if (passTxt.getText().toString().trim().equalsIgnoreCase(""))
-            Toast.makeText(this, "کلمه عبور را وارد نمایید", Toast.LENGTH_SHORT).show();
-        else if (rePassTxt.getText().toString().trim().equalsIgnoreCase(""))
-            Toast.makeText(this, "تکرار کلمه عبور را وارد نمایید", Toast.LENGTH_SHORT).show();
-        else if (!passTxt.getText().toString().equalsIgnoreCase(rePassTxt.getText().toString()))
-            Toast.makeText(this, "مقادیر ورودی کلمه عبور برابر نیستند", Toast.LENGTH_SHORT).show();
-        else if (((CaptchaView) findViewById(R.id.captchaView)).getCaptchaText().isEmpty())
+        else if (captchaView.getCaptchaText().isEmpty())
             Toast.makeText(this, "متن کپچا را وارد نمایید", Toast.LENGTH_SHORT).show();
         else {
             PhoneNumber = Txt.getText().toString();
@@ -124,7 +91,7 @@ import ntk.android.base.view.CaptchaView;
                 if (CheckPermission()) {
                     Register();
                 } else {
-                    ActivityCompat.requestPermissions(RegisterMobileActivity.this, new String[]{Manifest.permission.RECEIVE_SMS}, 100);
+                    ActivityCompat.requestPermissions(AuthWithSmsActivity.this, new String[]{Manifest.permission.RECEIVE_SMS}, 100);
                 }
             } else {
                 Toast.makeText(this, "عدم دسترسی به اینترنت", Toast.LENGTH_SHORT).show();
@@ -137,35 +104,36 @@ import ntk.android.base.view.CaptchaView;
         if (AppUtill.isNetworkAvailable(this)) {
             Loading.setVisibility(View.VISIBLE);
             findViewById(R.id.cardActRegister).setVisibility(View.GONE);
-            AuthUserSignUpModel request = new AuthUserSignUpModel();
+            AuthUserSignInBySmsDtoModel request = new AuthUserSignInBySmsDtoModel();
             if (PhoneNumber.length() == 0) {
                 PhoneNumber = Txt.getText().toString();
             }
-            CaptchaView captchaView = (CaptchaView) findViewById(R.id.captchaView);
+            CaptchaView captchaView = findViewById(R.id.captchaView);
             request.Mobile = PhoneNumber;
             request.CaptchaText = captchaView.getCaptchaText();
             request.CaptchaKey = captchaView.getCaptchaKey();
-            request.Password = passTxt.getText().toString();
-            new CoreAuthService(this).signUpUser(request)
+
+            new CoreAuthService(this).signInUserBySMS(request)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .subscribe(new NtkObserver<ErrorException<CoreUserModel>>() {
+                    .subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
                         @Override
-                        public void onNext(@io.reactivex.annotations.NonNull ErrorException<CoreUserModel> response) {
+                        public void onNext(@io.reactivex.annotations.NonNull ErrorException<TokenInfoModel> response) {
                             Loading.setVisibility(View.GONE);
                             if (!response.IsSuccess) {
                                 ((CaptchaView) findViewById(R.id.captchaView)).getNewCaptcha();
-                                Toasty.error(RegisterMobileActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
+                                Toasty.error(AuthWithSmsActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
                                 return;
                             }
-                            startActivity(new Intent(RegisterMobileActivity.this, ConfirmReqisterMobileActivity.class));
+                            Preferences.with(AuthWithSmsActivity.this).UserInfo().setMobile(PhoneNumber);
+                            startActivity(new Intent(AuthWithSmsActivity.this, ConfirmAuthMobileActivity.class));
                         }
 
                         @Override
                         public void onError(@io.reactivex.annotations.NonNull Throwable e) {
                             ((CaptchaView) findViewById(R.id.captchaView)).getNewCaptcha();
                             Loading.setVisibility(View.GONE);
-                            Toasty.warning(RegisterMobileActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
+                            Toasty.warning(AuthWithSmsActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
                             findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
                             findViewById(R.id.cardPassRegister).setVisibility(View.VISIBLE);
                             findViewById(R.id.cardRePassRegister).setVisibility(View.VISIBLE);
@@ -234,4 +202,5 @@ import ntk.android.base.view.CaptchaView;
     public void SetMessage(MessageEvent event) {
         Txt.setText(event.GetMessage());
     }
+
 }

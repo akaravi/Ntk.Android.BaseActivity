@@ -192,9 +192,6 @@ public abstract class BaseSplashActivity extends BaseActivity {
         if (model.UserId <= 0)
             Preferences.with(this).appVariableInfo().setRegistered(false);
 
-//        Loading.cancelAnimation();
-//        Loading.setVisibility(View.GONE);
-
         if (!Preferences.with(this).appVariableInfo().IntroSeen()) {
             new Handler().postDelayed(() -> {
                 if (!inDebug) {

@@ -44,7 +44,7 @@ public class CaptchaView extends FrameLayout {
                 if (captchaResponce.IsSuccess) {
                     ImageLoader.getInstance().displayImage(captchaResponce.Item.Image, (ImageView) findViewById(R.id.imgCaptcha));
                     captcha = captchaResponce.Item;
-                }else{
+                } else {
                     ((ImageView) findViewById(R.id.imgCaptcha)).setImageResource(R.drawable.error_captcha);
                 }
             }
@@ -69,4 +69,6 @@ public class CaptchaView extends FrameLayout {
             return captcha.Key;
         return "";
     }
+
+
 }

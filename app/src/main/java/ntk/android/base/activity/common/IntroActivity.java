@@ -17,7 +17,6 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
@@ -31,19 +30,22 @@ import ntk.android.base.utill.prefrense.Preferences;
 
 public class IntroActivity extends BaseActivity {
 
-    public int Help = 0;
+    public final static String ExtraComeFromMain = "FromMain";
     List<TextView> Lbls;
     ImageView Img;
     long startTime;
     List<ApplicationIntroModel> IntroModels = new ArrayList<>();
     private int CountIntro = 0;
     private Handler handler = new Handler();
+    private boolean startFromMain;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Preferences.with(this).appVariableInfo().setIntroSeen(true);
         setContentView(R.layout.common_intro_activty);
-
+        if (getIntent() != null&&getIntent().getExtras()!=null)
+            startFromMain = getIntent().getExtras().getBoolean(ExtraComeFromMain, false);
         startTime = System.currentTimeMillis();
         initView();
         init();
@@ -63,11 +65,6 @@ public class IntroActivity extends BaseActivity {
     }
 
     private void init() {
-        Bundle bundle = getIntent().getBundleExtra("Help");
-        if (bundle != null) {
-            Help = bundle.getInt("Help");
-        }
-
         Lbls.get(0).setTypeface(FontManager.GetTypeface(this, FontManager.IranSansBold));
         Lbls.get(1).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
         Lbls.get(2).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
@@ -90,24 +87,9 @@ public class IntroActivity extends BaseActivity {
                                     IntroModels = response.ListItems;
                                     HandelIntro();
                                 } else {
-                                    if (Help != 0) {
-                                        startActivity(new Intent(IntroActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
-                                        finish();
-                                    } else {
-                                        Preferences.with(IntroActivity.this).appVariableInfo().setIntroSeen(true);
-
-                                        if (Preferences.with(IntroActivity.this).appVariableInfo().isRegistered()) {
-                                            new Handler().postDelayed(() -> {
-                                                startActivity(new Intent(IntroActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
-                                                finish();
-                                            }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - System.currentTimeMillis() - startTime);
-                                        } else {
-                                            new Handler().postDelayed(() -> {
-                                                startActivity(new Intent(IntroActivity.this, AuthWithSmsActivity.class));
-                                                finish();
-                                            }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - System.currentTimeMillis() - startTime);
-                                        }
-                                    }
+                                    if (!startFromMain)//only finish if come from main
+                                        startActivity(new Intent(IntroActivity.this, AuthWithSmsActivity.class));
+                                    finish();
                                 }
                             } else {
                                 switcher.showErrorView();
@@ -127,6 +109,7 @@ public class IntroActivity extends BaseActivity {
         } else {
             switcher.showErrorView();
         }
+
     }
 
     private void HandelIntro() {
@@ -160,14 +143,11 @@ public class IntroActivity extends BaseActivity {
                 Lbls.get(2).setText("شروع");
             }
         } else {
+
             handler.removeCallbacksAndMessages(null);
-            if (Help == 0) {
-                Preferences.with(this).appVariableInfo().setIntroSeen(true);
+            if (!startFromMain)//only finish if come from main
                 startActivity(new Intent(IntroActivity.this, AuthWithSmsActivity.class));
-                finish();
-            } else {
-                finish();
-            }
+            finish();
         }
     }
 }

@@ -8,14 +8,15 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,24 +29,24 @@ import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.dialog.CaptchaDialog;
 import ntk.android.base.dtomodel.core.AuthUserSignInBySmsDtoModel;
-import ntk.android.base.entitymodel.base.CaptchaModel;
 import ntk.android.base.entitymodel.base.ErrorException;
-import ntk.android.base.entitymodel.base.ErrorExceptionBase;
 import ntk.android.base.entitymodel.base.TokenInfoModel;
+import ntk.android.base.event.MessageEvent;
 import ntk.android.base.services.core.CoreAuthService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.prefrense.Preferences;
 import ntk.android.base.view.CaptchaView;
 
-public class ConfirmAuthMobileActivity extends BaseActivity {
+public class AuthWithSmsConfirmActivity extends BaseActivity {
+    final int timeSmsTryAgain = 1000 * 60;
     ProgressBar Loading;
     EditText Txt;
-
-
     List<TextView> Lbls;
 
     private CountDownTimer Timer;
+    private int getNewCodeCount;
 
 
     @Override
@@ -62,7 +63,6 @@ public class ConfirmAuthMobileActivity extends BaseActivity {
         Lbls = new ArrayList() {
             {
                 add(findViewById(R.id.lblVerificationActRegister));
-
                 add(findViewById(R.id.lblCounterActRegister));
                 add(findViewById(R.id.txtCaptcha));
             }
@@ -75,6 +75,7 @@ public class ConfirmAuthMobileActivity extends BaseActivity {
     }
 
     private void init() {
+        ((CaptchaView) findViewById(R.id.captchaView)).getNewCaptcha();
         InputFilter[] filterArray = new InputFilter[1];
         filterArray[0] = new InputFilter.LengthFilter(4);
         Txt.setFilters(filterArray);
@@ -82,7 +83,7 @@ public class ConfirmAuthMobileActivity extends BaseActivity {
         Txt.setHint("کد اعتبار سنجی");
         ((Button) findViewById(R.id.btnActRegister)).setText("ادامــه");
         Txt.setInputType(InputType.TYPE_CLASS_NUMBER);
-        Timer = new CountDownTimer(180000, 1000) {
+        Timer = new CountDownTimer(timeSmsTryAgain, 1000) {
             @Override
             public void onTick(long l) {
                 int seconds = (int) (l / 1000) % 60;
@@ -104,11 +105,7 @@ public class ConfirmAuthMobileActivity extends BaseActivity {
         if (Txt.getText().toString().isEmpty()) {
             Toast.makeText(this, "کد اعتبار سنجی را وارد نمایید", Toast.LENGTH_SHORT).show();
         } else {
-            if (AppUtill.isNetworkAvailable(this)) {
-                Verify();
-            } else {
-                Toast.makeText(this, "عدم دسترسی به اینترنت", Toast.LENGTH_SHORT).show();
-            }
+            Verify();
         }
     }
 
@@ -132,7 +129,8 @@ public class ConfirmAuthMobileActivity extends BaseActivity {
                         public void onNext(@NonNull ErrorException<TokenInfoModel> response) {
                             Loading.setVisibility(View.GONE);
                             if (!response.IsSuccess) {
-                                Toasty.warning(ConfirmAuthMobileActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
+                                captchaView.getNewCaptcha();
+                                Toasty.warning(AuthWithSmsConfirmActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
                                 findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
                                 return;
                             }
@@ -141,52 +139,18 @@ public class ConfirmAuthMobileActivity extends BaseActivity {
 //                            EasyPreference.with(RegisterActivity.this).addLong("SiteId", response.Item.SiteId);
 //                           Preferences.with(this).UserInfo().setRegisterd(true);
 
-                            startActivity(new Intent(ConfirmAuthMobileActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
+                            startActivity(new Intent(AuthWithSmsConfirmActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                             finish();
                         }
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-//                            findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
-//                            findViewById(R.id.cardPassRegister).setVisibility(View.VISIBLE);
-//                            findViewById(R.id.cardRePassRegister).setVisibility(View.VISIBLE);
+                            captchaView.getNewCaptcha();
+                            findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
                             Loading.setVisibility(View.GONE);
-                            Toasty.warning(ConfirmAuthMobileActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
-//
+                            Toasty.warning(AuthWithSmsConfirmActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
                         }
                     });
-//            request.Code = Txt.getText().toString(); todo
-
-//            Observable<CoreUserResponse> observable = iCore.RegisterWithMobile(headers, request);
-//            observable.observeOn(AndroidSchedulers.mainThread())
-//                    .subscribeOn(Schedulers.io())
-//                    .subscribe(new Observer<CoreUserResponse>() {
-//                        @Override
-//                        public void onSubscribe(Disposable d) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onNext(CoreUserResponse response) {
-//                            Loading.setVisibility(View.GONE);
-//
-//
-//
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
-//                            Loading.setVisibility(View.GONE);
-//                            Toasty.warning(ntk.android.base.activity.common.RegisterActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
-//
-//                        }
-//
-//                        @Override
-//                        public void onComplete() {
-//
-//                        }
-//                    });
         } else {
             Loading.setVisibility(View.GONE);
             Toasty.warning(this, "عدم دسترسی به اینترنت", Toasty.LENGTH_LONG, true).show();
@@ -195,7 +159,71 @@ public class ConfirmAuthMobileActivity extends BaseActivity {
     }
 
     public void ClickCounter() {
-        Verify();
+        if (++getNewCodeCount > 2) {
+            startActivity(new Intent(this, RegisterMobileActivity.class));
+            finish();
+        } else {
+            FragmentManager fm = getSupportFragmentManager();
+            CaptchaDialog dialog = new CaptchaDialog();
+            dialog.setCancelable(false);
+            dialog.show(fm, "fragment_captcha");
+            dialog.setOnclickListener(() -> {
+                AuthUserSignInBySmsDtoModel request = new AuthUserSignInBySmsDtoModel();
+                request.Mobile = Preferences.with(this).UserInfo().mobile();
+                request.CaptchaText = dialog.getCaptcha().getCaptchaText();
+                request.CaptchaKey = dialog.getCaptcha().getCaptchaKey();
+                dialog.lockButton(true);
+                new CoreAuthService(this).signInUserBySMS(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
+                            @Override
+                            public void onNext(@io.reactivex.annotations.NonNull ErrorException<TokenInfoModel> response) {
+                                Loading.setVisibility(View.GONE);
+                                if (!response.IsSuccess) {
+                                    if (dialog.isShow()) {
+                                        dialog.getCaptcha().getNewCaptcha();
+                                        dialog.lockButton(false);
+                                    }
+                                    Toasty.error(AuthWithSmsConfirmActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
+                                    return;
+                                }
+                                Toasty.success(AuthWithSmsConfirmActivity.this, "کد اعتبار سنجی مجددا ارسال شد").show();
+                                Timer.start();
+                                if (dialog.isShow())
+                                    dialog.dismiss();
+                            }
+
+                            @Override
+                            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                                if (dialog.isShow()) {
+                                    dialog.lockButton(false);
+                                    dialog.getCaptcha().getNewCaptcha();
+                                }
+                                Toasty.warning(AuthWithSmsConfirmActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
+                            }
+                        });
+            });
+
+
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void SetMessage(MessageEvent event) {
+        Txt.setText(event.GetMessage());
     }
 
 }

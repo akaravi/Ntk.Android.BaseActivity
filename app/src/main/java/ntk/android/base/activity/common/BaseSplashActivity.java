@@ -133,12 +133,11 @@ public abstract class BaseSplashActivity extends BaseActivity {
                 .subscribe(new NtkObserver<ErrorException<AppThemeDtoModel>>() {
                     @Override
                     public void onNext(@NonNull ErrorException<AppThemeDtoModel> theme) {
-                        //todo check successfully on coreTheme
-                        Preferences.with(BaseSplashActivity.this).UserInfo().seTheme( new Gson().toJson(theme.Item.ThemeConfigJson));
                         //now can get main response
-                        if (theme.IsSuccess)
+                        if (theme.IsSuccess) {
+                            Preferences.with(BaseSplashActivity.this).UserInfo().seTheme(new Gson().toJson(theme.Item.ThemeConfigJson));
                             requestMainData();
-                        else
+                        } else
                             switcher.showErrorView();
                     }
 
@@ -189,40 +188,38 @@ public abstract class BaseSplashActivity extends BaseActivity {
         Preferences.with(this).UserInfo().setUserId(model.UserId);
         Preferences.with(this).UserInfo().setSiteId(model.SiteId);
         Preferences.with(this).appVariableInfo().setConfigapp(new Gson().toJson(model));
-        if (model.UserId <= 0)
-            Preferences.with(this).appVariableInfo().setRegistered(false);
+        //user has token
+        if (model.UserId > 0) {
+            new CoreAuthService(this).correctTokenInfo().observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new NtkObserver<Boolean>() {
+                        @Override
+                        public void onNext(@NonNull Boolean aBoolean) {
+                            if (aBoolean)//user sign in and have valid token
+                                startnewActivity(NTKApplication.getApplicationStyle().getMainActivity());
+                            else//user token in invalid then go to register
+                            {
+                                Toasty.warning(BaseSplashActivity.this, "َشما به صفحه ی ورود کاربر هدایت می شوید", Toasty.LENGTH_LONG, true).show();
+                                startnewActivity(AuthWithSmsActivity.class);
+                            }
+                        }
 
-        if (!Preferences.with(this).appVariableInfo().IntroSeen()) {
-            new Handler().postDelayed(() -> {
-                if (!inDebug) {
-                    startActivity(new Intent(BaseSplashActivity.this, IntroActivity.class));
-                    finish();
-                }
-            }, System.currentTimeMillis() - startTime >= 5000 ? 100 : 5000 - System.currentTimeMillis() - startTime);
-            return;
+                        @Override
+                        public void onError(@NonNull Throwable e) {
+                            switcher.showErrorView();
+                        }
+                    });
+        } else {//if user seen intro
+            if (Preferences.with(this).appVariableInfo().IntroSeen()) {
+                //if user not interested to login
+                if (Preferences.with(this).appVariableInfo().isRegisterNotInterested())
+                    startnewActivity(NTKApplication.getApplicationStyle().getMainActivity());
+                    //user maybe interest to login
+                else
+                    startnewActivity(AuthWithSmsActivity.class);
+            } else
+                startnewActivity(IntroActivity.class);
         }
-        if (!Preferences.with(this).appVariableInfo().isRegistered()) {
-            new Handler().postDelayed(() -> {
-//                Loading.setVisibility(View.GONE);
-                if (!inDebug) {
-                    boolean register_not_interested = Preferences.with(this).appVariableInfo().isRegistered();
-                    ;
-                    if (register_not_interested)
-                        startActivity(new Intent(BaseSplashActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
-                    else
-                        startActivity(new Intent(BaseSplashActivity.this, AuthWithSmsActivity.class));
-                    finish();
-                }
-            }, System.currentTimeMillis() - startTime >= 5000 ? 100 : 5000 - System.currentTimeMillis() - startTime);
-            return;
-        }
-        new Handler().postDelayed(() -> {
-//            Loading.setVisibility(View.GONE);
-            if (!inDebug) {
-                startActivity(new Intent(BaseSplashActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
-                finish();
-            }
-        }, System.currentTimeMillis() - startTime >= 5000 ? 100 : 5000 - System.currentTimeMillis() - startTime);
     }
 
     /**
@@ -234,5 +231,14 @@ public abstract class BaseSplashActivity extends BaseActivity {
         getData();
     }
 
+    public void startnewActivity(Class c) {
+        new Handler().postDelayed(() -> {
+            if (!inDebug) {
+                startActivity(new Intent(BaseSplashActivity.this, c));
+                finish();
+            }
+        }, System.currentTimeMillis() - startTime >= 5000 ? 100 : 5000 - System.currentTimeMillis() - startTime);
+
+    }
 
 }

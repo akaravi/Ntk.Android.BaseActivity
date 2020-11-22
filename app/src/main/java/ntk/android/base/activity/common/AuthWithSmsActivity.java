@@ -5,12 +5,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.method.PasswordTransformationMethod;
-import android.text.method.SingleLineTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,9 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -32,7 +26,6 @@ import ntk.android.base.config.NtkObserver;
 import ntk.android.base.dtomodel.core.AuthUserSignInBySmsDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.TokenInfoModel;
-import ntk.android.base.event.MessageEvent;
 import ntk.android.base.services.core.CoreAuthService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
@@ -40,6 +33,7 @@ import ntk.android.base.utill.prefrense.Preferences;
 import ntk.android.base.view.CaptchaView;
 
 public class AuthWithSmsActivity extends BaseActivity {
+    private static final int REQ_PERMISSION = 100;
     ProgressBar Loading;
     EditText Txt;
     private String PhoneNumber = "";
@@ -47,7 +41,7 @@ public class AuthWithSmsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        Boolean Registered = Preferences.with(this).appVariableInfo().isRegistered();
+        Boolean Registered = false;//Preferences.with(this).appVariableInfo().isRegistered();
         Boolean islogin = Preferences.with(this).appVariableInfo().isLogin();
         if (Registered && islogin) {
             startActivity(new Intent(AuthWithSmsActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
@@ -91,7 +85,7 @@ public class AuthWithSmsActivity extends BaseActivity {
                 if (CheckPermission()) {
                     Register();
                 } else {
-                    ActivityCompat.requestPermissions(AuthWithSmsActivity.this, new String[]{Manifest.permission.RECEIVE_SMS}, 100);
+                    ActivityCompat.requestPermissions(AuthWithSmsActivity.this, new String[]{Manifest.permission.RECEIVE_SMS}, REQ_PERMISSION);
                 }
             } else {
                 Toast.makeText(this, "عدم دسترسی به اینترنت", Toast.LENGTH_SHORT).show();
@@ -120,23 +114,24 @@ public class AuthWithSmsActivity extends BaseActivity {
                         @Override
                         public void onNext(@io.reactivex.annotations.NonNull ErrorException<TokenInfoModel> response) {
                             Loading.setVisibility(View.GONE);
+                            findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
                             if (!response.IsSuccess) {
                                 ((CaptchaView) findViewById(R.id.captchaView)).getNewCaptcha();
                                 Toasty.error(AuthWithSmsActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
                                 return;
                             }
                             Preferences.with(AuthWithSmsActivity.this).UserInfo().setMobile(PhoneNumber);
-                            startActivity(new Intent(AuthWithSmsActivity.this, ConfirmAuthMobileActivity.class));
+                            startActivity(new Intent(AuthWithSmsActivity.this, AuthWithSmsConfirmActivity.class));
                         }
 
                         @Override
                         public void onError(@io.reactivex.annotations.NonNull Throwable e) {
                             ((CaptchaView) findViewById(R.id.captchaView)).getNewCaptcha();
                             Loading.setVisibility(View.GONE);
+                            findViewById(R.id.cardActRegister).setVisibility(View.GONE);
                             Toasty.warning(AuthWithSmsActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
-                            findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
-                            findViewById(R.id.cardPassRegister).setVisibility(View.VISIBLE);
-                            findViewById(R.id.cardRePassRegister).setVisibility(View.VISIBLE);
+
+
                         }
                     });
         } else {
@@ -152,17 +147,6 @@ public class AuthWithSmsActivity extends BaseActivity {
         finish();
     }
 
-    private void Toggle(ImageView toogle, EditText et_input_pass) {
-        if (et_input_pass.getTransformationMethod().getClass().getSimpleName().equals("PasswordTransformationMethod")) {
-            et_input_pass.setTransformationMethod(new SingleLineTransformationMethod());
-            toogle.setImageResource(R.drawable.toggle_hide);
-        } else {
-            et_input_pass.setTransformationMethod(new PasswordTransformationMethod());
-            toogle.setImageResource(R.drawable.toggle_show);
-        }
-
-        et_input_pass.setSelection(et_input_pass.getText().length());
-    }
 
     private boolean CheckPermission() {
         if (Build.VERSION.SDK_INT >= 23) {
@@ -176,31 +160,15 @@ public class AuthWithSmsActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case 100:
+            case REQ_PERMISSION:
                 if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "عدم اجازه برای گرفتن پیامک کد اعتبار سنجی", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, " کد اعتبار سنجی که برایتان ارسال شده است را وارد کنید", Toast.LENGTH_SHORT).show();
+                    Register();
                 } else {
                     Register();
                 }
                 break;
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe
-    public void SetMessage(MessageEvent event) {
-        Txt.setText(event.GetMessage());
     }
 
 }

@@ -20,9 +20,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,15 +32,15 @@ import ntk.android.base.config.NtkObserver;
 import ntk.android.base.dtomodel.core.AuthUserSignUpModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.core.CoreUserModel;
-import ntk.android.base.event.MessageEvent;
 import ntk.android.base.services.core.CoreAuthService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
 import ntk.android.base.view.CaptchaView;
 
- class RegisterMobileActivity extends AppCompatActivity {
+public class RegisterMobileActivity extends AppCompatActivity {
 
+    private static final int REQ_PERMISSION = 100;
     ProgressBar Loading;
     EditText Txt;
     EditText passTxt;
@@ -56,7 +53,7 @@ import ntk.android.base.view.CaptchaView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        Boolean Registered = Preferences.with(this).appVariableInfo().isRegistered();
+        Boolean Registered = false;//Preferences.with(this).appVariableInfo().isRegistered();
         Boolean islogin = Preferences.with(this).appVariableInfo().isLogin();
         if (Registered && islogin) {
             startActivity(new Intent(RegisterMobileActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
@@ -124,7 +121,7 @@ import ntk.android.base.view.CaptchaView;
                 if (CheckPermission()) {
                     Register();
                 } else {
-                    ActivityCompat.requestPermissions(RegisterMobileActivity.this, new String[]{Manifest.permission.RECEIVE_SMS}, 100);
+                    ActivityCompat.requestPermissions(RegisterMobileActivity.this, new String[]{Manifest.permission.RECEIVE_SMS}, REQ_PERMISSION);
                 }
             } else {
                 Toast.makeText(this, "عدم دسترسی به اینترنت", Toast.LENGTH_SHORT).show();
@@ -158,7 +155,7 @@ import ntk.android.base.view.CaptchaView;
                                 Toasty.error(RegisterMobileActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
                                 return;
                             }
-                            startActivity(new Intent(RegisterMobileActivity.this, ConfirmReqisterMobileActivity.class));
+                            startActivity(new Intent(RegisterMobileActivity.this, RegisterMobileConfirmActivity.class));
                         }
 
                         @Override
@@ -208,30 +205,14 @@ import ntk.android.base.view.CaptchaView;
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case 100:
+            case REQ_PERMISSION:
                 if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "عدم اجازه برای گرفتن پیامک کد اعتبار سنجی", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, " کد اعتبار سنجی که برایتان ارسال شده است را وارد کنید", Toast.LENGTH_SHORT).show();
+                    Register();
                 } else {
                     Register();
                 }
                 break;
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe
-    public void SetMessage(MessageEvent event) {
-        Txt.setText(event.GetMessage());
     }
 }

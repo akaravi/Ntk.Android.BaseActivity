@@ -100,7 +100,8 @@ public abstract class AbstractionListActivity<TEntity> extends BaseActivity {
                                 else
                                     switcher.showEmptyView();
 
-                            }
+                            }else
+                                switcher.showErrorView(newsContentResponse.ErrorMessage, () -> init());
                         }
 
 

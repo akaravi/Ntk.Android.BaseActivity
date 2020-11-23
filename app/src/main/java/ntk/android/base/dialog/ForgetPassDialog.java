@@ -29,7 +29,7 @@ import ntk.android.base.services.core.CoreAuthService;
 public class ForgetPassDialog extends DialogFragment {
 
     private CaptchaModel captcha;
-
+    int Type=0;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +47,8 @@ public class ForgetPassDialog extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         // Get field from view
 //        getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        ((ToggleSwitch) view.findViewById(R.id.forgetPatternSw)).setOnChangeListener((ToggleSwitch.OnChangeListener) position -> {
+        ((ToggleSwitch) view.findViewById(R.id.forgetPatternSw)).setOnChangeListener(position -> {
+            Type=position;
             if (position == 0)
                 view.findViewById(R.id.txtActRegister).setVisibility(View.VISIBLE);
             else
@@ -62,8 +63,7 @@ public class ForgetPassDialog extends DialogFragment {
     }
 
     private void ForgetPass() {
-        Integer pos =((ToggleSwitch) getView().findViewById(R.id.forgetPatternSw)).getCheckedPosition();
-        if (pos == 0) {
+       if (Type == 0) {
             AuthUserForgetPasswordModel req = new AuthUserForgetPasswordModel();
             req.Email = ((EditText) getView().findViewById(R.id.txtActRegister)).getText().toString();
             req.CaptchaKey = ((EditText) getView().findViewById(R.id.txtCaptcha)).getText().toString();
@@ -83,6 +83,9 @@ public class ForgetPassDialog extends DialogFragment {
 
                 }
             });
+        }
+        {
+            //todo forget bye email
         }
     }
 

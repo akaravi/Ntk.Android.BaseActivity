@@ -74,16 +74,5 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/ToolbarLineActSearch"
             android:scrollbars="none" />
-
-        <Button
-            android:id="@+id/btnRefreshActSearch"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/button_accent"
-            android:text="تلاش مجدد"
-            android:textColor="@color/colorWhite"
-            android:visibility="gone" />
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

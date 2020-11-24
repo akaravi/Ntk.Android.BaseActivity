@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/dialog_item_detail"
+        android:id="@+id/activity_stub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <include
+        layout="@layout/sub_base_loading"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_stub"
+        app:layout_constraintEnd_toEndOf="@+id/activity_stub"
+        app:layout_constraintStart_toStartOf="@+id/activity_stub"
+        app:layout_constraintTop_toTopOf="@+id/activity_stub" />
+         />
+</androidx.constraintlayout.widget.ConstraintLayout>

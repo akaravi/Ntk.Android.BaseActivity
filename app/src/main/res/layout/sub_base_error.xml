@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_BaseError"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="#eee"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:visibility="gone">
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/sub_loading"
         android:layout_width="200dp"
@@ -15,6 +18,7 @@
         app:lottie_loop="true"
 
         app:lottie_rawRes="@raw/sub_error" />
+
     <TextView
         android:id="@+id/tvError"
         android:layout_width="match_parent"
@@ -28,19 +32,19 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnTryAgain"
         android:layout_width="150dp"
-        android:layout_marginTop="16dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvError"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
         android:background="@drawable/button_accent"
         android:text="تلاش مجدد"
-        android:textColor="@color/colorWhite"
-        />
+        android:textColor="@color/colorWhite" />
+
     <View
         android:id="@+id/debugModeView"
         android:layout_width="200dp"
-        android:clickable="true"
+        android:layout_height="200dp"
         android:layout_alignParentLeft="true"
         android:background="@color/transparent"
-        android:layout_height="200dp" />
+        android:clickable="true" />
 </RelativeLayout>

@@ -99,9 +99,9 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
                         public void onNext(@NonNull ErrorException<TEntity> newsContentResponse) {
                             if (newsContentResponse.IsSuccess) {
                                 models.addAll(newsContentResponse.ListItems);
-                                Total = newsContentResponse.RowPerPage;
+                                Total = newsContentResponse.TotalRowCount;
                                 adapter.notifyDataSetChanged();
-                                if (Total > 0)
+                                if (models.size() > 0)
                                     switcher.showContentView();
                                 else
                                     switcher.showEmptyView();

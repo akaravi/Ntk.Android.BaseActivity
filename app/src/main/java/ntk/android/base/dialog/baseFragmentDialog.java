@@ -1,4 +1,4 @@
-package ntk.android.base.fragment;
+package ntk.android.base.dialog;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,13 +8,12 @@ import android.view.ViewStub;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.DialogFragment;
 
 import ntk.android.base.R;
 import ntk.android.base.view.swicherview.Switcher;
 
-public abstract class BaseFragment extends Fragment {
-
+public abstract class baseFragmentDialog  extends DialogFragment {
     protected Switcher switcher;
     int directLayout = -1;
     int stunLayout = -1;
@@ -34,10 +33,11 @@ public abstract class BaseFragment extends Fragment {
             //todo add direct view
             return null;
         } else {
-            View inflate = inflater.inflate(R.layout.base_activity, container, false);
-            ViewStub activity = (ViewStub) inflate.findViewById(R.id.activity_stub);
-            activity.setLayoutResource(stunLayout);
-            activity.inflate();
+            View inflate = inflater.inflate(R.layout.base_fragmnet, null);
+            View activity = inflate.findViewById(R.id.activity_stub);
+//            ViewStub activity = inflate.findViewById(R.id.activity_stub);
+//            activity.setLayoutResource(stunLayout);
+//            activity.inflate();
             Switcher.Builder builder = new Switcher.Builder(getContext());
             builder.addEmptyView(inflate.findViewById(R.id.activity_BaseEmpty))
                     .addProgressView(inflate.findViewById(R.id.activity_BaseLoading))

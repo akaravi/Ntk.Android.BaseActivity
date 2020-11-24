@@ -34,6 +34,7 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
     @Override
     public void onCreate() {
         super.onCreate();
+
         instance = this;
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .diskCache(new UnlimitedDiskCache(new File(getCacheDir(), "image")))

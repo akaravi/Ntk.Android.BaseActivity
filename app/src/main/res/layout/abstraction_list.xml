@@ -92,6 +92,7 @@
             </RelativeLayout>
 
             <View
+                android:id="@+id/toolbarShadow"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
                 android:background="?attr/colorAccent" />

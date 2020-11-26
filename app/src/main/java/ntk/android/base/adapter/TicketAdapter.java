@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.activity.ticketing.TicketAnswerActivity;
 import ntk.android.base.entitymodel.base.FilterDataModel;
@@ -79,8 +80,8 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
             request.addFilter(f);
 
             Intent intent = new Intent(context, TicketAnswerActivity.class);
-            intent.putExtra("Request", new Gson().toJson(request));
-            intent.putExtra("TicketId", arrayList.get(position).Id);
+            intent.putExtra(Extras.EXTRA_FIRST_ARG, new Gson().toJson(request));
+            intent.putExtra(Extras.EXTRA_SECOND_ARG, arrayList.get(position).Id);
             context.startActivity(intent);
         });
     }

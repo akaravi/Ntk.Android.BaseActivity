@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.activity.poling.PoolingDetailActivity;
 import ntk.android.base.entitymodel.base.FilterDataModel;
@@ -48,8 +49,8 @@ public class PoolCategoryAdapter extends RecyclerView.Adapter<PoolCategoryAdapte
             f.IntValue1 = arrayList.get(position).Id;
             request.addFilter(f);
             Intent intent = new Intent(context, PoolingDetailActivity.class);
-            intent.putExtra("Request", new Gson().toJson(request));
-            intent.putExtra("Title", arrayList.get(position).Title);
+            intent.putExtra(Extras.EXTRA_FIRST_ARG, new Gson().toJson(request));
+            intent.putExtra(Extras.EXTRA_SECOND_ARG, arrayList.get(position).Title);
             context.startActivity(intent);
         });
     }

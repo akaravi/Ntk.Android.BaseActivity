@@ -42,9 +42,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import ntk.android.base.Extras;
 import ntk.android.base.R;
-import ntk.android.base.adapter.TicketAttachAdapter;
 import ntk.android.base.adapter.TicketAnswerAdapter;
+import ntk.android.base.adapter.TicketAttachAdapter;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
@@ -132,7 +133,7 @@ public class TicketAnswerActivity extends AppCompatActivity {
     private void HandelData(int i) {
         if (AppUtill.isNetworkAvailable(this)) {
 
-            new TicketingAnswerService(this).getAll(new Gson().fromJson(getIntent().getExtras().getString("Request"), FilterDataModel.class))
+            new TicketingAnswerService(this).getAll(new Gson().fromJson(getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG), FilterDataModel.class))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new NtkObserver<ErrorException<TicketingAnswerModel>>() {
@@ -173,7 +174,7 @@ public class TicketAnswerActivity extends AppCompatActivity {
             if (AppUtill.isNetworkAvailable(this)) {
                 TicketingAnswerModel request = new TicketingAnswerModel();
                 request.HtmlBody = txt.getText().toString();
-                request.LinkTicketId = getIntent().getLongExtra("TicketId", 0);
+                request.LinkTicketId = getIntent().getLongExtra(Extras.EXTRA_SECOND_ARG, 0);
                 request.LinkFileIds = linkFileIds;
 
                 new TicketingAnswerService(this).add(request)

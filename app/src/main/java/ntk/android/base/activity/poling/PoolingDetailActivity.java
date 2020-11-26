@@ -14,6 +14,7 @@ import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
+import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.adapter.DetailPoolCategoryAdapter;
 import ntk.android.base.config.NtkObserver;
@@ -49,7 +50,7 @@ public class PoolingDetailActivity extends AppCompatActivity {
         Rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
 
-        RequestStr = getIntent().getExtras().getString("Request");
+        RequestStr = getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG);
 
         HandelData(1, new Gson().fromJson(RequestStr, FilterDataModel.class));
     }

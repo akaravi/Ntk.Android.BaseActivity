@@ -39,6 +39,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import java9.util.function.BiFunction;
 import java9.util.function.Function;
+import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.api.core.entity.CoreMain;
@@ -55,7 +56,6 @@ import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
 
 public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> extends BaseActivity {
-    public static final String EXTRA_ID = "Request";
     ProgressBar Progress;
     LinearLayout Loading;
     protected List<TextView> Lbls;
@@ -116,7 +116,7 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
         RvTab.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         webViewBody.getSettings().setJavaScriptEnabled(true);
         webViewBody.getSettings().setBuiltInZoomControls(true);
-        Id = getIntent().getExtras().getLong(EXTRA_ID);
+        Id = getIntent().getExtras().getLong(Extras.EXTRA_FIRST_ARG);
         Loading.setVisibility(View.VISIBLE);
 
         RvComment.setHasFixedSize(true);
@@ -140,7 +140,8 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
     public abstract Function<Long, Observable<ErrorException<TOtherInfo>>> getOtherInfoListService();
 
     public abstract Pair<Function<Long, Observable<ErrorExceptionBase>>, Runnable> getFavoriteService();
-    public abstract  BiFunction<String,String,Observable<ErrorException<TComment>>> addCommentService();
+
+    public abstract BiFunction<String, String, Observable<ErrorException<TComment>>> addCommentService();
 
     public abstract RecyclerView.Adapter createCommentAdapter(List<TComment> listItems);
 
@@ -329,7 +330,7 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
                         String writer = Txt[0].getText().toString();
                         String comment = Txt[1].getText().toString();
 //                        add.LinkContentId = Id;
-                        addCommentService().apply(writer,comment).
+                        addCommentService().apply(writer, comment).
                                 subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new NtkObserver<ErrorException<TComment>>() {

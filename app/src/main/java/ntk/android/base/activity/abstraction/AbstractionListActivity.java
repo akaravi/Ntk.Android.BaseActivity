@@ -30,9 +30,7 @@ import ntk.android.base.utill.FontManager;
 
 public abstract class AbstractionListActivity<TEntity> extends BaseActivity {
     protected TextView LblTitle;
-    RecyclerView Rv;
 
-    SwipeRefreshLayout Refresh;
 
     private int Total = 0;
     protected List<TEntity> models = new ArrayList<>();
@@ -61,8 +59,8 @@ public abstract class AbstractionListActivity<TEntity> extends BaseActivity {
 
     private void init() {
         LblTitle = findViewById(R.id.lblTitle);
-        Rv = findViewById(R.id.recycler);
-        Refresh = findViewById(R.id.swipRefresh);
+        RecyclerView  Rv = findViewById(R.id.recycler);
+        SwipeRefreshLayout Refresh = findViewById(R.id.swipRefresh);
         findViewById(R.id.imgBack).setOnClickListener(v -> ClickBack());
         findViewById(R.id.imgSearch).setOnClickListener(v -> ClickSearch());
         LblTitle.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));

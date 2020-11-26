@@ -40,7 +40,6 @@ public abstract class BaseFragment extends Fragment {
             activity.inflate();
             Switcher.Builder builder = new Switcher.Builder(getContext());
             builder.addEmptyView(inflate.findViewById(R.id.base_frag_baseEmpty))
-                    .addProgressView(inflate.findViewById(R.id.activity_BaseLoading))
                     .addContentView(activity)
                     .addErrorView(inflate.findViewById(R.id.base_frag_baseError)).setErrorLabel((R.id.tvError))
                     .addProgressView(inflate.findViewById(R.id.base_frag_baseLoading));

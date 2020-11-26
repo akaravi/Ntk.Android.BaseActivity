@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import java9.util.function.Function;
+import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.entitymodel.base.ErrorException;
@@ -28,12 +31,12 @@ import ntk.android.base.utill.FontManager;
 
 public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
     TextView LblTitle;
-    RecyclerView Rv;
 
-    SwipeRefreshLayout Refresh;
+
     private int Total = 0;
     protected List<TEntity> models = new ArrayList<>();
     private RecyclerView.Adapter adapter;
+    protected FilterDataModel request;
 
     @Override
     public void onCreateFragment() {
@@ -41,28 +44,38 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public final void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (!withToolbar()) {
             findViewById(R.id.ToolbarRv).setVisibility(View.GONE);
             findViewById(R.id.toolbarShadow).setVisibility(View.GONE);
         }
+        request = new FilterDataModel();
+        request.RowPerPage = 20;
+        if (getArguments() != null) {
+            String reqString = getArguments().getString(Extras.EXTRA_FIRST_ARG, "");
+            if (!reqString.equalsIgnoreCase("")) {
+                request = new Gson().fromJson(reqString, FilterDataModel.class);
+            }
+        }
         init();
     }
-
+    protected RecyclerView.LayoutManager getRvLayoutManager() {
+        return new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+    }
     private void init() {
 
         LblTitle = findViewById(R.id.lblTitle);
-        Rv = findViewById(R.id.recycler);
-        Refresh = findViewById(R.id.swipRefresh);
+        RecyclerView Rv = findViewById(R.id.recycler);
+        SwipeRefreshLayout Refresh = findViewById(R.id.swipRefresh);
+        findViewById(R.id.imgBack).setOnClickListener(v -> ClickBack());
+        findViewById(R.id.imgSearch).setOnClickListener(v -> ClickSearch());
         LblTitle.setTypeface(FontManager.GetTypeface(getContext(), FontManager.IranSans));
         Rv.setHasFixedSize(true);
-        LinearLayoutManager LMC = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager LMC = getRvLayoutManager();
         Rv.setLayoutManager(LMC);
         adapter = createAdapter();
         Rv.setAdapter(adapter);
-        findViewById(R.id.imgBack).setOnClickListener(v -> ClickBack());
-        findViewById(R.id.imgSearch).setOnClickListener(v -> ClickSearch());
         EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(LMC) {
 
             @Override
@@ -81,17 +94,16 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
             init();
             Refresh.setRefreshing(false);
         });
+        afterInit();
     }
 
+    public void afterInit() {
 
+    }
     private void RestCall(int i) {
         if (AppUtill.isNetworkAvailable(getContext())) {
             switcher.showProgressView();
-
-            FilterDataModel request = new FilterDataModel();
-            request.RowPerPage = 20;
             request.CurrentPageNumber = i;
-
             getService().apply(request).observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(new NtkObserver<ErrorException<TEntity>>() {

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -70,7 +71,11 @@ public abstract class BaseSplashActivity extends BaseActivity {
         d.setContentView(R.layout.dialog_debug);
         ((EditText) d.findViewById(R.id.txtUrl)).setText(RetrofitManager.BASE_URL);
         ((EditText) d.findViewById(R.id.txtpackageName)).setText(BaseNtkApplication.get().getApplicationParameter().PACKAGE_NAME());
-        d.findViewById(R.id.btn).setOnClickListener(v -> {
+        d.findViewById(R.id.debugReset).setOnClickListener(v -> {
+            ApplicationStaticParameter.URL = "";
+            ApplicationStaticParameter.PACKAGE_NAME = "";
+        });
+        d.findViewById(R.id.debugStart).setOnClickListener(v -> {
 
             ApplicationStaticParameter.URL = ((EditText) d.findViewById(R.id.txtUrl)).getText().toString();
             ApplicationStaticParameter.PACKAGE_NAME = ((EditText) d.findViewById(R.id.txtpackageName)).getText().toString();
@@ -80,6 +85,11 @@ public abstract class BaseSplashActivity extends BaseActivity {
             d.dismiss();
             getData();
         });
+        ((EditText) d.findViewById(R.id.txtLinkSiteId)).setText(Preferences.with(this).UserInfo().siteId().toString());
+        ((EditText) d.findViewById(R.id.txtlinkUserId)).setText(Preferences.with(this).UserInfo().linkUserId().toString());
+        ((EditText) d.findViewById(R.id.txtLinkMemberId)).setText(Preferences.with(this).UserInfo().linkMemberId().toString());
+        ((EditText) d.findViewById(R.id.txtDeviceId)).setText(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+        ((EditText) d.findViewById(R.id.txtApplicationId)).setText(NTKApplication.get().getApplicationParameter().APPLICATION_ID());
         d.show();
     }
 

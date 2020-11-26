@@ -5,6 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ViewSwitcher;
 
 /**
@@ -44,9 +46,9 @@ public class Animations {
 
     public static FadeInListener fadeIn(final View view, int animDuration) {
         if (view == null || view.getVisibility() == View.VISIBLE) return null;
-
+        if (view.getAlpha()==1)
         view.setAlpha(0f);
-        view.setVisibility(View.VISIBLE);
+//        view.setVisibility(View.VISIBLE);
 
         FadeInListener listener = new FadeInListener(view);
 
@@ -59,7 +61,6 @@ public class Animations {
         if (view == null || view.getVisibility() == View.INVISIBLE) return null;
 
         FadeOutListener listener = new FadeOutListener(view);
-
         view.animate().alpha(0f).setDuration(animDuration).setListener(listener);
 
         return listener;

@@ -34,16 +34,16 @@ public abstract class BaseFragment extends Fragment {
             //todo add direct view
             return null;
         } else {
-            View inflate = inflater.inflate(R.layout.base_activity, container, false);
-            ViewStub activity = (ViewStub) inflate.findViewById(R.id.activity_stub);
+            View inflate = inflater.inflate(R.layout.base_fragmnet, container, false);
+            ViewStub activity = (ViewStub) inflate.findViewById(R.id.base_frag_stub);
             activity.setLayoutResource(stunLayout);
             activity.inflate();
             Switcher.Builder builder = new Switcher.Builder(getContext());
-            builder.addEmptyView(inflate.findViewById(R.id.activity_BaseEmpty))
+            builder.addEmptyView(inflate.findViewById(R.id.base_frag_baseEmpty))
                     .addProgressView(inflate.findViewById(R.id.activity_BaseLoading))
                     .addContentView(activity)
-                    .addErrorView(inflate.findViewById(R.id.activity_BaseError)).setErrorLabel((R.id.tvError))
-                    .addProgressView(inflate.findViewById(R.id.sub_loading));
+                    .addErrorView(inflate.findViewById(R.id.base_frag_baseError)).setErrorLabel((R.id.tvError))
+                    .addProgressView(inflate.findViewById(R.id.base_frag_baseLoading));
             switcher = builder.build();
             return inflate;
         }

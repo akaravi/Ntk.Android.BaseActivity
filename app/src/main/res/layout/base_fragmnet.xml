@@ -1,44 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relative"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <include  layout="@layout/dialog_item_detail"
-        android:id="@+id/activity_stub"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+    <ViewStub
+        android:id="@+id/base_frag_stub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <include
+        android:id="@+id/base_frag_baseEmpty"
         layout="@layout/sub_base_empty"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_stub"
-        app:layout_constraintEnd_toEndOf="@+id/activity_stub"
-        app:layout_constraintStart_toStartOf="@+id/activity_stub"
-        app:layout_constraintTop_toTopOf="@+id/activity_stub" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <include
+        android:id="@+id/base_frag_baseError"
         layout="@layout/sub_base_error"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_stub"
-        app:layout_constraintEnd_toEndOf="@+id/activity_stub"
-        app:layout_constraintStart_toStartOf="@+id/activity_stub"
-        app:layout_constraintTop_toTopOf="@+id/activity_stub" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
     <include
+        android:id="@+id/base_frag_baseLoading"
         layout="@layout/sub_base_loading"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_stub"
-        app:layout_constraintEnd_toEndOf="@+id/activity_stub"
-        app:layout_constraintStart_toStartOf="@+id/activity_stub"
-        app:layout_constraintTop_toTopOf="@+id/activity_stub" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

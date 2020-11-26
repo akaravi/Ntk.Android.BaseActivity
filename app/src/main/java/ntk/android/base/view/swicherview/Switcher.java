@@ -37,7 +37,7 @@ public class Switcher {
 
     private Integer errorLabel;//for customization of Error
     private TextView progressLabel;//for customization of loading
-    private int animDuration = 300;
+    private int animDuration = 2000;
     private boolean errorShown;
 
     private List<Animations.FadeListener> runningAnimators = new ArrayList<>();

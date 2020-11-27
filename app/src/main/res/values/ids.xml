@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="dialog_frag_baseEmpty" type="id" />
+    <item name="dialog_frag_baseLoading" type="id" />
+    <item name="dialog_frag_baseError" type="id" />
+</resources>

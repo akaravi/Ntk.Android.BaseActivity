@@ -50,11 +50,11 @@
             android:screenOrientation="portrait"
             android:theme="?attr/Theme_NTK_Faq_Search" />
         <activity
-            android:name="ntk.android.base.activity.poling.PoolingActivity"
+            android:name="ntk.android.base.activity.poling.PolingActivity"
             android:screenOrientation="portrait"
             android:theme="?attr/Theme_NTK_Poll" />
         <activity
-            android:name="ntk.android.base.activity.poling.PoolingDetailActivity"
+            android:name="ntk.android.base.activity.poling.PolingDetailActivity"
             android:screenOrientation="portrait"
             android:theme="?attr/Theme_NTK_Poll_Detail" />
         <activity android:name=".activity.common.AuthWithSmsActivity" />

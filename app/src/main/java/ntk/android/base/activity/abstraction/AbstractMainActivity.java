@@ -32,9 +32,9 @@ import ntk.android.base.BaseNtkApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.activity.common.IntroActivity;
-import ntk.android.base.api.core.entity.CoreMain;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.dtomodel.application.ApplicationScoreDtoModel;
+import ntk.android.base.dtomodel.application.MainResponseDtoModel;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
 import ntk.android.base.services.application.ApplicationAppService;
 import ntk.android.base.utill.AppUtill;
@@ -74,7 +74,7 @@ public class AbstractMainActivity extends BaseActivity {
      */
     protected void CheckUpdate() {
         String st = Preferences.with(this).appVariableInfo().configapp();
-        CoreMain mcr = new Gson().fromJson(st, CoreMain.class);
+        MainResponseDtoModel mcr = new Gson().fromJson(st, MainResponseDtoModel.class);
         ApplicationParameter AppParams = BaseNtkApplication.get().getApplicationParameter();
         if (mcr.AppVersion > AppParams.VERSION_CODE() && !AppParams.APPLICATION_ID().contains(".APPNTK")) {
             if (mcr.AppForceUpdate) {
@@ -90,7 +90,7 @@ public class AbstractMainActivity extends BaseActivity {
      */
     private void Update() {
         String st = Preferences.with(this).appVariableInfo().configapp();
-        CoreMain mcr = new Gson().fromJson(st, CoreMain.class);
+        MainResponseDtoModel mcr = new Gson().fromJson(st, MainResponseDtoModel.class);
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(true);
@@ -121,7 +121,7 @@ public class AbstractMainActivity extends BaseActivity {
      */
     private void UpdateFore() {
         String st = Preferences.with(this).appVariableInfo().configapp();
-        CoreMain mcr = new Gson().fromJson(st, CoreMain.class);
+        MainResponseDtoModel mcr = new Gson().fromJson(st, MainResponseDtoModel.class);
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
@@ -153,7 +153,7 @@ public class AbstractMainActivity extends BaseActivity {
 
     protected void onInviteMethod() {
         String st = Preferences.with(this).appVariableInfo().configapp();
-        CoreMain mcr = new Gson().fromJson(st, CoreMain.class);
+        MainResponseDtoModel mcr = new Gson().fromJson(st, MainResponseDtoModel.class);
 
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -188,7 +188,7 @@ public class AbstractMainActivity extends BaseActivity {
         });
     }
 
-    protected void onFeedbackClick(){
+    public void onFeedbackClick(){
         ApplicationScoreDtoModel request = new ApplicationScoreDtoModel();
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

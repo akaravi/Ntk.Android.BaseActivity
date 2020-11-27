@@ -5,14 +5,11 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.ViewSwitcher;
 
 /**
  * Created by m.parishani on 09/03/2017.
  */
-
 public class Animations {
     public static CrossfadeListeners crossfadeViews(final View viewToHide, final View viewToShow) {
         Context context;
@@ -30,7 +27,7 @@ public class Animations {
     public static CrossfadeListeners crossfadeViews(final View viewToHide, final View viewToShow, int animDuration) {
         if (viewToShow == null || viewToHide == null) return null;
         FadeInListener fadeInListener = fadeIn(viewToShow, animDuration);
-        FadeOutListener fadeOutListener = fadeOut(viewToHide, animDuration);
+        FadeOutListener fadeOutListener = fadeOut(true,viewToHide, animDuration);
         return new CrossfadeListeners(fadeOutListener, fadeInListener);
     }
 
@@ -41,14 +38,14 @@ public class Animations {
 
     public static FadeOutListener fadeOut(final View view) {
         int animDuration = view.getContext().getResources().getInteger(android.R.integer.config_shortAnimTime);
-        return fadeOut(view, animDuration);
+        return fadeOut(true, view, animDuration);
     }
 
     public static FadeInListener fadeIn(final View view, int animDuration) {
         if (view == null || view.getVisibility() == View.VISIBLE) return null;
-        if (view.getAlpha()==1)
+
         view.setAlpha(0f);
-//        view.setVisibility(View.VISIBLE);
+        view.setVisibility(View.VISIBLE);
 
         FadeInListener listener = new FadeInListener(view);
 
@@ -57,10 +54,12 @@ public class Animations {
         return listener;
     }
 
-    public static FadeOutListener fadeOut(final View view, int animDuration) {
-        if (view == null || view.getVisibility() == View.INVISIBLE) return null;
+    public static FadeOutListener fadeOut(boolean forview, final View view, int animDuration) {
+        if (forview && view == null || view.getVisibility() == View.INVISIBLE) return null;
+        if (view == null || view.getVisibility() == View.GONE) return null;
 
         FadeOutListener listener = new FadeOutListener(view);
+
         view.animate().alpha(0f).setDuration(animDuration).setListener(listener);
 
         return listener;

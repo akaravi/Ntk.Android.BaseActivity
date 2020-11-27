@@ -2,6 +2,7 @@ package ntk.android.base.activity.ticketing;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,8 +44,8 @@ public class TicketListActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ticket_list_activity);
-
+        setDirectContentView(R.layout.ticket_list_activity);
+        switcher.replaceContentView(findViewById(R.id.recyclerFrSupport));
         init();
     }
 
@@ -129,8 +130,10 @@ public class TicketListActivity extends BaseActivity {
 
                             if (TotalTag > 0)
                                 switcher.showContentView();
-                            else
+                            else {
                                 switcher.showEmptyView();
+                                Fab.setVisibility(View.VISIBLE);
+                            }
                         }
 
                         @Override

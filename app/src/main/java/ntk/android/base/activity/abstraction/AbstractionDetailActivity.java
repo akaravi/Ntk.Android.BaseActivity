@@ -42,8 +42,8 @@ import java9.util.function.Function;
 import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
-import ntk.android.base.api.core.entity.CoreMain;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.dtomodel.application.MainResponseDtoModel;
 import ntk.android.base.dtomodel.core.ScoreClickDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
@@ -70,7 +70,7 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
 
     protected TEntity model;
 
-    public long Id;
+    public long Id=-1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -412,7 +412,7 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
 
     public void ClickShare() {
         String st = Preferences.with(this).appVariableInfo().configapp();
-        CoreMain mcr = new Gson().fromJson(st, CoreMain.class);
+        MainResponseDtoModel mcr = new Gson().fromJson(st, MainResponseDtoModel.class);
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         String message = createShareMassage();

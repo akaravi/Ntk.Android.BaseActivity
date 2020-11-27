@@ -21,7 +21,7 @@ import ntk.android.base.services.pooling.PollingCategoryService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
 
-public class PoolingActivity extends BaseActivity {
+public class PolingActivity extends BaseActivity {
 
     TextView LblTitle;
     RecyclerView Rv;
@@ -51,7 +51,7 @@ public class PoolingActivity extends BaseActivity {
                         @Override
                         public void onNext(@NonNull ErrorException<PollingCategoryModel> poolingCategoryResponse) {
                             if (poolingCategoryResponse.IsSuccess) {
-                                PoolCategoryAdapter adapter = new PoolCategoryAdapter(PoolingActivity.this, poolingCategoryResponse.ListItems);
+                                PoolCategoryAdapter adapter = new PoolCategoryAdapter(PolingActivity.this, poolingCategoryResponse.ListItems);
                                 Rv.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
                                 if (adapter.getItemCount() > 0)

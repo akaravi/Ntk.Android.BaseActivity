@@ -9,6 +9,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import androidx.annotation.IdRes;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,7 +26,7 @@ import ntk.android.base.R;
  */
 
 public class Switcher {
-
+    boolean forDialog;
     private List<View> contentViews = new ArrayList<>();
     private List<View> errorViews = new ArrayList<>();
     private List<View> emptyViews = new ArrayList<>();
@@ -108,22 +109,31 @@ public class Switcher {
         if (toolbarProgress != null) {
             Log.d(Switcher.class.getSimpleName(), "hideToolbarProgress: ");
             toolbarProgress.setVisibility(View.GONE);
-            Animations.FadeListener animator = Animations.fadeOut(toolbarProgress, animDuration);
+            Animations.FadeListener animator = Animations.fadeOut(false ,toolbarProgress, animDuration);
             if (animator != null) runningAnimators.add(animator);
         }
+    }
+
+    public void replaceContentView(View rv) {
+    contentViews.clear();
+    contentViews.add(rv);
     }
 
     public static class Builder {
 
         private Switcher switcher;
         private Context context;
+        private boolean indialog;
 
         public Builder(Context context) {
             this.context = context;
             switcher = new Switcher();
             switcher.setAnimationDuration(context.getResources().getInteger(android.R.integer.config_shortAnimTime));
         }
-
+        public Builder forDialog() {
+            switcher.forDialog=true;
+            return this;
+        }
         public Builder(Switcher switcher) {
             this.switcher = switcher;
         }
@@ -189,19 +199,19 @@ public class Switcher {
         }
 
         for (View errorView : errorViews) {
-            errorView.setVisibility(View.INVISIBLE);
+            errorView.setVisibility(forDialog?View.INVISIBLE:View.GONE);
         }
 
         for (View progressView : progressViews) {
-            progressView.setVisibility(View.INVISIBLE);
+            progressView.setVisibility(forDialog?View.INVISIBLE:View.GONE);
         }
 
         for (View emptyView : emptyViews) {
-            emptyView.setVisibility(View.INVISIBLE);
+            emptyView.setVisibility(forDialog?View.INVISIBLE:View.GONE);
         }
 //        //next version
 //        for (View reqview : reqestViews) {
-//            reqview.setVisibility(View.INVISIBLE);
+//            reqview.setVisibility(View.GONE);
 //        }
     }
 
@@ -255,9 +265,9 @@ public class Switcher {
         for (View view : viewsToHide) {
             if (immediately) {
                 view.setAlpha(0);
-                view.setVisibility(View.INVISIBLE);
+                view.setVisibility(forDialog?View.INVISIBLE:View.GONE);
             } else {
-                Animations.FadeListener animator = Animations.fadeOut(view, animDuration);
+                Animations.FadeListener animator = Animations.fadeOut(forDialog,view, animDuration);
                 if (animator != null) runningAnimators.add(animator);
             }
         }

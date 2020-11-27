@@ -27,6 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void setDirectContentView(int layoutResID) {
         super.setContentView(layoutResID);
+//        findViewById(R.id.swicher)
     }
 
     @Override

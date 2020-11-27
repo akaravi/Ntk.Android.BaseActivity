@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,13 +33,17 @@ public abstract class baseFragmentDialog extends DialogFragment {
             //todo add direct view
             return null;
         } else {
-            View inflate = inflater.inflate(R.layout.base_fragmnet_dialog, null);
+            ViewGroup inflate = (ViewGroup) inflater.inflate(R.layout.base_fragmnet_dialog, null);
 //            View activity = inflate.findViewById(R.id.fragment_stub);
-            ViewStub activity = inflate.findViewById(R.id.dialog_view_stub);
-            activity.setLayoutResource(stunLayout);
-            activity.inflate();
+            RelativeLayout activity = inflate.findViewById(R.id.dialog_view_stub);
+            activity.addView(inflater.inflate(stunLayout, null));
+            inflatetoRelative(inflater,inflate,R.layout.sub_base_empty, R.id.dialog_frag_baseEmpty);
+            inflatetoRelative(inflater, inflate, R.layout.sub_base_error, R.id.dialog_frag_baseError);
+            inflatetoRelative(inflater, inflate, R.layout.sub_base_loading, R.id.dialog_frag_baseLoading);
+
             Switcher.Builder builder = new Switcher.Builder(getContext());
-            builder.addEmptyView(inflate.findViewById(R.id.dialog_frag_baseEmpty))
+            builder.forDialog()//for dialog styling
+                    .addEmptyView(inflate.findViewById(R.id.dialog_frag_baseEmpty))
                     .addProgressView(inflate.findViewById(R.id.dialog_frag_baseLoading))
                     .addContentView(activity)
                     .addErrorView(inflate.findViewById(R.id.dialog_frag_baseError)).setErrorLabel((R.id.tvError));
@@ -48,6 +52,14 @@ public abstract class baseFragmentDialog extends DialogFragment {
             return inflate;
         }
 
+    }
+
+    private void inflatetoRelative(LayoutInflater inflater, ViewGroup inflate, int childView, int ids) {
+        View child = inflater.inflate(childView, null);
+        child.setId(ids);
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)inflate.findViewById(R.id.frame).getLayoutParams();
+        child.setLayoutParams(params);
+        inflate.addView(child);
     }
 
     protected void setContentView(int layoutResID) {

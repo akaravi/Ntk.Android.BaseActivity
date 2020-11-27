@@ -20,7 +20,6 @@ import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.R;
-import ntk.android.base.api.pooling.model.PoolingSubmitRequest;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.polling.PollingContentModel;
@@ -91,8 +90,8 @@ public class PoolPlusMinesAdapter extends RecyclerView.Adapter<PoolPlusMinesAdap
             }
         });
         BtnSend.setOnClickListener(v -> {
-            PoolingSubmitRequest request = new PoolingSubmitRequest();
-            request.ContentId = arrayList.get(position).LinkPollingContentId;
+//            PoolingSubmitRequest request = new PoolingSubmitRequest();
+//            request.ContentId = arrayList.get(position).LinkPollingContentId;
             ArrayList<PollingVoteModel> votes = new ArrayList<>();
 
             for (Map.Entry<Long, Integer> map : MapVote.entrySet()) {

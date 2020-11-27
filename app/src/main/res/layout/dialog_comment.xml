@@ -20,7 +20,11 @@
             android:textColor="@color/colorWhite"
             android:textSize="17sp" />
     </RelativeLayout>
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
     <me.zhanghai.android.materialratingbar.MaterialRatingBar
         android:id="@+id/rateDialogComment"
         android:layout_width="wrap_content"
@@ -35,20 +39,19 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_margin="15dp"
-        android:background="@drawable/background_edittext"
+        android:background="#fff"
         android:hint="متن نظر سنجی"
         android:inputType="text"
         android:maxLines="1"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         tools:ignore="HardcodedText" />
-
+</LinearLayout>
     <Button
         android:id="@+id/btnDialogComment"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+
         android:layout_marginBottom="10dp"
         android:background="@drawable/button_accent"
         android:text="ثبت"

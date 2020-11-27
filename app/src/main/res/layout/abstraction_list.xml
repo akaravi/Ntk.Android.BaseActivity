@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -77,7 +77,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
-
+                android:text="بازگشت"
                 android:layout_toStartOf="@id/imgBack"
                 android:layout_toLeftOf="@id/imgBack"
                 android:textColor="@color/colorTextBlack"

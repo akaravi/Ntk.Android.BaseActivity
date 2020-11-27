@@ -151,7 +151,7 @@ public class AbstractMainActivity extends BaseActivity {
         dialog.show();
     }
 
-    protected void onInviteMethod() {
+    public void onInviteMethod() {
         String st = Preferences.with(this).appVariableInfo().configapp();
         MainResponseDtoModel mcr = new Gson().fromJson(st, MainResponseDtoModel.class);
 

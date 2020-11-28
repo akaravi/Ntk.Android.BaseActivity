@@ -103,10 +103,10 @@ public class DetailPoolCategoryAdapter extends RecyclerView.Adapter<DetailPoolCa
             TextView Title = dialog.findViewById(R.id.lblTitleDialogPoolingStatic);
             Title.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
             TextView Score = dialog.findViewById(R.id.lblScore);
-            Score.setText((int) arrayList.get(position).Options.get(0).ScoreOfVotes);//todo
+            Score.setText( String.valueOf(arrayList.get(position).Options.get(0).ScoreOfVotes));
             Score.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
             TextView Owner = dialog.findViewById(R.id.lblOwnerScore);
-            Owner.setText((int) arrayList.get(position).Options.get(0).NumberOfVotes);//todo
+            Owner.setText(String.valueOf( arrayList.get(position).Options.get(0).NumberOfVotes));
             Owner.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
             dialog.show();
         });

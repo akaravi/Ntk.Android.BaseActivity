@@ -113,7 +113,7 @@ public class IntroActivity extends BaseActivity {
     }
 
     private void HandelIntro() {
-        ImageLoader.getInstance().displayImage(IntroModels.get(CountIntro).MainImageSrc, Img);
+        ImageLoader.getInstance().displayImage(IntroModels.get(CountIntro).LinkMainImageIdSrc, Img);
         Lbls.get(0).setText(IntroModels.get(CountIntro).Title);
         Lbls.get(1).setText(IntroModels.get(CountIntro).Description);
         switcher.showContentView();

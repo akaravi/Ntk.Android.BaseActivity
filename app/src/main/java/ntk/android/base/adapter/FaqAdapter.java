@@ -38,14 +38,14 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.Lbls.get(0).setText(arrayList.get(position).Question);
         holder.Lbls.get(1).setText(arrayList.get(position).Answer);
-        holder.Root.get(0).setOnClickListener(view -> {
+        holder.itemView.findViewById(R.id.rootFaq).setOnClickListener(view -> {
             if (holder.Web.getVisibility() == View.GONE) {
                 holder.Web.loadData("<html dir=\"rtl\" lang=\"\"><body>" + arrayList.get(position).Answer + "</body></html>", "text/html; charset=utf-8", "UTF-8");
                 holder.Web.setVisibility(View.VISIBLE);
-                holder.Root.get(1).setVisibility(View.VISIBLE);
+                holder.itemView.findViewById(R.id.rowDetailFaq).setVisibility(View.VISIBLE);
             } else {
                 holder.Web.setVisibility(View.GONE);
-                holder.Root.get(1).setVisibility(View.GONE);
+                holder.itemView.findViewById(R.id.rowDetailFaq).setVisibility(View.GONE);
             }
         });
     }
@@ -58,7 +58,7 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         List<TextView> Lbls;
-        List<ViewGroup> Root;
+
         WebView Web;
 
         @SuppressLint("SetJavaScriptEnabled")
@@ -70,10 +70,7 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
                 add(view.findViewById(R.id.lblMessageFaq));
             }};
 
-                    Root = new ArrayList() {{
-                add(view.findViewById(R.id.rowDetailFaq));
-                add(view.findViewById(R.id.rootFaq));
-            }};
+
             Web = view.findViewById(R.id.WebViewFaqList);
             Lbls.get(0).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
             Lbls.get(1).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));

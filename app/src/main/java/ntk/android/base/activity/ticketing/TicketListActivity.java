@@ -44,8 +44,7 @@ public class TicketListActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setDirectContentView(R.layout.ticket_list_activity);
-        switcher.replaceContentView(findViewById(R.id.recyclerFrSupport));
+        setDirectContentViewWithSwicher(R.layout.ticket_list_activity,R.id.recyclerFrSupport);
         init();
     }
 
@@ -132,7 +131,7 @@ public class TicketListActivity extends BaseActivity {
                                 switcher.showContentView();
                             else {
                                 switcher.showEmptyView();
-                                Fab.setVisibility(View.VISIBLE);
+
                             }
                         }
 

@@ -182,7 +182,12 @@
             android:orientation="vertical"
             android:visibility="gone"
             tools:ignore="WebViewLayout">
-
+            <ImageView
+                android:id="@+id/RowTimeDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                android:scaleType="fitXY" />
             <TextView
                 android:id="@+id/lblNameCommandDetail"
                 android:layout_width="wrap_content"

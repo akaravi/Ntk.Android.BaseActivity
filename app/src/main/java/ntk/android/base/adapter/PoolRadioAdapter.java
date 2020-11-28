@@ -99,7 +99,7 @@ public class PoolRadioAdapter extends RecyclerView.Adapter<PoolRadioAdapter.View
         public ViewHolder(View view) {
             super(view);
             Radio = view.findViewById(R.id.RadioRecyclerPoolRadio);
-
+            LblTitle=view.findViewById(R.id.lblRecyclerPoolRadio);
             LblTitle.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
             Radio.setOnClickListener(v -> {
                 lastSelectedPosition = getAdapterPosition();

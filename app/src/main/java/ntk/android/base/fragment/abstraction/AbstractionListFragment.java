@@ -35,7 +35,7 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
 
     private int Total = 0;
     protected List<TEntity> models = new ArrayList<>();
-    private RecyclerView.Adapter adapter;
+    protected RecyclerView.Adapter adapter;
     protected FilterDataModel request;
 
     @Override
@@ -60,9 +60,11 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
         }
         init();
     }
+
     protected RecyclerView.LayoutManager getRvLayoutManager() {
         return new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
     }
+
     private void init() {
 
         LblTitle = findViewById(R.id.lblTitle);
@@ -84,6 +86,20 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
                     RestCall((page + 1));
                 }
             }
+
+            @Override
+            public void onScrolled(RecyclerView view, int dx, int dy) {
+                if (dy > 0 || dy < 0 && viewSyncOnScrolling().isShown())
+                    viewSyncOnScrolling().changeVisibility(false);
+            }
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    viewSyncOnScrolling().changeVisibility(true);
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
         };
         Rv.addOnScrollListener(scrollListener);
 
@@ -97,9 +113,24 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
         afterInit();
     }
 
+    protected IntegrationView viewSyncOnScrolling() {
+        return new IntegrationView() {
+            @Override
+            public boolean isShown() {
+                return false;
+            }
+            @Override
+            public void changeVisibility(boolean isVisible) {
+
+            }
+        };
+    }
+
+
     public void afterInit() {
 
     }
+
     private void RestCall(int i) {
         if (AppUtill.isNetworkAvailable(getContext())) {
             switcher.showProgressView();
@@ -145,5 +176,11 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
         getActivity().finish();
     }
 
-    public abstract void ClickSearch();
+    public  void ClickSearch(){}
+
+    public abstract static class IntegrationView {
+        public abstract boolean isShown();
+
+        public abstract void changeVisibility(boolean isVisible);
+    }
 }

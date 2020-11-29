@@ -134,11 +134,7 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
                                 findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
                                 return;
                             }
-//                            EasyPreference.with(RegisterActivity.this).addLong("UserId", response.Item.UserId);
-//                            EasyPreference.with(RegisterActivity.this).addLong("MemberUserId", response.Item.MemberId);
-//                            EasyPreference.with(RegisterActivity.this).addLong("SiteId", response.Item.SiteId);
-//                           Preferences.with(this).UserInfo().setRegisterd(true);
-
+                            Preferences.with(AuthWithSmsConfirmActivity.this).appVariableInfo().setIsLogin(true);
                             startActivity(new Intent(AuthWithSmsConfirmActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                             finish();
                         }

@@ -209,6 +209,7 @@ public abstract class BaseSplashActivity extends BaseActivity {
                                 startnewActivity(NTKApplication.getApplicationStyle().getMainActivity());
                             else//user token in invalid then go to register
                             {
+                                Preferences.with(BaseSplashActivity.this).appVariableInfo().setIsLogin(false);
                                 Toasty.warning(BaseSplashActivity.this, "َشما به صفحه ی ورود کاربر هدایت می شوید", Toasty.LENGTH_LONG, true).show();
                                 startnewActivity(AuthWithSmsActivity.class);
                             }
@@ -225,6 +226,8 @@ public abstract class BaseSplashActivity extends BaseActivity {
                 if (Preferences.with(this).appVariableInfo().isRegisterNotInterested())
                     startnewActivity(NTKApplication.getApplicationStyle().getMainActivity());
                     //user maybe interest to login
+                else if (Preferences.with(this).appVariableInfo().isLogin())
+                    startnewActivity(NTKApplication.getApplicationStyle().getMainActivity());
                 else
                     startnewActivity(AuthWithSmsActivity.class);
             } else

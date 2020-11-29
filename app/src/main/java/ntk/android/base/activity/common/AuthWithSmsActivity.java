@@ -41,12 +41,14 @@ public class AuthWithSmsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        Boolean Registered = false;//Preferences.with(this).appVariableInfo().isRegistered();
+
         Boolean islogin = Preferences.with(this).appVariableInfo().isLogin();
-        if (Registered && islogin) {
+        if (islogin) {
             startActivity(new Intent(AuthWithSmsActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
             finish();
+            return;
         }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.comon_auth_activity);
         initView();
@@ -122,6 +124,7 @@ public class AuthWithSmsActivity extends BaseActivity {
                             }
                             Preferences.with(AuthWithSmsActivity.this).UserInfo().setMobile(PhoneNumber);
                             startActivity(new Intent(AuthWithSmsActivity.this, AuthWithSmsConfirmActivity.class));
+                            finish();
                         }
 
                         @Override

@@ -58,7 +58,6 @@ import ntk.android.base.utill.prefrense.Preferences;
 public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> extends BaseActivity {
     ProgressBar Progress;
     LinearLayout Loading;
-    protected List<TextView> Lbls;
     protected ImageView ImgHeader;
     public RecyclerView RvTab;
     RecyclerView RvComment;
@@ -84,7 +83,7 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
         Progress = findViewById(R.id.progressDetail);
 
         Loading = findViewById(R.id.rowProgressDetail);
-        Lbls = new ArrayList() {{
+        List<TextView> Lbls = new ArrayList() {{
             add(findViewById(R.id.lblTitleDetail));
             add(findViewById(R.id.lblNameCommandDetail));
             add(findViewById(R.id.lblKeySeenDetail));
@@ -130,7 +129,7 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
         });
         getContent();
     }
-
+    public void afterDetailInit(){}
     public abstract Function<ScoreClickDtoModel, Observable<ErrorExceptionBase>> contentRateService();
 
     public abstract Function<Long, Observable<ErrorException<TEntity>>> getOneContentService();

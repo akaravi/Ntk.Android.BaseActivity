@@ -37,6 +37,7 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
     protected List<TEntity> models = new ArrayList<>();
     protected RecyclerView.Adapter adapter;
     protected FilterDataModel request;
+    private boolean loadingMore = true;
 
     @Override
     public void onCreateFragment() {
@@ -82,7 +83,7 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
 
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                if (totalItemsCount <= Total) {
+                if (loadingMore && totalItemsCount <= Total) {
                     RestCall((page + 1));
                 }
             }
@@ -107,6 +108,7 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
 
         Refresh.setOnRefreshListener(() -> {
             models.clear();
+            loadingMore = true;
             init();
             Refresh.setRefreshing(false);
         });
@@ -119,6 +121,7 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
             public boolean isShown() {
                 return false;
             }
+
             @Override
             public void changeVisibility(boolean isVisible) {
 
@@ -143,6 +146,9 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
                             if (newsContentResponse.IsSuccess) {
                                 models.addAll(newsContentResponse.ListItems);
                                 Total = newsContentResponse.TotalRowCount;
+                                if (newsContentResponse.ListItems.size() < request.RowPerPage) {
+                                    loadingMore = false;
+                                }
                                 adapter.notifyDataSetChanged();
                                 if (models.size() > 0)
                                     switcher.showContentView();
@@ -176,7 +182,8 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
         getActivity().finish();
     }
 
-    public  void ClickSearch(){}
+    public void ClickSearch() {
+    }
 
     public abstract static class IntegrationView {
         public abstract boolean isShown();

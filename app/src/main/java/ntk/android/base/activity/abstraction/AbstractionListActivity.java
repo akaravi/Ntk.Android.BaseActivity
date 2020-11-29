@@ -24,6 +24,7 @@ import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
+import ntk.android.base.fragment.abstraction.AbstractionListFragment;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
 import ntk.android.base.utill.FontManager;
@@ -34,8 +35,9 @@ public abstract class AbstractionListActivity<TEntity> extends BaseActivity {
 
     private int Total = 0;
     protected List<TEntity> models = new ArrayList<>();
-    private RecyclerView.Adapter adapter;
+    protected RecyclerView.Adapter adapter;
     protected FilterDataModel request;
+    private boolean loadingMore=true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,9 +76,22 @@ public abstract class AbstractionListActivity<TEntity> extends BaseActivity {
 
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                if (totalItemsCount <= Total) {
+                if (loadingMore&&totalItemsCount <= Total) {
                     RestCall((page + 1));
                 }
+            }
+            @Override
+            public void onScrolled(RecyclerView view, int dx, int dy) {
+                if (dy > 0 || dy < 0 && viewSyncOnScrolling().isShown())
+                    viewSyncOnScrolling().changeVisibility(false);
+            }
+
+            @Override
+            public void onScrollStateChanged(@androidx.annotation.NonNull RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    viewSyncOnScrolling().changeVisibility(true);
+                }
+                super.onScrollStateChanged(recyclerView, newState);
             }
         };
         Rv.addOnScrollListener(scrollListener);
@@ -85,12 +100,24 @@ public abstract class AbstractionListActivity<TEntity> extends BaseActivity {
 
         Refresh.setOnRefreshListener(() -> {
             models.clear();
+            loadingMore=true;
             init();
             Refresh.setRefreshing(false);
         });
         afterInit();
     }
+    protected AbstractionListFragment.IntegrationView viewSyncOnScrolling() {
+        return new AbstractionListFragment.IntegrationView() {
+            @Override
+            public boolean isShown() {
+                return false;
+            }
+            @Override
+            public void changeVisibility(boolean isVisible) {
 
+            }
+        };
+    }
     public void afterInit() {
 
     }
@@ -108,8 +135,11 @@ public abstract class AbstractionListActivity<TEntity> extends BaseActivity {
                             if (newsContentResponse.IsSuccess) {
                                 models.addAll(newsContentResponse.ListItems);
                                 Total = newsContentResponse.TotalRowCount;
+                                if (newsContentResponse.ListItems.size() < request.RowPerPage) {
+                                    loadingMore=false;
+                                }
                                 adapter.notifyDataSetChanged();
-                                if (Total > 0)
+                                if (models.size() > 0)
                                     switcher.showContentView();
                                 else
                                     switcher.showEmptyView();

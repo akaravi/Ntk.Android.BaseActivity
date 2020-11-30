@@ -55,7 +55,7 @@ import ntk.android.base.services.news.NewsContentService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
 
-public abstract class BaseNewsDetailActivity extends
+public abstract class BaseNewsDetail_1_Activity extends
         AbstractDetailActivity<NewsContentModel, NewsCategoryModel, NewsCommentModel, NewsContentOtherInfoModel> {
     ProgressBar Progress;
     LinearLayout Loading;
@@ -70,7 +70,7 @@ public abstract class BaseNewsDetailActivity extends
     protected int unFavoriteDrawableId;
 
     public void setContentView() {
-        setContentView(R.layout.base1_news_detail_activity);
+        setContentView(R.layout.base1_detail_activity);
     }
 
     @Override
@@ -143,9 +143,9 @@ public abstract class BaseNewsDetailActivity extends
                         public void onNext(ErrorExceptionBase biographyContentResponse) {
                             Loading.setVisibility(View.GONE);
                             if (biographyContentResponse.IsSuccess) {
-                                Toasty.success(BaseNewsDetailActivity.this, "نظر شمابا موفقیت ثبت گردید").show();
+                                Toasty.success(BaseNewsDetail_1_Activity.this, "نظر شمابا موفقیت ثبت گردید").show();
                             } else {
-                                Toasty.warning(BaseNewsDetailActivity.this, biographyContentResponse.ErrorMessage).show();
+                                Toasty.warning(BaseNewsDetail_1_Activity.this, biographyContentResponse.ErrorMessage).show();
                             }
                         }
 
@@ -292,10 +292,10 @@ public abstract class BaseNewsDetailActivity extends
 
         Btn.setOnClickListener(v -> {
             if (Txt[0].getText().toString().isEmpty()) {
-                Toast.makeText(BaseNewsDetailActivity.this, "لطفا مقادیر را وارد نمایید", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseNewsDetail_1_Activity.this, "لطفا مقادیر را وارد نمایید", Toast.LENGTH_SHORT).show();
             } else {
                 if (Txt[1].getText().toString().isEmpty()) {
-                    Toast.makeText(BaseNewsDetailActivity.this, "لطفا مقادیر را وارد نمایید", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BaseNewsDetail_1_Activity.this, "لطفا مقادیر را وارد نمایید", Toast.LENGTH_SHORT).show();
                 } else {
                     if (AppUtill.isNetworkAvailable(this)) {
 //                        NewsCommentModel add = new NewsCommentModel();
@@ -313,10 +313,10 @@ public abstract class BaseNewsDetailActivity extends
                                         if (e.IsSuccess) {
                                             HandelDataComment(Id);
                                             dialog.dismiss();
-                                            Toasty.success(BaseNewsDetailActivity.this, "نظر شما با موفقیت ثبت شد").show();
+                                            Toasty.success(BaseNewsDetail_1_Activity.this, "نظر شما با موفقیت ثبت شد").show();
                                         } else {
                                             dialog.dismiss();
-                                            Toasty.warning(BaseNewsDetailActivity.this, e.ErrorMessage).show();
+                                            Toasty.warning(BaseNewsDetail_1_Activity.this, e.ErrorMessage).show();
                                         }
                                     }
 

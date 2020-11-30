@@ -76,7 +76,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
     protected int unFavoriteDrawableId;
 
     public void setContentView() {
-        setContentView(R.layout.base1_detai2_activity);
+        setContentView(R.layout.base2_detail_activity);
     }
 
     @Override

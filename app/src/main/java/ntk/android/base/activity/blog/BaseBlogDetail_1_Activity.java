@@ -50,7 +50,6 @@ import ntk.android.base.entitymodel.blog.BlogCategoryModel;
 import ntk.android.base.entitymodel.blog.BlogCommentModel;
 import ntk.android.base.entitymodel.blog.BlogContentModel;
 import ntk.android.base.entitymodel.blog.BlogContentOtherInfoModel;
-import ntk.android.base.entitymodel.news.NewsContentModel;
 import ntk.android.base.services.blog.BlogCommentService;
 import ntk.android.base.services.blog.BlogContentOtherInfoService;
 import ntk.android.base.services.blog.BlogContentService;

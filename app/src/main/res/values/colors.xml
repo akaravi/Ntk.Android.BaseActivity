@@ -6,4 +6,5 @@
     <color name="colorGreen">#4caf50</color>
     <color name="colorOrang">#FFC107</color>
     <color name="colorRed">#fe0000</color>
+    <color name="colorMenu">#030303</color>
 </resources>

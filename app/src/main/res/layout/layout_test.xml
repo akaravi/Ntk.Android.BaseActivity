@@ -1,294 +1,296 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainLayoutActDetailNew"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layoutDirection="ltr">
+<LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
+<!--<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:id="@+id/mainLayoutActDetailNew"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:layoutDirection="ltr">-->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
 
-        <RelativeLayout
-            android:id="@+id/ToolbarActDetailBlog"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorWhite"
-            tools:ignore="UselessParent">
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/ToolbarActDetailBlog"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/actionBarSize"-->
+<!--            android:background="@color/colorWhite"-->
+<!--            tools:ignore="UselessParent">-->
 
-            <com.balysv.materialripple.MaterialRippleLayout
-                android:id="@+id/imgBackActDetailBlog"
-                android:layout_width="45dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="10dp"
-                app:mrl_rippleAlpha="0.05"
-                app:mrl_rippleColor="#10000000"
-                app:mrl_rippleRoundedCorners="100dp">
+<!--            <com.balysv.materialripple.MaterialRippleLayout-->
+<!--                android:id="@+id/imgBackActDetailBlog"-->
+<!--                android:layout_width="45dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_marginEnd="10dp"-->
+<!--                app:mrl_rippleAlpha="0.05"-->
+<!--                app:mrl_rippleColor="#10000000"-->
+<!--                app:mrl_rippleRoundedCorners="100dp">-->
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:contentDescription="@null"
-                        android:rotation="180"
-                        app:srcCompat="@drawable/ic_back" />
-                </RelativeLayout>
-            </com.balysv.materialripple.MaterialRippleLayout>
+<!--                    <ImageView-->
+<!--                        android:layout_width="30dp"-->
+<!--                        android:layout_height="30dp"-->
+<!--                        android:layout_centerInParent="true"-->
+<!--                        android:contentDescription="@null"-->
+<!--                        android:rotation="180"-->
+<!--                        app:srcCompat="@drawable/ic_back" />-->
+<!--                </RelativeLayout>-->
+<!--            </com.balysv.materialripple.MaterialRippleLayout>-->
 
-            <com.balysv.materialripple.MaterialRippleLayout
-                android:id="@+id/imgShareActDetailBlog"
-                android:layout_width="45dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="10dp"
-                app:mrl_rippleAlpha="0.05"
-                app:mrl_rippleColor="#10000000"
-                app:mrl_rippleRoundedCorners="100dp">
+<!--            <com.balysv.materialripple.MaterialRippleLayout-->
+<!--                android:id="@+id/imgShareActDetailBlog"-->
+<!--                android:layout_width="45dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_alignParentStart="true"-->
+<!--                android:layout_marginStart="10dp"-->
+<!--                app:mrl_rippleAlpha="0.05"-->
+<!--                app:mrl_rippleColor="#10000000"-->
+<!--                app:mrl_rippleRoundedCorners="100dp">-->
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:contentDescription="@null"
-                        app:srcCompat="@drawable/ic_share" />
-                </RelativeLayout>
-            </com.balysv.materialripple.MaterialRippleLayout>
+<!--                    <ImageView-->
+<!--                        android:layout_width="30dp"-->
+<!--                        android:layout_height="30dp"-->
+<!--                        android:layout_centerInParent="true"-->
+<!--                        android:contentDescription="@null"-->
+<!--                        app:srcCompat="@drawable/ic_share" />-->
+<!--                </RelativeLayout>-->
+<!--            </com.balysv.materialripple.MaterialRippleLayout>-->
 
-            <com.balysv.materialripple.MaterialRippleLayout
-                android:id="@+id/imgFavActDetailBlog"
-                android:layout_width="45dp"
-                android:layout_height="match_parent"
-                android:layout_toEndOf="@id/imgShareActDetailBlog"
-                app:mrl_rippleAlpha="0.05"
-                app:mrl_rippleColor="#10000000"
-                app:mrl_rippleRoundedCorners="100dp">
+<!--            <com.balysv.materialripple.MaterialRippleLayout-->
+<!--                android:id="@+id/imgFavActDetailBlog"-->
+<!--                android:layout_width="45dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_toEndOf="@id/imgShareActDetailBlog"-->
+<!--                app:mrl_rippleAlpha="0.05"-->
+<!--                app:mrl_rippleColor="#10000000"-->
+<!--                app:mrl_rippleRoundedCorners="100dp">-->
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
 
-                    <ImageView
-                        android:id="@+id/imgHeartActDetailBlog"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:contentDescription="@null"
-                        app:srcCompat="@drawable/ic_fav" />
-                </RelativeLayout>
-            </com.balysv.materialripple.MaterialRippleLayout>
+<!--                    <ImageView-->
+<!--                        android:id="@+id/imgHeartActDetailBlog"-->
+<!--                        android:layout_width="30dp"-->
+<!--                        android:layout_height="30dp"-->
+<!--                        android:layout_centerInParent="true"-->
+<!--                        android:contentDescription="@null"-->
+<!--                        app:srcCompat="@drawable/ic_fav" />-->
+<!--                </RelativeLayout>-->
+<!--            </com.balysv.materialripple.MaterialRippleLayout>-->
 
-            <com.balysv.materialripple.MaterialRippleLayout
-                android:id="@+id/imgCommentActDetailBlog"
-                android:layout_width="45dp"
-                android:layout_height="match_parent"
-                android:layout_toEndOf="@id/imgFavActDetailBlog"
-                app:mrl_rippleAlpha="0.05"
-                app:mrl_rippleColor="#10000000"
-                app:mrl_rippleRoundedCorners="100dp">
+<!--            <com.balysv.materialripple.MaterialRippleLayout-->
+<!--                android:id="@+id/imgCommentActDetailBlog"-->
+<!--                android:layout_width="45dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_toEndOf="@id/imgFavActDetailBlog"-->
+<!--                app:mrl_rippleAlpha="0.05"-->
+<!--                app:mrl_rippleColor="#10000000"-->
+<!--                app:mrl_rippleRoundedCorners="100dp">-->
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:contentDescription="@null"
-                        app:srcCompat="@drawable/ic_comment" />
-                </RelativeLayout>
-            </com.balysv.materialripple.MaterialRippleLayout>
+<!--                    <ImageView-->
+<!--                        android:layout_width="30dp"-->
+<!--                        android:layout_height="30dp"-->
+<!--                        android:layout_centerInParent="true"-->
+<!--                        android:contentDescription="@null"-->
+<!--                        app:srcCompat="@drawable/ic_comment" />-->
+<!--                </RelativeLayout>-->
+<!--            </com.balysv.materialripple.MaterialRippleLayout>-->
 
-            <TextView
-                android:id="@+id/lblTitleActDetailBlog"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
-                android:layout_toStartOf="@id/imgBackActDetailBlog"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/colorMenu"
-                tools:ignore="HardcodedText" />
-        </RelativeLayout>
+<!--            <TextView-->
+<!--                android:id="@+id/lblTitleActDetailBlog"-->
+<!--                android:layout_width="140dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginEnd="15dp"-->
+<!--                android:layout_toStartOf="@id/imgBackActDetailBlog"-->
+<!--                android:ellipsize="end"-->
+<!--                android:maxLines="1"-->
+<!--                android:textColor="@color/colorMenu"-->
+<!--                tools:ignore="HardcodedText" />-->
+<!--        </RelativeLayout>-->
 
-        <LinearLayout
-            android:id="@+id/PageActDetailBlog"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ToolbarActDetailBlog"
-            android:orientation="vertical"
-            android:visibility="gone">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/PageActDetailBlog"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/ToolbarActDetailBlog"-->
+<!--            android:orientation="vertical"-->
+<!--            android:visibility="gone">-->
 
-            <View
-                android:id="@+id/LineToolbarActDetailBlog"
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="@color/colorAccent" />
+<!--            <View-->
+<!--                android:id="@+id/LineToolbarActDetailBlog"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="3dp"-->
+<!--                android:background="@color/colorAccent" />-->
 
-            <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none">
+<!--            <androidx.core.widget.NestedScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:scrollbars="none">-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:gravity="center"-->
+<!--                    android:orientation="vertical">-->
 
-                    <ImageView
-                        android:id="@+id/imgHeaderActDetailBlog"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@null"
-                        android:scaleType="centerCrop" />
+<!--                    <ImageView-->
+<!--                        android:id="@+id/imgHeaderActDetailBlog"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:contentDescription="@null"-->
+<!--                        android:scaleType="centerCrop" />-->
 
-                    <TextView
-                        android:id="@+id/lblNameCommandActDetailBlog"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:textColor="@color/colorMenu"
-                        android:textSize="17sp"
-                        tools:ignore="HardcodedText" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/lblNameCommandActDetailBlog"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="15dp"-->
+<!--                        android:textColor="@color/colorMenu"-->
+<!--                        android:textSize="17sp"-->
+<!--                        tools:ignore="HardcodedText" />-->
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="15dp">
+<!--                    <RelativeLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginLeft="15dp"-->
+<!--                        android:layout_marginTop="20dp"-->
+<!--                        android:layout_marginRight="15dp">-->
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:orientation="horizontal">
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_alignParentEnd="true"-->
+<!--                            android:layout_centerVertical="true"-->
+<!--                            android:orientation="horizontal">-->
 
-                            <TextView
-                                android:id="@+id/lblValueSeenActDetailBlog"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:text=" 160"
-                                android:textColor="@color/colorMenu" />
+<!--                            <TextView-->
+<!--                                android:id="@+id/lblValueSeenActDetailBlog"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginEnd="10dp"-->
+<!--                                android:text=" 160"-->
+<!--                                android:textColor="@color/colorMenu" />-->
 
-                            <TextView
-                                android:id="@+id/lblKeySeenActDetailBlog"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="تعداد مشاهدات:"
-                                android:textColor="@color/colorMenu" />
-                        </LinearLayout>
+<!--                            <TextView-->
+<!--                                android:id="@+id/lblKeySeenActDetailBlog"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="تعداد مشاهدات:"-->
+<!--                                android:textColor="@color/colorMenu" />-->
+<!--                        </LinearLayout>-->
 
-                        <RatingBar
-                            android:id="@+id/ratingBarActDetailBlog"
-                            android:layout_width="wrap_content"
-                            android:layout_height="19dp"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="10dp"
-                            android:progressDrawable="@drawable/rating_bar_layer"
-                            android:rating="3" />
-                    </RelativeLayout>
+<!--                        <RatingBar-->
+<!--                            android:id="@+id/ratingBarActDetailBlog"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="19dp"-->
+<!--                            android:layout_alignParentStart="true"-->
+<!--                            android:layout_centerVertical="true"-->
+<!--                            android:layout_marginEnd="10dp"-->
+<!--                            android:progressDrawable="@drawable/rating_bar_layer"-->
+<!--                            android:rating="3" />-->
+<!--                    </RelativeLayout>-->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="15dp"
-                        android:background="@color/colorMenu" />
+<!--                    <View-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="1dp"-->
+<!--                        android:layout_marginLeft="15dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginRight="15dp"-->
+<!--                        android:background="@color/colorMenu" />-->
 
-                    <WebView
-                        android:id="@+id/WebViewBodyActDetailBlog"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layoutDirection="rtl"
-                        android:textDirection="rtl" />
+<!--                    <WebView-->
+<!--                        android:id="@+id/WebViewBodyActDetailBlog"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layoutDirection="rtl"-->
+<!--                        android:textDirection="rtl" />-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="15dp"
-                        android:orientation="horizontal">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginLeft="15dp"-->
+<!--                        android:layout_marginTop="5dp"-->
+<!--                        android:layout_marginRight="15dp"-->
+<!--                        android:orientation="horizontal">-->
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerTabActDetailBlog"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
+<!--                        <androidx.recyclerview.widget.RecyclerView-->
+<!--                            android:id="@+id/recyclerTabActDetailBlog"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content" />-->
+<!--                    </LinearLayout>-->
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp">
+<!--                    <RelativeLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="15dp">-->
 
-                        <TextView
-                            android:id="@+id/lblCommentActDetailBlog"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
-                            android:text="نظرات"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp"
-                            android:visibility="gone"
-                            tools:ignore="HardcodedText" />
+<!--                        <TextView-->
+<!--                            android:id="@+id/lblCommentActDetailBlog"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_alignParentEnd="true"-->
+<!--                            android:layout_marginLeft="15dp"-->
+<!--                            android:layout_marginRight="15dp"-->
+<!--                            android:text="نظرات"-->
+<!--                            android:textColor="@android:color/black"-->
+<!--                            android:textSize="16sp"-->
+<!--                            android:visibility="gone"-->
+<!--                            tools:ignore="HardcodedText" />-->
 
-                    </RelativeLayout>
+<!--                    </RelativeLayout>-->
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerCommentActDetailBlog"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="15dp"
-                        android:nestedScrollingEnabled="false"
-                        android:scrollbars="none"
-                        tools:targetApi="lollipop" />
-                </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
-        </LinearLayout>
+<!--                    <androidx.recyclerview.widget.RecyclerView-->
+<!--                        android:id="@+id/recyclerCommentActDetailBlog"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginBottom="15dp"-->
+<!--                        android:nestedScrollingEnabled="false"-->
+<!--                        android:scrollbars="none"-->
+<!--                        tools:targetApi="lollipop" />-->
+<!--                </LinearLayout>-->
+<!--            </androidx.core.widget.NestedScrollView>-->
+<!--        </LinearLayout>-->
 
-        <LinearLayout
-            android:id="@+id/rowProgressActDetailBlog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/rowProgressActDetailBlog"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="vertical"-->
+<!--            android:visibility="gone">-->
 
-            <ProgressBar
-                android:id="@+id/progressActDetailBlog"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
+<!--            <ProgressBar-->
+<!--                android:id="@+id/progressActDetailBlog"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp" />-->
 
-            <TextView
-                android:id="@+id/lblProgressActDetailBlog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="در حال دریافت اطلاعات..."
-                android:textColor="@color/colorAccent"
-                android:textSize="18sp"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
-    </RelativeLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+<!--            <TextView-->
+<!--                android:id="@+id/lblProgressActDetailBlog"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:text="در حال دریافت اطلاعات..."-->
+<!--                android:textColor="@color/colorAccent"-->
+<!--                android:textSize="18sp"-->
+<!--                tools:ignore="HardcodedText" />-->
+<!--        </LinearLayout>-->
+<!--    </RelativeLayout>-->
+<!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->

@@ -19,6 +19,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
+import java9.util.function.BiFunction;
 import java9.util.function.Function;
 import ntk.android.base.Extras;
 import ntk.android.base.R;
@@ -27,6 +28,7 @@ import ntk.android.base.config.NtkObserver;
 import ntk.android.base.dtomodel.application.MainResponseDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
+import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.entitymodel.news.NewsContentModel;
 import ntk.android.base.services.news.NewsContentService;
 import ntk.android.base.utill.AppUtill;
@@ -46,10 +48,10 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
     }
 
     private void initAbstractView() {
-        setViewListerner(findViewById(R.id.imgBackDetail), (v -> finish()));
-        setViewListerner(findViewById(R.id.imgCommentDetail), (v -> ClickCommentAdd()));
-        setViewListerner(findViewById(R.id.imgShareDetail), (v -> ClickShare()));
-        setViewListerner(findViewById(R.id.imgFavDetail), (v -> ClickFav()));
+        setViewListener(findViewById(R.id.imgBackDetail), (v -> finish()));
+        setViewListener(findViewById(R.id.imgCommentDetail), (v -> ClickCommentAdd()));
+        setViewListener(findViewById(R.id.imgShareDetail), (v -> ClickShare()));
+        setViewListener(findViewById(R.id.imgFavDetail), (v -> ClickFav()));
         webViewBody = findViewById(R.id.WebViewBodyDetail);
         webViewBody.getSettings().setJavaScriptEnabled(true);
         webViewBody.getSettings().setBuiltInZoomControls(true);
@@ -63,7 +65,7 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
         }
     }
 
-    private void setViewListerner(View viewById, View.OnClickListener o) {
+    protected void setViewListener(View viewById, View.OnClickListener o) {
         if (viewById != null)
             viewById.setOnClickListener(o);
     }
@@ -108,7 +110,8 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
 
                         @Override
                         public void onError(Throwable e) {
-                         showError(e.toString());                        }
+                            showError(e.toString());
+                        }
                     });
         } else {
             showError("عدم دسترسی به اینترنت");
@@ -174,6 +177,12 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
     public abstract Function<Long, Observable<ErrorException<TOtherInfo>>> getOtherInfoListService();
 
     public abstract Pair<Function<Long, Observable<ErrorExceptionBase>>, Runnable> getFavoriteService();
+
+    public abstract Function<Long,
+            Observable<ErrorException<TEntity>>> getSimilarCategoryService();
+
+    public abstract Function<Long,
+            Observable<ErrorException<TEntity>>> getSimilarContentService();
 
 
 }

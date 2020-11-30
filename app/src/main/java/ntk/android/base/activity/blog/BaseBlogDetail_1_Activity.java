@@ -37,6 +37,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import java9.util.function.Function;
+import kotlin.NotImplementedError;
 import ntk.android.base.R;
 import ntk.android.base.activity.abstraction.AbstractDetailActivity;
 import ntk.android.base.config.NtkObserver;
@@ -49,6 +50,7 @@ import ntk.android.base.entitymodel.blog.BlogCategoryModel;
 import ntk.android.base.entitymodel.blog.BlogCommentModel;
 import ntk.android.base.entitymodel.blog.BlogContentModel;
 import ntk.android.base.entitymodel.blog.BlogContentOtherInfoModel;
+import ntk.android.base.entitymodel.news.NewsContentModel;
 import ntk.android.base.services.blog.BlogCommentService;
 import ntk.android.base.services.blog.BlogContentOtherInfoService;
 import ntk.android.base.services.blog.BlogContentService;
@@ -362,7 +364,15 @@ public abstract class BaseBlogDetail_1_Activity extends
             return new BlogCommentService(this).getAll(Request);
         };
     }
+    @Override
+    public Function<Long, Observable<ErrorException<BlogContentModel>>> getSimilarCategoryService() {
+        throw new NotImplementedError("getSimilarCategoryService not implement in  Blog base activity");
+    }
 
+    @Override
+    public Function<Long, Observable<ErrorException<BlogContentModel>>> getSimilarContentService() {
+        throw new NotImplementedError("getSimilarContentService not implement in  Blog base activity");
+    }
     @Override
     public Function<Long, Observable<ErrorException<BlogContentOtherInfoModel>>> getOtherInfoListService() {
         return linkLongId -> {

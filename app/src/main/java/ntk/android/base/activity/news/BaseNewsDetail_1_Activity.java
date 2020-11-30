@@ -37,6 +37,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import java9.util.function.Function;
+import kotlin.NotImplementedError;
 import ntk.android.base.R;
 import ntk.android.base.activity.abstraction.AbstractDetailActivity;
 import ntk.android.base.config.NtkObserver;
@@ -368,6 +369,16 @@ public abstract class BaseNewsDetail_1_Activity extends
         return linkLongId -> {
             return new NewsContentOtherInfoService(this).getAll(otherInfoFilter(linkLongId));
         };
+    }
+
+    @Override
+    public Function<Long, Observable<ErrorException<NewsContentModel>>> getSimilarCategoryService() {
+        throw new NotImplementedError("getSimilarCategoryService not implement in  news base activity");
+    }
+
+    @Override
+    public Function<Long, Observable<ErrorException<NewsContentModel>>> getSimilarContentService() {
+        throw new NotImplementedError("getSimilarContentService not implement in  news base activity");
     }
 
     @Override

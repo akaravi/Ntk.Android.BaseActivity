@@ -47,7 +47,7 @@ dependencies {
     //for configHeader
     implementation 'com.google.firebase:firebase-messaging:21.0.0'
     //for base
-    api 'com.github.akaravi:ntk.android.base:1.2.1'
+    api 'com.github.akaravi:ntk.android.base:1.2.2'
 //    api project(path: ':baseApi')
     //image loader
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'

@@ -82,16 +82,19 @@ public abstract class AbstractionListActivity<TEntity> extends BaseActivity {
             }
             @Override
             public void onScrolled(RecyclerView view, int dx, int dy) {
+                super.onScrolled(view,dx,dy);
                 if (dy > 0 || dy < 0 && viewSyncOnScrolling().isShown())
                     viewSyncOnScrolling().changeVisibility(false);
+
             }
 
             @Override
             public void onScrollStateChanged(@androidx.annotation.NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     viewSyncOnScrolling().changeVisibility(true);
                 }
-                super.onScrollStateChanged(recyclerView, newState);
+
             }
         };
         Rv.addOnScrollListener(scrollListener);

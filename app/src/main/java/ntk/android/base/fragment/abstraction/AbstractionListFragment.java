@@ -78,7 +78,7 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
         RecyclerView.LayoutManager LMC = getRvLayoutManager();
         Rv.setLayoutManager(LMC);
         adapter = createAdapter();
-        Rv.setAdapter(adapter);
+
         EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(LMC) {
 
             @Override
@@ -90,16 +90,19 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
 
             @Override
             public void onScrolled(RecyclerView view, int dx, int dy) {
+                super.onScrolled(view, dx, dy);
                 if (dy > 0 || dy < 0 && viewSyncOnScrolling().isShown())
                     viewSyncOnScrolling().changeVisibility(false);
+
             }
 
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     viewSyncOnScrolling().changeVisibility(true);
                 }
-                super.onScrollStateChanged(recyclerView, newState);
+
             }
         };
         Rv.addOnScrollListener(scrollListener);
@@ -112,6 +115,7 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
             init();
             Refresh.setRefreshing(false);
         });
+        Rv.setAdapter(adapter);
         afterInit();
     }
 

@@ -55,6 +55,7 @@ import ntk.android.base.event.HtmlBodyEvent;
 import ntk.android.base.services.article.ArticleCommentService;
 import ntk.android.base.services.article.ArticleContentOtherInfoService;
 import ntk.android.base.services.article.ArticleContentService;
+import ntk.android.base.services.base.CmsApiScoreApi;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
 
@@ -427,9 +428,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
 
     @Override
     public Function<Long, Observable<ErrorException<ArticleContentOtherInfoModel>>> getOtherInfoListService() {
-        return linkLongId -> {
-            return new ArticleContentOtherInfoService(this).getAll(otherInfoFilter(linkLongId));
-        };
+        return linkLongId -> new ArticleContentOtherInfoService(this).getAll(otherInfoFilter(linkLongId));
     }
 
     @Override
@@ -462,30 +461,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
         }
         Loading.setVisibility(View.GONE);
         Page.setVisibility(View.VISIBLE);
-        double rating = 0.0;
-        int sumClick = model.Item.ViewCount;
-        if (model.Item.ViewCount == 0) sumClick = 1;
-        if (model.Item.ScoreSumPercent / sumClick > 0 && model.Item.ScoreSumPercent / sumClick <= 10) {
-            rating = 0.5;
-        } else if (model.Item.ScoreSumPercent / sumClick > 10 && model.Item.ScoreSumPercent / sumClick <= 20) {
-            rating = 1.0;
-        } else if (model.Item.ScoreSumPercent / sumClick > 20 && model.Item.ScoreSumPercent / sumClick <= 30) {
-            rating = 1.5;
-        } else if (model.Item.ScoreSumPercent / sumClick > 30 && model.Item.ScoreSumPercent / sumClick <= 40) {
-            rating = 2.0;
-        } else if (model.Item.ScoreSumPercent / sumClick > 40 && model.Item.ScoreSumPercent / sumClick <= 50) {
-            rating = 2.5;
-        } else if (model.Item.ScoreSumPercent / sumClick > 50 && model.Item.ScoreSumPercent / sumClick <= 60) {
-            rating = 3.0;
-        } else if (model.Item.ScoreSumPercent / sumClick > 60 && model.Item.ScoreSumPercent / sumClick <= 70) {
-            rating = 3.5;
-        } else if (model.Item.ScoreSumPercent / sumClick > 70 && model.Item.ScoreSumPercent / sumClick <= 80) {
-            rating = 4.0;
-        } else if (model.Item.ScoreSumPercent / sumClick > 80 && model.Item.ScoreSumPercent / sumClick <= 90) {
-            rating = 4.5;
-        } else if (model.Item.ScoreSumPercent / sumClick > 90) {
-            rating = 5.0;
-        }
+        double rating = CmsApiScoreApi.CONVERT_TO_RATE(model.Item.ViewCount, model.Item.ScoreSumPercent);
         Rate.setRating((float) rating);
         ImageLoader.getInstance().displayImage(model.Item.LinkMainImageIdSrc, ImgHeader);
         ((TextView) findViewById(R.id.lblTitleDetail)).setText(model.Item.Title);
@@ -515,7 +491,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-
+                            findViewById(R.id.RowSimilaryDetail).setVisibility(View.GONE);
                         }
                     });
         } else {

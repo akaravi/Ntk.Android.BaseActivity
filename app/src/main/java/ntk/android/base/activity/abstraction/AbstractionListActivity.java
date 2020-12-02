@@ -28,7 +28,6 @@ import ntk.android.base.fragment.abstraction.AbstractionListFragment;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
 import ntk.android.base.utill.FontManager;
-
 public abstract class AbstractionListActivity<TEntity> extends BaseActivity {
     protected TextView LblTitle;
 

@@ -228,6 +228,10 @@ public abstract class BaseNewsDetail_1_Activity extends
         return Request;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 
     @Override
     public void bindDataOtherInfo(ErrorException<NewsContentOtherInfoModel> model) {

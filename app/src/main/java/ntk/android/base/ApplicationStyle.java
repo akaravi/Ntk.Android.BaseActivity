@@ -6,6 +6,7 @@ import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.activity.common.BaseSplashActivity;
 import ntk.android.base.styles.BaseModuleStyle;
 import ntk.android.base.styles.StyleHelper;
+import ntk.android.base.view.ViewController;
 
 /**
  * Created by m.parishani on 29/08/2017.
@@ -32,7 +33,7 @@ public abstract class ApplicationStyle extends StyleHelper {
 
         return baseModuleStyle;
     }
-
+    public abstract ViewController getViewController();
     public abstract Class<?> getMainActivity();
 }
 

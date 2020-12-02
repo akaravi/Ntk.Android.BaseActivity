@@ -3,4 +3,9 @@
     <item name="dialog_frag_baseEmpty" type="id" />
     <item name="dialog_frag_baseLoading" type="id" />
     <item name="dialog_frag_baseError" type="id" />
+    <item name="activity_BaseEmpty" type="id" />
+    <item name="activity_BaseLoading" type="id" />
+    <item name="activity_BaseError" type="id" />
+    <item name="activity_stub" type="id" />
+    <item name="contetntView" type="id" />
 </resources>

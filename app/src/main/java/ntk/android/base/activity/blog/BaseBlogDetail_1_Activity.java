@@ -82,7 +82,10 @@ public abstract class BaseBlogDetail_1_Activity extends
         initChild();
     }
 
-    protected abstract void initChild();
+    protected  void initChild() {
+        favoriteDrawableId = R.drawable.ic_fav_full;
+        unFavoriteDrawableId = R.drawable.ic_fav;
+    }
 
     @SuppressLint("SetJavaScriptEnabled")
     private void initView() {

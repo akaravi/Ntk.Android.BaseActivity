@@ -13,6 +13,10 @@ import ntk.android.base.model.NotificationModel;
 @Database(entities = {NotificationModel.class}, version = 1, exportSchema = false)
 public abstract class RoomDb extends RoomDatabase {
 
+    public static NotificationDoa getNotificationDao(Context context) {
+        return getRoomDb(context).NotificationDoa();
+    }
+
     public abstract NotificationDoa NotificationDoa();
 
     private static RoomDb Instance;

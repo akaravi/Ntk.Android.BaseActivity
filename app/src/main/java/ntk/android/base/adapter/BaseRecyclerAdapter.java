@@ -27,7 +27,7 @@ import ntk.android.base.R;
 
 public abstract class BaseRecyclerAdapter<Entity, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
     protected List<Entity> list;
-    protected int drawable = R.mipmap.ic_launcher;
+    protected int drawable = R.attr.ntk_base_logo;
 
     public BaseRecyclerAdapter(ArrayList<Entity> list) {
         this.list = list;
@@ -53,7 +53,7 @@ public abstract class BaseRecyclerAdapter<Entity, VH extends RecyclerView.ViewHo
         notifyItemInserted(list.size() - 1);
     }
 
-    public List<Entity> List() {
+    public List<Entity> list() {
         return list;
     }
 

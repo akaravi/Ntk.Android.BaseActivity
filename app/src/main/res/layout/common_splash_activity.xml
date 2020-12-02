@@ -34,9 +34,9 @@
         app:lottie_rawRes="?attr/ntk_splash_loading" />
     <View
         android:id="@+id/debugModeView"
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:clickable="true"
         android:layout_alignParentLeft="true"
         android:background="@color/transparent"
-        android:layout_height="100dp" />
+        android:layout_height="200dp" />
 </RelativeLayout>

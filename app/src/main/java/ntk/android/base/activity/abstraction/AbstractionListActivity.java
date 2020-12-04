@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,49 +16,47 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import java9.util.function.Function;
-import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.entitymodel.base.ErrorException;
-import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.fragment.abstraction.AbstractionListFragment;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
 import ntk.android.base.utill.FontManager;
-public abstract class AbstractionListActivity<TEntity> extends BaseActivity {
+
+public abstract class AbstractionListActivity<TREq,TEntity> extends BaseActivity {
     protected TextView LblTitle;
 
 
-    private int Total = 0;
+    protected int Total = 0;
     protected List<TEntity> models = new ArrayList<>();
     protected RecyclerView.Adapter adapter;
-    protected FilterDataModel request;
-    private boolean loadingMore=true;
+    protected TREq request;
+    protected boolean loadingMore = true;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.abstraction_list);
-        request = new FilterDataModel();
-        request.RowPerPage = 20;
-        if (getIntent() != null)
-            if (getIntent().getExtras() != null) {
-                String reqString = getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG, "");
-                if (!reqString.equalsIgnoreCase("")) {
-                    request = new Gson().fromJson(reqString, FilterDataModel.class);
-                }
-            }
+        requestOnIntent();
         init();
+        onCreated();
     }
 
-    protected RecyclerView.LayoutManager getRvLayoutManager() {
+    protected abstract void requestOnIntent();
+
+    protected void onCreated() {
+
+    }
+
+    public RecyclerView.LayoutManager getRvLayoutManager() {
         return new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
     }
 
     private void init() {
         LblTitle = findViewById(R.id.lblTitle);
-        RecyclerView  Rv = findViewById(R.id.recycler);
+        RecyclerView Rv = findViewById(R.id.recycler);
         SwipeRefreshLayout Refresh = findViewById(R.id.swipRefresh);
         findViewById(R.id.imgBack).setOnClickListener(v -> ClickBack());
         findViewById(R.id.imgSearch).setOnClickListener(v -> ClickSearch());
@@ -75,13 +71,14 @@ public abstract class AbstractionListActivity<TEntity> extends BaseActivity {
 
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                if (loadingMore&&totalItemsCount <= Total) {
+                if (loadingMore && totalItemsCount <= Total) {
                     RestCall((page + 1));
                 }
             }
+
             @Override
             public void onScrolled(RecyclerView view, int dx, int dy) {
-                super.onScrolled(view,dx,dy);
+                super.onScrolled(view, dx, dy);
                 if (dy > 0 || dy < 0 && viewSyncOnScrolling().isShown())
                     viewSyncOnScrolling().changeVisibility(false);
 
@@ -102,50 +99,41 @@ public abstract class AbstractionListActivity<TEntity> extends BaseActivity {
 
         Refresh.setOnRefreshListener(() -> {
             models.clear();
-            loadingMore=true;
+            loadingMore = true;
             init();
             Refresh.setRefreshing(false);
         });
         afterInit();
     }
+
     protected AbstractionListFragment.IntegrationView viewSyncOnScrolling() {
         return new AbstractionListFragment.IntegrationView() {
             @Override
             public boolean isShown() {
                 return false;
             }
+
             @Override
             public void changeVisibility(boolean isVisible) {
 
             }
         };
     }
+
     public void afterInit() {
 
     }
 
-    private void RestCall(int i) {
+    private void RestCall(int nextPage) {
         if (AppUtill.isNetworkAvailable(this)) {
             switcher.showProgressView();
-            request.CurrentPageNumber = i;
-
-            getService().apply(request).observeOn(AndroidSchedulers.mainThread())
+            apiService().apply((nextPage)).observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(new NtkObserver<ErrorException<TEntity>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<TEntity> newsContentResponse) {
                             if (newsContentResponse.IsSuccess) {
-                                models.addAll(newsContentResponse.ListItems);
-                                Total = newsContentResponse.TotalRowCount;
-                                if (newsContentResponse.ListItems.size() < request.RowPerPage) {
-                                    loadingMore=false;
-                                }
-                                adapter.notifyDataSetChanged();
-                                if (models.size() > 0)
-                                    switcher.showContentView();
-                                else
-                                    switcher.showEmptyView();
-
+                              onSuccessNext(newsContentResponse);
                             } else
                                 switcher.showErrorView(newsContentResponse.ErrorMessage, () -> init());
                         }
@@ -162,9 +150,10 @@ public abstract class AbstractionListActivity<TEntity> extends BaseActivity {
         }
     }
 
+    protected abstract void onSuccessNext(ErrorException<TEntity> response);
 
-    public abstract Function<FilterDataModel, Observable<ErrorException<TEntity>>> getService();
-
+    protected abstract Function<Integer,Observable<ErrorException<TEntity>>> apiService();
+    
     public abstract RecyclerView.Adapter createAdapter();
 
     public void ClickBack() {

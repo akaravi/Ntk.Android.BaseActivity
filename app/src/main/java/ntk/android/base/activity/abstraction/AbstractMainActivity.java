@@ -35,6 +35,8 @@ import ntk.android.base.activity.common.IntroActivity;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.dtomodel.application.ApplicationScoreDtoModel;
 import ntk.android.base.dtomodel.application.MainResponseDtoModel;
+import ntk.android.base.entitymodel.application.ApplicationAppModel;
+import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
 import ntk.android.base.services.application.ApplicationAppService;
 import ntk.android.base.utill.AppUtill;
@@ -48,7 +50,25 @@ public class AbstractMainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        CheckUpdate();
+        CheckUpdateApi();
+    }
+
+    private void CheckUpdateApi() {
+        new ApplicationAppService(this).currentDevice()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new NtkObserver<ErrorException<ApplicationAppModel>>() {
+                    @Override
+                    public void onNext(@NonNull ErrorException<ApplicationAppModel> res) {
+                        if (res.IsSuccess)
+                            CheckUpdate(res.Item);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
     }
 
     @Override
@@ -71,16 +91,19 @@ public class AbstractMainActivity extends BaseActivity {
 
     /**
      * check new version availability
+     *
+     * @param item
      */
-    protected void CheckUpdate() {
-        String st = Preferences.with(this).appVariableInfo().configapp();
-        MainResponseDtoModel mcr = new Gson().fromJson(st, MainResponseDtoModel.class);
+    protected void CheckUpdate(ApplicationAppModel item) {
+
         ApplicationParameter AppParams = BaseNtkApplication.get().getApplicationParameter();
-        if (mcr.AppVersion > AppParams.VERSION_CODE() && !AppParams.APPLICATION_ID().contains(".APPNTK")) {
-            if (mcr.AppForceUpdate) {
-                UpdateFore();
+        if (!AppParams.APPLICATION_ID().contains(".APPNTK")) {
+            if (item.ForceUpdate) {
+                if (item.AppVersion != AppParams.VERSION_CODE())
+                    UpdateFore();
             } else {
-                Update();
+                if (item.AppVersion > AppParams.VERSION_CODE())
+                    Update();
             }
         }
     }
@@ -188,7 +211,7 @@ public class AbstractMainActivity extends BaseActivity {
         });
     }
 
-    public void onFeedbackClick(){
+    public void onFeedbackClick() {
         ApplicationScoreDtoModel request = new ApplicationScoreDtoModel();
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

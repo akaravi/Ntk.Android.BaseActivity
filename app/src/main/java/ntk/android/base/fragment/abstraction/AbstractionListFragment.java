@@ -60,6 +60,7 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
             }
         }
         init();
+        afterInit();
     }
 
     protected RecyclerView.LayoutManager getRvLayoutManager() {

@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
-import ntk.android.base.utill.FontManager;
 import ntk.android.base.view.ViewController;
 import ntk.android.base.view.swicherview.Switcher;
 
@@ -54,7 +53,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         View newView = getLayoutInflater().inflate(layoutResID, rv, false);
         rv.addView(newView,0);
         if(newView.getId()==-1)
-            newView.setId(R.id.contetntView);
+            newView.setId(R.id.contentView);
         createSwitcher(rv,newView.getId());
     }
     private void createSwitcher(RelativeLayout parent,int contentId) {

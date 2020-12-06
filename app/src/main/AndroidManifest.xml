@@ -59,6 +59,7 @@
             android:theme="?attr/Theme_NTK_Poll_Detail" />
         <activity android:name=".activity.common.AuthWithSmsActivity" />
         <activity android:name=".activity.common.AuthWithSmsConfirmActivity" />
+        <activity android:name=".activity.ticketing.NewTicketActivity" />
 
 
         <service

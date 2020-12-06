@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <item name="DialogStructView" type="id" />
     <item name="dialog_frag_baseEmpty" type="id" />
     <item name="dialog_frag_baseLoading" type="id" />
     <item name="dialog_frag_baseError" type="id" />
@@ -7,5 +8,6 @@
     <item name="activity_BaseLoading" type="id" />
     <item name="activity_BaseError" type="id" />
     <item name="activity_stub" type="id" />
-    <item name="contetntView" type="id" />
+    <item name="contentView" type="id" />
+
 </resources>

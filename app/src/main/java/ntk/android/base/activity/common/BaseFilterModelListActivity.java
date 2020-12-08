@@ -35,16 +35,21 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractionLi
     public abstract Function<FilterDataModel, Observable<ErrorException<TEntity>>> getService();
 
     @Override
-    protected void onSuccessNext(ErrorException<TEntity> newsContentResponse) {
+    protected final void onSuccessNext(ErrorException<TEntity> newsContentResponse) {
         models.addAll(newsContentResponse.ListItems);
         Total = newsContentResponse.TotalRowCount;
         if (newsContentResponse.ListItems.size() < request.RowPerPage) {
             loadingMore = false;
         }
         adapter.notifyDataSetChanged();
-        if (models.size() > 0)
+        if (models.size() > 0) {
             switcher.showContentView();
+            onListCreate();
+        }
         else
             switcher.showEmptyView();
+    }
+
+    protected void onListCreate() {
     }
 }

@@ -40,23 +40,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (!(findViewById(contentId).getParent() instanceof RelativeLayout))
             throw new RuntimeException("parent of  " + getResources().getResourceEntryName(contentId) + " should be relative layout");
         RelativeLayout frame = (RelativeLayout) findViewById(contentId).getParent();
-        createSwitcher(frame,contentId);
+        createSwitcher(frame, contentId);
 
     }
 
     @Override
-    public final void  setContentView(int layoutResID) {
+    public final void setContentView(int layoutResID) {
         RelativeLayout rv = new RelativeLayout(this);
         rv.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         rv.setId(R.id.StructView);
         super.setContentView(rv);
         View newView = getLayoutInflater().inflate(layoutResID, rv, false);
-        rv.addView(newView,0);
-        if(newView.getId()==-1)
+        rv.addView(newView, 0);
+        if (newView.getId() == -1)
             newView.setId(R.id.contentView);
-        createSwitcher(rv,newView.getId());
+        createSwitcher(rv, newView.getId());
     }
-    private void createSwitcher(RelativeLayout parent,int contentId) {
+
+    private void createSwitcher(RelativeLayout parent, int contentId) {
         ViewController viewController = NTKApplication.getApplicationStyle().getViewController();
         inflateChild(parent, contentId, viewController.getEmpty_view(), R.id.activity_BaseEmpty);
         inflateChild(parent, contentId, viewController.getError_view(), R.id.activity_BaseError);
@@ -69,10 +70,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         switcher = builder.build();
 
     }
+
     private void inflateChild(ViewGroup inflate, int contentId, int childView, int ids) {
-        View child = getLayoutInflater().inflate(childView, null);
+        View child = getLayoutInflater().inflate(childView, inflate, false);
         child.setId(ids);
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inflate.findViewById(contentId).getLayoutParams();
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         params.addRule(RelativeLayout.ALIGN_TOP, contentId);
         params.addRule(RelativeLayout.ALIGN_BOTTOM, contentId);
         params.addRule(RelativeLayout.ALIGN_RIGHT, contentId);

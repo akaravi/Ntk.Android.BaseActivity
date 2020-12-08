@@ -3,12 +3,16 @@ package ntk.android.base.adapter;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.LayoutRes;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -27,7 +31,7 @@ import ntk.android.base.R;
 
 public abstract class BaseRecyclerAdapter<Entity, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
     protected List<Entity> list;
-    protected int drawable = R.attr.ntk_base_logo;
+    protected int drawable =-1;
 
     public BaseRecyclerAdapter(ArrayList<Entity> list) {
         this.list = list;
@@ -62,6 +66,12 @@ public abstract class BaseRecyclerAdapter<Entity, VH extends RecyclerView.ViewHo
     }
 
     public void loadImage(String path, ImageView holder, View loading) {
+//        if(drawable==-1){
+//            TypedValue typedValue = new TypedValue();
+//            Resources.Theme theme = holder.getContext().getTheme();
+//            theme.resolveAttribute(R.attr.ntk_base_logo, typedValue, true);
+//            drawable = typedValue.data;
+//        }
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnFail(drawable).cacheOnDisk(true).build();
         ImageLoader.getInstance().displayImage(path, holder, options, new ImageLoadingListener() {
@@ -73,12 +83,16 @@ public abstract class BaseRecyclerAdapter<Entity, VH extends RecyclerView.ViewHo
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                 if (loading != null) loading.setVisibility(View.GONE);
+
             }
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 if (loading != null) loading.setVisibility(View.GONE);
-            }
+            if(loadedImage==null){
+                holder.setImageResource(drawable);
+
+            }}
 
             @Override
             public void onLoadingCancelled(String imageUri, View view) {

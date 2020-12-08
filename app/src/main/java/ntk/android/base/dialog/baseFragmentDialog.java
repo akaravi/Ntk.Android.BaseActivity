@@ -43,7 +43,7 @@ public abstract class baseFragmentDialog extends DialogFragment {
             if (contentView.getId() == -1)
                 contentView.setId(R.id.contentView);
             RelativeLayout exceptView = new RelativeLayout(getContext());
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) contentView.getLayoutParams();
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.addRule(RelativeLayout.ALIGN_TOP, contentView.getId());
             params.addRule(RelativeLayout.ALIGN_BOTTOM, contentView.getId());
             params.addRule(RelativeLayout.ALIGN_RIGHT, contentView.getId());
@@ -73,7 +73,8 @@ public abstract class baseFragmentDialog extends DialogFragment {
     private void inflateChild( ViewGroup inflate, int childView, int ids) {
         View child = getLayoutInflater().inflate(childView, null);
         child.setId(ids);
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inflate.getLayoutParams();
+        RelativeLayout.LayoutParams params =  new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
         child.setLayoutParams(params);
         inflate.addView(child);
     }

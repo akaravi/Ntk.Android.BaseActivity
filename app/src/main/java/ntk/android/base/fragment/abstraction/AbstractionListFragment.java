@@ -155,9 +155,10 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
                                     loadingMore = false;
                                 }
                                 adapter.notifyDataSetChanged();
-                                if (models.size() > 0)
+                                if (models.size() > 0) {
                                     switcher.showContentView();
-                                else
+                                    onListCreate();
+                                } else
                                     switcher.showEmptyView();
 
                             } else
@@ -174,6 +175,11 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
             switcher.showErrorView("عدم دسترسی به اینترنت", () -> init());
 
         }
+    }
+
+    protected void onListCreate() {
+
+
     }
 
 

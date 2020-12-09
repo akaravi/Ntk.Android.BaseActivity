@@ -83,5 +83,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         inflate.addView(child);
     }
 
+
 }
 

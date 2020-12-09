@@ -54,21 +54,21 @@ public class AbstractMainActivity extends BaseActivity {
     }
 
     private void CheckUpdateApi() {
-        new ApplicationAppService(this).currentDevice()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new NtkObserver<ErrorException<ApplicationAppModel>>() {
-                    @Override
-                    public void onNext(@NonNull ErrorException<ApplicationAppModel> res) {
-                        if (res.IsSuccess)
-                            CheckUpdate(res.Item);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-                });
+//        new ApplicationAppService(this).currentApp()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new NtkObserver<ErrorException<ApplicationAppModel>>() {
+//                    @Override
+//                    public void onNext(@NonNull ErrorException<ApplicationAppModel> res) {
+//                        if (res.IsSuccess)
+//                            CheckUpdate(res.Item);
+//                    }
+//
+//                    @Override
+//                    public void onError(@NonNull Throwable e) {
+//
+//                    }
+//                });
     }
 
     @Override

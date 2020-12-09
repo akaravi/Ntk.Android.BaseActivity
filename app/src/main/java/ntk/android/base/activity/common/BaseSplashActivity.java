@@ -25,8 +25,7 @@ import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.RetrofitManager;
-import ntk.android.base.dtomodel.application.AppThemeDtoModel;
-import ntk.android.base.dtomodel.application.MainResponseDtoModel;
+import ntk.android.base.entitymodel.application.ApplicationAppModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.TokenInfoModel;
 import ntk.android.base.services.application.ApplicationAppService;
@@ -122,7 +121,8 @@ public abstract class BaseSplashActivity extends BaseActivity {
                     @Override
                     public void onNext(@NonNull ErrorException<TokenInfoModel> tokenInfoModelErrorException) {
                         if (tokenInfoModelErrorException.IsSuccess)
-                            getThemeData();
+//                            getThemeData();
+                            getCurrentApp();
                         else
                             switcher.showErrorView();
                     }
@@ -134,72 +134,39 @@ public abstract class BaseSplashActivity extends BaseActivity {
                 });
     }
 
-    /**
-     * get theme from server
-     */
-    private void getThemeData() {
-        new ApplicationAppService(this).getAppTheme().subscribeOn(Schedulers.io())
+    private void getCurrentApp() {
+        new ApplicationAppService(this).currentApp()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new NtkObserver<ErrorException<AppThemeDtoModel>>() {
-                    @Override
-                    public void onNext(@NonNull ErrorException<AppThemeDtoModel> theme) {
-                        //now can get main response
-                        if (theme.IsSuccess) {
-                            Preferences.with(BaseSplashActivity.this).UserInfo().seTheme(new Gson().toJson(theme.Item.ThemeConfigJson));
-                            requestMainData();
-                        } else
-                            switcher.showErrorView();
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        switcher.showErrorView();
-                    }
-                });
-    }
-
-    /**
-     * req main data
-     */
-    private void requestMainData() {
-        new ApplicationAppService(this).getResponseMain().observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new NtkObserver<ErrorException<MainResponseDtoModel>>() {
+                .subscribe(new NtkObserver<ErrorException<ApplicationAppModel>>() {
                     @Override
-                    public void onNext(@NonNull ErrorException<MainResponseDtoModel> mainCoreResponse) {
-                        if (!mainCoreResponse.IsSuccess) {
+                    public void onNext(@NonNull ErrorException<ApplicationAppModel> response) {
+                        if (!response.IsSuccess) {
                             switcher.showErrorView();
                             //replace with layout
-                            Toasty.warning(BaseSplashActivity.this, mainCoreResponse.ErrorMessage, Toasty.LENGTH_LONG, true).show();
+                            Toasty.warning(BaseSplashActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
                             return;
-
                         }
-                        HandelDataAction(mainCoreResponse.Item);
-
+                        Preferences.with(BaseSplashActivity.this).UserInfo().seTheme(new Gson().toJson(response.Item.ThemeConfigJsonValues));
+                        HandelDataAction(response.Item);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        //replace with layout
-                        switcher.showErrorView();
-                        Toasty.warning(BaseSplashActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
 
                     }
                 });
     }
-
 
     /**
      * @param model get from response
      */
-    private void HandelDataAction(MainResponseDtoModel model) {
+    private void HandelDataAction(ApplicationAppModel model) {
 
-        Preferences.with(this).UserInfo().setMemberUserId(model.MemberUserId);
-        Preferences.with(this).UserInfo().setUserId(model.UserId);
-        Preferences.with(this).UserInfo().setSiteId(model.SiteId);
+        long userId = Preferences.with(this).UserInfo().userId();
         Preferences.with(this).appVariableInfo().setConfigapp(new Gson().toJson(model));
         //user has token
-        if (model.UserId > 0) {
+        if (userId > 0) {
             new CoreAuthService(this).correctTokenInfo().observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(new NtkObserver<Boolean>() {

@@ -23,6 +23,7 @@ import ntk.android.base.BaseNtkApplication;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
+import ntk.android.base.appclass.UpdateClass;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.RetrofitManager;
 import ntk.android.base.entitymodel.application.ApplicationAppModel;
@@ -147,6 +148,8 @@ public abstract class BaseSplashActivity extends BaseActivity {
                             Toasty.warning(BaseSplashActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
                             return;
                         }
+
+                        Preferences.with(BaseSplashActivity.this).appVariableInfo().setUpdateInfo(new UpdateClass(response.Item));
                         Preferences.with(BaseSplashActivity.this).UserInfo().seTheme(new Gson().toJson(response.Item.ThemeConfigJsonValues));
                         HandelDataAction(response.Item);
                     }

@@ -32,11 +32,10 @@ import ntk.android.base.BaseNtkApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.activity.common.IntroActivity;
+import ntk.android.base.appclass.UpdateClass;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.dtomodel.application.ApplicationScoreDtoModel;
 import ntk.android.base.dtomodel.application.MainResponseDtoModel;
-import ntk.android.base.entitymodel.application.ApplicationAppModel;
-import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
 import ntk.android.base.services.application.ApplicationAppService;
 import ntk.android.base.utill.AppUtill;
@@ -50,26 +49,9 @@ public class AbstractMainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        CheckUpdateApi();
+        CheckUpdate();
     }
 
-    private void CheckUpdateApi() {
-//        new ApplicationAppService(this).currentApp()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new NtkObserver<ErrorException<ApplicationAppModel>>() {
-//                    @Override
-//                    public void onNext(@NonNull ErrorException<ApplicationAppModel> res) {
-//                        if (res.IsSuccess)
-//                            CheckUpdate(res.Item);
-//                    }
-//
-//                    @Override
-//                    public void onError(@NonNull Throwable e) {
-//
-//                    }
-//                });
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -91,29 +73,27 @@ public class AbstractMainActivity extends BaseActivity {
 
     /**
      * check new version availability
-     *
-     * @param item
      */
-    protected void CheckUpdate(ApplicationAppModel item) {
-
+    protected void CheckUpdate() {
+        UpdateClass updateClass = Preferences.with(this).appVariableInfo().updateInfo();
         ApplicationParameter AppParams = BaseNtkApplication.get().getApplicationParameter();
         if (!AppParams.APPLICATION_ID().contains(".APPNTK")) {
-            if (item.ForceUpdate) {
-                if (item.AppVersion != AppParams.VERSION_CODE())
-                    UpdateFore();
+            if (updateClass.isForced) {
+                if (updateClass.version != AppParams.VERSION_CODE())
+                    UpdateFore(updateClass.url);
             } else {
-                if (item.AppVersion > AppParams.VERSION_CODE())
-                    Update();
+                if (updateClass.version > AppParams.VERSION_CODE())
+                    Update(updateClass.url);
             }
         }
     }
 
     /**
      * optional update if user want
+     *
+     * @param url
      */
-    private void Update() {
-        String st = Preferences.with(this).appVariableInfo().configapp();
-        MainResponseDtoModel mcr = new Gson().fromJson(st, MainResponseDtoModel.class);
+    private void Update(String url) {
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(true);
@@ -129,7 +109,7 @@ public class AbstractMainActivity extends BaseActivity {
         Ok.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
         Ok.setOnClickListener(view1 -> {
             Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(mcr.AppUrl));
+            i.setData(Uri.parse(url));
             startActivity(i);
             dialog.dismiss();
         });
@@ -141,10 +121,10 @@ public class AbstractMainActivity extends BaseActivity {
 
     /**
      * force update app
+     *
+     * @param url
      */
-    private void UpdateFore() {
-        String st = Preferences.with(this).appVariableInfo().configapp();
-        MainResponseDtoModel mcr = new Gson().fromJson(st, MainResponseDtoModel.class);
+    private void UpdateFore(String url) {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
@@ -160,7 +140,7 @@ public class AbstractMainActivity extends BaseActivity {
         Ok.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
         Ok.setOnClickListener(view1 -> {
             Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(mcr.AppUrl));
+            i.setData(Uri.parse(url));
             startActivity(i);
             dialog.dismiss();
         });

@@ -9,7 +9,6 @@ import android.view.Window;
 import android.widget.TextView;
 
 import androidx.annotation.IdRes;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -37,11 +36,13 @@ public class Switcher {
 //    private List<View> reqestViews = new ArrayList<>();
 
     private Integer errorLabel;//for customization of Error
+    private int errorButton;//for customization of Error
     private TextView progressLabel;//for customization of loading
     private int animDuration = 2000;
     private boolean errorShown;
 
     private List<Animations.FadeListener> runningAnimators = new ArrayList<>();
+    private int emyptyTextId;
 
     private Switcher() {
 
@@ -109,14 +110,14 @@ public class Switcher {
         if (toolbarProgress != null) {
             Log.d(Switcher.class.getSimpleName(), "hideToolbarProgress: ");
             toolbarProgress.setVisibility(View.GONE);
-            Animations.FadeListener animator = Animations.fadeOut(false ,toolbarProgress, animDuration);
+            Animations.FadeListener animator = Animations.fadeOut(false, toolbarProgress, animDuration);
             if (animator != null) runningAnimators.add(animator);
         }
     }
 
     public void replaceContentView(View rv) {
-    contentViews.clear();
-    contentViews.add(rv);
+        contentViews.clear();
+        contentViews.add(rv);
     }
 
     public static class Builder {
@@ -130,10 +131,12 @@ public class Switcher {
             switcher = new Switcher();
             switcher.setAnimationDuration(context.getResources().getInteger(android.R.integer.config_shortAnimTime));
         }
+
         public Builder forDialog() {
-            switcher.forDialog=true;
+            switcher.forDialog = true;
             return this;
         }
+
         public Builder(Switcher switcher) {
             this.switcher = switcher;
         }
@@ -168,14 +171,27 @@ public class Switcher {
             return this;
         }
 
-        public Builder setErrorLabel(Integer errorLabel) {
+        public Builder setErrorLabelId(Integer errorLabel) {
             checkNotNull(errorLabel, "Provided error label is null");
             switcher.setErrorLabelID(errorLabel);
             return this;
         }
 
+        public Builder setErrorButtonId(int errorButton) {
+            checkNotNull(errorButton, "Provided error label is null");
+            switcher.setErrorButtonId(errorButton);
+            return this;
+        }
+
+        public Builder setEmptyLabelId(int errorButton) {
+            checkNotNull(errorButton, "Provided error label is null");
+            switcher.setEmptyId(errorButton);
+            return this;
+        }
+
         public Switcher build() {
             switcher.setupViews();
+
             return switcher;
         }
 
@@ -183,10 +199,20 @@ public class Switcher {
             if (view != null)
                 switcher.addToolbarProgress(view);
         }
+
+
 //        //next version
 //        public void addWaitView(View view) {
 //            switcher.reqestViews.add(view);
 //        }
+    }
+
+    private void setEmptyId(int emptyID) {
+        this.emyptyTextId = emptyID;
+    }
+
+    private void setErrorButtonId(int errorButton) {
+        this.errorButton = errorButton;
     }
 
     private void addToolbarProgress(View view) {
@@ -199,15 +225,15 @@ public class Switcher {
         }
 
         for (View errorView : errorViews) {
-            errorView.setVisibility(forDialog?View.INVISIBLE:View.GONE);
+            errorView.setVisibility(forDialog ? View.INVISIBLE : View.GONE);
         }
 
         for (View progressView : progressViews) {
-            progressView.setVisibility(forDialog?View.INVISIBLE:View.GONE);
+            progressView.setVisibility(forDialog ? View.INVISIBLE : View.GONE);
         }
 
         for (View emptyView : emptyViews) {
-            emptyView.setVisibility(forDialog?View.INVISIBLE:View.GONE);
+            emptyView.setVisibility(forDialog ? View.INVISIBLE : View.GONE);
         }
 //        //next version
 //        for (View reqview : reqestViews) {
@@ -265,9 +291,9 @@ public class Switcher {
         for (View view : viewsToHide) {
             if (immediately) {
                 view.setAlpha(0);
-                view.setVisibility(forDialog?View.INVISIBLE:View.GONE);
+                view.setVisibility(forDialog ? View.INVISIBLE : View.GONE);
             } else {
-                Animations.FadeListener animator = Animations.fadeOut(forDialog,view, animDuration);
+                Animations.FadeListener animator = Animations.fadeOut(forDialog, view, animDuration);
                 if (animator != null) runningAnimators.add(animator);
             }
         }
@@ -333,36 +359,22 @@ public class Switcher {
             throw new NullPointerException("build ViewSwitcher showErrorView(String errorMessage) VIEW NULL");
     }
 
-    private void showErrorView(final OnErrorViewListener listener) {
+    private void showErrorView( Runnable runner) {
         for (View errorView : errorViews) {
 //            errorView.setClickable(true);
             errorView.setAlpha(1);
 //            errorView.setEnabled(true);
-            errorView.findViewById(R.id.btnTryAgain)
-                    .setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View view, MotionEvent motionEvent) {
-                            view.setOnTouchListener(null);
-                            listener.onErrorViewClicked();
-                            return false;
-                        }
+            errorView.findViewById(errorButton)
+                    .setOnTouchListener((view, motionEvent) -> {
+                        view.setOnTouchListener(null);
+                        runner.run();
+                        return false;
                     });
-//            progressViews.get(0).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Toast.makeText(view.getContext(), "LOADING", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//            contentViews.get(0).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Toast.makeText(view.getContext(), "Content", Toast.LENGTH_SHORT).show();
-//                }
-//            });
+
         }
     }
 
-    public void showErrorView(String errorMessage, final OnErrorViewListener listener) {
+    public void showErrorView(String errorMessage,Runnable runner) {
         if (errorLabel == null) {
             throw new NullPointerException("You have to build ViewSwitcher using withErrorLabel() method");
         }
@@ -370,7 +382,7 @@ public class Switcher {
         showErrorView(errorMessage);
 
         showErrorView();
-        showErrorView(listener);
+        showErrorView(runner);
     }
 
     public void showEmptyView() {

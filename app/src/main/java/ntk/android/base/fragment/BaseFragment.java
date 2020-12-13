@@ -70,7 +70,7 @@ public abstract class BaseFragment extends Fragment {
         builder.addEmptyView(parent.findViewById(R.id.activity_BaseEmpty))
                 .addProgressView(parent.findViewById(R.id.activity_BaseLoading))
                 .addContentView(parent.findViewById(contentId))
-                .addErrorView(parent.findViewById(R.id.activity_BaseError)).setErrorLabel((R.id.tvError));
+                .addErrorView(parent.findViewById(R.id.activity_BaseError)).setErrorLabelId((R.id.tvError));
         switcher = builder.build();
 
     }

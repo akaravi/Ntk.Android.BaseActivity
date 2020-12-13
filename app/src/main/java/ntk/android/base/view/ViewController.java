@@ -1,5 +1,6 @@
 package ntk.android.base.view;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 
 public abstract class ViewController {
@@ -9,7 +10,10 @@ public abstract class ViewController {
     protected int loading_view;
     @LayoutRes
     protected int empty_view;
-
+    @IdRes
+    protected int error_label;
+   @IdRes
+    protected int error_button;
     public int getEmpty_view() {
         return empty_view;
     }
@@ -22,6 +26,11 @@ public abstract class ViewController {
         return loading_view;
     }
 
+    public  int getErrorLabel(){
+        return error_label;
+    }   public  int getErrorButton(){
+        return error_button;
+    }
     public ViewController setError_view(int error_view) {
         this.error_view = error_view;
         return this;
@@ -36,4 +45,7 @@ public abstract class ViewController {
         this.empty_view = empty_view;
         return this;
     }
+
+
+
 }

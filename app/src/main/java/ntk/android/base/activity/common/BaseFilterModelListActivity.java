@@ -44,6 +44,7 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractionLi
         adapter.notifyDataSetChanged();
         if (models.size() > 0) {
             switcher.showContentView();
+            switcher.hideLoadMore();
             onListCreate();
         }
         else

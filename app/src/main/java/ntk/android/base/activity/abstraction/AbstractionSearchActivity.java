@@ -18,13 +18,14 @@ import java9.util.function.Function;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.api.utill.NTKUtill;
-import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ErrorExceptionObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.entitymodel.base.Filters;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
+import ntk.android.base.view.swicherview.GenericErrors;
 
 public abstract class AbstractionSearchActivity<TEntity> extends BaseActivity {
     EditText Txt;
@@ -76,32 +77,39 @@ public abstract class AbstractionSearchActivity<TEntity> extends BaseActivity {
 
                 switcher.showProgressView();
                 ServiceExecute.execute(getService().apply(request))
-                        .subscribe(new NtkObserver<ErrorException<TEntity>>() {
+                        .subscribe(new ErrorExceptionObserver<TEntity>(switcher) {
+
                             @Override
                             public void onNext(@NonNull ErrorException<TEntity> response) {
                                 searchLock = false;
-                                if (response.IsSuccess) {
-                                    if (response.ListItems.size() != 0) {
-                                        models.addAll(response.ListItems);
-                                        adapter.notifyDataSetChanged();
-                                        switcher.showContentView();
-                                    } else {
-                                        switcher.showEmptyView();
-                                    }
+                                super.onNext(response);
+                            }
+
+                            @Override
+                            protected void SuccessResponse(ErrorException<TEntity> response) {
+                                if (response.ListItems.size() != 0) {
+                                    models.addAll(response.ListItems);
+                                    adapter.notifyDataSetChanged();
+                                    switcher.showContentView();
                                 } else {
-                                    switcher.showErrorView(response.ErrorMessage, () -> init());
+                                    switcher.showEmptyView();
                                 }
+                            }
+
+                            @Override
+                            protected Runnable tryAgainMethod() {
+                                return AbstractionSearchActivity.this::Search;
                             }
 
                             @Override
                             public void onError(@NonNull Throwable e) {
                                 searchLock = false;
-                                switcher.showErrorView("خطا در دسترسی به سامانه", () -> init());
+                                super.onError(e);
                             }
                         });
             } else {
                 searchLock = false;
-                switcher.showErrorView("عدم دسترسی به اینترنت", () -> Search());
+                new GenericErrors().netError(switcher, this::Search);
             }
         }
     }

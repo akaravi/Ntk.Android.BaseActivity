@@ -77,9 +77,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
-                android:text="بازگشت"
                 android:layout_toStartOf="@id/imgBack"
                 android:layout_toLeftOf="@id/imgBack"
+                android:text="بازگشت"
                 android:textColor="@color/colorTextBlack"
                 tools:ignore="HardcodedText" />
         </RelativeLayout>
@@ -90,11 +90,14 @@
             android:layout_height="3dp"
             android:background="?attr/colorAccent" />
     </LinearLayout>
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipRefresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+
         android:backgroundTint="?attr/colorAccent"
         tools:targetApi="lollipop">
 
@@ -106,4 +109,31 @@
             tools:ignore="InvalidId" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/loadMoreProgress"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#251C1C1C"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ProgressBar
+            android:id="@+id/loadingProgress"
+            style="style/CircularProgressDrawableStylePrimary"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="در حال دریافت اطلاعات"
+            android:textColor="?attr/colorAccent"
+            android:textSize="14sp" />
+    </LinearLayout>
+</RelativeLayout>
 </LinearLayout>

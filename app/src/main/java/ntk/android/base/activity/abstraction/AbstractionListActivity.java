@@ -12,21 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 import java9.util.function.Function;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
-import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ErrorExceptionObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.fragment.abstraction.AbstractionListFragment;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
 import ntk.android.base.utill.FontManager;
+import ntk.android.base.view.swicherview.GenericErrors;
 
-public abstract class AbstractionListActivity<TREq,TEntity> extends BaseActivity {
+public abstract class AbstractionListActivity<TREq, TEntity> extends BaseActivity {
     protected TextView LblTitle;
 
 
@@ -56,6 +54,7 @@ public abstract class AbstractionListActivity<TREq,TEntity> extends BaseActivity
     }
 
     private void init() {
+        switcher.setLoadMore(findViewById(R.id.loadMoreProgress));
         LblTitle = findViewById(R.id.lblTitle);
         RecyclerView Rv = findViewById(R.id.recycler);
         SwipeRefreshLayout Refresh = findViewById(R.id.swipRefresh);
@@ -127,33 +126,33 @@ public abstract class AbstractionListActivity<TREq,TEntity> extends BaseActivity
 
     private void RestCall(int nextPage) {
         if (AppUtill.isNetworkAvailable(this)) {
-            switcher.showProgressView();
+            if (nextPage == 1)
+                switcher.showProgressView();
+            else
+                switcher.showLoadMore();
             ServiceExecute.execute(apiService().apply((nextPage)))
-                    .subscribe(new NtkObserver<ErrorException<TEntity>>() {
+                    .subscribe(new ErrorExceptionObserver<TEntity>(switcher) {
+
                         @Override
-                        public void onNext(@NonNull ErrorException<TEntity> newsContentResponse) {
-                            if (newsContentResponse.IsSuccess) {
-                              onSuccessNext(newsContentResponse);
-                            } else
-                                switcher.showErrorView(newsContentResponse.ErrorMessage, () -> init());
+                        protected void SuccessResponse(ErrorException<TEntity> response) {
+                            onSuccessNext(response);
                         }
 
-
                         @Override
-                        public void onError(@NonNull Throwable e) {
-                            switcher.showErrorView("خطای سامانه مجددا تلاش کنید", () -> init());
+                        protected Runnable tryAgainMethod() {
+                            return () -> RestCall(nextPage);
                         }
                     });
         } else {
-            switcher.showErrorView("عدم دسترسی به اینترنت", () -> init());
+            new GenericErrors().netError(switcher, () -> RestCall(nextPage));
 
         }
     }
 
     protected abstract void onSuccessNext(ErrorException<TEntity> response);
 
-    protected abstract Function<Integer,Observable<ErrorException<TEntity>>> apiService();
-    
+    protected abstract Function<Integer, Observable<ErrorException<TEntity>>> apiService();
+
     public abstract RecyclerView.Adapter createAdapter();
 
     public void ClickBack() {

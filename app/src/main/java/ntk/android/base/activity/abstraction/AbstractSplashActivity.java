@@ -11,7 +11,6 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.annotations.NonNull;
@@ -155,6 +154,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                                 startnewActivity(NTKApplication.getApplicationStyle().getMainActivity());
                             else//user token in invalid then go to register
                             {
+                                Preferences.with(AbstractSplashActivity.this).UserInfo().setUserId(0);
                                 Preferences.with(AbstractSplashActivity.this).appVariableInfo().setIsLogin(false);
                                 Toasty.warning(AbstractSplashActivity.this, "َشما به صفحه ی ورود کاربر هدایت می شوید", Toasty.LENGTH_LONG, true).show();
                                 startnewActivity(AuthWithSmsActivity.class);
@@ -190,10 +190,5 @@ public abstract class AbstractSplashActivity extends BaseActivity {
             }
         }, System.currentTimeMillis() - startTime >= 5000 ? 100 : 5000 - System.currentTimeMillis() - startTime);
 
-    }
-
-    public void ClickRefresh() {
-        switcher.showProgressView();
-        getTokenDevice();
     }
 }

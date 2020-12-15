@@ -16,11 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import java9.util.function.Function;
 import ntk.android.base.Extras;
 import ntk.android.base.R;
+import ntk.android.base.config.ErrorExceptionObserver;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
@@ -29,6 +28,7 @@ import ntk.android.base.fragment.BaseFragment;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
 import ntk.android.base.utill.FontManager;
+import ntk.android.base.view.swicherview.GenericErrors;
 
 public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
     TextView LblTitle;
@@ -52,6 +52,7 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
             findViewById(R.id.ToolbarRv).setVisibility(View.GONE);
             findViewById(R.id.toolbarShadow).setVisibility(View.GONE);
         }
+        switcher.setLoadMore(findViewById(R.id.loadMoreProgress));
         request = new FilterDataModel();
         request.RowPerPage = 20;
         if (getArguments() != null) {
@@ -140,39 +141,43 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
 
     }
 
-    private void RestCall(int i) {
+    private void RestCall(int nextPage) {
         if (AppUtill.isNetworkAvailable(getContext())) {
-            switcher.showProgressView();
-            request.CurrentPageNumber = i;
-            ServiceExecute.execute(  getService().apply(request))
-                    .subscribe(new NtkObserver<ErrorException<TEntity>>() {
-                        @Override
-                        public void onNext(@NonNull ErrorException<TEntity> newsContentResponse) {
-                            if (newsContentResponse.IsSuccess) {
-                                models.addAll(newsContentResponse.ListItems);
-                                Total = newsContentResponse.TotalRowCount;
-                                if (newsContentResponse.ListItems.size() < request.RowPerPage) {
-                                    loadingMore = false;
-                                }
-                                adapter.notifyDataSetChanged();
-                                if (models.size() > 0) {
-                                    switcher.showContentView();
-                                    onListCreate();
-                                } else
-                                    switcher.showEmptyView();
+            if (nextPage == 1)
+                switcher.showProgressView();
+            else
+                switcher.showLoadMore();
+            request.CurrentPageNumber = nextPage;
+            ServiceExecute.execute(getService().apply(request))
+                    .subscribe(new ErrorExceptionObserver<TEntity>(switcher) {
 
+                        @Override
+                        protected void SuccessResponse(ErrorException<TEntity> newsContentResponse) {
+                            models.addAll(newsContentResponse.ListItems);
+                            Total = newsContentResponse.TotalRowCount;
+                            if (newsContentResponse.ListItems.size() < request.RowPerPage) {
+                                loadingMore = false;
+                            }
+                            adapter.notifyDataSetChanged();
+                            if (models.size() > 0) {
+                                switcher.showContentView();
+                                switcher.hideLoadMore();
+                                onListCreate();
                             } else
-                                switcher.showErrorView(newsContentResponse.ErrorMessage, () -> init());
-                        }
+                                switcher.showEmptyView();
 
+                        }
 
                         @Override
-                        public void onError(@NonNull Throwable e) {
-                            switcher.showErrorView("خطای سامانه مجددا تلاش کنید", () -> init());
+                        protected Runnable tryAgainMethod() {
+                            return () -> RestCall(nextPage);
                         }
+
+
+
                     });
         } else {
-            switcher.showErrorView("عدم دسترسی به اینترنت", () -> init());
+            new GenericErrors().netError(switcher, () -> RestCall(nextPage));
 
         }
     }

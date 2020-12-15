@@ -3,7 +3,6 @@ package ntk.android.base.view.swicherview;
 import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
@@ -31,6 +30,7 @@ public class Switcher {
     private List<View> emptyViews = new ArrayList<>();
     private List<View> progressViews = new ArrayList<>();
     private View toolbarProgress;
+    private View loadingMoreView;
     int dialogResId = R.layout.dialog_load;
     Dialog dialog;
 //    private List<View> reqestViews = new ArrayList<>();
@@ -77,18 +77,19 @@ public class Switcher {
         animDuration = duration;
     }
 
-//    public void showToolbarProgress() {
-//        if (toolbarProgress != null) {
-//            Log.d(Switcher.class.getSimpleName(), "showToolbarProgress: ");
-//            Animations.FadeListener animator = Animations.fadeIn(toolbarProgress, animDuration);
-//            if (animator != null) runningAnimators.add(animator);
-//            if (progressViews != null) {
-//                if (toolbarProgress.findViewById(R.id.toolbarLinearProgress) != null)
-//                    ((ProgressView) toolbarProgress.findViewById(R.id.toolbarLinearProgress)).start();
-//
-//            }
-//        }
-//    }
+    public void showLoadMore() {
+        if (loadingMoreView != null) {
+            Animations.FadeListener animator = Animations.fadeIn(loadingMoreView, animDuration);
+            if (animator != null) runningAnimators.add(animator);
+        }
+    }
+
+    public void hideLoadMore() {
+        if (loadingMoreView != null) {
+            Animations.FadeListener animator = Animations.fadeOut(forDialog, loadingMoreView, animDuration);
+            if (animator != null) runningAnimators.add(animator);
+        }
+    }
 
     public void showLoadDialog(Context context, boolean cancleable) {
         dialog = new Dialog(context);
@@ -118,6 +119,10 @@ public class Switcher {
     public void replaceContentView(View rv) {
         contentViews.clear();
         contentViews.add(rv);
+    }
+
+    public void setLoadMore(View viewById) {
+        loadingMoreView = viewById;
     }
 
     public static class Builder {
@@ -197,7 +202,7 @@ public class Switcher {
 
         public void addTitleProgress(View view) {
             if (view != null)
-                switcher.addToolbarProgress(view);
+                switcher.setToolbarProgress(view);
         }
 
 
@@ -215,7 +220,7 @@ public class Switcher {
         this.errorButton = errorButton;
     }
 
-    private void addToolbarProgress(View view) {
+    private void setToolbarProgress(View view) {
         toolbarProgress = view;
     }
 
@@ -359,22 +364,21 @@ public class Switcher {
             throw new NullPointerException("build ViewSwitcher showErrorView(String errorMessage) VIEW NULL");
     }
 
-    private void showErrorView( Runnable runner) {
+    private void showErrorView(Runnable runner) {
         for (View errorView : errorViews) {
 //            errorView.setClickable(true);
             errorView.setAlpha(1);
 //            errorView.setEnabled(true);
             errorView.findViewById(errorButton)
-                    .setOnTouchListener((view, motionEvent) -> {
+                    .setOnClickListener((view) -> {
                         view.setOnTouchListener(null);
                         runner.run();
-                        return false;
                     });
 
         }
     }
 
-    public void showErrorView(String errorMessage,Runnable runner) {
+    public void showErrorView(String errorMessage, Runnable runner) {
         if (errorLabel == null) {
             throw new NullPointerException("You have to build ViewSwitcher using withErrorLabel() method");
         }

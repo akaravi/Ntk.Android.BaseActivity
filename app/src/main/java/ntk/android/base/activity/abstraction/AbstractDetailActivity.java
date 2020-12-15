@@ -16,20 +16,17 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 import java9.util.function.Function;
 import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
+import ntk.android.base.appclass.UpdateClass;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.application.MainResponseDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
-import ntk.android.base.entitymodel.news.NewsContentModel;
-import ntk.android.base.services.news.NewsContentService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
@@ -91,7 +88,7 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
 
                     });
         } else {
-            new GenericErrors(switcher).netError(this::getContent);
+            new GenericErrors().netError(switcher, this::getContent);
         }
 
     }
@@ -112,18 +109,17 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
                         }
                     });
         } else {
-            new GenericErrors(switcher).netError(() -> getContentOtherInfo(ContentId));
+            new GenericErrors().netError(switcher, () -> getContentOtherInfo(ContentId));
         }
     }
 
 
     public void ClickShare() {
-        String st = Preferences.with(this).appVariableInfo().configapp();
-        MainResponseDtoModel mcr = new Gson().fromJson(st, MainResponseDtoModel.class);
+        UpdateClass updateInfo = Preferences.with(this).appVariableInfo().updateInfo();
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         String message = createShareMassage();
-        shareIntent.putExtra(Intent.EXTRA_TEXT, message + "\n\n\n" + this.getString(R.string.app_name) + "\n" + "لینک دانلود:" + "\n" + mcr.AppUrl);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, message + "\n\n\n" + this.getString(R.string.app_name) + "\n" + "لینک دانلود:" + "\n" + updateInfo.url);
         shareIntent.setType("text/txt");
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         this.startActivity(Intent.createChooser(shareIntent, "به اشتراک گزاری با...."));
@@ -151,7 +147,7 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
                         }
                     });
         } else {
-            new GenericErrors(switcher).netError(this::ClickFav);
+            new GenericErrors().netError(switcher, this::ClickFav);
         }
     }
 

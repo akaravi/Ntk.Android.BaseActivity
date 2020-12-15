@@ -12,8 +12,9 @@ public abstract class ViewController {
     protected int empty_view;
     @IdRes
     protected int error_label;
-   @IdRes
+    @IdRes
     protected int error_button;
+
     public int getEmpty_view() {
         return empty_view;
     }
@@ -26,11 +27,15 @@ public abstract class ViewController {
         return loading_view;
     }
 
-    public  int getErrorLabel(){
+    public int getErrorLabel() {
         return error_label;
-    }   public  int getErrorButton(){
+    }
+
+    public int getErrorButton() {
         return error_button;
     }
+
+
     public ViewController setError_view(int error_view) {
         this.error_view = error_view;
         return this;
@@ -46,6 +51,13 @@ public abstract class ViewController {
         return this;
     }
 
+    public ViewController setError_button(int error_button) {
+        this.error_button = error_button;
+        return this;
+    }
 
-
+    public ViewController setError_label(int error_label) {
+        this.error_label = error_label;
+        return this;
+    }
 }

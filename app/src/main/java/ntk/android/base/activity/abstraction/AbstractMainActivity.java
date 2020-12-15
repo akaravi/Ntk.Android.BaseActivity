@@ -17,15 +17,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
 
-import com.google.gson.Gson;
 import com.google.zxing.WriterException;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 import es.dmoral.toasty.Toasty;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 import ntk.android.base.ApplicationParameter;
 import ntk.android.base.BaseNtkApplication;
@@ -36,7 +33,6 @@ import ntk.android.base.appclass.UpdateClass;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.application.ApplicationScoreDtoModel;
-import ntk.android.base.dtomodel.application.MainResponseDtoModel;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
 import ntk.android.base.services.application.ApplicationAppService;
 import ntk.android.base.utill.AppUtill;
@@ -156,8 +152,7 @@ public class AbstractMainActivity extends BaseActivity {
     }
 
     public void onInviteMethod() {
-        String st = Preferences.with(this).appVariableInfo().configapp();
-        MainResponseDtoModel mcr = new Gson().fromJson(st, MainResponseDtoModel.class);
+        UpdateClass updateInfo = Preferences.with(this).appVariableInfo().updateInfo();
 
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -169,8 +164,8 @@ public class AbstractMainActivity extends BaseActivity {
         dialog.show();
         TextView Lbl = dialog.findViewById(R.id.lblTitleDialogQRCode);
         Lbl.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-
-        QRGEncoder qrgEncoder = new QRGEncoder(mcr.AppUrl, null, QRGContents.Type.TEXT, 300);
+        String qrCode = Preferences.with(this).appVariableInfo().qrCode();
+        QRGEncoder qrgEncoder = new QRGEncoder(qrCode, null, QRGContents.Type.TEXT, 300);
         try {
             Bitmap bitmap = qrgEncoder.encodeAsBitmap();
             ImageView img = dialog.findViewById(R.id.qrCodeDialogQRCode);
@@ -185,7 +180,7 @@ public class AbstractMainActivity extends BaseActivity {
             dialog.dismiss();
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, this.getString(R.string.app_name) + "\n" + "لینک دانلود:" + "\n" + mcr.AppUrl);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, this.getString(R.string.app_name) + "\n" + "لینک دانلود:" + "\n" + updateInfo.url);
             shareIntent.setType("text/txt");
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             this.startActivity(Intent.createChooser(shareIntent, "به اشتراک گزاری با...."));
@@ -227,7 +222,7 @@ public class AbstractMainActivity extends BaseActivity {
                     request.ScoreComment = Txt.getText().toString();
                     //todo show loading
 
-                    ServiceExecute.execute( new ApplicationAppService(this).submitAppScore(request))
+                    ServiceExecute.execute(new ApplicationAppService(this).submitAppScore(request))
                             .subscribe(new NtkObserver<ErrorExceptionBase>() {
                                 @Override
                                 public void onNext(@NonNull ErrorExceptionBase response) {

@@ -30,7 +30,7 @@
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnTryAgain"
+        android:id="@+id/btn_error_tryAgain"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvError"

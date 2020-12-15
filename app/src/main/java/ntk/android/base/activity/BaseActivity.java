@@ -16,8 +16,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected Switcher switcher;
 
-    protected Button btnTryAgain;
-
     @Override
     protected void onStart() {
         super.onStart();

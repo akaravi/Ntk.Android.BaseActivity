@@ -42,6 +42,7 @@ import java9.util.function.Function;
 import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
+import ntk.android.base.appclass.UpdateClass;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.application.MainResponseDtoModel;
@@ -405,12 +406,11 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
 
 
     public void ClickShare() {
-        String st = Preferences.with(this).appVariableInfo().configapp();
-        MainResponseDtoModel mcr = new Gson().fromJson(st, MainResponseDtoModel.class);
+        UpdateClass updateInfo = Preferences.with(this).appVariableInfo().updateInfo();
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         String message = createShareMassage();
-        shareIntent.putExtra(Intent.EXTRA_TEXT, message + "\n\n\n" + this.getString(R.string.app_name) + "\n" + "لینک دانلود:" + "\n" + mcr.AppUrl);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, message + "\n\n\n" + this.getString(R.string.app_name) + "\n" + "لینک دانلود:" + "\n" + updateInfo.url);
         shareIntent.setType("text/txt");
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         this.startActivity(Intent.createChooser(shareIntent, "به اشتراک گزاری با...."));

@@ -42,6 +42,7 @@ import java9.util.function.Function;
 import ntk.android.base.R;
 import ntk.android.base.activity.abstraction.AbstractDetailActivity;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.ScoreClickDtoModel;
 import ntk.android.base.entitymodel.article.ArticleCategoryModel;
 import ntk.android.base.entitymodel.article.ArticleCommentModel;
@@ -170,8 +171,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
     protected void setContentRate(ScoreClickDtoModel request) {
         if (AppUtill.isNetworkAvailable(this)) {
 
-            new ArticleContentService(this).scoreClick(request).observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(new ArticleContentService(this).scoreClick(request))
                     .subscribe(new NtkObserver<ErrorExceptionBase>() {
 
                         @Override
@@ -211,8 +211,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
 
     private void HandelDataComment(long ContentId) {
         if (AppUtill.isNetworkAvailable(this)) {
-            getCommentListService().apply(ContentId).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+            ServiceExecute.execute( getCommentListService().apply(ContentId))
                     .subscribe(new NtkObserver<ErrorException<ArticleCommentModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<ArticleCommentModel> model) {
@@ -347,9 +346,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
                         ArticleCommentModel model = new ArticleCommentModel();
                         model.Writer = writer;
                         model.Comment = comment;
-                        new ArticleCommentService(this).add(model).
-                                subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
+                        ServiceExecute.execute( new ArticleCommentService(this).add(model))
                                 .subscribe(new NtkObserver<ErrorException<ArticleCommentModel>>() {
                                     @Override
                                     public void onNext(@NonNull ErrorException<ArticleCommentModel> e) {
@@ -474,8 +471,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
 
     private void getSimilarContent(long id) {
         if (AppUtill.isNetworkAvailable(this)) {
-            getSimilarContentService().apply(id).observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute( getSimilarContentService().apply(id))
                     .subscribe(new NtkObserver<ErrorException<ArticleContentModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<ArticleContentModel> response) {
@@ -510,8 +506,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
     private void getSimilarCategoryContent(long id) {
         if (AppUtill.isNetworkAvailable(this)) {
             FilterDataModel request = new FilterDataModel();
-            new ArticleContentService(this).getAllWithCategoryUsedInContent(id, request).observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute( new ArticleContentService(this).getAllWithCategoryUsedInContent(id, request))
                     .subscribe(new NtkObserver<ErrorException<ArticleContentModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<ArticleContentModel> response) {

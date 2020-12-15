@@ -43,14 +43,13 @@ import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.application.MainResponseDtoModel;
 import ntk.android.base.dtomodel.core.ScoreClickDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
 import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.entitymodel.base.Filters;
-import ntk.android.base.entitymodel.news.NewsContentModel;
-import ntk.android.base.services.news.NewsContentService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
@@ -69,7 +68,7 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
 
     protected TEntity model;
 
-    public long Id=-1;
+    public long Id = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -129,7 +128,10 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
         });
         getContent();
     }
-    public void afterDetailInit(){}
+
+    public void afterDetailInit() {
+    }
+
     public abstract Function<ScoreClickDtoModel, Observable<ErrorExceptionBase>> contentRateService();
 
     public abstract Function<Long, Observable<ErrorException<TEntity>>> getOneContentService();
@@ -146,8 +148,7 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
 
     protected void setContentRate(ScoreClickDtoModel request) {
         if (AppUtill.isNetworkAvailable(this)) {
-            contentRateService().apply(request).observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(contentRateService().apply(request))
                     .subscribe(new NtkObserver<ErrorExceptionBase>() {
 
                         @Override
@@ -185,9 +186,8 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
 
     private void getContent() {
         if (AppUtill.isNetworkAvailable(this)) {
-            Observable<ErrorException<NewsContentModel>> one = new NewsContentService(this).getOne(Id);
-            getOneContentService().apply(Id).observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+
+            ServiceExecute.execute(getOneContentService().apply(Id))
                     .subscribe(new NtkObserver<ErrorException<TEntity>>() {
                         @Override
                         public void onNext(ErrorException<TEntity> ContentResponse) {
@@ -218,8 +218,7 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
 
     private void HandelDataComment(long ContentId) {
         if (AppUtill.isNetworkAvailable(this)) {
-            getCommentListService().apply(ContentId).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+            ServiceExecute.execute(getCommentListService().apply(ContentId))
                     .subscribe(new NtkObserver<ErrorException<TComment>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<TComment> model) {
@@ -267,8 +266,7 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
 
     private void HandelDataContentOtherInfo(long ContentId) {
         if (AppUtill.isNetworkAvailable(this)) {
-            getOtherInfoListService().apply(ContentId).observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(getOtherInfoListService().apply(ContentId))
                     .subscribe(new NtkObserver<ErrorException<TOtherInfo>>() {
 
                         @Override
@@ -329,9 +327,7 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
                         String writer = Txt[0].getText().toString();
                         String comment = Txt[1].getText().toString();
 //                        add.LinkContentId = Id;
-                        addCommentService().apply(writer, comment).
-                                subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
+                        ServiceExecute.execute(addCommentService().apply(writer, comment))
                                 .subscribe(new NtkObserver<ErrorException<TComment>>() {
                                     @Override
                                     public void onNext(@NonNull ErrorException<TComment> e) {
@@ -374,8 +370,7 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
     public void ClickFav() {
         if (AppUtill.isNetworkAvailable(this)) {
             Pair<Function<Long, Observable<ErrorExceptionBase>>, Runnable> functionFunctionPair = getFavoriteService();
-            functionFunctionPair.first.apply(Id).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+            ServiceExecute.execute(functionFunctionPair.first.apply(Id))
                     .subscribe(new NtkObserver<ErrorExceptionBase>() {
 
                         @Override

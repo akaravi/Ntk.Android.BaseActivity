@@ -14,6 +14,7 @@ import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.adapter.FaqAdapter;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.entitymodel.ticketing.TicketingFaqModel;
@@ -53,9 +54,7 @@ public class FaqActivity extends BaseActivity {
             FilterDataModel request = new FilterDataModel();
             request.RowPerPage = 1000;
 
-            new TicketingFaqService(this).getAll(request).
-                    subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+            ServiceExecute.execute(new TicketingFaqService(this).getAll(request))
                     .subscribe(new NtkObserver<ErrorException<TicketingFaqModel>>() {
                         @Override
                         public void onNext(ErrorException<TicketingFaqModel> model) {

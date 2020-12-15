@@ -18,6 +18,7 @@ import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.adapter.DetailPoolCategoryAdapter;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.entitymodel.polling.PollingContentModel;
@@ -56,9 +57,7 @@ public class PolingDetailActivity extends AppCompatActivity {
     }
 
     private void HandelData(int i, FilterDataModel request) {
-        new PollingContentService(this).getAll(request)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+        ServiceExecute.execute(new PollingContentService(this).getAll(request))
                 .subscribe(new NtkObserver<ErrorException<PollingContentModel>>() {
 
                     @Override

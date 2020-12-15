@@ -2,7 +2,6 @@ package ntk.android.base.activity.ticketing;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,21 +13,19 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.adapter.TicketAdapter;
 import ntk.android.base.api.utill.NTKUtill;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.entitymodel.ticketing.TicketingTaskModel;
 import ntk.android.base.services.ticketing.TicketingTaskService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
-
 
 
 public class TicketListActivity extends BaseActivity {
@@ -44,14 +41,14 @@ public class TicketListActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setDirectContentViewWithSwicher(R.layout.ticket_list_activity,R.id.recyclerFrSupport);
+        setDirectContentViewWithSwicher(R.layout.ticket_list_activity, R.id.recyclerFrSupport);
         init();
     }
 
     private void init() {
-        Rv=findViewById(R.id.recyclerFrSupport);
-        Fab=findViewById(R.id.FabFrSupport);
-        Refresh=findViewById(R.id.RefreshTicket);
+        Rv = findViewById(R.id.recyclerFrSupport);
+        Fab = findViewById(R.id.FabFrSupport);
+        Refresh = findViewById(R.id.RefreshTicket);
         findViewById(R.id.FabFrSupport).setOnClickListener(v -> ClickSendTicket());
         Rv.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -112,9 +109,7 @@ public class TicketListActivity extends BaseActivity {
             request.SortType = NTKUtill.Descnding_Sort;
             request.SortColumn = "Id";
             switcher.showProgressView();
-            new TicketingTaskService(this).getAll(request)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+            ServiceExecute.execute(new TicketingTaskService(this).getAll(request))
                     .subscribe(new NtkObserver<ErrorException<TicketingTaskModel>>() {
                         @Override
                         public void onSubscribe(Disposable d) {

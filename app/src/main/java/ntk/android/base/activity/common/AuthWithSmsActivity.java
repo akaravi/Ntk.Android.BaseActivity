@@ -23,6 +23,7 @@ import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.AuthUserSignInBySmsDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.TokenInfoModel;
@@ -109,9 +110,7 @@ public class AuthWithSmsActivity extends BaseActivity {
             request.CaptchaText = captchaView.getCaptchaText();
             request.CaptchaKey = captchaView.getCaptchaKey();
 
-            new CoreAuthService(this).signInUserBySMS(request)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(new CoreAuthService(this).signInUserBySMS(request))
                     .subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
                         @Override
                         public void onNext(@io.reactivex.annotations.NonNull ErrorException<TokenInfoModel> response) {

@@ -42,6 +42,7 @@ import java9.util.function.Function;
 import ntk.android.base.R;
 import ntk.android.base.activity.abstraction.AbstractDetailActivity;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.ScoreClickDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
@@ -163,8 +164,7 @@ public abstract class BaseBiographyDetail_1_Activity extends AbstractDetailActiv
     protected void setContentRate(ScoreClickDtoModel request) {
         if (AppUtill.isNetworkAvailable(this)) {
 
-            new BiographyContentService(this).scoreClick(request).observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute( new BiographyContentService(this).scoreClick(request))
                     .subscribe(new NtkObserver<ErrorExceptionBase>() {
 
                         @Override
@@ -204,8 +204,7 @@ public abstract class BaseBiographyDetail_1_Activity extends AbstractDetailActiv
 
     private void HandelDataComment(long ContentId) {
         if (AppUtill.isNetworkAvailable(this)) {
-            getCommentListService().apply(ContentId).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+            ServiceExecute.execute( getCommentListService().apply(ContentId))
                     .subscribe(new NtkObserver<ErrorException<BiographyCommentModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<BiographyCommentModel> model) {
@@ -351,9 +350,7 @@ public abstract class BaseBiographyDetail_1_Activity extends AbstractDetailActiv
                         BiographyCommentModel model = new BiographyCommentModel();
                         model.Writer = writer;
                         model.Comment = comment;
-                        new BiographyCommentService(this).add(model).
-                                subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
+                        ServiceExecute.execute(new BiographyCommentService(this).add(model))
                                 .subscribe(new NtkObserver<ErrorException<BiographyCommentModel>>() {
                                     @Override
                                     public void onNext(@NonNull ErrorException<BiographyCommentModel> e) {
@@ -478,8 +475,7 @@ public abstract class BaseBiographyDetail_1_Activity extends AbstractDetailActiv
 
     private void getSimilarContent(long id) {
         if (AppUtill.isNetworkAvailable(this)) {
-            getSimilarContentService().apply(id).observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(getSimilarContentService().apply(id))
                     .subscribe(new NtkObserver<ErrorException<BiographyContentModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<BiographyContentModel> response) {
@@ -520,8 +516,7 @@ public abstract class BaseBiographyDetail_1_Activity extends AbstractDetailActiv
 
     private void getSimilarCategoryContent(long id) {
         if (AppUtill.isNetworkAvailable(this)) {
-            getSimilarCategoryService().apply(id).observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(getSimilarCategoryService().apply(id))
                     .subscribe(new NtkObserver<ErrorException<BiographyContentModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<BiographyContentModel> response) {

@@ -47,6 +47,7 @@ import ntk.android.base.R;
 import ntk.android.base.adapter.TicketAnswerAdapter;
 import ntk.android.base.adapter.TicketAttachAdapter;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.entitymodel.file.FileUploadModel;
@@ -133,9 +134,7 @@ public class TicketAnswerActivity extends AppCompatActivity {
     private void HandelData(int i) {
         if (AppUtill.isNetworkAvailable(this)) {
 
-            new TicketingAnswerService(this).getAll(new Gson().fromJson(getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG), FilterDataModel.class))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+            ServiceExecute.execute(new TicketingAnswerService(this).getAll(new Gson().fromJson(getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG), FilterDataModel.class)))
                     .subscribe(new NtkObserver<ErrorException<TicketingAnswerModel>>() {
                         @Override
                         public void onSubscribe(Disposable d) {
@@ -177,9 +176,7 @@ public class TicketAnswerActivity extends AppCompatActivity {
                 request.LinkTicketId = getIntent().getLongExtra(Extras.EXTRA_SECOND_ARG, 0);
                 request.LinkFileIds = linkFileIds;
 
-                new TicketingAnswerService(this).add(request)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
+                ServiceExecute.execute(  new TicketingAnswerService(this).add(request))
                         .subscribe(new NtkObserver<ErrorException<TicketingAnswerModel>>() {
 
                             @Override
@@ -323,9 +320,7 @@ public class TicketAnswerActivity extends AppCompatActivity {
 
     private void UploadFileToServer(String url) {
         if (AppUtill.isNetworkAvailable(this)) {
-            new FileUploaderService(this).uploadFile(url).
-                    observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(new FileUploaderService(this).uploadFile(url))
                     .subscribe(new NtkObserver<FileUploadModel>() {
                         @Override
                         public void onNext(@NonNull FileUploadModel fileUploadModel) {

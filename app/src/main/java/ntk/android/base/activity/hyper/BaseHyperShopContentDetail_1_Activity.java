@@ -11,6 +11,7 @@ import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.Extras;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.hypershop.HyperShopContentModel;
 import ntk.android.base.services.hypershop.HyperShopContentService;
@@ -31,9 +32,7 @@ public abstract class BaseHyperShopContentDetail_1_Activity extends BaseActivity
 
     public void callGetOne() {
         switcher.showProgressView();
-        new HyperShopContentService(this).getOneMicroService(Id)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+        ServiceExecute.execute(new HyperShopContentService(this).getOneMicroService(Id))
                 .subscribe(new NtkObserver<ErrorException<HyperShopContentModel>>() {
                     @Override
                     public void onNext(@NonNull ErrorException<HyperShopContentModel> response) {

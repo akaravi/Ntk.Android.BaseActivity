@@ -15,11 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.application.ApplicationIntroModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
@@ -44,7 +43,7 @@ public class IntroActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         Preferences.with(this).appVariableInfo().setIntroSeen(true);
         setContentView(R.layout.common_intro_activty);
-        if (getIntent() != null&&getIntent().getExtras()!=null)
+        if (getIntent() != null && getIntent().getExtras() != null)
             startFromMain = getIntent().getExtras().getBoolean(ExtraComeFromMain, false);
         startTime = System.currentTimeMillis();
         initView();
@@ -74,12 +73,8 @@ public class IntroActivity extends BaseActivity {
     private void getdata() {
         if (AppUtill.isNetworkAvailable(this)) {
             switcher.showProgressView();
-            new ApplicationIntroService(this).getAll(new FilterDataModel())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(new ApplicationIntroService(this).getAll(new FilterDataModel()))
                     .subscribe(new NtkObserver<ErrorException<ApplicationIntroModel>>() {
-
-
                         @Override
                         public void onNext(ErrorException<ApplicationIntroModel> response) {
                             if (response.IsSuccess) {

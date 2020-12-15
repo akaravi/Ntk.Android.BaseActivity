@@ -28,6 +28,7 @@ import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.AuthMobileConfirmDtoModel;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
 import ntk.android.base.event.MessageEvent;
@@ -116,9 +117,7 @@ public class RegisterMobileConfirmActivity extends BaseActivity {
             request.CaptchaKey = captchaView.getCaptchaKey();
             request.Mobile = Preferences.with(this).UserInfo().mobile();
             request.Code= Txt.getText().toString();
-            new CoreAuthService(this).confirmMobile(request)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(new CoreAuthService(this).confirmMobile(request))
                     .subscribe(new NtkObserver<ErrorExceptionBase>() {
                         @Override
                         public void onNext(@NonNull ErrorExceptionBase response) {

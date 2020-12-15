@@ -20,6 +20,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.R;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.AuthUserForgetPasswordModel;
 import ntk.android.base.entitymodel.base.CaptchaModel;
 import ntk.android.base.entitymodel.base.ErrorException;
@@ -69,9 +70,8 @@ public class ForgetPassDialog extends DialogFragment {
             req.CaptchaKey = ((EditText) getView().findViewById(R.id.txtCaptcha)).getText().toString();
             if (captcha != null)
                 req.CaptchaKey = captcha.Key;
-            new CoreAuthService(getContext()).forgetPassword(req)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io()).subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
+           ServiceExecute.execute(  new CoreAuthService(getContext()).forgetPassword(req))
+                   .subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
                 @Override
                 public void onNext(@NonNull ErrorException<TokenInfoModel> tokenInfoModelErrorException) {
                     dismiss();
@@ -90,8 +90,8 @@ public class ForgetPassDialog extends DialogFragment {
     }
 
     private void callCaptchaApi() {
-        new CoreAuthService(getContext()).getCaptcha().observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io()).subscribe(new NtkObserver<ErrorException<CaptchaModel>>() {
+        ServiceExecute.execute(new CoreAuthService(getContext()).getCaptcha())
+                .subscribe(new NtkObserver<ErrorException<CaptchaModel>>() {
             @Override
             public void onNext(@io.reactivex.annotations.NonNull ErrorException<CaptchaModel> captchaResponce) {
                 if (captchaResponce.IsSuccess) {

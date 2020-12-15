@@ -33,14 +33,13 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 import java9.util.function.Function;
 import kotlin.NotImplementedError;
 import ntk.android.base.R;
 import ntk.android.base.activity.abstraction.AbstractDetailActivity;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.ScoreClickDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
@@ -82,7 +81,7 @@ public abstract class BaseBlogDetail_1_Activity extends
         initChild();
     }
 
-    protected  void initChild() {
+    protected void initChild() {
         favoriteDrawableId = R.drawable.ic_fav_full;
         unFavoriteDrawableId = R.drawable.ic_fav;
     }
@@ -140,8 +139,7 @@ public abstract class BaseBlogDetail_1_Activity extends
     protected void setContentRate(ScoreClickDtoModel request) {
         if (AppUtill.isNetworkAvailable(this)) {
 
-            new BlogContentService(this).scoreClick(request).observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(new BlogContentService(this).scoreClick(request))
                     .subscribe(new NtkObserver<ErrorExceptionBase>() {
 
                         @Override
@@ -181,8 +179,7 @@ public abstract class BaseBlogDetail_1_Activity extends
 
     private void HandelDataComment(long ContentId) {
         if (AppUtill.isNetworkAvailable(this)) {
-            getCommentListService().apply(ContentId).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+            ServiceExecute.execute(getCommentListService().apply(ContentId))
                     .subscribe(new NtkObserver<ErrorException<BlogCommentModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<BlogCommentModel> model) {
@@ -309,9 +306,7 @@ public abstract class BaseBlogDetail_1_Activity extends
                         BlogCommentModel model = new BlogCommentModel();
                         model.Writer = writer;
                         model.Comment = comment;
-                        new BlogCommentService(this).add(model).
-                                subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
+                        ServiceExecute.execute(new BlogCommentService(this).add(model))
                                 .subscribe(new NtkObserver<ErrorException<BlogCommentModel>>() {
                                     @Override
                                     public void onNext(@NonNull ErrorException<BlogCommentModel> e) {
@@ -367,6 +362,7 @@ public abstract class BaseBlogDetail_1_Activity extends
             return new BlogCommentService(this).getAll(Request);
         };
     }
+
     @Override
     public Function<Long, Observable<ErrorException<BlogContentModel>>> getSimilarCategoryService() {
         throw new NotImplementedError("getSimilarCategoryService not implement in  Blog base activity");
@@ -376,6 +372,7 @@ public abstract class BaseBlogDetail_1_Activity extends
     public Function<Long, Observable<ErrorException<BlogContentModel>>> getSimilarContentService() {
         throw new NotImplementedError("getSimilarContentService not implement in  Blog base activity");
     }
+
     @Override
     public Function<Long, Observable<ErrorException<BlogContentOtherInfoModel>>> getOtherInfoListService() {
         return linkLongId -> {
@@ -420,7 +417,7 @@ public abstract class BaseBlogDetail_1_Activity extends
         } else
             ((ImageView) findViewById(R.id.imgHeartDetail)).setImageResource(unFavoriteDrawableId);
 
-        double rating= CmsApiScoreApi.CONVERT_TO_RATE(model.Item.ViewCount,model.Item.ScoreSumPercent );
+        double rating = CmsApiScoreApi.CONVERT_TO_RATE(model.Item.ViewCount, model.Item.ScoreSumPercent);
         Rate.setRating((float) rating);
         if (model.Item.Body != null)
             webViewBody.loadData("<html dir=\"rtl\" lang=\"\"><body>" + model.Item.Body + "</body></html>", "text/html; charset=utf-8", "UTF-8");

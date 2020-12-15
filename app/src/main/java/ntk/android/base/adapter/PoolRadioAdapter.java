@@ -19,6 +19,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.R;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.polling.PollingContentModel;
 import ntk.android.base.entitymodel.polling.PollingOptionModel;
@@ -61,8 +62,7 @@ public class PoolRadioAdapter extends RecyclerView.Adapter<PoolRadioAdapter.View
                 vote.OptionScore = 1;
                 vote.LinkPollingContentId = arrayList.get(position).LinkPollingContentId;
                 votes.add(vote);
-                new PollingVoteService(context).addBatch(votes).observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
+                ServiceExecute.execute( new PollingVoteService(context).addBatch(votes))
                         .subscribe(new NtkObserver<ErrorException<PollingVoteModel>>() {
 
                             @Override

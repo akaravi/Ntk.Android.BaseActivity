@@ -19,21 +19,21 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
-import java9.util.function.BiFunction;
 import java9.util.function.Function;
 import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.application.MainResponseDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
-import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.entitymodel.news.NewsContentModel;
 import ntk.android.base.services.news.NewsContentService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
+import ntk.android.base.view.swicherview.GenericErrors;
 
 public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOtherInfo> extends BaseActivity {
     protected TEntity model;
@@ -72,9 +72,8 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
 
     protected final void getContent() {
         if (AppUtill.isNetworkAvailable(this)) {
-            Observable<ErrorException<NewsContentModel>> one = new NewsContentService(this).getOne(Id);
-            getOneContentService().apply(Id).observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+
+            ServiceExecute.execute(getOneContentService().apply(Id))
                     .subscribe(new NtkObserver<ErrorException<TEntity>>() {
                         @Override
                         public void onNext(ErrorException<TEntity> ContentResponse) {
@@ -92,15 +91,14 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
 
                     });
         } else {
-            showError("عدم دسترسی به اینترنت");
+            new GenericErrors(switcher).netError(this::getContent);
         }
 
     }
 
     protected final void getContentOtherInfo(long ContentId) {
         if (AppUtill.isNetworkAvailable(this)) {
-            getOtherInfoListService().apply(ContentId).observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(getOtherInfoListService().apply(ContentId))
                     .subscribe(new NtkObserver<ErrorException<TOtherInfo>>() {
 
                         @Override
@@ -114,7 +112,7 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
                         }
                     });
         } else {
-            showError("عدم دسترسی به اینترنت");
+            new GenericErrors(switcher).netError(() -> getContentOtherInfo(ContentId));
         }
     }
 
@@ -134,8 +132,7 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
     public void ClickFav() {
         if (AppUtill.isNetworkAvailable(this)) {
             Pair<Function<Long, Observable<ErrorExceptionBase>>, Runnable> functionFunctionPair = getFavoriteService();
-            functionFunctionPair.first.apply(Id).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+            ServiceExecute.execute(functionFunctionPair.first.apply(Id))
                     .subscribe(new NtkObserver<ErrorExceptionBase>() {
 
                         @Override
@@ -154,7 +151,7 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
                         }
                     });
         } else {
-            showError("عدم دسترسی به اینترنت");
+            new GenericErrors(switcher).netError(this::ClickFav);
         }
     }
 

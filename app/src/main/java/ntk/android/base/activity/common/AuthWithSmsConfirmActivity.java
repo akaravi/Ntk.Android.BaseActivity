@@ -22,13 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dialog.CaptchaDialog;
 import ntk.android.base.dtomodel.core.AuthUserSignInBySmsDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
@@ -121,9 +120,7 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
             request.Mobile = Preferences.with(this).UserInfo().mobile();
             request.SiteId = Preferences.with(this).UserInfo().siteId();
 //                    request.Password = Txt.getText().toString();
-            new CoreAuthService(this).signInUserBySMS(request)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(new CoreAuthService(this).signInUserBySMS(request))
                     .subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<TokenInfoModel> response) {
@@ -169,9 +166,7 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
                 request.CaptchaText = dialog.getCaptcha().getCaptchaText();
                 request.CaptchaKey = dialog.getCaptcha().getCaptchaKey();
                 dialog.lockButton(true);
-                new CoreAuthService(this).signInUserBySMS(request)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
+                ServiceExecute.execute(new CoreAuthService(this).signInUserBySMS(request))
                         .subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
                             @Override
                             public void onNext(@io.reactivex.annotations.NonNull ErrorException<TokenInfoModel> response) {

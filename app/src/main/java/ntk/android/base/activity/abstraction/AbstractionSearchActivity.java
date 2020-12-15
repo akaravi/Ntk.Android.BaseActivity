@@ -13,14 +13,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 import java9.util.function.Function;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.api.utill.NTKUtill;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.entitymodel.base.Filters;
@@ -30,7 +29,6 @@ import ntk.android.base.utill.FontManager;
 public abstract class AbstractionSearchActivity<TEntity> extends BaseActivity {
     EditText Txt;
     RecyclerView Rv;
-
 
 
     protected ArrayList<TEntity> models = new ArrayList<>();
@@ -46,8 +44,8 @@ public abstract class AbstractionSearchActivity<TEntity> extends BaseActivity {
     }
 
     private void init() {
-        Txt= findViewById(R.id.txtSearchActSearch);
-        Rv=findViewById(R.id.recyclerSearch);
+        Txt = findViewById(R.id.txtSearchActSearch);
+        Rv = findViewById(R.id.recyclerSearch);
 
         findViewById(R.id.imgBackActSearch).setOnClickListener(v -> ClickBack());
         Rv.setHasFixedSize(true);
@@ -66,8 +64,9 @@ public abstract class AbstractionSearchActivity<TEntity> extends BaseActivity {
         adapter.notifyDataSetChanged();
     }
 
-    protected abstract RecyclerView.Adapter getAdapter() ;
-    public abstract Function< FilterDataModel, Observable<ErrorException<TEntity>>> getService();
+    protected abstract RecyclerView.Adapter getAdapter();
+
+    public abstract Function<FilterDataModel, Observable<ErrorException<TEntity>>> getService();
 
     private void Search() {
         if (!searchLock) {
@@ -76,9 +75,7 @@ public abstract class AbstractionSearchActivity<TEntity> extends BaseActivity {
                 FilterDataModel request = getDefaultFilterDataModel(Txt.getText().toString());
 
                 switcher.showProgressView();
-                getService().apply(request).
-                        observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
+                ServiceExecute.execute(getService().apply(request))
                         .subscribe(new NtkObserver<ErrorException<TEntity>>() {
                             @Override
                             public void onNext(@NonNull ErrorException<TEntity> response) {
@@ -128,7 +125,7 @@ public abstract class AbstractionSearchActivity<TEntity> extends BaseActivity {
 
         Filters fb = new Filters();
         fb.PropertyName = "Body";
-        fb.StringValue =stringValue;
+        fb.StringValue = stringValue;
         fb.ClauseType = NTKUtill.ClauseType_Or;
         fb.SearchType = NTKUtill.Search_Type_Contains;
         request.addFilter(fb);

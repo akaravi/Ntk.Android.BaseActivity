@@ -41,6 +41,7 @@ import kotlin.NotImplementedError;
 import ntk.android.base.R;
 import ntk.android.base.activity.abstraction.AbstractDetailActivity;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.ScoreClickDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
@@ -140,8 +141,7 @@ public abstract class BaseNewsDetail_1_Activity extends
     protected void setContentRate(ScoreClickDtoModel request) {
         if (AppUtill.isNetworkAvailable(this)) {
 
-            new NewsContentService(this).scoreClick(request).observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(new NewsContentService(this).scoreClick(request))
                     .subscribe(new NtkObserver<ErrorExceptionBase>() {
 
                         @Override
@@ -181,8 +181,7 @@ public abstract class BaseNewsDetail_1_Activity extends
 
     private void HandelDataComment(long ContentId) {
         if (AppUtill.isNetworkAvailable(this)) {
-            getCommentListService().apply(ContentId).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+            ServiceExecute.execute(getCommentListService().apply(ContentId))
                     .subscribe(new NtkObserver<ErrorException<NewsCommentModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<NewsCommentModel> model) {
@@ -313,9 +312,7 @@ public abstract class BaseNewsDetail_1_Activity extends
                         NewsCommentModel model = new NewsCommentModel();
                         model.Writer = writer;
                         model.Comment = comment;
-                        new NewsCommentService(this).add(model).
-                                subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
+                        ServiceExecute.execute( new NewsCommentService(this).add(model))
                                 .subscribe(new NtkObserver<ErrorException<NewsCommentModel>>() {
                                     @Override
                                     public void onNext(@NonNull ErrorException<NewsCommentModel> e) {

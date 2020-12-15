@@ -29,6 +29,7 @@ import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.AuthUserSignUpModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.core.CoreUserModel;
@@ -143,9 +144,7 @@ public class RegisterMobileActivity extends AppCompatActivity {
             request.CaptchaText = captchaView.getCaptchaText();
             request.CaptchaKey = captchaView.getCaptchaKey();
             request.Password = passTxt.getText().toString();
-            new CoreAuthService(this).signUpUser(request)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute( new CoreAuthService(this).signUpUser(request))
                     .subscribe(new NtkObserver<ErrorException<CoreUserModel>>() {
                         @Override
                         public void onNext(@io.reactivex.annotations.NonNull ErrorException<CoreUserModel> response) {

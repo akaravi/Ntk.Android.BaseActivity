@@ -40,15 +40,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
-import ntk.android.base.adapter.TicketAttachAdapter;
 import ntk.android.base.adapter.SpinnerAdapter;
+import ntk.android.base.adapter.TicketAttachAdapter;
 import ntk.android.base.api.member.model.MemberUserActAddRequest;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.entitymodel.file.FileUploadModel;
@@ -174,10 +173,7 @@ public class NewTicketActivity extends BaseActivity {
             spinners.get(1).setSelection(0);
         }
         FilterDataModel request = new FilterDataModel();
-        new TicketingDepartemenService(this).getAll(request)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-
+        ServiceExecute.execute(new TicketingDepartemenService(this).getAll(request))
                 .subscribe(new NtkObserver<ErrorException<TicketingDepartemenModel>>() {
                     @Override
                     public void onNext(@NonNull ErrorException<TicketingDepartemenModel> model) {
@@ -214,7 +210,7 @@ public class NewTicketActivity extends BaseActivity {
             Toasty.warning(NewTicketActivity.this, "نام و نام خانوادگی را وارد کنید", Toasty.LENGTH_LONG, true).show();
             return;
         }
-        Preferences.with(this).ticketVariableInfo().setNameFamily( Txts.get(2).getText().toString());
+        Preferences.with(this).ticketVariableInfo().setNameFamily(Txts.get(2).getText().toString());
         if (Txts.get(3).getText().toString().isEmpty()) {
             YoYo.with(Techniques.Tada).duration(700).playOn(Txts.get(3));
             Toasty.warning(NewTicketActivity.this, "شماره تلفن همراه را وارد کنید", Toasty.LENGTH_LONG, true).show();
@@ -225,7 +221,7 @@ public class NewTicketActivity extends BaseActivity {
             Toasty.warning(NewTicketActivity.this, "شماره تلفن همراه را به صورت صحیح وارد کنید", Toasty.LENGTH_LONG, true).show();
             return;
         }
-        Preferences.with(this).ticketVariableInfo().setMobile( Txts.get(3).getText().toString());
+        Preferences.with(this).ticketVariableInfo().setMobile(Txts.get(3).getText().toString());
         if (Txts.get(4).getText().toString().isEmpty()) {
             YoYo.with(Techniques.Tada).duration(700).playOn(Txts.get(4));
             Toasty.warning(NewTicketActivity.this, "پست الکترونیک را وارد کنید", Toasty.LENGTH_LONG, true).show();
@@ -262,9 +258,7 @@ public class NewTicketActivity extends BaseActivity {
 
             findViewById(R.id.btnSubmitActSendTicket).setClickable(false);
 
-            new TicketingTaskService(this).add(request).
-                    observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(new TicketingTaskService(this).add(request))
                     .subscribe(new NtkObserver<ErrorException<TicketingTaskModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<TicketingTaskModel> model) {
@@ -414,9 +408,7 @@ public class NewTicketActivity extends BaseActivity {
 
     private void UploadFileToServer(String url) {
         if (AppUtill.isNetworkAvailable(this)) {
-            new FileUploaderService(this).uploadFile(url).
-                    observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute( new FileUploaderService(this).uploadFile(url))
                     .subscribe(new NtkObserver<FileUploadModel>() {
                         @Override
                         public void onNext(@NonNull FileUploadModel fileUploadModel) {

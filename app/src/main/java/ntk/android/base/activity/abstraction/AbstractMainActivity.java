@@ -34,6 +34,7 @@ import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.activity.common.IntroActivity;
 import ntk.android.base.appclass.UpdateClass;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.application.ApplicationScoreDtoModel;
 import ntk.android.base.dtomodel.application.MainResponseDtoModel;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
@@ -226,9 +227,7 @@ public class AbstractMainActivity extends BaseActivity {
                     request.ScoreComment = Txt.getText().toString();
                     //todo show loading
 
-                    new ApplicationAppService(this).submitAppScore(request)
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribeOn(Schedulers.io())
+                    ServiceExecute.execute( new ApplicationAppService(this).submitAppScore(request))
                             .subscribe(new NtkObserver<ErrorExceptionBase>() {
                                 @Override
                                 public void onNext(@NonNull ErrorExceptionBase response) {

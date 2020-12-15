@@ -19,6 +19,7 @@ import java9.util.function.Function;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.fragment.abstraction.AbstractionListFragment;
 import ntk.android.base.utill.AppUtill;
@@ -127,8 +128,7 @@ public abstract class AbstractionListActivity<TREq,TEntity> extends BaseActivity
     private void RestCall(int nextPage) {
         if (AppUtill.isNetworkAvailable(this)) {
             switcher.showProgressView();
-            apiService().apply((nextPage)).observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(apiService().apply((nextPage)))
                     .subscribe(new NtkObserver<ErrorException<TEntity>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<TEntity> newsContentResponse) {

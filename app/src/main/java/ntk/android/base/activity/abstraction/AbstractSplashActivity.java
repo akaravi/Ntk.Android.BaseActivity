@@ -26,6 +26,7 @@ import ntk.android.base.activity.common.IntroActivity;
 import ntk.android.base.appclass.UpdateClass;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.RetrofitManager;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.application.ApplicationAppModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.TokenInfoModel;
@@ -45,7 +46,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         onCreated();
         startTime = System.currentTimeMillis();
-        getData();
+        getTokenDevice();
     }
 
     protected abstract void onCreated();
@@ -73,7 +74,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
             Preferences.with(this).debugInfo().setUrl(ApplicationStaticParameter.URL);
             Preferences.with(this).debugInfo().setPackageName(ApplicationStaticParameter.PACKAGE_NAME);
             d.dismiss();
-            getData();
+            getTokenDevice();
         });
         ((EditText) d.findViewById(R.id.txtLinkSiteId)).setText(Preferences.with(this).UserInfo().siteId().toString());
         ((EditText) d.findViewById(R.id.txtlinkUserId)).setText(Preferences.with(this).UserInfo().linkUserId().toString());
@@ -86,59 +87,55 @@ public abstract class AbstractSplashActivity extends BaseActivity {
     /**
      * get all needed data
      */
-    private void getData() {
-        if (AppUtill.isNetworkAvailable(this)) {
-            getTokenDevice();
-
-        } else {
-            new GenericErrors(switcher).netError(this::getData);
-        }
-    }
-
     private void getTokenDevice() {
-        new CoreAuthService(this).getTokenDevice()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
-                    @Override
-                    public void onNext(@NonNull ErrorException<TokenInfoModel> tokenInfoModelErrorException) {
-                        if (tokenInfoModelErrorException.IsSuccess)
-                            getCurrentApp();
-                        else
-                            switcher.showErrorView();
-                    }
 
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        switcher.showErrorView();
-                    }
-                });
-    }
-
-    private void getCurrentApp() {
-        new ApplicationAppService(this).currentApp()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new NtkObserver<ErrorException<ApplicationAppModel>>() {
-                    @Override
-                    public void onNext(@NonNull ErrorException<ApplicationAppModel> response) {
-                        if (!response.IsSuccess) {
-                            switcher.showErrorView();
-                            //replace with layout
-                            Toasty.warning(AbstractSplashActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
-                            return;
+        if (AppUtill.isNetworkAvailable(this)) {
+            ServiceExecute.execute(new CoreAuthService(this).getTokenDevice())
+                    .subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
+                        @Override
+                        public void onNext(@NonNull ErrorException<TokenInfoModel> tokenInfoModelErrorException) {
+                            if (tokenInfoModelErrorException.IsSuccess)
+                                getCurrentApp();
                         }
 
-                        Preferences.with(AbstractSplashActivity.this).appVariableInfo().setUpdateInfo(new UpdateClass(response.Item));
-                        Preferences.with(AbstractSplashActivity.this).UserInfo().seTheme(new Gson().toJson(response.Item.ThemeConfigJsonValues));
-                        HandelDataAction(response.Item);
-                    }
+                        @Override
+                        public void onError(@NonNull Throwable e) {
+                            new GenericErrors(switcher).throwableException(e, AbstractSplashActivity.this::getTokenDevice);
+                        }
+                    });
+        } else {
+            new GenericErrors(switcher).netError(this::getTokenDevice);
+        }
 
-                    @Override
-                    public void onError(@NonNull Throwable e) {
+    }
 
-                    }
-                });
+
+    private void getCurrentApp() {
+        if (AppUtill.isNetworkAvailable(this)) {
+            ServiceExecute.execute(new ApplicationAppService(this).currentApp())
+                    .subscribe(new  NtkObserver<ErrorException<ApplicationAppModel>>() {
+                        @Override
+                        public void onNext(@NonNull ErrorException<ApplicationAppModel> response) {
+                            if (!response.IsSuccess) {
+                                switcher.showErrorView();
+                                //replace with layout
+                                Toasty.warning(AbstractSplashActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
+                                return;
+                            }
+
+                            Preferences.with(AbstractSplashActivity.this).appVariableInfo().setUpdateInfo(new UpdateClass(response.Item));
+                            Preferences.with(AbstractSplashActivity.this).UserInfo().seTheme(new Gson().toJson(response.Item.ThemeConfigJsonValues));
+                            HandelDataAction(response.Item);
+                        }
+
+                        @Override
+                        public void onError(@NonNull Throwable e) {
+                            new GenericErrors(switcher).throwableException(e, AbstractSplashActivity.this::getCurrentApp);
+                        }
+                    });
+        } else {
+            new GenericErrors(switcher).netError(this::getTokenDevice);
+        }
     }
 
     /**
@@ -150,8 +147,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         Preferences.with(this).appVariableInfo().setConfigapp(new Gson().toJson(model));
         //user has token
         if (userId > 0) {
-            new CoreAuthService(this).correctTokenInfo().observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(new CoreAuthService(this).correctTokenInfo())
                     .subscribe(new NtkObserver<Boolean>() {
                         @Override
                         public void onNext(@NonNull Boolean aBoolean) {
@@ -195,8 +191,9 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         }, System.currentTimeMillis() - startTime >= 5000 ? 100 : 5000 - System.currentTimeMillis() - startTime);
 
     }
+
     public void ClickRefresh() {
         switcher.showProgressView();
-        getData();
+        getTokenDevice();
     }
 }

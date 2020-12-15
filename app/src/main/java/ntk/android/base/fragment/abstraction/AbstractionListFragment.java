@@ -22,6 +22,7 @@ import java9.util.function.Function;
 import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.fragment.BaseFragment;
@@ -143,8 +144,7 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
         if (AppUtill.isNetworkAvailable(getContext())) {
             switcher.showProgressView();
             request.CurrentPageNumber = i;
-            getService().apply(request).observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(  getService().apply(request))
                     .subscribe(new NtkObserver<ErrorException<TEntity>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<TEntity> newsContentResponse) {

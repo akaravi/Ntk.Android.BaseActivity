@@ -14,6 +14,7 @@ import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.adapter.PoolCategoryAdapter;
 import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.entitymodel.polling.PollingCategoryModel;
@@ -44,9 +45,7 @@ public class PolingActivity extends BaseActivity {
         if (AppUtill.isNetworkAvailable(this)) {
             // show loading
             switcher.showProgressView();
-            new PollingCategoryService(this).getAll(new FilterDataModel())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            ServiceExecute.execute(new PollingCategoryService(this).getAll(new FilterDataModel()))
                     .subscribe(new NtkObserver<ErrorException<PollingCategoryModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<PollingCategoryModel> poolingCategoryResponse) {

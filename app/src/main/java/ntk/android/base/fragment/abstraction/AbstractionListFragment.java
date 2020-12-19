@@ -20,7 +20,7 @@ import java9.util.function.Function;
 import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.config.ErrorExceptionObserver;
-import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
@@ -28,17 +28,22 @@ import ntk.android.base.fragment.BaseFragment;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
 import ntk.android.base.utill.FontManager;
-import ntk.android.base.view.swicherview.GenericErrors;
 
 public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
     TextView LblTitle;
-
-
+    String title = "";
+    boolean toolbarShow = false;
     private int Total = 0;
     protected List<TEntity> models = new ArrayList<>();
     protected RecyclerView.Adapter adapter;
     protected FilterDataModel request;
     private boolean loadingMore = true;
+
+    @Override
+    public void onCreated() {
+        super.onCreated();
+        //can customize for future
+    }
 
     @Override
     public void onCreateFragment() {
@@ -48,11 +53,6 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
     @Override
     public final void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (!withToolbar()) {
-            findViewById(R.id.ToolbarRv).setVisibility(View.GONE);
-            findViewById(R.id.toolbarShadow).setVisibility(View.GONE);
-        }
-        switcher.setLoadMore(findViewById(R.id.loadMoreProgress));
         request = new FilterDataModel();
         request.RowPerPage = 20;
         if (getArguments() != null) {
@@ -60,7 +60,16 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
             if (!reqString.equalsIgnoreCase("")) {
                 request = new Gson().fromJson(reqString, FilterDataModel.class);
             }
+            String name = getArguments().getString(Extras.EXTRA_SECOND_ARG, "");
+            if (!name.equalsIgnoreCase(""))
+                title = name;
+            toolbarShow = getArguments().getBoolean(Extras.Extra_THIRD_ARG, true);
         }
+        if (!withToolbar() || !toolbarShow) {
+            findViewById(R.id.ToolbarRv).setVisibility(View.GONE);
+            findViewById(R.id.toolbarShadow).setVisibility(View.GONE);
+        }
+        switcher.setLoadMore(findViewById(R.id.loadMoreProgress));
         init();
         afterInit();
     }
@@ -72,6 +81,8 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
     private void init() {
 
         LblTitle = findViewById(R.id.lblTitle);
+        if (!title.equalsIgnoreCase(""))
+            LblTitle.setText(title);
         RecyclerView Rv = findViewById(R.id.recycler);
         SwipeRefreshLayout Refresh = findViewById(R.id.swipRefresh);
         findViewById(R.id.imgBack).setOnClickListener(v -> ClickBack());
@@ -149,7 +160,7 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
                 switcher.showLoadMore();
             request.CurrentPageNumber = nextPage;
             ServiceExecute.execute(getService().apply(request))
-                    .subscribe(new ErrorExceptionObserver<TEntity>(switcher) {
+                    .subscribe(new ErrorExceptionObserver<TEntity>(switcher::showErrorView) {
 
                         @Override
                         protected void SuccessResponse(ErrorException<TEntity> newsContentResponse) {
@@ -174,10 +185,9 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
                         }
 
 
-
                     });
         } else {
-            new GenericErrors().netError(switcher, () -> RestCall(nextPage));
+            new GenericErrors().netError(switcher::showErrorView, () -> RestCall(nextPage));
 
         }
     }
@@ -190,7 +200,9 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
 
     public abstract Function<FilterDataModel, Observable<ErrorException<TEntity>>> getService();
 
-    public abstract boolean withToolbar();
+    public boolean withToolbar() {
+        return toolbarShow;
+    }
 
     public abstract RecyclerView.Adapter createAdapter();
 

@@ -22,7 +22,7 @@ import ntk.android.base.fragment.abstraction.AbstractionListFragment;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
 import ntk.android.base.utill.FontManager;
-import ntk.android.base.view.swicherview.GenericErrors;
+import ntk.android.base.config.GenericErrors;
 
 public abstract class AbstractionListActivity<TREq, TEntity> extends BaseActivity {
     protected TextView LblTitle;
@@ -131,7 +131,7 @@ public abstract class AbstractionListActivity<TREq, TEntity> extends BaseActivit
             else
                 switcher.showLoadMore();
             ServiceExecute.execute(apiService().apply((nextPage)))
-                    .subscribe(new ErrorExceptionObserver<TEntity>(switcher) {
+                    .subscribe(new ErrorExceptionObserver<TEntity>(switcher::showErrorView) {
 
                         @Override
                         protected void SuccessResponse(ErrorException<TEntity> response) {
@@ -144,7 +144,7 @@ public abstract class AbstractionListActivity<TREq, TEntity> extends BaseActivit
                         }
                     });
         } else {
-            new GenericErrors().netError(switcher, () -> RestCall(nextPage));
+            new GenericErrors().netError(switcher::showErrorView, () -> RestCall(nextPage));
 
         }
     }
@@ -159,5 +159,5 @@ public abstract class AbstractionListActivity<TREq, TEntity> extends BaseActivit
         finish();
     }
 
-    public abstract void ClickSearch();
+    public  void ClickSearch(){}
 }

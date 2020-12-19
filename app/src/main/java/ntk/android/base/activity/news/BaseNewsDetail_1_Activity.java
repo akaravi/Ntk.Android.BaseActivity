@@ -33,13 +33,12 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 import java9.util.function.Function;
 import kotlin.NotImplementedError;
 import ntk.android.base.R;
 import ntk.android.base.activity.abstraction.AbstractDetailActivity;
+import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.ScoreClickDtoModel;
@@ -83,7 +82,7 @@ public abstract class BaseNewsDetail_1_Activity extends
         initChild();
     }
 
-    protected  void initChild(){
+    protected void initChild() {
         favoriteDrawableId = R.drawable.ic_fav_full;
         unFavoriteDrawableId = R.drawable.ic_fav;
     }
@@ -128,15 +127,20 @@ public abstract class BaseNewsDetail_1_Activity extends
     }
 
     @Override
-    protected void showError(String toString) {
-        Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getContent();
-            }
-        }).show();
+    protected void showError(String toString, Runnable onTryingAgain) {
+//        Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onTryingAgain.run();
+//            }
+//        }).show();
+        switcher.showErrorView(toString, onTryingAgain);
     }
 
+    @Override
+    protected void showErrorDialog(String toString, Runnable onTryingAgain) {
+
+    }
 
     protected void setContentRate(ScoreClickDtoModel request) {
         if (AppUtill.isNetworkAvailable(this)) {
@@ -170,7 +174,7 @@ public abstract class BaseNewsDetail_1_Activity extends
             Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //todo init();
+                    //todo replace();
                 }
             }).show();
         }
@@ -185,34 +189,33 @@ public abstract class BaseNewsDetail_1_Activity extends
                     .subscribe(new NtkObserver<ErrorException<NewsCommentModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<NewsCommentModel> model) {
-                            if (model.IsSuccess && !model.ListItems.isEmpty()) {
-                                findViewById(R.id.lblCommentDetail).setVisibility(View.VISIBLE);
-                                RecyclerView.Adapter commentAdapter = createCommentAdapter(model.ListItems);
-                                RvComment.setAdapter(commentAdapter);
-                                commentAdapter.notifyDataSetChanged();
-                            } else {
-                                findViewById(R.id.lblCommentDetail).setVisibility(View.GONE);
-                            }
+                            if (model.IsSuccess) {
+                                if (!model.ListItems.isEmpty()) {
+                                    findViewById(R.id.lblCommentDetail).setVisibility(View.VISIBLE);
+                                    RecyclerView.Adapter commentAdapter = createCommentAdapter(model.ListItems);
+                                    RvComment.setAdapter(commentAdapter);
+                                    commentAdapter.notifyDataSetChanged();
+                                } else {
+                                    findViewById(R.id.lblCommentDetail).setVisibility(View.GONE);
+                                }
+                            } else
+                                new GenericErrors().ntkException(BaseNewsDetail_1_Activity.this::showError, model.ErrorMessage, () -> HandelDataComment(ContentId));
                         }
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    //todo add to  init();
-                                }
-                            }).show();
+                            new GenericErrors().throwableException(BaseNewsDetail_1_Activity.this::showError, e, () -> HandelDataComment(ContentId));
                         }
                     });
         } else {
             findViewById(R.id.lblCommentDetail).setVisibility(View.GONE);
-            Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //todo add to  init();
-                }
-            }).show();
+            new GenericErrors().netError(this::showError, () -> HandelDataComment(ContentId));
+//            Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                }
+//            }).show();
         }
     }
 
@@ -312,7 +315,7 @@ public abstract class BaseNewsDetail_1_Activity extends
                         NewsCommentModel model = new NewsCommentModel();
                         model.Writer = writer;
                         model.Comment = comment;
-                        ServiceExecute.execute( new NewsCommentService(this).add(model))
+                        ServiceExecute.execute(new NewsCommentService(this).add(model))
                                 .subscribe(new NtkObserver<ErrorException<NewsCommentModel>>() {
                                     @Override
                                     public void onNext(@NonNull ErrorException<NewsCommentModel> e) {
@@ -337,12 +340,13 @@ public abstract class BaseNewsDetail_1_Activity extends
                                     }
                                 });
                     } else {
-                        Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                //todo add instead of init();
-                            }
-                        }).show();
+                        new GenericErrors().netError(this::showErrorDialog, Btn::performClick);
+//                        Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//
+//                            }
+//                        }).show();
                     }
                 }
             }

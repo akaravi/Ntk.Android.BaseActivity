@@ -5,6 +5,7 @@
         <item name="ntk_splash_background">@drawable/ic_back</item>
         <item name="ntk_splash_loading">@raw/fingerprint</item>
         <item name="ntk_splash_logo">@drawable/ic_back</item>
+        <item name="colorTextPrimary">#fff</item>
         <item name="ntk_notification_color">@color/colorWhite</item>
         <!-- Primary brand color. -->
         <!--        <item name="colorPrimary">@color/purple_500</item>-->

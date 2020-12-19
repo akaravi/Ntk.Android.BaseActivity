@@ -21,8 +21,10 @@ import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.activity.common.AuthWithSmsActivity;
 import ntk.android.base.activity.common.IntroActivity;
+import ntk.android.base.appclass.AboutUsClass;
 import ntk.android.base.appclass.UpdateClass;
 import ntk.android.base.config.ErrorExceptionObserver;
+import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.RetrofitManager;
 import ntk.android.base.config.ServiceExecute;
@@ -33,12 +35,10 @@ import ntk.android.base.services.application.ApplicationAppService;
 import ntk.android.base.services.core.CoreAuthService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.prefrense.Preferences;
-import ntk.android.base.view.swicherview.GenericErrors;
 
 public abstract class AbstractSplashActivity extends BaseActivity {
     long startTime;
     protected int debugBtnClickCount = 0;
-    protected boolean inDebug;
 
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
     }
 
     private void showDebug() {
-        inDebug = true;
+
         Dialog d = new Dialog(this);
         d.setContentView(R.layout.dialog_debug);
         ((EditText) d.findViewById(R.id.txtUrl)).setText(RetrofitManager.BASE_URL);
@@ -66,6 +66,10 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         d.findViewById(R.id.debugReset).setOnClickListener(v -> {
             ApplicationStaticParameter.URL = "";
             ApplicationStaticParameter.PACKAGE_NAME = "";
+            Preferences.with(this).debugInfo().setUrl("");
+            Preferences.with(this).debugInfo().setPackageName("");
+            d.dismiss();
+            getTokenDevice();
         });
         d.findViewById(R.id.debugStart).setOnClickListener(v -> {
 
@@ -93,7 +97,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         //check connectivity
         if (AppUtill.isNetworkAvailable(this)) {
             ServiceExecute.execute(new CoreAuthService(this).getTokenDevice())
-                    .subscribe(new ErrorExceptionObserver<TokenInfoModel>(switcher) {
+                    .subscribe(new ErrorExceptionObserver<TokenInfoModel>(switcher::showErrorView) {
                         @Override
                         protected void SuccessResponse(ErrorException<TokenInfoModel> tokenInfoModelErrorException) {
                             getCurrentApp();
@@ -108,7 +112,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                     });
         } else {
             //show generic net error
-            new GenericErrors().netError(switcher, this::getTokenDevice);
+            new GenericErrors().netError(switcher::showErrorView, this::getTokenDevice);
         }
 
     }
@@ -118,11 +122,13 @@ public abstract class AbstractSplashActivity extends BaseActivity {
 
         if (AppUtill.isNetworkAvailable(this)) {
             ServiceExecute.execute(new ApplicationAppService(this).currentApp())
-                    .subscribe(new ErrorExceptionObserver<ApplicationAppModel>(switcher) {
+                    .subscribe(new ErrorExceptionObserver<ApplicationAppModel>(switcher::showErrorView) {
                         @Override
                         protected void SuccessResponse(ErrorException<ApplicationAppModel> response) {
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setUpdateInfo(new UpdateClass(response.Item));
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setQRCode(response.Item.DownloadLinkSrcByDomainQRCodeBase64);
+                            Preferences.with(AbstractSplashActivity.this).appVariableInfo().setAboutUs(new AboutUsClass(response.Item));
+                            Preferences.with(AbstractSplashActivity.this).appVariableInfo().setAppId(response.Item.Id);
                             HandelDataAction(response.Item);
                         }
 
@@ -133,7 +139,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                     });
         } else {
             //show generic net error
-            new GenericErrors().netError(switcher, this::getTokenDevice);
+            new GenericErrors().netError(switcher::showErrorView, this::getTokenDevice);
         }
     }
 
@@ -184,10 +190,8 @@ public abstract class AbstractSplashActivity extends BaseActivity {
     public void startnewActivity(Class c) {
         long l = System.currentTimeMillis();
         new Handler().postDelayed(() -> {
-            if (!inDebug) {
                 startActivity(new Intent(AbstractSplashActivity.this, c));
                 finish();
-            }
         }, System.currentTimeMillis() - startTime >= 5000 ? 100 : 5000 - System.currentTimeMillis() - startTime);
 
     }

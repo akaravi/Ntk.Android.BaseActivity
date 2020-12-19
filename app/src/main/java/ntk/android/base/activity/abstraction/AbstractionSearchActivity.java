@@ -25,7 +25,7 @@ import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.entitymodel.base.Filters;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
-import ntk.android.base.view.swicherview.GenericErrors;
+import ntk.android.base.config.GenericErrors;
 
 public abstract class AbstractionSearchActivity<TEntity> extends BaseActivity {
     EditText Txt;
@@ -77,7 +77,7 @@ public abstract class AbstractionSearchActivity<TEntity> extends BaseActivity {
 
                 switcher.showProgressView();
                 ServiceExecute.execute(getService().apply(request))
-                        .subscribe(new ErrorExceptionObserver<TEntity>(switcher) {
+                        .subscribe(new ErrorExceptionObserver<TEntity>(switcher::showErrorView) {
 
                             @Override
                             public void onNext(@NonNull ErrorException<TEntity> response) {
@@ -109,7 +109,7 @@ public abstract class AbstractionSearchActivity<TEntity> extends BaseActivity {
                         });
             } else {
                 searchLock = false;
-                new GenericErrors().netError(switcher, this::Search);
+                new GenericErrors().netError(switcher::showErrorView, this::Search);
             }
         }
     }

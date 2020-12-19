@@ -26,6 +26,7 @@ import io.reactivex.annotations.NonNull;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
+import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dialog.CaptchaDialog;
@@ -141,12 +142,15 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
                             captchaView.getNewCaptcha();
                             findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
                             Loading.setVisibility(View.GONE);
-                            Toasty.warning(AuthWithSmsConfirmActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
+                            new GenericErrors().throwableException((error, tryAgain) -> Toasty.warning(AuthWithSmsConfirmActivity.this, error, Toasty.LENGTH_LONG, true).show()
+                                    , e, () -> {
+                                    });
                         }
                     });
         } else {
             Loading.setVisibility(View.GONE);
-            Toasty.warning(this, "عدم دسترسی به اینترنت", Toasty.LENGTH_LONG, true).show();
+            new GenericErrors().netError((error, tryAgain) -> Toasty.warning(AuthWithSmsConfirmActivity.this, error, Toasty.LENGTH_LONG, true).show(), () -> {
+            });
         }
 
     }

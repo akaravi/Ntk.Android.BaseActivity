@@ -35,9 +35,7 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 import java9.util.function.Function;
 import ntk.android.base.R;
 import ntk.android.base.activity.abstraction.AbstractDetailActivity;
@@ -154,7 +152,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
     protected abstract void ClickGalley();
 
     @Override
-    protected void showError(String toString) {
+    protected void showError(String toString, Runnable onTryingAgain) {
         Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

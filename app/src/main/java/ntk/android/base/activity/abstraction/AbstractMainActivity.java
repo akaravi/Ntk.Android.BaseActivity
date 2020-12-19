@@ -3,9 +3,11 @@ package ntk.android.base.activity.abstraction;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Window;
@@ -30,6 +32,7 @@ import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.activity.common.IntroActivity;
 import ntk.android.base.appclass.UpdateClass;
+import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.application.ApplicationScoreDtoModel;
@@ -171,7 +174,11 @@ public class AbstractMainActivity extends BaseActivity {
             ImageView img = dialog.findViewById(R.id.qrCodeDialogQRCode);
             img.setImageBitmap(bitmap);
         } catch (WriterException e) {
-            Toasty.warning(this, e.getMessage(), Toast.LENGTH_LONG, true).show();
+            String base64Image = qrCode.split(",")[1];
+            byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            ImageView img = dialog.findViewById(R.id.qrCodeDialogQRCode);
+            img.setImageBitmap(decodedByte);
         }
 
         Button Btn = dialog.findViewById(R.id.btnDialogQRCode);
@@ -206,9 +213,7 @@ public class AbstractMainActivity extends BaseActivity {
         final MaterialRatingBar Rate = dialog.findViewById(R.id.rateDialogComment);
 //        Rate.setRating(EasyPreference.with(this).getInt("Rate", 0));
         Rate.setOnRatingChangeListener((ratingBar, rating) -> {
-            request.ScorePercent = (int) rating;
-            //برای تبدیل به درصد
-            request.ScorePercent = request.ScorePercent * 17;
+            request.ScorePercent = (int) (rating * 20);
             if (request.ScorePercent > 100)
                 request.ScorePercent = 100;
         });
@@ -220,6 +225,7 @@ public class AbstractMainActivity extends BaseActivity {
             } else {
                 if (AppUtill.isNetworkAvailable(this)) {
                     request.ScoreComment = Txt.getText().toString();
+                    request.LinkApiId = Preferences.with(AbstractMainActivity.this).appVariableInfo().appId();
                     //todo show loading
 
                     ServiceExecute.execute(new ApplicationAppService(this).submitAppScore(request))
@@ -229,13 +235,14 @@ public class AbstractMainActivity extends BaseActivity {
                                     if (response.IsSuccess)
                                         Toasty.success(AbstractMainActivity.this, "با موفقیت ثبت شد", Toast.LENGTH_LONG, true).show();
                                     else {
-                                        Toasty.warning(AbstractMainActivity.this, "خظا در دریافت اطلاعات", Toast.LENGTH_LONG, true).show();
+                                        Toasty.warning(AbstractMainActivity.this, response.ErrorMessage, Toast.LENGTH_LONG, true).show();
                                     }
                                 }
 
                                 @Override
                                 public void onError(@NonNull Throwable e) {
-                                    Toasty.warning(AbstractMainActivity.this, "خظا در اتصال به مرکز", Toast.LENGTH_LONG, true).show();
+                                    new GenericErrors().throwableException((error, tryAgain) -> Toasty.warning(AbstractMainActivity.this, error, Toast.LENGTH_LONG, true).show(), e, () -> {
+                                    });
 
                                 }
                             });

@@ -30,6 +30,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.setContentView(content);
     }
 
+    /**
+     * create view base on layoutRes as ContentView and create View Switcher dynamically
+     * base of parent of id ContentId
+     * @param layoutResID
+     * @param contentId
+     */
     public void setDirectContentViewWithSwicher(int layoutResID, int contentId) {
         super.setContentView(layoutResID);
         if (findViewById(contentId) == null)

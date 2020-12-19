@@ -10,34 +10,68 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/RefreshTicket"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <RelativeLayout
-
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/RefreshTicket"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <RelativeLayout
-                    android:id="@+id/StructView"
+
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerFrSupport"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbars="none" />
+
+                    <RelativeLayout
+                        android:id="@+id/StructView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerFrSupport"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scrollbars="none" />
+                    </RelativeLayout>
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/FabFrSupport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="16dp"
+                        app:backgroundTint="?attr/colorAccent"
+                        app:srcCompat="@drawable/ic_plus" />
                 </RelativeLayout>
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/FabFrSupport"
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <LinearLayout
+                android:id="@+id/loadMoreProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="?attr/colorPrimaryDark"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:id="@+id/loadingProgress"
+                    style="style/CircularProgressDrawableStylePrimary"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="16dp"
-                    app:backgroundTint="?attr/colorAccent"
-                    app:srcCompat="@drawable/ic_plus" />
-            </RelativeLayout>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                    android:text="در حال دریافت اطلاعات"
+                    android:textColor="?attr/colorAccent"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -17,11 +17,10 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 import es.dmoral.toasty.Toasty;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
+import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.AuthUserSignInBySmsDtoModel;
@@ -84,16 +83,12 @@ public class AuthWithSmsActivity extends BaseActivity {
             Toast.makeText(this, "متن کپچا را وارد نمایید", Toast.LENGTH_SHORT).show();
         else {
             PhoneNumber = Txt.getText().toString();
-            if (AppUtill.isNetworkAvailable(this)) {
                 if (CheckPermission()) {
                     Register();
                 } else {
                     ActivityCompat.requestPermissions(AuthWithSmsActivity.this, new String[]{Manifest.permission.RECEIVE_SMS}, REQ_PERMISSION);
                 }
-            } else {
-                Toast.makeText(this, "عدم دسترسی به اینترنت", Toast.LENGTH_SHORT).show();
             }
-        }
     }
 
 
@@ -130,15 +125,17 @@ public class AuthWithSmsActivity extends BaseActivity {
                         public void onError(@io.reactivex.annotations.NonNull Throwable e) {
                             ((CaptchaView) findViewById(R.id.captchaView)).getNewCaptcha();
                             Loading.setVisibility(View.GONE);
-                            findViewById(R.id.cardActRegister).setVisibility(View.GONE);
-                            Toasty.warning(AuthWithSmsActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
+                            new GenericErrors().throwableException((error, tryAgain) -> Toasty.warning(AuthWithSmsActivity.this, error, Toasty.LENGTH_LONG, true).show()
+                                    , e, () -> {
+                                    });
 
 
                         }
                     });
         } else {
             Loading.setVisibility(View.GONE);
-            Toasty.warning(this, "عدم دسترسی به اینترنت", Toasty.LENGTH_LONG, true).show();
+            new GenericErrors().netError((error, tryAgain) -> Toasty.warning(AuthWithSmsActivity.this, error, Toasty.LENGTH_LONG, true).show(), () -> {
+            });
         }
     }
 

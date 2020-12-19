@@ -72,9 +72,9 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.4.2'
     //for ripple
     implementation 'com.balysv:material-ripple:1.0.2'
-    //for animation
-    implementation 'com.daimajia.easing:library:2.0@aar'
-    implementation 'com.daimajia.androidanimations:library:2.3@aar'
+//    //for animation
+//    implementation 'com.daimajia.easing:library:2.0@aar'
+//    implementation 'com.daimajia.androidanimations:library:2.3@aar'
     //for toggle switch
     implementation 'com.llollox:androidtoggleswitch:2.0.1'
     //for java 8 features

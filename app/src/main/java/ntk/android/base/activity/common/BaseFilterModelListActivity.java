@@ -11,6 +11,11 @@ import ntk.android.base.entitymodel.base.FilterDataModel;
 
 public abstract class BaseFilterModelListActivity<TEntity> extends AbstractionListActivity<FilterDataModel, TEntity> {
     @Override
+    public void afterInit() {
+        super.afterInit();
+    }
+
+    @Override
     protected void requestOnIntent() {
         request = new FilterDataModel();
         request.RowPerPage = 20;

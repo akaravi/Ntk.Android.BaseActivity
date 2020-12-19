@@ -14,13 +14,14 @@
             android:id="@+id/toolbarFrService"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary">
+            android:background="?attr/colorPrimary">
 
             <ImageView
                 android:id="@+id/imgBackActSendTicket"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
@@ -35,7 +36,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@id/imgBackActSendTicket"
-                android:text="@string/SendTicket"
+                android:layout_toLeftOf="@id/imgBackActSendTicket"
+                android:text="ارسال تیکت جدید"
                 android:textColor="@color/colorGrayText"
                 android:textSize="17sp"
                 tools:ignore="MissingPrefix" />
@@ -45,6 +47,7 @@
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 app:mrl_rippleAlpha="0.05"
                 app:mrl_rippleColor="#10000000"
                 app:mrl_rippleRoundedCorners="100dp">
@@ -69,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_below="@id/toolbarFrService"
-            android:background="@color/colorAccent" />
+            android:background="?attr/colorAccent" />
 
         <ProgressBar
             android:layout_width="wrap_content"
@@ -83,7 +86,7 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentBottom="true"
             android:background="#014efe"
-            android:text="@string/SendTicket"
+            android:text="ارسال درخواست"
             android:textColor="@color/colorWhite"
             android:textSize="17sp"
             android:textStyle="bold"
@@ -100,185 +103,143 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputNameFamilytActSendTicket"
+                    style="@style/new_ticket_textInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="15dp"
-                    android:theme="@style/TextLabel">
+                    android:layout_marginTop="10dp"
+                    android:hint="نام و نام خانوادگی">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtNameFamilyActSendTicket"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:background="@drawable/background_edittext"
-                        android:hint="نام و نام خانوادگی"
+                        android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:paddingStart="15dp"
                         android:textSize="14sp"
-                        tools:ignore="MissingPrefix,RtlSymmetry,TextFields" />
+                        android:theme="@style/new_ticket_inputEditText" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputEmailtActSendTicket"
+                    style="@style/new_ticket_textInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="15dp"
-                    android:theme="@style/TextLabel">
+                    android:layout_marginTop="10dp"
+                    android:hint="آدرس پست الکترونیکی"
+                    android:theme="@style/new_ticket_inputEditText">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtEmailActSendTicket"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:background="@drawable/background_edittext"
-                        android:hint="آدرس پست الکترونیکی"
+                        android:layout_height="wrap_content"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
-                        android:paddingStart="15dp"
                         android:textSize="14sp"
-                        tools:ignore="MissingPrefix,RtlSymmetry,TextFields" />
+                        android:theme="@style/new_ticket_inputEditText" />
+                    <!--         tools:ignore="MissingPrefix,RtlSymmetry,TextFields" />-->
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputPhoneNumberActSendTicket"
+                    style="@style/new_ticket_textInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="15dp"
-                    android:theme="@style/TextLabel">
 
-                    <EditText
+                    android:layout_marginTop="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtPhoneNumberActSendTicket"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:background="@drawable/background_edittext"
-                        android:hint="شماره همراه"
+                        android:layout_height="wrap_content"
+                        android:hint="شماره تلفن همراه"
                         android:inputType="phone"
                         android:maxLength="12"
                         android:maxLines="1"
-                        android:paddingStart="15dp"
                         android:textSize="14sp"
-                        tools:ignore="MissingPrefix,RtlSymmetry,TextFields" />
+                        android:theme="@style/new_ticket_inputEditText" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputSubjectActSendTicket"
+                    style="@style/new_ticket_textInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="15dp"
-                    android:theme="@style/TextLabel">
+                    android:layout_marginTop="10dp"
+                    android:hint="موضوع">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtSubjectActSendTicket"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:background="@drawable/background_edittext"
-                        android:hint="@string/Subject"
+                        android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:paddingStart="15dp"
                         android:textSize="14sp"
-                        tools:ignore="MissingPrefix,RtlSymmetry,TextFields" />
+                        android:theme="@style/new_ticket_inputEditText" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:weightSum="2.8">
 
-                    <LinearLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="2.5dp"
+                        android:layout_marginRight="10dp"
                         android:layout_weight="1.2"
-                        android:gravity="right"
-                        android:orientation="vertical">
+                        android:hint="اهمیت"
+                        app:helperTextEnabled="true"
+                        app:hintEnabled="true">
 
-                        <TextView
-                            android:id="@+id/lblImportantActSendTicket"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/Inportant"
-                            android:textColor="@color/colorAccent"
-                            tools:ignore="MissingPrefix" />
-
-                        <Spinner
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
                             android:id="@+id/SpinnerState"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginEnd="2.5dp" />
+                            android:layout_height="wrap_content"
+                            android:inputType="none" />
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/colorGrayText" />
-                    </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <LinearLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="2.5dp"
-                        android:layout_marginRight="2.5dp"
                         android:layout_weight="1.6"
-                        android:gravity="right"
-                        android:orientation="vertical">
+                        android:hint="مربوط به بخش"
+                        app:helperTextEnabled="true"
+                        app:hintEnabled="true">
 
-                        <TextView
-                            android:id="@+id/lblServiceActSendTicket"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/UserService"
-                            android:textColor="@color/colorAccent"
-                            tools:ignore="MissingPrefix" />
-
-                        <Spinner
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
                             android:id="@+id/SpinnerService"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginStart="2.5dp"
-                            android:layout_marginEnd="2.5dp" />
+                            android:layout_height="wrap_content"
+                            android:inputType="none" />
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/colorGrayText" />
-                    </LinearLayout>
-
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputMessageActSendTicket"
+                    style="@style/new_ticket_textInputLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:theme="@style/TextLabel">
+                    android:layout_height="150dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="متن درخواست">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtMessageActSendTicket"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:background="@drawable/background_edittext"
-                        android:gravity="right|top"
-                        android:hint="متن درخواست"
+                        android:layout_height="match_parent"
                         android:inputType="textMultiLine"
-                        android:paddingStart="15dp"
                         android:textSize="14sp"
-                        tools:ignore="MissingPrefix,RtlSymmetry,TextFields" />
+                        android:theme="@style/new_ticket_inputEditText" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

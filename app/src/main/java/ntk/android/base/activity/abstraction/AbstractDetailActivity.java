@@ -10,27 +10,24 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.google.gson.Gson;
-
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.Observable;
-import io.reactivex.annotations.NonNull;
 import java9.util.function.Function;
 import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.appclass.UpdateClass;
+import ntk.android.base.config.ErrorExceptionObserver;
+import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
-import ntk.android.base.dtomodel.application.MainResponseDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
-import ntk.android.base.view.swicherview.GenericErrors;
 
 public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOtherInfo> extends BaseActivity {
     protected TEntity model;
@@ -71,24 +68,22 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
         if (AppUtill.isNetworkAvailable(this)) {
 
             ServiceExecute.execute(getOneContentService().apply(Id))
-                    .subscribe(new NtkObserver<ErrorException<TEntity>>() {
+                    .subscribe(new ErrorExceptionObserver<TEntity>(this::showError) {
+
                         @Override
-                        public void onNext(ErrorException<TEntity> ContentResponse) {
-                            if (ContentResponse.IsSuccess) {
-                                model = ContentResponse.Item;
-                                bindContentData(ContentResponse);
-                            } else
-                                showError(ContentResponse.ErrorMessage);
+                        protected void SuccessResponse(ErrorException<TEntity> ContentResponse) {
+                            model = ContentResponse.Item;
+                            bindContentData(ContentResponse);
                         }
 
                         @Override
-                        public void onError(Throwable e) {
-                            showError(e.toString());
+                        protected Runnable tryAgainMethod() {
+                            return AbstractDetailActivity.this::getContent;
                         }
 
                     });
         } else {
-            new GenericErrors().netError(switcher, this::getContent);
+            new GenericErrors().netError(this::showError, this::getContent);
         }
 
     }
@@ -96,20 +91,21 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
     protected final void getContentOtherInfo(long ContentId) {
         if (AppUtill.isNetworkAvailable(this)) {
             ServiceExecute.execute(getOtherInfoListService().apply(ContentId))
-                    .subscribe(new NtkObserver<ErrorException<TOtherInfo>>() {
+                    .subscribe(new ErrorExceptionObserver<TOtherInfo>(this::showError) {
 
                         @Override
-                        public void onNext(@NonNull ErrorException<TOtherInfo> ContentOtherInfoResponse) {
-                            bindDataOtherInfo(ContentOtherInfoResponse);
+                        protected void SuccessResponse(ErrorException<TOtherInfo> tOtherInfoErrorException) {
+                            bindDataOtherInfo(tOtherInfoErrorException);
                         }
 
                         @Override
-                        public void onError(Throwable e) {
-                            showError(e.toString());
+                        protected Runnable tryAgainMethod() {
+                            return () -> getContentOtherInfo(ContentId);
                         }
+
                     });
         } else {
-            new GenericErrors().netError(switcher, () -> getContentOtherInfo(ContentId));
+            new GenericErrors().netError(this::showError, () -> getContentOtherInfo(ContentId));
         }
     }
 
@@ -143,11 +139,11 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
 
                         @Override
                         public void onError(Throwable e) {
-                            showError(e.toString());
+                            new GenericErrors().throwableException(AbstractDetailActivity.this::showErrorDialog, e, () -> ClickFav());
                         }
                     });
         } else {
-            new GenericErrors().netError(switcher, this::ClickFav);
+            new GenericErrors().netError(this::showErrorDialog, this::ClickFav);
         }
     }
 
@@ -157,7 +153,9 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
 
     public abstract void bindDataOtherInfo(ErrorException<TOtherInfo> contentOtherInfoResponse);
 
-    protected abstract void showError(String toString);
+    protected abstract void showError(String toString, Runnable onTryingAgain);
+
+    protected abstract void showErrorDialog(String toString, Runnable onTryingAgain);
 
     protected abstract void setContentView();
 

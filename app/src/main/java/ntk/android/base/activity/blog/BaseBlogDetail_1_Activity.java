@@ -126,7 +126,7 @@ public abstract class BaseBlogDetail_1_Activity extends
     }
 
     @Override
-    protected void showError(String toString) {
+    protected void showError(String toString, Runnable onTryingAgain) {
         Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +134,10 @@ public abstract class BaseBlogDetail_1_Activity extends
             }
         }).show();
     }
+    @Override
+    protected void showErrorDialog(String toString, Runnable onTryingAgain) {
 
+    }
 
     protected void setContentRate(ScoreClickDtoModel request) {
         if (AppUtill.isNetworkAvailable(this)) {

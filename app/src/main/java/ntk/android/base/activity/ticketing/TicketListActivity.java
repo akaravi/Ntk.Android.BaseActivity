@@ -18,6 +18,8 @@ import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.adapter.TicketAdapter;
 import ntk.android.base.api.utill.NTKUtill;
+import ntk.android.base.config.ErrorExceptionObserver;
+import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
@@ -37,6 +39,7 @@ public class TicketListActivity extends BaseActivity {
 
     private EndlessRecyclerViewScrollListener scrollListener;
     private int TotalTag = 0;
+    private boolean loadingMore = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +65,7 @@ public class TicketListActivity extends BaseActivity {
 
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                if (totalItemsCount <= TotalTag) {
+                if (loadingMore && totalItemsCount <= TotalTag) {
                     HandelData((page + 1));
                 }
             }
@@ -91,39 +94,40 @@ public class TicketListActivity extends BaseActivity {
 
         Refresh.setOnRefreshListener(() -> {
             tickets.clear();
+            loadingMore = true;
             HandelData(1);
             Refresh.setRefreshing(false);
         });
-
+        switcher.setLoadMore(findViewById(R.id.loadMoreProgress));
         HandelData(1);
     }
 
 
-    private void HandelData(int i) {
+    private void HandelData(int nextPage) {
         if (AppUtill.isNetworkAvailable(this)) {
-
 
             FilterDataModel request = new FilterDataModel();
             request.RowPerPage = 10;
-            request.CurrentPageNumber = i;
+            request.CurrentPageNumber = nextPage;
             request.SortType = NTKUtill.Descnding_Sort;
             request.SortColumn = "Id";
             switcher.showProgressView();
             ServiceExecute.execute(new TicketingTaskService(this).getAll(request))
-                    .subscribe(new NtkObserver<ErrorException<TicketingTaskModel>>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
+                    .subscribe(new ErrorExceptionObserver<TicketingTaskModel>(switcher::showErrorView) {
 
                         @Override
-                        public void onNext(ErrorException<TicketingTaskModel> model) {
+                        protected void SuccessResponse(ErrorException<TicketingTaskModel> model) {
                             tickets.addAll(model.ListItems);
-                            adapter.notifyDataSetChanged();
-                            TotalTag = model.TotalRowCount;
 
-                            if (TotalTag > 0)
+                            TotalTag = model.TotalRowCount;
+                            if (model.ListItems.size() < request.RowPerPage) {
+                                loadingMore = false;
+                            }
+                            adapter.notifyDataSetChanged();
+                            if (model.ListItems.size() > 0) {
                                 switcher.showContentView();
+                                switcher.hideLoadMore();
+                            }
                             else {
                                 switcher.showEmptyView();
 
@@ -131,17 +135,13 @@ public class TicketListActivity extends BaseActivity {
                         }
 
                         @Override
-                        public void onError(Throwable e) {
-                            switcher.showErrorView("خطای سامانه مجددا تلاش کنید", () -> init());
-                        }
+                        protected Runnable tryAgainMethod() {
 
-                        @Override
-                        public void onComplete() {
-
+                                return () -> HandelData(nextPage);
                         }
                     });
         } else {
-            switcher.showErrorView("عدم دسترسی به اینترنت", () -> init());
+            new GenericErrors().netError(switcher::showErrorView, () -> HandelData(nextPage));
 
         }
     }

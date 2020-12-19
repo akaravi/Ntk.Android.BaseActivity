@@ -73,15 +73,8 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
                 break;
         }
         holder.Root.setOnClickListener(v -> {
-            FilterDataModel request = new FilterDataModel();
-            Filters f = new Filters();
-            f.PropertyName = "LinkTicketId";
-            f.IntValue1 = arrayList.get(position).Id;
-            request.addFilter(f);
-
             Intent intent = new Intent(context, TicketAnswerActivity.class);
-            intent.putExtra(Extras.EXTRA_FIRST_ARG, new Gson().toJson(request));
-            intent.putExtra(Extras.EXTRA_SECOND_ARG, arrayList.get(position).Id);
+            intent.putExtra(Extras.EXTRA_FIRST_ARG, arrayList.get(position).Id);
             context.startActivity(intent);
         });
     }

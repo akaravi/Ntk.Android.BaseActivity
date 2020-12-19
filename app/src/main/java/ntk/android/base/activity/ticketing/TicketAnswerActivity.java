@@ -20,16 +20,12 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -38,18 +34,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.Extras;
 import ntk.android.base.R;
+import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.adapter.TicketAnswerAdapter;
 import ntk.android.base.adapter.TicketAttachAdapter;
+import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
+import ntk.android.base.entitymodel.base.Filters;
 import ntk.android.base.entitymodel.file.FileUploadModel;
 import ntk.android.base.entitymodel.ticketing.TicketingAnswerModel;
 import ntk.android.base.event.RemoveAttachEvent;
@@ -59,19 +55,20 @@ import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
 
 
-public class TicketAnswerActivity extends AppCompatActivity {
+public class TicketAnswerActivity extends BaseActivity {
 
     List<RecyclerView> Rvs;
     TextView Lbl;
     CoordinatorLayout layout;
     EditText txt;
-    Button btn;
-
+    Button Btn;
+    long ticketId;
     private ArrayList<TicketingAnswerModel> tickets = new ArrayList<>();
     private TicketAnswerAdapter adapter;
     private List<String> attaches = new ArrayList<>();
+    private List<String> fileId = new ArrayList<>();
     private TicketAttachAdapter AdAtach;
-    private String linkFileIds = "";
+
     private static final int READ_REQUEST_CODE = 42;
 
     @Override
@@ -96,6 +93,7 @@ public class TicketAnswerActivity extends AppCompatActivity {
     @Subscribe
     public void EventBus(RemoveAttachEvent event) {
         attaches.remove(event.GetPosition());
+        fileId.remove(event.GetPosition());
         AdAtach.notifyDataSetChanged();
     }
 
@@ -108,14 +106,15 @@ public class TicketAnswerActivity extends AppCompatActivity {
 
         Lbl = findViewById(R.id.lblTitleActTicketAnswer);
         txt = findViewById(R.id.txtMessageActTicketAnswer);
-        btn = findViewById(R.id.btnSubmitActTicketAnswer);
+        Btn = findViewById(R.id.btnSubmitActTicketAnswer);
         findViewById(R.id.imgBackActTicketAnswer).setOnClickListener(v -> ClickBack());
         findViewById(R.id.btnSubmitActTicketAnswer).setOnClickListener(v -> ClickSubmit());
         findViewById(R.id.RippleAttachActTicketAnswer).setOnClickListener(v -> ClickAttach());
         Lbl.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Lbl.setText("پاسخ تیکت  " + getIntent().getLongExtra("TicketId", 0));
+        ticketId = getIntent().getExtras().getLong(Extras.EXTRA_FIRST_ARG);
+        Lbl.setText("پاسخ تیکت  " + ticketId);
         Rvs.get(0).setHasFixedSize(true);
-        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         Rvs.get(0).setLayoutManager(manager);
 
         adapter = new TicketAnswerAdapter(this, tickets);
@@ -133,18 +132,19 @@ public class TicketAnswerActivity extends AppCompatActivity {
 
     private void HandelData(int i) {
         if (AppUtill.isNetworkAvailable(this)) {
+            FilterDataModel request = new FilterDataModel();
+            request.addFilter(new Filters().setPropertyName("LinkTaskId").setIntValue1(ticketId));
 
-            ServiceExecute.execute(new TicketingAnswerService(this).getAll(new Gson().fromJson(getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG), FilterDataModel.class)))
+            ServiceExecute.execute(new TicketingAnswerService(this).getAll(request))
                     .subscribe(new NtkObserver<ErrorException<TicketingAnswerModel>>() {
                         @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
                         public void onNext(ErrorException<TicketingAnswerModel> model) {
-                            tickets.addAll(model.ListItems);
-                            adapter.notifyDataSetChanged();
+                            if (model.IsSuccess) {
+                                tickets.addAll(model.ListItems);
+                                adapter.notifyDataSetChanged();
+                            } else
+                                switcher.showErrorView();
+
                         }
 
                         @Override
@@ -152,10 +152,7 @@ public class TicketAnswerActivity extends AppCompatActivity {
                             Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", v -> init()).show();
                         }
 
-                        @Override
-                        public void onComplete() {
 
-                        }
                     });
         } else {
             Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", v -> init()).show();
@@ -168,31 +165,31 @@ public class TicketAnswerActivity extends AppCompatActivity {
 
     public void ClickSubmit() {
         if (txt.getText().toString().isEmpty()) {
-            YoYo.with(Techniques.Tada).duration(700).playOn(txt);
+
         } else {
             if (AppUtill.isNetworkAvailable(this)) {
                 TicketingAnswerModel request = new TicketingAnswerModel();
                 request.HtmlBody = txt.getText().toString();
-                request.LinkTicketId = getIntent().getLongExtra(Extras.EXTRA_SECOND_ARG, 0);
-                request.LinkFileIds = linkFileIds;
+                request.LinkTaskId = ticketId;
+                request.UploadFileGUID = fileId;
 
-                ServiceExecute.execute(  new TicketingAnswerService(this).add(request))
+                ServiceExecute.execute(new TicketingAnswerService(this).add(request))
                         .subscribe(new NtkObserver<ErrorException<TicketingAnswerModel>>() {
 
                             @Override
                             public void onNext(ErrorException<TicketingAnswerModel> model) {
-                                Toasty.success(TicketAnswerActivity.this, "با موفقیت ثبت شد", Toasty.LENGTH_LONG, true).show();
-                                finish();
+                                if (model.IsSuccess) {
+                                    Toasty.success(TicketAnswerActivity.this, "با موفقیت ثبت شد", Toasty.LENGTH_LONG, true).show();
+                                    finish();
+                                } else
+                                    Toasty.error(TicketAnswerActivity.this, model.ErrorMessage).show();
+
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        init();
-                                    }
-                                }).show();
+                                new GenericErrors().throwableException((error, tryAgain) -> Toasty.error(TicketAnswerActivity.this, error).show(), e, () -> {
+                                });
                             }
 
                         });
@@ -223,7 +220,7 @@ public class TicketAnswerActivity extends AppCompatActivity {
             if (resultData != null) {
                 uri = resultData.getData();
                 if (uri != null) {
-                    btn.setVisibility(View.GONE);
+                    Btn.setVisibility(View.GONE);
                     attaches.add(getPath(TicketAnswerActivity.this, uri));
                     AdAtach.notifyDataSetChanged();
                     UploadFileToServer(getPath(TicketAnswerActivity.this, uri));
@@ -324,25 +321,28 @@ public class TicketAnswerActivity extends AppCompatActivity {
                     .subscribe(new NtkObserver<FileUploadModel>() {
                         @Override
                         public void onNext(@NonNull FileUploadModel fileUploadModel) {
-                            if (linkFileIds.equals("")) linkFileIds = fileUploadModel.FileKey;
-                            else linkFileIds = linkFileIds + "," + fileUploadModel.FileKey;
                             adapter.notifyDataSetChanged();
-                            btn.setVisibility(View.VISIBLE);
+                            fileId.add(fileUploadModel.FileKey);
+                            Btn.setVisibility(View.VISIBLE);
                         }
 
                         @Override
                         public void onError(@NonNull Throwable e) {
+                            Btn.setVisibility(View.VISIBLE);
+                            attaches.remove(attaches.size() - 1);
+                            adapter.notifyDataSetChanged();
                             Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     init();
                                 }
                             }).show();
-                            btn.setVisibility(View.VISIBLE);
+
                         }
                     });
 
         } else {
+            Btn.setVisibility(View.VISIBLE);
             Toasty.warning(this, "عدم دسترسی به اینترنت", Toasty.LENGTH_LONG, true).show();
         }
     }

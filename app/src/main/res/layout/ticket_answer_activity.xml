@@ -23,7 +23,9 @@
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
                 app:mrl_rippleAlpha="0.05"
                 app:mrl_rippleColor="#10000000"
                 app:mrl_rippleRoundedCorners="100dp">
@@ -48,7 +50,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_toStartOf="@id/imgBackActTicketAnswer"
+                android:layout_toLeftOf="@id/imgBackActTicketAnswer"
                 android:text="صندوق پیام"
                 android:textColor="@color/colorMenu"
                 tools:ignore="HardcodedText" />
@@ -58,6 +62,7 @@
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 app:mrl_rippleAlpha="0.05"
                 app:mrl_rippleColor="#10000000"
                 app:mrl_rippleRoundedCorners="100dp">
@@ -80,11 +85,13 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:background="@color/colorAccent" />
+            android:background="?attr/colorAccent" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fillViewport="true"
             android:scrollbars="none">
 
             <LinearLayout
@@ -96,8 +103,15 @@
                     android:id="@+id/recyclerAnswer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:scrollbars="none"
                     tools:ignore="InvalidId" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/RecyclerAttachTicketAnswer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputMessageActTicketAnswer"
@@ -107,7 +121,7 @@
                     android:layout_marginTop="25dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="15dp"
-                    android:theme="@style/TextLabel">
+                    android:theme="@style/new_ticket_inputEditText">
 
                     <EditText
                         android:id="@+id/txtMessageActTicketAnswer"
@@ -118,15 +132,10 @@
                         android:hint="جواب درخواست"
                         android:inputType="textMultiLine"
                         android:paddingStart="15dp"
+                        android:paddingLeft="15dp"
                         android:textSize="14sp"
                         tools:ignore="MissingPrefix,RtlSymmetry,TextFields" />
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/RecyclerAttachTicketAnswer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="none" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"

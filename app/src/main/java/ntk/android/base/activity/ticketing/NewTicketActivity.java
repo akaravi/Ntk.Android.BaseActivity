@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -27,9 +26,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -46,6 +45,7 @@ import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.adapter.SpinnerAdapter;
 import ntk.android.base.adapter.TicketAttachAdapter;
 import ntk.android.base.api.member.model.MemberUserActAddRequest;
+import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
@@ -63,10 +63,9 @@ import ntk.android.base.utill.Regex;
 import ntk.android.base.utill.prefrense.Preferences;
 
 public class NewTicketActivity extends BaseActivity {
-    List<Spinner> spinners;
-    List<TextView> Lbls;
-    List<EditText> Txts;
-    List<TextInputLayout> Inputs;
+    //    List<MaterialAutoCompleteTextView> spinners;
+//    List<EditText> Txts;
+//    List<TextInputLayout> Inputs;
     Button Btn;
     RecyclerView Rv;
     CoordinatorLayout layout;
@@ -83,7 +82,6 @@ public class NewTicketActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ticket_new_activity);
-
         init();
     }
 
@@ -100,24 +98,22 @@ public class NewTicketActivity extends BaseActivity {
     }
 
     private void init() {
-        spinners = new ArrayList() {{
+        List<MaterialAutoCompleteTextView> spinners = new ArrayList() {{
             add(findViewById(R.id.SpinnerService));
             add(findViewById(R.id.SpinnerState));
         }};
 
-        Lbls = new ArrayList() {{
-            add(findViewById(R.id.lblTitleActSendTicket));
-            add(findViewById(R.id.lblImportantActSendTicket));
-            add(findViewById(R.id.lblServiceActSendTicket));
-        }};
-        Txts = new ArrayList() {{
+        ((TextView) findViewById(R.id.lblTitleActSendTicket)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+
+
+        List<EditText> Txts = new ArrayList() {{
             add(findViewById(R.id.txtSubjectActSendTicket));
             add(findViewById(R.id.txtMessageActSendTicket));
             add(findViewById(R.id.txtNameFamilyActSendTicket));
             add(findViewById(R.id.txtPhoneNumberActSendTicket));
             add(findViewById(R.id.txtEmailActSendTicket));
         }};
-        Inputs = new ArrayList() {{
+        List<TextInputLayout> Inputs = new ArrayList() {{
             add(findViewById(R.id.inputSubjectActSendTicket));
             add(findViewById(R.id.inputMessageActSendTicket));
             add(findViewById(R.id.inputNameFamilytActSendTicket));
@@ -130,25 +126,20 @@ public class NewTicketActivity extends BaseActivity {
         findViewById(R.id.btnSubmitActSendTicket).setOnClickListener(v -> ClickSubmit());
         findViewById(R.id.imgBackActSendTicket).setOnClickListener(v -> Clickback());
         findViewById(R.id.RippleAttachActSendTicket).setOnClickListener(v -> ClickAttach());
-        Lbls.get(0).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Lbls.get(1).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Lbls.get(2).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-
-        Inputs.get(0).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Inputs.get(1).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Inputs.get(2).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Inputs.get(3).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Inputs.get(4).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-
-        Txts.get(0).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Txts.get(1).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Txts.get(2).setText(Preferences.with(this).ticketVariableInfo().nameFamily());
-        Txts.get(3).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Txts.get(3).setText(Preferences.with(this).ticketVariableInfo().mobile());
-        Txts.get(4).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Txts.get(4).setText(Preferences.with(this).ticketVariableInfo().email());
-
+        for (TextInputLayout ti :
+                Inputs) {
+            ti.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        }
+        for (EditText ti :
+                Txts) {
+            ti.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        }
         Btn.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+
+        ((TextInputEditText) findViewById(R.id.txtNameFamilyActSendTicket)).setText(Preferences.with(this).ticketVariableInfo().nameFamily());
+        ((TextInputEditText) findViewById(R.id.txtPhoneNumberActSendTicket)).setText(Preferences.with(this).ticketVariableInfo().mobile());
+        ((TextInputEditText) findViewById(R.id.txtEmailActSendTicket)).setText(Preferences.with(this).ticketVariableInfo().email());
+
 
         Rv.setHasFixedSize(true);
         Rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
@@ -177,83 +168,86 @@ public class NewTicketActivity extends BaseActivity {
                 .subscribe(new NtkObserver<ErrorException<TicketingDepartemenModel>>() {
                     @Override
                     public void onNext(@NonNull ErrorException<TicketingDepartemenModel> model) {
-                        List<String> list = new ArrayList<>();
-                        for (TicketingDepartemenModel td : model.ListItems) {
-                            list.add(td.Title);
-                            SpinnerAdapter<String> adapter_dpartman = new SpinnerAdapter<>(NewTicketActivity.this, R.layout.spinner_item, list);
-                            spinners.get(0).setAdapter(adapter_dpartman);
+                        if (model.IsSuccess) {
+                            List<String> list = new ArrayList<>();
+                            for (TicketingDepartemenModel td : model.ListItems) {
+                                list.add(td.Title);
+                                SpinnerAdapter<String> adapter_dpartman = new SpinnerAdapter<>(NewTicketActivity.this, R.layout.spinner_item, list);
+                                spinners.get(0).setAdapter(adapter_dpartman);
+                            }
+                        } else {
+                            switcher.showErrorView();
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Toasty.warning(NewTicketActivity.this, "خطای سامانه", Toasty.LENGTH_LONG, true).show();
-
+                        new GenericErrors().throwableException((error, tryAgain) -> Toasty.warning(NewTicketActivity.this, error, Toasty.LENGTH_LONG, true).show(), e, () -> {
+                        });
                     }
                 });
     }
 
     public void ClickSubmit() {
-
-        if (Txts.get(0).getText().toString().isEmpty()) {
-            YoYo.with(Techniques.Tada).duration(700).playOn(Txts.get(0));
+        TextInputEditText subject = (findViewById(R.id.txtSubjectActSendTicket));
+        TextInputEditText message = (findViewById(R.id.txtMessageActSendTicket));
+        TextInputEditText name = (findViewById(R.id.txtNameFamilyActSendTicket));
+        TextInputEditText phone = (findViewById(R.id.txtPhoneNumberActSendTicket));
+        TextInputEditText email = (findViewById(R.id.txtEmailActSendTicket));
+        findViewById(R.id.txtSubjectActSendTicket);
+        if (subject.getText().toString().isEmpty()) {
             Toasty.warning(NewTicketActivity.this, "موضوع درخواست خود را وارد کنید", Toasty.LENGTH_LONG, true).show();
             return;
         }
-        if (Txts.get(1).getText().toString().isEmpty()) {
-            YoYo.with(Techniques.Tada).duration(700).playOn(Txts.get(1));
+        if (message.getText().toString().isEmpty()) {
             Toasty.warning(NewTicketActivity.this, "متن درخواست خود را وارد کنید", Toasty.LENGTH_LONG, true).show();
             return;
         }
-        if (Txts.get(2).getText().toString().isEmpty()) {
-            YoYo.with(Techniques.Tada).duration(700).playOn(Txts.get(2));
+        if (name.getText().toString().isEmpty()) {
             Toasty.warning(NewTicketActivity.this, "نام و نام خانوادگی را وارد کنید", Toasty.LENGTH_LONG, true).show();
             return;
         }
-        Preferences.with(this).ticketVariableInfo().setNameFamily(Txts.get(2).getText().toString());
-        if (Txts.get(3).getText().toString().isEmpty()) {
-            YoYo.with(Techniques.Tada).duration(700).playOn(Txts.get(3));
+        Preferences.with(this).ticketVariableInfo().setNameFamily(name.getText().toString());
+        if (phone.getText().toString().isEmpty()) {
             Toasty.warning(NewTicketActivity.this, "شماره تلفن همراه را وارد کنید", Toasty.LENGTH_LONG, true).show();
             return;
         }
-        if (!Txts.get(3).getText().toString().startsWith("09")) {
-            YoYo.with(Techniques.Tada).duration(700).playOn(Txts.get(3));
+        if (!phone.getText().toString().startsWith("09")) {
             Toasty.warning(NewTicketActivity.this, "شماره تلفن همراه را به صورت صحیح وارد کنید", Toasty.LENGTH_LONG, true).show();
             return;
         }
-        Preferences.with(this).ticketVariableInfo().setMobile(Txts.get(3).getText().toString());
-        if (Txts.get(4).getText().toString().isEmpty()) {
-            YoYo.with(Techniques.Tada).duration(700).playOn(Txts.get(4));
+        Preferences.with(this).ticketVariableInfo().setMobile(phone.getText().toString());
+        if (email.getText().toString().isEmpty()) {
             Toasty.warning(NewTicketActivity.this, "پست الکترونیک را وارد کنید", Toasty.LENGTH_LONG, true).show();
             return;
         }
-        if (!Regex.ValidateEmail(Txts.get(4).getText().toString())) {
+        if (!Regex.ValidateEmail(email.getText().toString())) {
             Toasty.warning(this, "آدرس پست الکترونیکی صحیح نمیباشد", Toasty.LENGTH_LONG, true).show();
             return;
         }
-        Preferences.with(this).ticketVariableInfo().setEmail(Txts.get(4).getText().toString());
+        Preferences.with(this).ticketVariableInfo().setEmail(email.getText().toString());
         if (AppUtill.isNetworkAvailable(this)) {
             //show dialog loading
             switcher.showLoadDialog(this, false);
-            request.Email = Txts.get(4).getText().toString();
-            request.PhoneNo = Txts.get(3).getText().toString();
-            request.FullName = Txts.get(2).getText().toString();
-            request.HtmlBody = Txts.get(1).getText().toString();
-            request.Title = Txts.get(0).getText().toString();
+            request.Email = email.getText().toString();
+            request.PhoneNo = phone.getText().toString();
+            request.FullName = name.getText().toString();
+            request.HtmlBody = message.getText().toString();
+            request.Title = subject.getText().toString();
 
-            String ids = "";
-            for (int i = 0; i < fileId.size(); i++) {
-                if (ids.equals(""))
-                    ids = fileId.get(i);
-                else
-                    ids += "," + fileId.get(i);
-            }
-            request.LinkFileIds = ids;
+//            String ids = "";
+//            for (int i = 0; i < fileId.size(); i++) {
+//                if (ids.equals(""))
+//                    ids = fileId.get(i);
+//                else
+//                    ids += "," + fileId.get(i);
+//            }
+            request.UploadFileGUID = fileId;
 
-            requestMember.FirstName = Txts.get(2).getText().toString();
-            requestMember.LastName = Txts.get(2).getText().toString();
-            requestMember.PhoneNo = Txts.get(3).getText().toString();
-            requestMember.Email = Txts.get(4).getText().toString();
+            requestMember.FirstName = name.getText().toString();
+            requestMember.LastName = name.getText().toString();
+            requestMember.PhoneNo = phone.getText().toString();
+            requestMember.Email = email.getText().toString();
 
 
             findViewById(R.id.btnSubmitActSendTicket).setClickable(false);
@@ -263,25 +257,24 @@ public class NewTicketActivity extends BaseActivity {
                         @Override
                         public void onNext(@NonNull ErrorException<TicketingTaskModel> model) {
                             switcher.hideLoadDialog();
-                            Toasty.success(NewTicketActivity.this, "با موفقیت ثبت شد", Toasty.LENGTH_LONG, true).show();
-                            finish();
+                            if (model.IsSuccess) {
+                                Toasty.success(NewTicketActivity.this, "با موفقیت ثبت شد", Toasty.LENGTH_LONG, true).show();
+                                finish();
+                            } else
+                                Toasty.error(NewTicketActivity.this, model.ErrorMessage).show();
+
                         }
 
                         @Override
                         public void onError(@NonNull Throwable e) {
                             switcher.hideLoadDialog();
-                            Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", v -> init()).show();
+                            new GenericErrors().throwableException((error, tryAgain) -> Toasty.error(NewTicketActivity.this, error).show(), e, () -> {
+                            });
                             findViewById(R.id.btnSubmitActSendTicket).setClickable(true);
                         }
                     });
         } else {
-
-            Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    init();
-                }
-            }).show();
+            Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", v -> init()).show();
         }
 
 
@@ -408,7 +401,7 @@ public class NewTicketActivity extends BaseActivity {
 
     private void UploadFileToServer(String url) {
         if (AppUtill.isNetworkAvailable(this)) {
-            ServiceExecute.execute( new FileUploaderService(this).uploadFile(url))
+            ServiceExecute.execute(new FileUploaderService(this).uploadFile(url))
                     .subscribe(new NtkObserver<FileUploadModel>() {
                         @Override
                         public void onNext(@NonNull FileUploadModel fileUploadModel) {

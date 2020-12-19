@@ -4,13 +4,11 @@ import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import ntk.android.base.entitymodel.base.ErrorException;
-import ntk.android.base.view.swicherview.GenericErrors;
-import ntk.android.base.view.swicherview.Switcher;
 
 public abstract class ErrorExceptionObserver<T> implements Observer<ErrorException<T>> {
-    Switcher switcher;
+    ErrorViewInterface switcher;
 
-    public ErrorExceptionObserver(Switcher sw) {
+    public ErrorExceptionObserver(ErrorViewInterface sw) {
         switcher = sw;
     }
 

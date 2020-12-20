@@ -196,9 +196,9 @@ public class AbstractMainActivity extends BaseActivity {
     }
 
     public void onFeedbackClick() {
-        if (Preferences.with(this).appVariableInfo().feedback() == null)
-            startActivity(new Intent(this, FeedbackListActivity.class));
-        else {
+//        if (Preferences.with(this).appVariableInfo().feedback() == null)
+//            startActivity(new Intent(this, FeedbackListActivity.class));
+//        else {
             ApplicationScoreDtoModel request = new ApplicationScoreDtoModel();
             final Dialog dialog = new Dialog(this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -257,7 +257,7 @@ public class AbstractMainActivity extends BaseActivity {
                     dialog.dismiss();
                 }
             });
-        }
+//        }
     }
 
     public void onMainIntro() {

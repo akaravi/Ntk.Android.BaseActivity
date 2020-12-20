@@ -43,7 +43,7 @@ import io.reactivex.annotations.NonNull;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.adapter.SpinnerAdapter;
-import ntk.android.base.adapter.TicketAttachAdapter;
+import ntk.android.base.adapter.common.TicketAttachAdapter;
 import ntk.android.base.api.member.model.MemberUserActAddRequest;
 import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;

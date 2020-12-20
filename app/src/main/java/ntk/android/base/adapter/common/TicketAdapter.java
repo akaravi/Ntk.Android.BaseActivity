@@ -1,4 +1,4 @@
-package ntk.android.base.adapter;
+package ntk.android.base.adapter.common;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +18,6 @@ import java.util.List;
 import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.activity.ticketing.TicketAnswerActivity;
-import ntk.android.base.entitymodel.base.FilterDataModel;
-import ntk.android.base.entitymodel.base.Filters;
 import ntk.android.base.entitymodel.ticketing.TicketingTaskModel;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;

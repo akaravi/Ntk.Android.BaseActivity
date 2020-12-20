@@ -1,4 +1,4 @@
-package ntk.android.base.adapter;
+package ntk.android.base.adapter.common;
 
 import android.content.Context;
 import android.view.LayoutInflater;

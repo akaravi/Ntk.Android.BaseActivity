@@ -1,4 +1,4 @@
-package ntk.android.base.adapter;
+package ntk.android.base.adapter.common;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

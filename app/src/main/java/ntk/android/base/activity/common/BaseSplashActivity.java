@@ -30,7 +30,7 @@ public abstract class BaseSplashActivity extends AbstractSplashActivity {
             @Override
             public void buildUi() {
                 TextView Lbl = findViewById(R.id.lblVersionActSplash);
-                findViewById(R.id.debugModeView).setOnClickListener(BaseSplashActivity.this::showDebugView);
+                findViewById(R.id.splash_debugView).setOnClickListener(BaseSplashActivity.this::showDebugView);
                 findViewById(R.id.activity_BaseError).findViewById(R.id.debugModeView).setOnClickListener(BaseSplashActivity.this::showDebugView);
                 Lbl.setTypeface(FontManager.GetTypeface(BaseSplashActivity.this, FontManager.IranSans));
                 Lbl.setText("نسخه  " + (int) Float.parseFloat(BaseNtkApplication.get().getApplicationParameter().VERSION_NAME())

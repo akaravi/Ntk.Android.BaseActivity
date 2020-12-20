@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.Observable;
 import java9.util.function.Function;
 import ntk.android.base.activity.abstraction.AbstractionSearchActivity;
-import ntk.android.base.adapter.TicketAdapter;
+import ntk.android.base.adapter.common.TicketAdapter;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.entitymodel.ticketing.TicketingTaskModel;

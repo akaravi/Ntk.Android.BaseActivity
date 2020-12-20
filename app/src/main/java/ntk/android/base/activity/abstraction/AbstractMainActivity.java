@@ -30,6 +30,7 @@ import ntk.android.base.ApplicationParameter;
 import ntk.android.base.BaseNtkApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
+import ntk.android.base.activity.common.FeedbackListActivity;
 import ntk.android.base.activity.common.IntroActivity;
 import ntk.android.base.appclass.UpdateClass;
 import ntk.android.base.config.GenericErrors;
@@ -195,63 +196,68 @@ public class AbstractMainActivity extends BaseActivity {
     }
 
     public void onFeedbackClick() {
-        ApplicationScoreDtoModel request = new ApplicationScoreDtoModel();
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setCanceledOnTouchOutside(true);
-        Window window = dialog.getWindow();
-        window.setLayout(LinearLayoutCompat.LayoutParams.WRAP_CONTENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
-        window.setGravity(Gravity.CENTER);
-        dialog.setContentView(R.layout.dialog_comment);
-        dialog.show();
-        TextView Lbl = dialog.findViewById(R.id.lblTitleDialogComment);
-        Lbl.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        final EditText Txt = dialog.findViewById(R.id.txtDialogComment);
-        Txt.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        if (Preferences.with(this).appVariableInfo().feedback() == null)
+            startActivity(new Intent(this, FeedbackListActivity.class));
+        else {
+            ApplicationScoreDtoModel request = new ApplicationScoreDtoModel();
+            final Dialog dialog = new Dialog(this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.setCanceledOnTouchOutside(true);
+            Window window = dialog.getWindow();
+            window.setLayout(LinearLayoutCompat.LayoutParams.WRAP_CONTENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
+            window.setGravity(Gravity.CENTER);
+            dialog.setContentView(R.layout.dialog_comment);
+            dialog.show();
+            TextView Lbl = dialog.findViewById(R.id.lblTitleDialogComment);
+            Lbl.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+            final EditText Txt = dialog.findViewById(R.id.txtDialogComment);
+            Txt.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
 //        Txt.setText(EasyPreference.with(this).getString("RateMessage", ""));
-        final MaterialRatingBar Rate = dialog.findViewById(R.id.rateDialogComment);
+            final MaterialRatingBar Rate = dialog.findViewById(R.id.rateDialogComment);
 //        Rate.setRating(EasyPreference.with(this).getInt("Rate", 0));
-        Rate.setOnRatingChangeListener((ratingBar, rating) -> {
-            request.ScorePercent = (int) (rating * 20);
-            if (request.ScorePercent > 100)
-                request.ScorePercent = 100;
-        });
-        Button Btn = dialog.findViewById(R.id.btnDialogComment);
-        Btn.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Btn.setOnClickListener(v -> {
-            if (Txt.getText().toString().isEmpty()) {
-                Toasty.error(this, "لطفا نظر خود را وارد نمایید", Toasty.LENGTH_LONG, true).show();
-            } else {
-                if (AppUtill.isNetworkAvailable(this)) {
-                    request.ScoreComment = Txt.getText().toString();
-                    request.LinkApiId = Preferences.with(AbstractMainActivity.this).appVariableInfo().appId();
-                    //todo show loading
-
-                    ServiceExecute.execute(new ApplicationAppService(this).submitAppScore(request))
-                            .subscribe(new NtkObserver<ErrorExceptionBase>() {
-                                @Override
-                                public void onNext(@NonNull ErrorExceptionBase response) {
-                                    if (response.IsSuccess)
-                                        Toasty.success(AbstractMainActivity.this, "با موفقیت ثبت شد", Toast.LENGTH_LONG, true).show();
-                                    else {
-                                        Toasty.warning(AbstractMainActivity.this, response.ErrorMessage, Toast.LENGTH_LONG, true).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onError(@NonNull Throwable e) {
-                                    new GenericErrors().throwableException((error, tryAgain) -> Toasty.warning(AbstractMainActivity.this, error, Toast.LENGTH_LONG, true).show(), e, () -> {
-                                    });
-
-                                }
-                            });
+            Rate.setOnRatingChangeListener((ratingBar, rating) -> {
+                request.ScorePercent = (int) (rating * 20);
+                if (request.ScorePercent > 100)
+                    request.ScorePercent = 100;
+            });
+            Button Btn = dialog.findViewById(R.id.btnDialogComment);
+            Btn.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+            Btn.setOnClickListener(v -> {
+                if (Txt.getText().toString().isEmpty()) {
+                    Toasty.error(this, "لطفا نظر خود را وارد نمایید", Toasty.LENGTH_LONG, true).show();
                 } else {
-                    Toasty.error(this, "عدم دسترسی به اینترنت", Toasty.LENGTH_LONG, true).show();
+                    if (AppUtill.isNetworkAvailable(this)) {
+                        request.ScoreComment = Txt.getText().toString();
+                        request.LinkApiId = Preferences.with(AbstractMainActivity.this).appVariableInfo().appId();
+                        //todo show loading
+
+                        ServiceExecute.execute(new ApplicationAppService(this).submitAppScore(request))
+                                .subscribe(new NtkObserver<ErrorExceptionBase>() {
+                                    @Override
+                                    public void onNext(@NonNull ErrorExceptionBase response) {
+                                        if (response.IsSuccess) {
+                                            Preferences.with(AbstractMainActivity.this).appVariableInfo().setFeedback(request);
+                                            Toasty.success(AbstractMainActivity.this, "با موفقیت ثبت شد", Toast.LENGTH_LONG, true).show();
+                                        } else {
+                                            Toasty.warning(AbstractMainActivity.this, response.ErrorMessage, Toast.LENGTH_LONG, true).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(@NonNull Throwable e) {
+                                        new GenericErrors().throwableException((error, tryAgain) -> Toasty.warning(AbstractMainActivity.this, error, Toast.LENGTH_LONG, true).show(), e, () -> {
+                                        });
+
+                                    }
+                                });
+                    } else {
+                        Toasty.error(this, "عدم دسترسی به اینترنت", Toasty.LENGTH_LONG, true).show();
+                    }
+                    dialog.dismiss();
                 }
-                dialog.dismiss();
-            }
-        });
+            });
+        }
     }
 
     public void onMainIntro() {

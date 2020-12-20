@@ -39,6 +39,7 @@ import ntk.android.base.utill.prefrense.Preferences;
 public abstract class AbstractSplashActivity extends BaseActivity {
     long startTime;
     protected int debugBtnClickCount = 0;
+    boolean debugIsVisible = false;
 
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,17 +54,21 @@ public abstract class AbstractSplashActivity extends BaseActivity {
 
     //show errors
     protected void showDebugView(View v) {
-        if (debugBtnClickCount++ > 3)
+        if (debugBtnClickCount++ > 3) {
             showDebug();
+
+        }
     }
 
     private void showDebug() {
-
+        debugIsVisible = true;
         Dialog d = new Dialog(this);
         d.setContentView(R.layout.dialog_debug);
+        d.setCancelable(false);
         ((EditText) d.findViewById(R.id.txtUrl)).setText(RetrofitManager.BASE_URL);
         ((EditText) d.findViewById(R.id.txtpackageName)).setText(BaseNtkApplication.get().getApplicationParameter().PACKAGE_NAME());
         d.findViewById(R.id.debugReset).setOnClickListener(v -> {
+            debugIsVisible=false;
             ApplicationStaticParameter.URL = "";
             ApplicationStaticParameter.PACKAGE_NAME = "";
             Preferences.with(this).debugInfo().setUrl("");
@@ -72,7 +77,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
             getTokenDevice();
         });
         d.findViewById(R.id.debugStart).setOnClickListener(v -> {
-
+            debugIsVisible=false;
             ApplicationStaticParameter.URL = ((EditText) d.findViewById(R.id.txtUrl)).getText().toString();
             ApplicationStaticParameter.PACKAGE_NAME = ((EditText) d.findViewById(R.id.txtpackageName)).getText().toString();
             Preferences.with(this).debugInfo().setCount(20);
@@ -93,9 +98,9 @@ public abstract class AbstractSplashActivity extends BaseActivity {
      * get token device
      */
     private void getTokenDevice() {
-
         //check connectivity
         if (AppUtill.isNetworkAvailable(this)) {
+            switcher.showContentView();
             ServiceExecute.execute(new CoreAuthService(this).getTokenDevice())
                     .subscribe(new ErrorExceptionObserver<TokenInfoModel>(switcher::showErrorView) {
                         @Override
@@ -121,6 +126,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
     private void getCurrentApp() {
 
         if (AppUtill.isNetworkAvailable(this)) {
+            switcher.showContentView();
             ServiceExecute.execute(new ApplicationAppService(this).currentApp())
                     .subscribe(new ErrorExceptionObserver<ApplicationAppModel>(switcher::showErrorView) {
                         @Override
@@ -157,13 +163,13 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                         @Override
                         public void onNext(@NonNull Boolean aBoolean) {
                             if (aBoolean)//user sign in and have valid token
-                                startnewActivity(NTKApplication.getApplicationStyle().getMainActivity());
+                                startNewActivity(NTKApplication.getApplicationStyle().getMainActivity());
                             else//user token in invalid then go to register
                             {
                                 Preferences.with(AbstractSplashActivity.this).UserInfo().setUserId(0);
                                 Preferences.with(AbstractSplashActivity.this).appVariableInfo().setIsLogin(false);
                                 Toasty.warning(AbstractSplashActivity.this, "َشما به صفحه ی ورود کاربر هدایت می شوید", Toasty.LENGTH_LONG, true).show();
-                                startnewActivity(AuthWithSmsActivity.class);
+                                startNewActivity(AuthWithSmsActivity.class);
                             }
                         }
 
@@ -176,23 +182,24 @@ public abstract class AbstractSplashActivity extends BaseActivity {
             if (Preferences.with(this).appVariableInfo().IntroSeen()) {
                 //if user not interested to login
                 if (Preferences.with(this).appVariableInfo().isRegisterNotInterested())
-                    startnewActivity(NTKApplication.getApplicationStyle().getMainActivity());
+                    startNewActivity(NTKApplication.getApplicationStyle().getMainActivity());
                     //user maybe interest to login
                 else if (Preferences.with(this).appVariableInfo().isLogin())
-                    startnewActivity(NTKApplication.getApplicationStyle().getMainActivity());
+                    startNewActivity(NTKApplication.getApplicationStyle().getMainActivity());
                 else
-                    startnewActivity(AuthWithSmsActivity.class);
+                    startNewActivity(AuthWithSmsActivity.class);
             } else
-                startnewActivity(IntroActivity.class);
+                startNewActivity(IntroActivity.class);
         }
     }
 
-    public void startnewActivity(Class c) {
-        long l = System.currentTimeMillis();
-        new Handler().postDelayed(() -> {
+    public void startNewActivity(Class c) {
+        if (!debugIsVisible) {
+            long l = System.currentTimeMillis();
+            new Handler().postDelayed(() -> {
                 startActivity(new Intent(AbstractSplashActivity.this, c));
                 finish();
-        }, System.currentTimeMillis() - startTime >= 5000 ? 100 : 5000 - System.currentTimeMillis() - startTime);
-
+            }, System.currentTimeMillis() - startTime >= 5000 ? 100 : 5000 - System.currentTimeMillis() - startTime);
+        }
     }
 }

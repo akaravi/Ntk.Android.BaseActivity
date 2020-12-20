@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="colorTextPrimary" format="color"/>
+    <attr name="colorTextPrimary" format="color" />
+    <attr name="colorTextSecondary" format="color" />
+    <attr name="toolbarColorBackground" format="color" />
+    <attr name="toolbarColorText" format="color" />
     <!--    for base-->
     <attr name="ntk_base_logo" format="reference" />
     <attr name="ntk_splash_background" format="reference" />

@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_margin="16dp"
-                    app:backgroundTint="@color/colorAccent"
+                    app:backgroundTint="?attr/colorAccent"
                     app:srcCompat="@drawable/ic_plus" />
             </RelativeLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

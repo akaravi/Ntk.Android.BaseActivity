@@ -2,11 +2,11 @@
 <resources>
 
     <!--Style Float Text-->
-    <style name="new_ticket_inputEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="ticket_inputEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">?attr/colorTextPrimary</item>
     </style>
 
-    <style name="new_ticket_textInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox"></style>
+    <style name="ticket_textInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox"/>
 </resources>

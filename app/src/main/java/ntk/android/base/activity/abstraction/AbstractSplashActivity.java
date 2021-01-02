@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -55,6 +56,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
     //show errors
     protected void showDebugView(View v) {
         if (debugBtnClickCount++ > 3) {
+            Log.i("DEBUG_CLICK", debugBtnClickCount + "");
             showDebug();
 
         }
@@ -68,7 +70,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         ((EditText) d.findViewById(R.id.txtUrl)).setText(RetrofitManager.BASE_URL);
         ((EditText) d.findViewById(R.id.txtpackageName)).setText(BaseNtkApplication.get().getApplicationParameter().PACKAGE_NAME());
         d.findViewById(R.id.debugReset).setOnClickListener(v -> {
-            debugIsVisible=false;
+            debugIsVisible = false;
             ApplicationStaticParameter.URL = "";
             ApplicationStaticParameter.PACKAGE_NAME = "";
             Preferences.with(this).debugInfo().setUrl("");
@@ -77,7 +79,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
             getTokenDevice();
         });
         d.findViewById(R.id.debugStart).setOnClickListener(v -> {
-            debugIsVisible=false;
+            debugIsVisible = false;
             ApplicationStaticParameter.URL = ((EditText) d.findViewById(R.id.txtUrl)).getText().toString();
             ApplicationStaticParameter.PACKAGE_NAME = ((EditText) d.findViewById(R.id.txtpackageName)).getText().toString();
             Preferences.with(this).debugInfo().setCount(20);
@@ -192,14 +194,16 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                 startNewActivity(IntroActivity.class);
         }
     }
-
+    long l;
+    long x;
     public void startNewActivity(Class c) {
         if (!debugIsVisible) {
-            long l = System.currentTimeMillis();
+             l =  System.currentTimeMillis() - startTime ;
             new Handler().postDelayed(() -> {
+                x=System.currentTimeMillis() - startTime;
                 startActivity(new Intent(AbstractSplashActivity.this, c));
                 finish();
-            }, System.currentTimeMillis() - startTime >= 5000 ? 100 : 5000 - System.currentTimeMillis() - startTime);
+            }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000-(System.currentTimeMillis() - startTime));
         }
     }
 }

@@ -27,7 +27,7 @@
             android:clickable="true"
             android:visibility="invisible">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_centerInParent="true"
@@ -46,7 +46,7 @@
             android:background="@drawable/circle_red_full"
             android:clickable="true">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"

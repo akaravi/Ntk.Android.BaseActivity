@@ -29,6 +29,7 @@ import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
 
 
 public class TicketListActivity extends BaseActivity {
+    private static final int NEW_TICKET = 1004;
     RecyclerView Rv;
     FloatingActionButton Fab;
     SwipeRefreshLayout Refresh;
@@ -85,19 +86,20 @@ public class TicketListActivity extends BaseActivity {
 
         Rv.addOnScrollListener(scrollListener);
 
-//        Refresh.setColorSchemeColors(
-//                R.color.colorAccent,
-//                R.color.colorAccent, //todo set
-//                R.color.colorAccent);
+
 
         Refresh.setOnRefreshListener(() -> {
-            tickets.clear();
-            loadingMore = true;
-            HandelData(1);
-            Refresh.setRefreshing(false);
+            refresh();
         });
         switcher.setLoadMore(findViewById(R.id.loadMoreProgress));
         HandelData(1);
+    }
+
+    private void refresh() {
+        tickets.clear();
+        loadingMore = true;
+        HandelData(1);
+        Refresh.setRefreshing(false);
     }
 
 
@@ -125,8 +127,7 @@ public class TicketListActivity extends BaseActivity {
                             if (model.ListItems.size() > 0) {
                                 switcher.showContentView();
                                 switcher.hideLoadMore();
-                            }
-                            else {
+                            } else {
                                 switcher.showEmptyView();
 
                             }
@@ -135,7 +136,7 @@ public class TicketListActivity extends BaseActivity {
                         @Override
                         protected Runnable tryAgainMethod() {
 
-                                return () -> HandelData(nextPage);
+                            return () -> HandelData(nextPage);
                         }
                     });
         } else {
@@ -146,6 +147,14 @@ public class TicketListActivity extends BaseActivity {
 
 
     public void ClickSendTicket() {
-        startActivity(new Intent(this, NewTicketActivity.class));
+        startActivityForResult(new Intent(this, NewTicketActivity.class), NEW_TICKET);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            refresh();
+        }
     }
 }

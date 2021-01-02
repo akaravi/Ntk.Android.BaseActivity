@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mainLayoutActSupport"
     android:layout_width="match_parent"
+     android:background="#F4F4F4"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -42,6 +43,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_margin="16dp"
+                        app:tint="#fff"
                         app:backgroundTint="?attr/colorAccent"
                         app:srcCompat="@drawable/ic_plus" />
                 </RelativeLayout>

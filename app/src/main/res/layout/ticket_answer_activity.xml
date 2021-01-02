@@ -15,7 +15,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorWhite"
+            android:background="?attr/toolbarColorBackground"
             tools:ignore="UselessParent">
 
             <com.balysv.materialripple.MaterialRippleLayout
@@ -30,18 +30,18 @@
                 app:mrl_rippleColor="#10000000"
                 app:mrl_rippleRoundedCorners="100dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:contentDescription="@null"
-                        android:rotation="180"
-                        app:srcCompat="@drawable/ic_back" />
-                </RelativeLayout>
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:contentDescription="@null"
+                    android:rotation="180"
+                    app:srcCompat="@drawable/ic_left"
+                    app:tint="?attr/toolbarColorText" />
             </com.balysv.materialripple.MaterialRippleLayout>
 
             <TextView
@@ -54,7 +54,8 @@
                 android:layout_toStartOf="@id/imgBackActTicketAnswer"
                 android:layout_toLeftOf="@id/imgBackActTicketAnswer"
                 android:text="صندوق پیام"
-                android:textColor="@color/colorMenu"
+                android:textColor="?attr/toolbarColorText"
+                android:textSize="17sp"
                 tools:ignore="HardcodedText" />
 
             <com.balysv.materialripple.MaterialRippleLayout
@@ -75,9 +76,10 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_centerInParent="true"
-                        android:alpha=".5"
+                        android:alpha=".8"
                         android:contentDescription="@null"
-                        android:src="@drawable/ic_attach" />
+                        android:src="@drawable/ic_attach"
+                        app:tint="?attr/toolbarColorText" />
                 </RelativeLayout>
             </com.balysv.materialripple.MaterialRippleLayout>
         </RelativeLayout>
@@ -115,26 +117,22 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputMessageActTicketAnswer"
+                    style="@style/ticket_textInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="25dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:theme="@style/new_ticket_inputEditText">
 
-                    <EditText
+                    android:layout_marginRight="15dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtMessageActTicketAnswer"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:background="@drawable/background_edittext"
-                        android:gravity="right|top"
-                        android:hint="جواب درخواست"
+                        android:layout_height="wrap_content"
+                        android:hint="پاسخ درخواست"
                         android:inputType="textMultiLine"
-                        android:paddingStart="15dp"
-                        android:paddingLeft="15dp"
                         android:textSize="14sp"
-                        tools:ignore="MissingPrefix,RtlSymmetry,TextFields" />
+                        android:theme="@style/ticket_inputEditText" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <RelativeLayout
@@ -151,7 +149,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
                         android:layout_margin="15dp"
-                        android:background="#014efe"
+
                         android:text="ارسال پاسخ"
                         android:textColor="@color/colorWhite"
                         android:textSize="17sp"

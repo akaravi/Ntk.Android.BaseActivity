@@ -1,5 +1,5 @@
 include ':myapplication'
 include ':app'
- include ':baseApi'
+// include ':baseApi'
 
- project(':baseApi').projectDir = new File('..\\Ntk.Android.Base\\api')
+// project(':baseApi').projectDir = new File('..\\Ntk.Android.Base\\api')

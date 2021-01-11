@@ -54,7 +54,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
     protected abstract void onCreated();
 
     //show errors
-    protected void showDebugView(View v) {
+    public void showDebugView(View v) {
         if (debugBtnClickCount++ > 3) {
             Log.i("DEBUG_CLICK", debugBtnClickCount + "");
             showDebug();

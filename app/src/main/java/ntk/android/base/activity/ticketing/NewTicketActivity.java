@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -69,6 +69,7 @@ public class NewTicketActivity extends BaseActivity {
     private TicketAttachAdapter adapter;
 
     private static final int READ_REQUEST_CODE = 1520;
+    private List<TicketingDepartemenModel> departments;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -139,36 +140,35 @@ public class NewTicketActivity extends BaseActivity {
         Rv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        SpinnerAdapter adapter_state = new SpinnerAdapter(this, R.layout.spinner_item, new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.StateTicket))));
-        spinners.get(1).setAdapter(adapter_state);
-        spinners.get(1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                request.Priority = (position + 1);
-            }
+        getStateTicket();
+        getDepartment();
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+    }
 
-            }
-        });
-        if (request.Priority == 0) {
-            spinners.get(1).setSelection(0);
-        }
-        FilterDataModel request = new FilterDataModel();
-        ServiceExecute.execute(new TicketingDepartemenService(this).getAll(request))
+    public void getDepartment() {
+
+        ServiceExecute.execute(new TicketingDepartemenService(this).getAll(new FilterDataModel()))
                 .subscribe(new NtkObserver<ErrorException<TicketingDepartemenModel>>() {
                     @Override
                     public void onNext(@NonNull ErrorException<TicketingDepartemenModel> model) {
                         if (model.IsSuccess) {
-                            List<String> list = new ArrayList<>();
-                            for (TicketingDepartemenModel td : model.ListItems) {
-                                list.add(td.Title);
-                                SpinnerAdapter<String> adapter_dpartman = new SpinnerAdapter<>(NewTicketActivity.this, R.layout.spinner_item, list);
-                                spinners.get(0).setAdapter(adapter_dpartman);
-                            }
+                            departments = model.ListItems;
+                            MaterialAutoCompleteTextView spinner = (findViewById(R.id.SpinnerService));
+                            List<String> names = new ArrayList<>();
+                            for (TicketingDepartemenModel t : model.ListItems)
+                                names.add(t.Title);
+                            SpinnerAdapter<TicketingDepartemenModel> adapter_dpartman = new SpinnerAdapter<TicketingDepartemenModel>(NewTicketActivity.this, names);
+                            spinner.setAdapter(adapter_dpartman);
+                            spinner.setOnItemClickListener((parent, view, position, id) -> {
+
+                                TicketingDepartemenModel selectedModel = departments.get(position);
+                                request.LinkTicketingDepartemenId = selectedModel.Id;
+                                request.Departemen = selectedModel;
+
+                            });
+
                         } else {
-                            switcher.showErrorView();
+                            switcher.showErrorView(model.ErrorMessage, () -> getDepartment());
                         }
                     }
 
@@ -178,6 +178,16 @@ public class NewTicketActivity extends BaseActivity {
                         });
                     }
                 });
+    }
+
+    public void getStateTicket() {
+        SpinnerAdapter<String> adapter_state = new SpinnerAdapter(this, new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.StateTicket))));
+        MaterialAutoCompleteTextView spinner = findViewById(R.id.SpinnerState);
+        spinner.setAdapter(adapter_state);
+        spinner.setOnItemClickListener((parent, view, position, id) -> request.Priority = (position + 1));
+        if (request.Priority == 0) {
+            spinner.setListSelection(0);
+        }
     }
 
     public void ClickSubmit() {
@@ -217,6 +227,14 @@ public class NewTicketActivity extends BaseActivity {
             Toasty.warning(this, "آدرس پست الکترونیکی صحیح نمیباشد", Toasty.LENGTH_LONG, true).show();
             return;
         }
+        if (request.LinkTicketingDepartemenId == null || request.LinkTicketingDepartemenId == 0) {
+            Toasty.warning(this, "بخش مربوطه را انتخاب نمایید", Toasty.LENGTH_LONG, true).show();
+            return;
+        }
+        if (request.Priority == 0) {
+            Toasty.warning(this, "میزان اهمیت درخئاست خود را انتحاب نمایید", Toasty.LENGTH_LONG, true).show();
+            return;
+        }
         Preferences.with(this).ticketVariableInfo().setEmail(email.getText().toString());
         if (AppUtill.isNetworkAvailable(this)) {
             //show dialog loading
@@ -250,7 +268,10 @@ public class NewTicketActivity extends BaseActivity {
                         public void onNext(@NonNull ErrorException<TicketingTaskModel> model) {
                             switcher.hideLoadDialog();
                             if (model.IsSuccess) {
-                                Toasty.success(NewTicketActivity.this, "با موفقیت ثبت شد", Toasty.LENGTH_LONG, true).show();
+                                if (request.Departemen.DefaultAnswerBody == null)
+                                    request.Departemen.DefaultAnswerBody = "";
+                                String reply = Html.fromHtml(request.Departemen.DefaultAnswerBody) + "\n" + "َشماره درخواست : " + model.Item.Id;
+                                Toasty.success(NewTicketActivity.this, reply, Toasty.LENGTH_LONG, true).show();
                                 setResult(RESULT_OK);
                                 finish();
                             } else
@@ -278,12 +299,12 @@ public class NewTicketActivity extends BaseActivity {
     }
 
     public void ClickAttach() {
-        new FileManagerService().clickAttach(this,READ_REQUEST_CODE);
+        new FileManagerService().clickAttach(this, READ_REQUEST_CODE);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         super.onActivityResult(requestCode, resultCode, resultData);
         if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Uri uri;

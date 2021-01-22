@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="about_item_icon_color">#313131</color>
+    <color name="about_background_color">#FFFFFF</color>
+    <color name="about_separator_color">#e1e1e1</color>
+    <color name="about_facebook_color">#3b5998</color>
+    <color name="about_twitter_color">#55acee</color>
+    <color name="about_instagram_color">#3f729b</color>
+    <color name="about_play_store_color">#689F38</color>
+    <color name="about_youtube_color">#cd201f</color>
+    <color name="about_github_color">#333333</color>
+    <color name="about_description_text_color">#595959</color>
+    <color name="about_item_text_color">#7c7c7c</color>
+    <color name="about_text_color">#595959</color>
+<!--Strings  -->
+    <string name="about_page_description" translatable="false">نوشته تستی</string>
+    <string name="about_contact_us">تماس با ما</string>
+    <string name="about_instagram">ما را در اینستاگرام دنبال کنید</string>
+    <string name="about_telegram">ما را در تلگرام دنبال کنید</string>
+    <string name="about_facebook">شبکه اجتماعی فیسبوک</string>
+    <string name="about_play_store">لینک دانلود از گوگل پلی</string>
+    <string name="about_youtube">ما را در یوتیوب تماشا کنید</string>
+    <string name="about_twitter">ما را در توییتر دنبال کنید</string>
+    <string name="about_phone">تلفن</string>
+    <string name="about_github">Fork us on GitHub</string>
+    <string name="about_website">وب سایت ما</string>
+<!--dimens-->
+    <!--About-->
+    <dimen name="about_icon_size">34dp</dimen>
+    <dimen name="about_icon_padding">8dp</dimen>
+    <dimen name="about_text_padding">8dp</dimen>
+    <dimen name="about_group_text_padding">16dp</dimen>
+    <dimen name="about_separator_height">0.5dp</dimen>
+
+    <dimen name="about_description_text_size">16sp</dimen>
+    <dimen name="about_item_text_size">16sp</dimen>
+    <dimen name="about_group_item_text_size">18sp</dimen>
+
+    <style name="about_About" />
+    <style name="about_About.wrapper">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/about_background_color</item>
+    </style>
+
+    <style name="about_sub_wrapper">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">20dp</item>
+    </style>
+
+    <style name="about_image">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginBottom">30dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <style name="about_description" parent="@android:style/TextAppearance">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:lineSpacingExtra">8dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:textColor">@color/about_description_text_color</item>
+        <item name="android:textSize">@dimen/about_description_text_size</item>
+    </style>
+
+    <style name="about_separator">
+        <item name="android:layout_height">@dimen/about_separator_height</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/about_separator_color</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+    <style name="about_elementTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/about_text_color</item>
+        <item name="android:textSize">@dimen/about_item_text_size</item>
+    </style>
+
+    <style name="about_groupTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/about_item_text_color</item>
+        <item name="android:textSize">@dimen/about_group_item_text_size</item>
+    </style>
+
+
+</resources>

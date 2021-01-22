@@ -1,6 +1,7 @@
 package ntk.android.base.view;
 
 import android.content.Context;
+import android.util.TypedValue;
 
 import java.text.DecimalFormat;
 
@@ -8,6 +9,14 @@ public class NViewUtils {
     public static int dpToPx(Context context, int dp) {
         float density = context.getResources().getDisplayMetrics().density;
         return Math.round((float) dp * density);
+    }
+    public static int getResIdFromAttribute(Context activity,final int attr)
+    {
+        if(attr==0)
+            return 0;
+        final TypedValue typedvalueattr=new TypedValue();
+        activity.getTheme().resolveAttribute(attr,typedvalueattr,true);
+        return typedvalueattr.resourceId;
     }
 
     public static String PriceFormat(float price) {

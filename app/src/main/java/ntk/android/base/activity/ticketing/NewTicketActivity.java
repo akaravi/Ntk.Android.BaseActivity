@@ -270,7 +270,8 @@ public class NewTicketActivity extends BaseActivity {
                             if (model.IsSuccess) {
                                 if (request.Departemen.DefaultAnswerBody == null)
                                     request.Departemen.DefaultAnswerBody = "";
-                                String reply = Html.fromHtml(request.Departemen.DefaultAnswerBody) + "\n" + "َشماره درخواست : " + model.Item.Id;
+                                String reply = Html.fromHtml(request.Departemen.DefaultAnswerBody.replace("<p>", "")
+                                        .replace("</p>", "")) + "\n" + "َشماره درخواست : " + model.Item.Id;
                                 Toasty.success(NewTicketActivity.this, reply, Toasty.LENGTH_LONG, true).show();
                                 setResult(RESULT_OK);
                                 finish();

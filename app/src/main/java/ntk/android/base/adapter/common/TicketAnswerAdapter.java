@@ -1,6 +1,5 @@
 package ntk.android.base.adapter.common;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -10,38 +9,67 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ntk.android.base.R;
 import ntk.android.base.entitymodel.ticketing.TicketingAnswerModel;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
+import ntk.android.base.view.NViewUtils;
+
+import static ntk.android.base.adapter.BaseRecyclerAdapter.getScreenWidth;
 
 
-public class TicketAnswerAdapter extends RecyclerView.Adapter<TicketAnswerAdapter.ViewHolder> {
+public class TicketAnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int ME_TYPE = 0;
     private List<TicketingAnswerModel> arrayList;
     private Context context;
+    int iconSize;
 
     public TicketAnswerAdapter(Context context, List<TicketingAnswerModel> arrayList) {
         this.arrayList = arrayList;
         this.context = context;
+        iconSize = NViewUtils.dpToPx(context, 80);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ticket_answer_row_recycler, viewGroup, false);
-        return new ViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        if (viewType == ME_TYPE) {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ticket_answer_me_row_recycler, viewGroup, false);
+            return new MeHolder(view);
+        } else {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ticket_answer_you_row_recycler, viewGroup, false);
+            return new YouHolder(view);
+        }
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.Lbls.get(0).setText(Html.fromHtml(arrayList.get(position).HtmlBody
-                .replace("<p>", "")
-                .replace("</p>", "")));
-        holder.Lbls.get(1).setText(AppUtill.GregorianToPersian(arrayList.get(position).CreatedDate) + "");
+    public void onBindViewHolder(RecyclerView.ViewHolder bh, int position) {
+        TicketingAnswerModel model = arrayList.get(position);
+        int itemViewType = getItemViewType(position);
+        if (itemViewType == ME_TYPE) {
+            MeHolder holder = (MeHolder) bh;
+            holder.desc.setText(Html.fromHtml(model.HtmlBody
+                    .replace("<p>", "")
+                    .replace("</p>", "")));
+            holder.date.setText(AppUtill.GregorianToPersian(model.CreatedDate) + "");
+            if (model.LinkFileIdsSrc != null && model.LinkFileIdsSrc.size() != 0) {
+                holder.attach.setVisibility(View.VISIBLE);
+            }else
+                holder.attach.setVisibility(View.GONE);
+        } else {
+            YouHolder holder = (YouHolder) bh;
+            holder.desc.setText(Html.fromHtml(model.HtmlBody
+                    .replace("<p>", "")
+                    .replace("</p>", "")));
+            holder.date.setText(AppUtill.GregorianToPersian(model.CreatedDate) + "");
+            if (model.LinkFileIdsSrc != null && model.LinkFileIdsSrc.size() != 0) {
+                holder.attach.setVisibility(View.VISIBLE);
+            }else
+                holder.attach.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -49,18 +77,42 @@ public class TicketAnswerAdapter extends RecyclerView.Adapter<TicketAnswerAdapte
         return arrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public int getItemViewType(int position) {
+        return position % 2;
+    }
 
-        List<TextView> Lbls;
+    public class MeHolder extends RecyclerView.ViewHolder {
 
-        public ViewHolder(View view) {
+        TextView desc;
+        TextView date;
+        View attach;
+
+        public MeHolder(View view) {
             super(view);
-            Lbls=new ArrayList<TextView>(){{
-                add(view.findViewById(R.id.lblTypeRecyclerTicketAnswer));
-                add(view.findViewById(R.id.lblDateRecyclerTicketAnswer));
-            }};
-            Lbls.get(0).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
-            Lbls.get(1).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            desc = (view.findViewById(R.id.lblTypeRecyclerTicketAnswer));
+            date = (view.findViewById(R.id.lblDateRecyclerTicketAnswer));
+            attach = view.findViewById(R.id.answerAttaches);
+            desc.setMaxWidth(getScreenWidth() - iconSize);
+            desc.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            date.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+        }
+    }
+
+    public class YouHolder extends RecyclerView.ViewHolder {
+        TextView desc;
+        TextView date;
+        View attach;
+
+        public YouHolder(View view) {
+            super(view);
+
+            desc = (view.findViewById(R.id.lblTypeRecyclerTicketAnswer));
+            date = (view.findViewById(R.id.lblDateRecyclerTicketAnswer));
+            attach = view.findViewById(R.id.answerAttaches);
+            desc.setMaxWidth(getScreenWidth() - iconSize);
+            desc.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            date.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
         }
     }
 }

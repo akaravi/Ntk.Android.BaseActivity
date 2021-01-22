@@ -3,6 +3,7 @@ package ntk.android.base.adapter.common;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
@@ -21,7 +23,9 @@ import java.util.List;
 
 import ntk.android.base.Extras;
 import ntk.android.base.R;
+import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.activity.ticketing.TicketAnswerActivity;
+import ntk.android.base.dialog.DownloadFileDialog;
 import ntk.android.base.entitymodel.ticketing.TicketingTaskModel;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
@@ -32,10 +36,12 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
 
     private List<TicketingTaskModel> arrayList;
     private Context context;
+    FragmentManager fm;
 
-    public TicketAdapter(Context context, ArrayList<TicketingTaskModel> arrayList) {
+    public TicketAdapter(BaseActivity act, ArrayList<TicketingTaskModel> arrayList) {
         this.arrayList = arrayList;
-        this.context = context;
+        this.context = act;
+        fm = act.getSupportFragmentManager();
     }
 
     @Override
@@ -48,10 +54,17 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         TicketingTaskModel model = arrayList.get(position);
-        holder.Lbls.get(0).setText( model.Title);
+        holder.id.setText("شماره ی "+model.Id );
+        holder.Lbls.get(0).setText(model.Title);
         holder.Lbls.get(2).setText(AppUtill.GregorianToPersian(model.CreatedDate) + "");
         holder.webView.loadData("<html dir=\"rtl\" lang=\"\"><body>" + model.HtmlBody + "</body></html>", "text/html; charset=utf-8", "UTF-8");
-
+        if (model.LinkFileIdsSrc != null && model.LinkFileIdsSrc.size() != 0) {
+            holder.attachment.setVisibility(View.VISIBLE);
+            holder.attachment.setOnClickListener(v -> {
+                DownloadFileDialog.SHOW_DIALOG(fm,model.LinkFileIdsSrc);
+            });
+        } else
+            holder.attachment.setVisibility(View.GONE);
         switch (model.TicketStatus) {
             case 1:
                 holder.Lbls.get(1).setBackgroundResource(R.drawable.circlegreen);
@@ -107,12 +120,13 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
+        TextView id;
         List<TextView> Lbls;
         CardView Root;
         LinearLayout ll;
         WebView webView;
         ImageView arrow;
+        ImageView attachment;
 
         public ViewHolder(View view) {
             super(view);
@@ -121,14 +135,18 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
                     add(view.findViewById(R.id.lblNameRecyclerTicket));
                     add(view.findViewById(R.id.lblStateRecyclerTicket));
                     add(view.findViewById(R.id.lblDateRecyclerTicket));
+                    add(view.findViewById(R.id.ticketId));
                 }
             };
+             id = view.findViewById(R.id.ticketId);
             Root = view.findViewById(R.id.rootTicket);
-            Lbls.get(0).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
-            Lbls.get(1).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
-            Lbls.get(2).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            Lbls.get(0).setTypeface(FontManager.T1_BOLD_Typeface(context));
+            Lbls.get(1).setTypeface(FontManager.T1_Typeface(context));
+            Lbls.get(2).setTypeface(FontManager.T1_Typeface(context));
+            Lbls.get(3).setTypeface(FontManager.T2_BOLD_Typeface(context));
             ll = view.findViewById(R.id.rvTitle);
             webView = view.findViewById(R.id.webView);
+            attachment = view.findViewById(R.id.btnMoreFile);
             arrow = view.findViewById(R.id.imgArrow);
         }
     }

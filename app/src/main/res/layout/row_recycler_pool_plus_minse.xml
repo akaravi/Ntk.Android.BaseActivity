@@ -31,7 +31,7 @@
         android:layout_margin="16dp"
         android:layout_toStartOf="@id/lblRecyclerPoolPlus"
         android:contentDescription="@null"
-        android:src="@drawable/ic_minus"
+        android:src="@drawable/ic_minus_pool"
         android:tint="@color/colorAccent" />
 
     <TextView

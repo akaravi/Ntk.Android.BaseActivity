@@ -77,7 +77,6 @@ public class TicketAnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (model.LinkFileIdsSrc != null && model.LinkFileIdsSrc.size() != 0) {
                 holder.attach.setVisibility(View.VISIBLE);
                 holder.attach.setOnClickListener(v -> DownloadFileDialog.SHOW_DIALOG(v.getContext(), fm, model.LinkFileIdsSrc));
-                ;
             } else
                 holder.attach.setVisibility(View.GONE);
         }

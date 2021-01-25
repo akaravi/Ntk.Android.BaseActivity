@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp">
+    android:layout_margin="16dp"
+    android:orientation="horizontal">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:id="@+id/answerAttaches"
+        android:layout_width="34dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+
+        android:layout_marginRight="16dp"
+        android:padding="5dp"
+        android:src="@drawable/ic_attach"
+        app:tint="?attr/colorAccent" />
+
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -16,16 +34,14 @@
 
         <TextView
             android:id="@+id/lblTypeRecyclerTicketAnswer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:ellipsize="end"
+            android:gravity="end"
             android:padding="8dp"
-            android:text="هاست لینوکس حرفaasdadsdadaس حرفaasdadsdadadaadaه ای خارج - 4GBdaadaه ای خارج - 4GB"
+            android:text="seda seda seda seas sadwdasd w asd adw adwd aw seda seda seas sadwdasd w asd adw adwd aw seda seda seas sadwdasd w asd adw adwd aw"
             android:textColor="@color/colorGrayText"
-            android:textSize="14sp"
-            tools:ignore="HardcodedText" />
+            android:textSize="14sp" />
 
 
         <LinearLayout
@@ -42,20 +58,7 @@
                 android:text="2017/08/24 14:25 -"
                 android:textSize="9sp"
                 tools:ignore="HardcodedText" />
-
         </LinearLayout>
-
-
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/answerAttaches"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_toLeftOf="@+id/answerLin"
-        android:src="@drawable/ic_attach"
-        app:tint="?attr/colorAccent" />
-</RelativeLayout>
+</LinearLayout>

@@ -64,7 +64,7 @@ public abstract class BaseNewsDetail_1_Activity extends
     protected ImageView ImgHeader;
     public RecyclerView RvTab;
     RecyclerView RvComment;
-    public RecyclerView Rv;
+//    public RecyclerView Rv;
     protected RatingBar Rate;
     LinearLayout Page;
     CoordinatorLayout layout;
@@ -106,7 +106,7 @@ public abstract class BaseNewsDetail_1_Activity extends
         ImgHeader = findViewById(R.id.imgHeaderDetail);
         RvTab = findViewById(R.id.recyclerTabDetail);
         RvComment = findViewById(R.id.recyclerCommentDetail);
-        Rv = findViewById(R.id.recyclerMenuDetail);
+//        Rv = findViewById(R.id.recyclerMenuDetail);
         Rate = findViewById(R.id.ratingBarDetail);
         Page = findViewById(R.id.PageDetail);
         layout = findViewById(R.id.mainLayoutDetail);

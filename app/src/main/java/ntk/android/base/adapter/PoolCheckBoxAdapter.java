@@ -1,7 +1,6 @@
 package ntk.android.base.adapter;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,8 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.R;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
@@ -29,9 +26,8 @@ import ntk.android.base.services.pooling.PollingVoteService;
 import ntk.android.base.utill.FontManager;
 
 
-public class PoolCheckBoxAdapter extends RecyclerView.Adapter<PoolCheckBoxAdapter.ViewHolder> {
+public class PoolCheckBoxAdapter extends BaseRecyclerAdapter<PollingOptionModel, PoolCheckBoxAdapter.ViewHolder> {
 
-    private List<PollingOptionModel> arrayList;
     private Context context;
     private PollingContentModel PC;
     private Button BtnSend;
@@ -40,7 +36,7 @@ public class PoolCheckBoxAdapter extends RecyclerView.Adapter<PoolCheckBoxAdapte
     private Map<Long, Integer> MapVote;
 
     public PoolCheckBoxAdapter(Context context, List<PollingOptionModel> arrayList, PollingContentModel pc, Button send, Button chart) {
-        this.arrayList = arrayList;
+        super(arrayList);
         this.context = context;
         this.PC = pc;
         this.BtnSend = send;
@@ -50,13 +46,14 @@ public class PoolCheckBoxAdapter extends RecyclerView.Adapter<PoolCheckBoxAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_recycler_pool_check_box, viewGroup, false);
+        View view = inflate(viewGroup, R.layout.row_recycler_pool_check_box );
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.LblTitle.setText(arrayList.get(position).Option);
+        PollingOptionModel optionModel = getItem(position);
+        holder.LblTitle.setText(optionModel.Option);
 
         holder.Radio.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -65,7 +62,7 @@ public class PoolCheckBoxAdapter extends RecyclerView.Adapter<PoolCheckBoxAdapte
                     Score = Score + map.getValue();
                 }
                 if (Score < PC.MaxVoteForThisContent) {
-                    MapVote.put(Long.parseLong(String.valueOf(arrayList.get(position).Id)), 1);
+                    MapVote.put(Long.parseLong(String.valueOf(optionModel.Id)), 1);
                     holder.Radio.setChecked(true);
                 } else {
                     Toasty.warning(context, "تعداد پاسخ مجاز برای این نظر سنجی " + PC.MaxVoteForThisContent, Toasty.LENGTH_LONG, true).show();
@@ -77,7 +74,7 @@ public class PoolCheckBoxAdapter extends RecyclerView.Adapter<PoolCheckBoxAdapte
                     Score = Score + map.getValue();
                 }
                 if (Score > 0) {
-                    MapVote.remove(Long.parseLong(String.valueOf(arrayList.get(position).Id)));
+                    MapVote.remove(Long.parseLong(String.valueOf(optionModel.Id)));
                     Score = Score - 1;
                     holder.Radio.setChecked(false);
                 }
@@ -90,7 +87,7 @@ public class PoolCheckBoxAdapter extends RecyclerView.Adapter<PoolCheckBoxAdapte
             for (Map.Entry<Long, Integer> map : MapVote.entrySet()) {
                 PollingVoteModel vote = new PollingVoteModel();
                 vote.LinkPollingOptionId = map.getKey();
-                vote.LinkPollingContentId = arrayList.get(position).LinkPollingContentId;
+                vote.LinkPollingContentId = optionModel.LinkPollingContentId;
                 vote.OptionScore = map.getValue();
                 votes.add(vote);
             }
@@ -119,10 +116,7 @@ public class PoolCheckBoxAdapter extends RecyclerView.Adapter<PoolCheckBoxAdapte
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return arrayList.size();
-    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView LblTitle;

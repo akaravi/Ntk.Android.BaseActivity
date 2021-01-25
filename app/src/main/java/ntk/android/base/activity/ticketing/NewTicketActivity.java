@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -33,6 +35,7 @@ import es.dmoral.toasty.Toasty;
 import io.reactivex.annotations.NonNull;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
+import ntk.android.base.adapter.BaseRecyclerAdapter;
 import ntk.android.base.adapter.SpinnerAdapter;
 import ntk.android.base.adapter.common.TicketAttachAdapter;
 import ntk.android.base.api.member.model.MemberUserActAddRequest;
@@ -53,6 +56,7 @@ import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.Regex;
 import ntk.android.base.utill.prefrense.Preferences;
+import ntk.android.base.view.NViewUtils;
 
 public class NewTicketActivity extends BaseActivity {
     //    List<MaterialAutoCompleteTextView> spinners;
@@ -70,6 +74,7 @@ public class NewTicketActivity extends BaseActivity {
 
     private static final int READ_REQUEST_CODE = 1520;
     private List<TicketingDepartemenModel> departments;
+    private String DefaultAnswerBody;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -132,10 +137,33 @@ public class NewTicketActivity extends BaseActivity {
         ((TextInputEditText) findViewById(R.id.txtNameFamilyActSendTicket)).setText(Preferences.with(this).ticketVariableInfo().nameFamily());
         ((TextInputEditText) findViewById(R.id.txtPhoneNumberActSendTicket)).setText(Preferences.with(this).ticketVariableInfo().mobile());
         ((TextInputEditText) findViewById(R.id.txtEmailActSendTicket)).setText(Preferences.with(this).ticketVariableInfo().email());
+        ((TextInputEditText) findViewById(R.id.txtMessageActSendTicket)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                findViewById(R.id.RippleAttachActSendTicket).setAlpha((float) 0.4);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+//                findViewById(R.id.RippleAttachActSendTicket).setVisibility(View.INVISIBLE);
+            }
+        });
+        ((TextInputEditText) findViewById(R.id.txtMessageActSendTicket)).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    findViewById(R.id.RippleAttachActSendTicket).setAlpha((float) 1);
+                } else
+                    findViewById(R.id.RippleAttachActSendTicket).setAlpha((float) 0.4);
+            }
+        });
         Rv.setHasFixedSize(true);
-        Rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+        Rv.setLayoutManager(new GridLayoutManager(this, BaseRecyclerAdapter.getScreenWidth() / NViewUtils.dpToPx(this, 150)));
         adapter = new TicketAttachAdapter(this, attaches);
         Rv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -158,14 +186,18 @@ public class NewTicketActivity extends BaseActivity {
                             for (TicketingDepartemenModel t : model.ListItems)
                                 names.add(t.Title);
                             SpinnerAdapter<TicketingDepartemenModel> adapter_dpartman = new SpinnerAdapter<TicketingDepartemenModel>(NewTicketActivity.this, names);
-                            spinner.setAdapter(adapter_dpartman);
                             spinner.setOnItemClickListener((parent, view, position, id) -> {
-
                                 TicketingDepartemenModel selectedModel = departments.get(position);
                                 request.LinkTicketingDepartemenId = selectedModel.Id;
-                                request.Departemen = selectedModel;
-
+                                DefaultAnswerBody = selectedModel.DefaultAnswerBody;
                             });
+                            spinner.setAdapter(adapter_dpartman);
+                            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                                // Do something for lollipop and above versions
+                                spinner.setText(adapter_dpartman.getItem(0), false);
+                                request.LinkTicketingDepartemenId = departments.get(0).Id;
+                            }
+
 
                         } else {
                             switcher.showErrorView(model.ErrorMessage, () -> getDepartment());
@@ -185,8 +217,12 @@ public class NewTicketActivity extends BaseActivity {
         MaterialAutoCompleteTextView spinner = findViewById(R.id.SpinnerState);
         spinner.setAdapter(adapter_state);
         spinner.setOnItemClickListener((parent, view, position, id) -> request.Priority = (position + 1));
-        if (request.Priority == 0) {
-            spinner.setListSelection(0);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            // Do something for lollipop and above versions
+            if (request.Priority == 0) {
+                (spinner).setText(adapter_state.getItem(0), false);
+                request.Priority = 1;
+            }
         }
     }
 
@@ -232,7 +268,7 @@ public class NewTicketActivity extends BaseActivity {
             return;
         }
         if (request.Priority == 0) {
-            Toasty.warning(this, "میزان اهمیت درخئاست خود را انتحاب نمایید", Toasty.LENGTH_LONG, true).show();
+            Toasty.warning(this, "میزان اهمیت درخواست خود را انتحاب نمایید", Toasty.LENGTH_LONG, true).show();
             return;
         }
         Preferences.with(this).ticketVariableInfo().setEmail(email.getText().toString());
@@ -268,9 +304,9 @@ public class NewTicketActivity extends BaseActivity {
                         public void onNext(@NonNull ErrorException<TicketingTaskModel> model) {
                             switcher.hideLoadDialog();
                             if (model.IsSuccess) {
-                                if (request.Departemen.DefaultAnswerBody == null)
-                                    request.Departemen.DefaultAnswerBody = "";
-                                String reply = Html.fromHtml(request.Departemen.DefaultAnswerBody.replace("<p>", "")
+                                if (DefaultAnswerBody == null)
+                                    DefaultAnswerBody = "";
+                                String reply = Html.fromHtml(DefaultAnswerBody.replace("<p>", "")
                                         .replace("</p>", "")) + "\n" + "َشماره درخواست : " + model.Item.Id;
                                 Toasty.success(NewTicketActivity.this, reply, Toasty.LENGTH_LONG, true).show();
                                 setResult(RESULT_OK);
@@ -329,6 +365,7 @@ public class NewTicketActivity extends BaseActivity {
                         @Override
                         public void onNext(@NonNull FileUploadModel fileUploadModel) {
                             adapter.notifyDataSetChanged();
+                            findViewById(R.id.linearAttachment).setVisibility(View.VISIBLE);
                             fileId.add(fileUploadModel.FileKey);
                             Btn.setVisibility(View.VISIBLE);
                         }
@@ -357,5 +394,7 @@ public class NewTicketActivity extends BaseActivity {
         attaches.remove(event.GetPosition());
         fileId.remove(event.GetPosition());
         adapter.notifyDataSetChanged();
+        if (adapter.getItemCount() == 0)
+            findViewById(R.id.linearAttachment).setVisibility(View.GONE);
     }
 }

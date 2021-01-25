@@ -1,42 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginLeft="8dp"
-    android:layout_height="182dp">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
 
-    <LinearLayout
-        android:id="@+id/rootInbox"
+    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
 
-        <ImageView
-            android:id="@+id/imgRecyclerAttach"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/file" />
+        app:strokeColor="?attr/colorPrimary"
+        app:strokeWidth="1dp">
 
-        <TextView
-            android:id="@+id/lblTitleRecyclerAttach"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="8dp"
-            android:maxLines="1"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/imgRemoveRecyclerAttach"
+        <LinearLayout
+            android:id="@+id/rootInbox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="?attr/colorAccent"
-            android:text="حذف"
-            android:textColor="@color/colorWhite"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgRemveAttach"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_vertical"
+                android:padding="10dp"
+                app:srcCompat="@drawable/ic_delete"
+                app:tint="?attr/colorAccent" />
+
+            <TextView
+                android:id="@+id/lblTitleRecyclerAttach"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:text="file"
+                android:gravity="start"
+                android:textAlignment="textStart"
+                android:textColor="?colorTextSecondary"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/imgRecyclerAttach"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="4dp"
+                android:src="@drawable/attach_file"
+                app:tint="?colorTextSecondary" />
+
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</FrameLayout>

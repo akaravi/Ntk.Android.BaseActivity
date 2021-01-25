@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,10 +15,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -29,6 +33,7 @@ import io.reactivex.annotations.NonNull;
 import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
+import ntk.android.base.adapter.BaseRecyclerAdapter;
 import ntk.android.base.adapter.common.TicketAnswerAdapter;
 import ntk.android.base.adapter.common.TicketAttachAdapter;
 import ntk.android.base.config.GenericErrors;
@@ -45,11 +50,12 @@ import ntk.android.base.services.file.FileUploaderService;
 import ntk.android.base.services.ticketing.TicketingAnswerService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
+import ntk.android.base.utill.prefrense.Preferences;
+import ntk.android.base.view.NViewUtils;
 
 
 public class TicketAnswerActivity extends BaseActivity {
 
-    List<RecyclerView> Rvs;
     TextView Lbl;
     CoordinatorLayout layout;
     EditText txt;
@@ -83,48 +89,72 @@ public class TicketAnswerActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void EventBus(RemoveAttachEvent event) {
+    public void EventRemove(RemoveAttachEvent event) {
         attaches.remove(event.GetPosition());
         fileId.remove(event.GetPosition());
         AdAtach.notifyDataSetChanged();
+        if (adapter.getItemCount() == 0)
+            findViewById(R.id.linearAttachment).setVisibility(View.GONE);
     }
 
     private void init() {
-
-        Rvs = new ArrayList() {{
-            add(findViewById(R.id.recyclerAnswer));
-            add(findViewById(R.id.RecyclerAttachTicketAnswer));
-        }};
-
         Lbl = findViewById(R.id.lblTitleActTicketAnswer);
         txt = findViewById(R.id.txtMessageActTicketAnswer);
         Btn = findViewById(R.id.btnSubmitActTicketAnswer);
         findViewById(R.id.imgBackActTicketAnswer).setOnClickListener(v -> ClickBack());
         findViewById(R.id.btnSubmitActTicketAnswer).setOnClickListener(v -> ClickSubmit());
         findViewById(R.id.RippleAttachActTicketAnswer).setOnClickListener(v -> ClickAttach());
-        Lbl.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        Lbl.setTypeface(FontManager.T1_Typeface(this));
+        ((TextView) findViewById(R.id.txtNoAnswers)).setTypeface(FontManager.T1_Typeface(this));
         ticketId = getIntent().getExtras().getLong(Extras.EXTRA_FIRST_ARG);
         Lbl.setText("پاسخ تیکت  " + ticketId);
-        Rvs.get(0).setHasFixedSize(true);
-        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        Rvs.get(0).setLayoutManager(manager);
-
-        adapter = new TicketAnswerAdapter(this, tickets);
-        Rvs.get(0).setAdapter(adapter);
+        RecyclerView answersRv = findViewById(R.id.recyclerAnswer);
+        answersRv.setHasFixedSize(true);
+        answersRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        Long userId = Preferences.with(this).UserInfo().userId();
+        Long memberId = Preferences.with(this).UserInfo().memberUserId();
+        adapter = new TicketAnswerAdapter(this, this.getSupportFragmentManager(), tickets, userId, memberId);
+        answersRv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        ((TextInputEditText) findViewById(R.id.txtMessageActTicketAnswer)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                findViewById(R.id.RippleAttachActTicketAnswer).setAlpha((float) 0.4);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+//                findViewById(R.id.RippleAttachActSendTicket).setVisibility(View.INVISIBLE);
+            }
+        });
+        ((TextInputEditText) findViewById(R.id.txtMessageActTicketAnswer)).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    findViewById(R.id.RippleAttachActTicketAnswer).setAlpha((float) 1);
+                } else
+                    findViewById(R.id.RippleAttachActTicketAnswer).setAlpha((float) 0.4);
+            }
+        });
         HandelData(1);
-
-        Rvs.get(1).setHasFixedSize(true);
-        Rvs.get(1).setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+        RecyclerView attachesRc = findViewById(R.id.RecyclerAttachTicketAnswer);
+        attachesRc.setHasFixedSize(true);
+        attachesRc.setLayoutManager(new GridLayoutManager(this, BaseRecyclerAdapter.getScreenWidth() / NViewUtils.dpToPx(this, 150)));
         AdAtach = new TicketAttachAdapter(this, attaches);
-        Rvs.get(1).setAdapter(AdAtach);
+        attachesRc.setAdapter(AdAtach);
         AdAtach.notifyDataSetChanged();
     }
 
     private void HandelData(int i) {
         if (AppUtill.isNetworkAvailable(this)) {
+            switcher.showProgressView();
             FilterDataModel request = new FilterDataModel();
+            request.RowPerPage = 100;
             request.addFilter(new Filters().setPropertyName("LinkTaskId").setIntValue1(ticketId));
 
             ServiceExecute.execute(new TicketingAnswerService(this).getAll(request))
@@ -132,7 +162,12 @@ public class TicketAnswerActivity extends BaseActivity {
                         @Override
                         public void onNext(ErrorException<TicketingAnswerModel> model) {
                             if (model.IsSuccess) {
+                                switcher.showContentView();
                                 tickets.addAll(model.ListItems);
+                                if (tickets.size() == 0) {
+                                    findViewById(R.id.viewNoAnswer).setVisibility(View.VISIBLE);
+                                    findViewById(R.id.recyclerAnswer).setVisibility(View.GONE);
+                                }
                                 adapter.notifyDataSetChanged();
                             } else
                                 switcher.showErrorView();
@@ -141,6 +176,7 @@ public class TicketAnswerActivity extends BaseActivity {
 
                         @Override
                         public void onError(Throwable e) {
+                            switcher.showErrorView();
                             Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", v -> init()).show();
                         }
 
@@ -222,6 +258,7 @@ public class TicketAnswerActivity extends BaseActivity {
                         @Override
                         public void onNext(@NonNull FileUploadModel fileUploadModel) {
                             adapter.notifyDataSetChanged();
+                            findViewById(R.id.linearAttachment).setVisibility(View.VISIBLE);
                             fileId.add(fileUploadModel.FileKey);
                             Btn.setVisibility(View.VISIBLE);
                         }

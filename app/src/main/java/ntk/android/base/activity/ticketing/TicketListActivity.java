@@ -52,6 +52,7 @@ public class TicketListActivity extends BaseActivity {
         Fab = findViewById(R.id.FabFrSupport);
         Refresh = findViewById(R.id.RefreshTicket);
         findViewById(R.id.FabFrSupport).setOnClickListener(v -> ClickSendTicket());
+        findViewById(R.id.imgToolbarBack).setOnClickListener(v -> finish());
         Rv.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         Rv.setLayoutManager(manager);

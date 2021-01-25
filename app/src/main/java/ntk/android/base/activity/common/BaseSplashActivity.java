@@ -1,7 +1,6 @@
 package ntk.android.base.activity.common;
 
 
-
 import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;

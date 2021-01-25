@@ -65,7 +65,7 @@
             android:layout_marginStart="20dp"
             android:layout_toEndOf="@id/btnSendRecyclerDeialPooling"
             android:background="@drawable/ic_chart"
-            android:visibility="gone" />
+            android:visibility="visible" />
     </RelativeLayout>
 
     <View

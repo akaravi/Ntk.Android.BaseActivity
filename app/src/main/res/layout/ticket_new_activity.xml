@@ -42,30 +42,7 @@
                 android:textSize="17sp"
                 tools:ignore="MissingPrefix" />
 
-            <com.balysv.materialripple.MaterialRippleLayout
-                android:id="@+id/RippleAttachActSendTicket"
-                android:layout_width="45dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                app:mrl_rippleAlpha="0.05"
-                app:mrl_rippleColor="#10000000"
-                app:mrl_rippleRoundedCorners="100dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_centerInParent="true"
-                        android:alpha=".8"
-                        android:contentDescription="@null"
-                        app:srcCompat="@drawable/ic_attach"
-                        app:tint="?attr/toolbarColorText" />
-                </RelativeLayout>
-            </com.balysv.materialripple.MaterialRippleLayout>
         </RelativeLayout>
 
         <View
@@ -104,150 +81,212 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
                 android:orientation="vertical">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputNameFamilytActSendTicket"
-                    style="@style/ticket_textInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="نام و نام خانوادگی">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtNameFamilyActSendTicket"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:textSize="14sp"
-                        android:theme="@style/ticket_inputEditText" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputEmailtActSendTicket"
-                    style="@style/ticket_textInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="آدرس پست الکترونیکی"
-                    android:theme="@style/ticket_inputEditText">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtEmailActSendTicket"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textEmailAddress"
-                        android:maxLines="1"
-                        android:textSize="14sp"
-                        android:theme="@style/ticket_inputEditText" />
-                    <!--         tools:ignore="MissingPrefix,RtlSymmetry,TextFields" />-->
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputPhoneNumberActSendTicket"
-                    style="@style/ticket_textInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginTop="10dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtPhoneNumberActSendTicket"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="شماره تلفن همراه"
-                        android:inputType="phone"
-                        android:maxLength="12"
-                        android:maxLines="1"
-                        android:textSize="14sp"
-                        android:theme="@style/ticket_inputEditText" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputSubjectActSendTicket"
-                    style="@style/ticket_textInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="موضوع">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtSubjectActSendTicket"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:textSize="14sp"
-                        android:theme="@style/ticket_inputEditText" />
-                </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2.8">
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:orientation="vertical">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                        android:layout_width="0dp"
+                        android:id="@+id/inputNameFamilytActSendTicket"
+                        style="@style/ticket_textInputLayout"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1.2"
-                        android:hint="اهمیت"
-                        app:helperTextEnabled="true"
-                        app:hintEnabled="true">
+                        android:layout_marginTop="10dp"
+                        android:hint="نام و نام خانوادگی">
 
-                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                            android:id="@+id/SpinnerState"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtNameFamilyActSendTicket"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="none" />
-
+                            android:maxLines="1"
+                            android:textSize="14sp"
+                            android:theme="@style/ticket_inputEditText" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                        android:layout_width="0dp"
+                        android:id="@+id/inputEmailtActSendTicket"
+                        style="@style/ticket_textInputLayout"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.6"
-                        android:hint="مربوط به بخش"
-                        app:helperTextEnabled="true"
-                        app:hintEnabled="true">
+                        android:layout_marginTop="10dp"
+                        android:hint="آدرس پست الکترونیکی"
+                        android:theme="@style/ticket_inputEditText">
 
-                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                            android:id="@+id/SpinnerService"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtEmailActSendTicket"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="none" />
-
+                            android:inputType="textEmailAddress"
+                            android:maxLines="1"
+                            android:textSize="14sp"
+                            android:theme="@style/ticket_inputEditText" />
+                        <!--         tools:ignore="MissingPrefix,RtlSymmetry,TextFields" />-->
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputPhoneNumberActSendTicket"
+                        style="@style/ticket_textInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="10dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtPhoneNumberActSendTicket"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="شماره تلفن همراه"
+                            android:inputType="phone"
+                            android:maxLength="12"
+                            android:maxLines="1"
+                            android:textSize="14sp"
+                            android:theme="@style/ticket_inputEditText" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputSubjectActSendTicket"
+                        style="@style/ticket_textInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="موضوع">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtSubjectActSendTicket"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:textSize="14sp"
+                            android:theme="@style/ticket_inputEditText" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2.8">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1.2"
+                            android:hint="اهمیت"
+                            app:helperTextEnabled="true"
+                            app:hintEnabled="true">
+
+                            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                android:id="@+id/SpinnerState"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="none" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.6"
+                            android:hint="مربوط به بخش"
+                            app:helperTextEnabled="true"
+                            app:hintEnabled="true">
+
+                            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                android:id="@+id/SpinnerService"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="none" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inputMessageActSendTicket"
+                            style="@style/ticket_textInputLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="متن درخواست">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/txtMessageActSendTicket"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textCapSentences|textMultiLine"
+                                android:maxLines="8"
+                                android:scrollHorizontally="false"
+                                android:textSize="14sp"
+                                android:theme="@style/ticket_inputEditText" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.balysv.materialripple.MaterialRippleLayout
+                            android:id="@+id/RippleAttachActSendTicket"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="8dp"
+                            android:paddingTop="4dp"
+                            app:mrl_rippleAlpha="0.05"
+                            app:mrl_rippleColor="#10000000"
+                            app:mrl_rippleRoundedCorners="100dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_centerInParent="true"
+                                    android:contentDescription="@null"
+                                    app:srcCompat="@drawable/ic_attach"
+                                    app:tint="?attr/colorPrimary" />
+                            </RelativeLayout>
+                        </com.balysv.materialripple.MaterialRippleLayout>
+                    </RelativeLayout>
                 </LinearLayout>
 
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputMessageActSendTicket"
-                    style="@style/ticket_textInputLayout"
+                <LinearLayout
+                    android:id="@+id/linearAttachment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="10dp"
-                    android:hint="متن درخواست">
+                    android:layout_marginRight="16dp"
+                    android:background="#54707070"
+                    android:visibility="gone"
+                    android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtMessageActSendTicket"
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:inputType="textMultiLine"
-                        android:textSize="14sp"
-                        android:theme="@style/ticket_inputEditText" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:text="فایل های پیوست"
+                        android:textSize="11sp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/RecyclerAttach"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="none" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/RecyclerAttach"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="-8dp"
+                        android:paddingRight="-8dp"
+                        android:scrollbars="none" />
+                </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>

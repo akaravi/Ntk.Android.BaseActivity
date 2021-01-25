@@ -2,7 +2,6 @@ package ntk.android.base.adapter;
 
 import android.content.Context;
 import android.os.Vibrator;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,8 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.R;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
@@ -30,9 +27,8 @@ import ntk.android.base.services.pooling.PollingVoteService;
 import ntk.android.base.utill.FontManager;
 
 
-public class PoolPlusMinesAdapter extends RecyclerView.Adapter<PoolPlusMinesAdapter.ViewHolder> {
+public class PoolPlusMinesAdapter extends BaseRecyclerAdapter<PollingOptionModel, PoolPlusMinesAdapter.ViewHolder> {
 
-    private List<PollingOptionModel> arrayList;
     private Context context;
     private PollingContentModel PC;
     private Button BtnSend;
@@ -41,7 +37,7 @@ public class PoolPlusMinesAdapter extends RecyclerView.Adapter<PoolPlusMinesAdap
     private Map<Long, Integer> MapVote;
 
     public PoolPlusMinesAdapter(Context context, List<PollingOptionModel> arrayList, PollingContentModel pc, Button send, Button chart) {
-        this.arrayList = arrayList;
+        super(arrayList);
         this.context = context;
         this.PC = pc;
         this.BtnSend = send;
@@ -51,13 +47,14 @@ public class PoolPlusMinesAdapter extends RecyclerView.Adapter<PoolPlusMinesAdap
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_recycler_pool_plus_minse, viewGroup, false);
+        View view = inflate(viewGroup, R.layout.row_recycler_pool_plus_minse);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.Title.setText(arrayList.get(position).Option);
+        PollingOptionModel optionModel = getItem(position);
+        holder.Title.setText(optionModel.Option);
         holder.Plus.setOnClickListener(v -> {
             Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
             vibe.vibrate(100);
@@ -70,7 +67,7 @@ public class PoolPlusMinesAdapter extends RecyclerView.Adapter<PoolPlusMinesAdap
                 if (val < PC.MaxVoteForEachOption) {
                     val = val + 1;
                     holder.Number.setText(String.valueOf(val));
-                    MapVote.put(Long.parseLong(String.valueOf(arrayList.get(position).Id)), val);
+                    MapVote.put(Long.parseLong(String.valueOf(optionModel.Id)), val);
                 } else {
                     Toasty.warning(context, "تعداد پاسخ مجاز برای این گزینه " + PC.MaxVoteForEachOption, Toasty.LENGTH_LONG, true).show();
                 }
@@ -87,7 +84,7 @@ public class PoolPlusMinesAdapter extends RecyclerView.Adapter<PoolPlusMinesAdap
             } else {
                 val = val - 1;
                 holder.Number.setText(String.valueOf(val));
-                MapVote.put(Long.parseLong(String.valueOf(arrayList.get(position).Id)), (val));
+                MapVote.put(Long.parseLong(String.valueOf(optionModel.Id)), (val));
             }
         });
         BtnSend.setOnClickListener(v -> {
@@ -98,7 +95,7 @@ public class PoolPlusMinesAdapter extends RecyclerView.Adapter<PoolPlusMinesAdap
             for (Map.Entry<Long, Integer> map : MapVote.entrySet()) {
                 PollingVoteModel vote = new PollingVoteModel();
                 vote.LinkPollingOptionId = map.getKey();
-                vote.LinkPollingContentId = arrayList.get(position).LinkPollingContentId;
+                vote.LinkPollingContentId = optionModel.LinkPollingContentId;
                 vote.OptionScore = map.getValue();
                 votes.add(vote);
             }
@@ -128,10 +125,6 @@ public class PoolPlusMinesAdapter extends RecyclerView.Adapter<PoolPlusMinesAdap
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return arrayList.size();
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 

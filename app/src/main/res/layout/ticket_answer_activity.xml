@@ -24,6 +24,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 app:mrl_rippleAlpha="0.05"
@@ -31,11 +32,11 @@
                 app:mrl_rippleRoundedCorners="100dp">
 
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:contentDescription="@null"
@@ -58,12 +59,79 @@
                 android:textSize="17sp"
                 tools:ignore="HardcodedText" />
 
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="?attr/colorAccent" />
+
+        <LinearLayout
+            android:id="@+id/viewNoAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="@drawable/no_massage" />
+
+            <TextView
+                android:id="@+id/txtNoAnswers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="پاسخی ارسال نشده است"
+                android:textColor="?colorTextSecondary" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="none" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputMessageActTicketAnswer"
+                style="@style/ticket_textInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtMessageActTicketAnswer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="پاسخ درخواست"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:maxLines="8"
+                    android:scrollHorizontally="false"
+                    android:textSize="14sp"
+                    android:theme="@style/ticket_inputEditText" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <com.balysv.materialripple.MaterialRippleLayout
                 android:id="@+id/RippleAttachActTicketAnswer"
-                android:layout_width="45dp"
-                android:layout_height="match_parent"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:paddingTop="4dp"
                 app:mrl_rippleAlpha="0.05"
                 app:mrl_rippleColor="#10000000"
                 app:mrl_rippleRoundedCorners="100dp">
@@ -72,91 +140,65 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_centerInParent="true"
-                        android:alpha=".8"
                         android:contentDescription="@null"
-                        android:src="@drawable/ic_attach"
-                        app:tint="?attr/toolbarColorText" />
+                        app:srcCompat="@drawable/ic_attach"
+                        app:tint="?attr/colorPrimary" />
                 </RelativeLayout>
             </com.balysv.materialripple.MaterialRippleLayout>
         </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="?attr/colorAccent" />
-
-        <ScrollView
+        <LinearLayout
+            android:id="@+id/linearAttachment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fillViewport="true"
-            android:scrollbars="none">
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:background="#54707070"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:text="فایل های پیوست"
+                android:textSize="11sp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerAnswer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:scrollbars="none"
-                    tools:ignore="InvalidId" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RecyclerAttachTicketAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="-8dp"
+                android:paddingRight="-8dp"
+                android:scrollbars="none" />
+        </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/RecyclerAttachTicketAnswer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="none" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputMessageActTicketAnswer"
-                    style="@style/ticket_textInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="25dp"
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
 
-                    android:layout_marginRight="15dp">
+            <Button
+                android:id="@+id/btnSubmitActTicketAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_margin="15dp"
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtMessageActTicketAnswer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="پاسخ درخواست"
-                        android:inputType="textMultiLine"
-                        android:textSize="14sp"
-                        android:theme="@style/ticket_inputEditText" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ProgressBar
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true" />
-
-                    <Button
-                        android:id="@+id/btnSubmitActTicketAnswer"
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        android:layout_margin="15dp"
-
-                        android:text="ارسال پاسخ"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        tools:ignore="MissingPrefix" />
-                </RelativeLayout>
-            </LinearLayout>
-        </ScrollView>
+                android:text="ارسال پاسخ"
+                android:textColor="@color/colorWhite"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                tools:ignore="MissingPrefix" />
+        </RelativeLayout>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

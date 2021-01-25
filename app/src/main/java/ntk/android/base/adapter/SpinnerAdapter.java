@@ -19,8 +19,6 @@ import ntk.android.base.utill.FontManager;
 
 public class SpinnerAdapter<S> extends ArrayAdapter<String> {
 
-    List<S> items;
-
     public SpinnerAdapter(Context context, List<String> items) {
         super(context, R.layout.spinner_item, items);
 

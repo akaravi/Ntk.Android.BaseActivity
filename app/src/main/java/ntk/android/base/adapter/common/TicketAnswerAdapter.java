@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import ntk.android.base.R;
+import ntk.android.base.dialog.DownloadFileDialog;
 import ntk.android.base.entitymodel.ticketing.TicketingAnswerModel;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
@@ -23,14 +25,21 @@ import static ntk.android.base.adapter.BaseRecyclerAdapter.getScreenWidth;
 public class TicketAnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int ME_TYPE = 0;
+    private static final int YOU_TYPE = 1;
+    private final Long memberId;
+    private final Long userId;
     private List<TicketingAnswerModel> arrayList;
     private Context context;
     int iconSize;
+    FragmentManager fm;
 
-    public TicketAnswerAdapter(Context context, List<TicketingAnswerModel> arrayList) {
+    public TicketAnswerAdapter(Context context, FragmentManager fm, List<TicketingAnswerModel> arrayList, Long userId, Long memberId) {
         this.arrayList = arrayList;
         this.context = context;
-        iconSize = NViewUtils.dpToPx(context, 80);
+        this.fm = fm;
+        iconSize = NViewUtils.dpToPx(context, 50 + 32);
+        this.userId = userId;
+        this.memberId = memberId;
     }
 
     @Override
@@ -56,7 +65,8 @@ public class TicketAnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.date.setText(AppUtill.GregorianToPersian(model.CreatedDate) + "");
             if (model.LinkFileIdsSrc != null && model.LinkFileIdsSrc.size() != 0) {
                 holder.attach.setVisibility(View.VISIBLE);
-            }else
+                holder.attach.setOnClickListener(v -> DownloadFileDialog.SHOW_DIALOG(v.getContext(), fm, model.LinkFileIdsSrc));
+            } else
                 holder.attach.setVisibility(View.GONE);
         } else {
             YouHolder holder = (YouHolder) bh;
@@ -66,7 +76,9 @@ public class TicketAnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.date.setText(AppUtill.GregorianToPersian(model.CreatedDate) + "");
             if (model.LinkFileIdsSrc != null && model.LinkFileIdsSrc.size() != 0) {
                 holder.attach.setVisibility(View.VISIBLE);
-            }else
+                holder.attach.setOnClickListener(v -> DownloadFileDialog.SHOW_DIALOG(v.getContext(), fm, model.LinkFileIdsSrc));
+                ;
+            } else
                 holder.attach.setVisibility(View.GONE);
         }
 
@@ -79,7 +91,12 @@ public class TicketAnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        return position % 2;
+        if (memberId == arrayList.get(position).LinkMemberUserId)
+            return ME_TYPE;
+        else if (userId == arrayList.get(position).CreatedBy)
+            return ME_TYPE;
+        else return YOU_TYPE;
+
     }
 
     public class MeHolder extends RecyclerView.ViewHolder {
@@ -93,7 +110,6 @@ public class TicketAnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             desc = (view.findViewById(R.id.lblTypeRecyclerTicketAnswer));
             date = (view.findViewById(R.id.lblDateRecyclerTicketAnswer));
             attach = view.findViewById(R.id.answerAttaches);
-            desc.setMaxWidth(getScreenWidth() - iconSize);
             desc.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
             date.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
         }
@@ -110,7 +126,7 @@ public class TicketAnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             desc = (view.findViewById(R.id.lblTypeRecyclerTicketAnswer));
             date = (view.findViewById(R.id.lblDateRecyclerTicketAnswer));
             attach = view.findViewById(R.id.answerAttaches);
-            desc.setMaxWidth(getScreenWidth() - iconSize);
+            desc.setMaxWidth(getScreenWidth() - iconSize - 100);
             desc.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
             date.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
         }

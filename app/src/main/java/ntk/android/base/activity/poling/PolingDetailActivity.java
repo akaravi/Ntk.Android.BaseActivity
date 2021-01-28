@@ -8,11 +8,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import es.dmoral.toasty.Toasty;
 import io.reactivex.annotations.NonNull;
 import ntk.android.base.Extras;
 import ntk.android.base.R;
-import ntk.android.base.adapter.DetailPoolCategoryAdapter;
+import ntk.android.base.adapter.poling.DetailPolCategoryAdapter;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
@@ -26,6 +29,7 @@ public class PolingDetailActivity extends AppCompatActivity {
 
     TextView LblTitle;
     Long id;
+    String title;
     RecyclerView Rv;
 
 
@@ -33,7 +37,12 @@ public class PolingDetailActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_detail_pooling);
-        id = getIntent().getExtras().getLong(Extras.EXTRA_FIRST_ARG);
+        id = 0L;
+        title = "نظرسنجی ها";
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            id = getIntent().getExtras().getLong(Extras.EXTRA_FIRST_ARG);
+            title = getIntent().getStringExtra(Extras.EXTRA_SECOND_ARG);
+        }
         init();
     }
 
@@ -42,7 +51,7 @@ public class PolingDetailActivity extends AppCompatActivity {
         Rv = findViewById(R.id.recyclerDetailPooling);
         findViewById(R.id.imgBackActDetailPooling).setOnClickListener(v -> ClickBack());
         LblTitle.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        LblTitle.setText(getIntent().getStringExtra(Extras.EXTRA_SECOND_ARG));
+        LblTitle.setText(title);
         Rv.setHasFixedSize(true);
         Rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         HandelData();
@@ -51,16 +60,24 @@ public class PolingDetailActivity extends AppCompatActivity {
     private void HandelData() {
         FilterDataModel request = new FilterDataModel();
         Filters f = new Filters();
-        f.PropertyName = "LinkCategoryId";
-        f.IntValue1 = id;
-        request.addFilter(f);
+        if (id > 0) {
+            f.PropertyName = "LinkCategoryId";
+            f.IntValue1 = id;
+            request.addFilter(f);
+        }
         ServiceExecute.execute(new PollingContentService(this).getAll(request))
                 .subscribe(new NtkObserver<ErrorException<PollingContentModel>>() {
 
                     @Override
                     public void onNext(@NonNull ErrorException<PollingContentModel> poolingContentListResponse) {
                         if (poolingContentListResponse.IsSuccess) {
-                            DetailPoolCategoryAdapter adapter = new DetailPoolCategoryAdapter(PolingDetailActivity.this, poolingContentListResponse.ListItems);
+                            List<PollingContentModel> arrays = new ArrayList<>();
+                            for (PollingContentModel m :
+                                    poolingContentListResponse.ListItems) {
+                                if (m.Options.size() > 0)
+                                    arrays.add(m);
+                            }
+                            DetailPolCategoryAdapter adapter = new DetailPolCategoryAdapter(PolingDetailActivity.this, arrays);
                             Rv.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         }

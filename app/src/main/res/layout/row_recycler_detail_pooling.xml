@@ -16,10 +16,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:text="سوال"
-            android:textColor="@color/colorTextBlack"
+            android:textColor="?attr/colorTextPrimary"
             android:textSize="17sp"
             tools:ignore="HardcodedText" />
 
@@ -29,10 +31,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/lblTitleRowRecyclerDetailPooling"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginBottom="10dp"
             android:text="توضحات سوال"
+            android:textColor="?attr/colorTextSecondary"
             android:textSize="15sp"
             tools:ignore="HardcodedText" />
 
@@ -41,21 +46,14 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:contentDescription="@null"
-            android:tint="@color/colorTextBlack"
-            app:srcCompat="@drawable/ic_arrow" />
+            app:srcCompat="@drawable/ic_arrow"
+            app:tint="?attr/colorTextPrimary" />
 
-        <Button
-            android:id="@+id/btnSendRecyclerDeialPooling"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:layout_toEndOf="@id/imgDropDownRecyclerDetailPooling"
-            android:background="@drawable/ic_checked"
-            android:visibility="gone" />
 
         <Button
             android:id="@+id/btnChartRecyclerDeialPooling"
@@ -63,7 +61,9 @@
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
-            android:layout_toEndOf="@id/btnSendRecyclerDeialPooling"
+            android:layout_marginLeft="20dp"
+            android:layout_toEndOf="@id/imgDropDownRecyclerDetailPooling"
+            android:layout_toRightOf="@id/imgDropDownRecyclerDetailPooling"
             android:background="@drawable/ic_chart"
             android:visibility="visible" />
     </RelativeLayout>
@@ -71,12 +71,39 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/colorTextBlack" />
+        android:background="?attr/colorTextPrimary" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerOptionPooling"
+    <LinearLayout
+        android:id="@+id/linOptions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:visibility="gone" />
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerOptionPooling"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSendPoolResult"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:text="ثبت" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnClearPool"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:text="انصراف" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

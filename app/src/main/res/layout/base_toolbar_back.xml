@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:gravity="center_vertical"
-    android:background="?attr/colorPrimary"
+    android:background="?attr/toolbarColorBackground"
     android:orientation="horizontal"
     app:layout_collapseMode="pin">
 

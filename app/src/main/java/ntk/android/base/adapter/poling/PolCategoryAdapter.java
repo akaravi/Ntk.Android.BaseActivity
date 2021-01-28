@@ -1,4 +1,4 @@
-package ntk.android.base.adapter;
+package ntk.android.base.adapter.poling;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,25 +10,21 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-
 import java.util.List;
 
 import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.activity.poling.PolingDetailActivity;
-import ntk.android.base.entitymodel.base.FilterDataModel;
-import ntk.android.base.entitymodel.base.Filters;
 import ntk.android.base.entitymodel.polling.PollingCategoryModel;
 import ntk.android.base.utill.FontManager;
 
 
-public class PoolCategoryAdapter extends RecyclerView.Adapter<PoolCategoryAdapter.ViewHolder> {
+public class PolCategoryAdapter extends RecyclerView.Adapter<PolCategoryAdapter.ViewHolder> {
 
     private List<PollingCategoryModel> arrayList;
     private Context context;
 
-    public PoolCategoryAdapter(Context context, List<PollingCategoryModel> arrayList) {
+    public PolCategoryAdapter(Context context, List<PollingCategoryModel> arrayList) {
         this.arrayList = arrayList;
         this.context = context;
     }

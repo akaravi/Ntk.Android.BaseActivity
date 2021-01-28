@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorWhite"
+        android:background="?attr/toolbarColorBackground"
         tools:ignore="UselessParent">
 
         <com.balysv.materialripple.MaterialRippleLayout
@@ -17,7 +17,9 @@
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             app:mrl_rippleAlpha="0.05"
             app:mrl_rippleColor="#10000000"
             app:mrl_rippleRoundedCorners="100dp">
@@ -32,7 +34,8 @@
                     android:layout_centerInParent="true"
                     android:contentDescription="@null"
                     android:rotation="180"
-                    app:srcCompat="@drawable/ic_back" />
+                    app:srcCompat="@drawable/ic_back"
+                    app:tint="?attr/toolbarColorText" />
             </RelativeLayout>
         </com.balysv.materialripple.MaterialRippleLayout>
 

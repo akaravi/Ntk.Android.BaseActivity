@@ -41,7 +41,7 @@
                 android:id="@+id/ToolbarDetail"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorWhite"
+                android:background="?attr/toolbarColorBackground"
                 app:layout_collapseMode="pin">
 
                 <com.balysv.materialripple.MaterialRippleLayout

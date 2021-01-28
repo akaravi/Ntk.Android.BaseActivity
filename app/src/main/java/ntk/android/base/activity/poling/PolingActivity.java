@@ -7,12 +7,10 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
-import ntk.android.base.adapter.PoolCategoryAdapter;
+import ntk.android.base.adapter.poling.PolCategoryAdapter;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
@@ -50,7 +48,7 @@ public class PolingActivity extends BaseActivity {
                         @Override
                         public void onNext(@NonNull ErrorException<PollingCategoryModel> poolingCategoryResponse) {
                             if (poolingCategoryResponse.IsSuccess) {
-                                PoolCategoryAdapter adapter = new PoolCategoryAdapter(PolingActivity.this, poolingCategoryResponse.ListItems);
+                                PolCategoryAdapter adapter = new PolCategoryAdapter(PolingActivity.this, poolingCategoryResponse.ListItems);
                                 Rv.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
                                 if (adapter.getItemCount() > 0)

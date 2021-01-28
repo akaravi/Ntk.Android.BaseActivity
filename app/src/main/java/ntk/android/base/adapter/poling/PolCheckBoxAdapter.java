@@ -1,4 +1,4 @@
-package ntk.android.base.adapter;
+package ntk.android.base.adapter.poling;
 
 import android.content.Context;
 import android.view.View;
@@ -10,12 +10,11 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import ntk.android.base.R;
+import ntk.android.base.adapter.BaseRecyclerAdapter;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
@@ -26,27 +25,31 @@ import ntk.android.base.services.pooling.PollingVoteService;
 import ntk.android.base.utill.FontManager;
 
 
-public class PoolCheckBoxAdapter extends BaseRecyclerAdapter<PollingOptionModel, PoolCheckBoxAdapter.ViewHolder> {
+public class PolCheckBoxAdapter extends BaseRecyclerAdapter<PollingOptionModel, PolCheckBoxAdapter.ViewHolder> {
 
     private Context context;
     private PollingContentModel PC;
-    private Button BtnSend;
-    private Button BtnChart;
-    private int Score = 0;
-    private Map<Long, Integer> MapVote;
+    private final View BtnSend;
+    private final View BtnChart;
+    private List<Long> votesList;
 
-    public PoolCheckBoxAdapter(Context context, List<PollingOptionModel> arrayList, PollingContentModel pc, Button send, Button chart) {
+    public PolCheckBoxAdapter(Context context, List<PollingOptionModel> arrayList, PollingContentModel pc, View chart, View send, View clear) {
         super(arrayList);
         this.context = context;
         this.PC = pc;
         this.BtnSend = send;
         this.BtnChart = chart;
-        MapVote = new HashMap<>();
+        votesList = new ArrayList<>();
+        clear.setOnClickListener(v -> {
+            votesList = new ArrayList<>();
+
+            notifyDataSetChanged();
+        });
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = inflate(viewGroup, R.layout.row_recycler_pool_check_box );
+        View view = inflate(viewGroup, R.layout.row_recycler_pool_check_box);
         return new ViewHolder(view);
     }
 
@@ -54,51 +57,49 @@ public class PoolCheckBoxAdapter extends BaseRecyclerAdapter<PollingOptionModel,
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         PollingOptionModel optionModel = getItem(position);
         holder.LblTitle.setText(optionModel.Option);
-
-        holder.Radio.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                Score = 0;
-                for (Map.Entry<Long, Integer> map : MapVote.entrySet()) {
-                    Score = Score + map.getValue();
-                }
-                if (Score < PC.MaxVoteForThisContent) {
-                    MapVote.put(Long.parseLong(String.valueOf(optionModel.Id)), 1);
-                    holder.Radio.setChecked(true);
-                } else {
-                    Toasty.warning(context, "تعداد پاسخ مجاز برای این نظر سنجی " + PC.MaxVoteForThisContent, Toasty.LENGTH_LONG, true).show();
-                    holder.Radio.setChecked(false);
-                }
+        if (votesList.contains(optionModel.Id)) {
+            holder.checkBox.setChecked(true);
+        } else {
+            holder.checkBox.setChecked(false);
+        }
+        holder.itemView.setOnClickListener(v -> {
+            //if select checkbox before
+            if (votesList.contains(optionModel.Id)) {
+                votesList.remove(optionModel.Id);
+                notifyDataSetChanged();
             } else {
-                Score = 0;
-                for (Map.Entry<Long, Integer> map : MapVote.entrySet()) {
-                    Score = Score + map.getValue();
-                }
-                if (Score > 0) {
-                    MapVote.remove(Long.parseLong(String.valueOf(optionModel.Id)));
-                    Score = Score - 1;
-                    holder.Radio.setChecked(false);
+                int Score = votesList.size();
+                if (Score < PC.MaxVoteForThisContent) {
+                    votesList.add(((optionModel.Id)));
+                    notifyDataSetChanged();
+                } else {
+                    Toasty.warning(context, "حداکثز تعداد پاسخ مجاز برای این نظر سنجی " + PC.MaxVoteForThisContent + " می باشد", Toasty.LENGTH_LONG, true).show();
                 }
             }
         });
 
         BtnSend.setOnClickListener(v -> {
-//            request.ContentId = arrayList.get(position).linkPollingContentId;
-            ArrayList<PollingVoteModel> votes = new ArrayList<>();
-            for (Map.Entry<Long, Integer> map : MapVote.entrySet()) {
-                PollingVoteModel vote = new PollingVoteModel();
-                vote.LinkPollingOptionId = map.getKey();
-                vote.LinkPollingContentId = optionModel.LinkPollingContentId;
-                vote.OptionScore = map.getValue();
-                votes.add(vote);
+            if (votesList.size() == 0) {
+                Toasty.warning(context, "مقداری انتخاب نشده است", Toasty.LENGTH_LONG, true).show();
+                return;
             }
-
-            ServiceExecute.execute(new PollingVoteService(context).addBatch(votes))
+            BtnSend.setEnabled(false);
+            ArrayList<PollingVoteModel> requests = new ArrayList<>();
+            for (Long id : votesList) {
+                PollingVoteModel vote = new PollingVoteModel();
+                vote.LinkPollingOptionId = id;
+                vote.LinkPollingContentId = optionModel.LinkPollingContentId;
+                vote.OptionScore = 1;
+                requests.add(vote);
+            }
+            ServiceExecute.execute(new PollingVoteService(context).addBatch(requests))
                     .subscribe(new NtkObserver<ErrorException<PollingVoteModel>>() {
 
                         @Override
                         public void onNext(ErrorException<PollingVoteModel> poolingSubmitResponse) {
+                            BtnSend.setEnabled(true);
                             if (poolingSubmitResponse.IsSuccess) {
-                                Toasty.info(context, "نظر شما با موققثیت ثبت شد", Toasty.LENGTH_LONG, true).show();
+                                Toasty.info(context, "نظر شما با موققیت ثبت شد", Toasty.LENGTH_LONG, true).show();
                                 if (PC.ViewStatisticsAfterVote) {
                                     BtnChart.setVisibility(View.VISIBLE);
                                 }
@@ -109,7 +110,8 @@ public class PoolCheckBoxAdapter extends BaseRecyclerAdapter<PollingOptionModel,
 
                         @Override
                         public void onError(Throwable e) {
-                            Toasty.warning(context, "خطای سامانه", Toasty.LENGTH_LONG, true).show();
+                            BtnSend.setEnabled(true);
+                            Toasty.warning(context, "خطا در ارسال اطلاعات، لطفا مجدد تلاش فرمایید", Toasty.LENGTH_LONG, true).show();
                         }
 
                     });
@@ -117,17 +119,16 @@ public class PoolCheckBoxAdapter extends BaseRecyclerAdapter<PollingOptionModel,
     }
 
 
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView LblTitle;
-        CheckBox Radio;
+        CheckBox checkBox;
 
         public ViewHolder(View view) {
             super(view);
             LblTitle = view.findViewById(R.id.lblRecyclerPoolCheckBox);
 
 
-            Radio = view.findViewById(R.id.RadioRecyclerPoolCheckBox);
+            checkBox = view.findViewById(R.id.RadioRecyclerPoolCheckBox);
             LblTitle.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
         }
     }

@@ -24,7 +24,9 @@
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
                 app:mrl_rippleAlpha="0.05"
                 app:mrl_rippleColor="#10000000"
                 app:mrl_rippleRoundedCorners="100dp">
@@ -48,7 +50,9 @@
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 app:mrl_rippleAlpha="0.05"
                 app:mrl_rippleColor="#10000000"
                 app:mrl_rippleRoundedCorners="100dp">
@@ -71,6 +75,7 @@
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:layout_toEndOf="@id/imgShareDetail"
+                android:layout_toRightOf="@id/imgShareDetail"
                 app:mrl_rippleAlpha="0.05"
                 app:mrl_rippleColor="#10000000"
                 app:mrl_rippleRoundedCorners="100dp">
@@ -94,6 +99,7 @@
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:layout_toEndOf="@id/imgFavDetail"
+                android:layout_toRightOf="@id/imgFavDetail"
                 app:mrl_rippleAlpha="0.05"
                 app:mrl_rippleColor="#10000000"
                 app:mrl_rippleRoundedCorners="100dp">
@@ -117,7 +123,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_toStartOf="@id/imgBackDetail"
+                android:layout_toLeftOf="@id/imgBackDetail"
                 android:text="دستور آشپزی"
                 android:textColor="@color/colorMenu"
                 tools:ignore="HardcodedText" />
@@ -135,7 +143,7 @@
                 android:id="@+id/LineToolbarActMain"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:background="@color/colorAccent" />
+                android:background="?attr/colorAccent" />
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
@@ -176,6 +184,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:orientation="horizontal">
 
@@ -184,6 +193,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="10dp"
+                                android:layout_marginRight="10dp"
                                 android:text="..."
                                 android:textColor="@color/colorMenu" />
 
@@ -200,8 +210,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="19dp"
                             android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="10dp"
+                            android:layout_marginRight="10dp"
                             android:progressDrawable="@drawable/rating_bar_layer"
                             android:rating="3" />
                     </RelativeLayout>
@@ -449,6 +461,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp"
                             android:text="نظرات"
@@ -478,6 +491,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp"
                             android:text="دستورات مشابه"
@@ -507,6 +521,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp"
                             android:text="دسته بندی مشابه"
@@ -548,7 +563,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="در حال دریافت اطلاعات..."
-                android:textColor="@color/colorAccent"
+                android:textColor="?attr/colorAccent"
                 android:textSize="18sp"
                 tools:ignore="HardcodedText" />
         </LinearLayout>

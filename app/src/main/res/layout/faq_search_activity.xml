@@ -2,8 +2,8 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/mainLayoutActFaqSearch"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -23,7 +23,9 @@
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
                 app:mrl_rippleAlpha="0.05"
                 app:mrl_rippleColor="#10000000"
                 app:mrl_rippleRoundedCorners="100dp">
@@ -32,13 +34,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_centerInParent="true"
                         android:contentDescription="@null"
                         android:rotation="180"
-                        app:srcCompat="@drawable/ic_back" />
+                        app:srcCompat="@drawable/ic_back"
+                        app:tint="?attr/toolbarColorText" />
                 </RelativeLayout>
             </com.balysv.materialripple.MaterialRippleLayout>
 
@@ -47,6 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_toStartOf="@id/imgBackActFaqSearch"
+                android:layout_toLeftOf="@id/imgBackActFaqSearch"
                 android:background="@android:color/transparent"
                 android:hint="عبارت جستجو را وارد نمایید"
                 android:imeOptions="actionSearch"
@@ -54,6 +58,7 @@
                 android:maxLines="1"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
+                android:textColor="?attr/toolbarColorText"
                 android:textSize="13sp"
                 tools:ignore="HardcodedText" />
 
@@ -64,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_below="@+id/ToolbarActFaqSearch"
-            android:background="@color/colorAccent" />
+            android:background="?attr/colorAccent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerFaqSearch"

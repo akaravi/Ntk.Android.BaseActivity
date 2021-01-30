@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="نتیجه نظرسنجی"
-            android:textColor="@color/colorWhite"
+            android:textColor="?attr/toolbarColorText"
             android:textSize="17sp"
             tools:ignore="HardcodedText" />
     </RelativeLayout>

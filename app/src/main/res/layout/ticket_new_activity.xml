@@ -58,12 +58,11 @@
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSubmitActSendTicket"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentBottom="true"
-            android:background="#014efe"
             android:text="ارسال درخواست"
             android:textColor="@color/colorWhite"
             android:textSize="17sp"

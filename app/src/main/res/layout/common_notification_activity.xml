@@ -28,12 +28,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerInParent="true"
                     android:contentDescription="@null"
-                    android:rotation="180"
+                    android:rotation="180"  app:tint="?attr/toolbarColorText"
                     app:srcCompat="@drawable/ic_back" />
             </RelativeLayout>
         </com.balysv.materialripple.MaterialRippleLayout>
@@ -46,7 +46,7 @@
             android:layout_marginEnd="15dp"
             android:layout_toStartOf="@id/imgBackActInbox"
             android:text="صندوق پیام"
-            android:textColor="?attr/ntk_notification_color"
+            android:textColor="?attr/toolbarColorText"
             tools:ignore="HardcodedText"
             android:layout_marginRight="15dp"
             android:layout_toLeftOf="@id/imgBackActInbox" />

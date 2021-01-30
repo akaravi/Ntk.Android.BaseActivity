@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/background_comment_title">
+        android:background="?attr/toolbarColorBackground">
 
         <TextView
             android:id="@+id/lblTitleDialogComment"
@@ -17,44 +17,46 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="ثبت بازخورد"
-            android:textColor="@color/colorWhite"
+            android:textColor="?attr/toolbarColorText"
             android:textSize="17sp" />
     </RelativeLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:background="#fff"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
-    <me.zhanghai.android.materialratingbar.MaterialRatingBar
-        android:id="@+id/rateDialogComment"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        app:mrb_fillBackgroundStars="true"
-        app:mrb_progressTint="?attr/colorAccent" />
 
-    <EditText
-        android:id="@+id/txtDialogComment"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_margin="15dp"
-        android:background="#fff"
-        android:hint="متن نظر سنجی"
-        android:inputType="text"
-        android:maxLines="1"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        tools:ignore="HardcodedText" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <me.zhanghai.android.materialratingbar.MaterialRatingBar
+            android:id="@+id/rateDialogComment"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            app:mrb_fillBackgroundStars="true"
+            app:mrb_progressTint="?attr/colorAccent" />
+
+        <EditText
+            android:id="@+id/txtDialogComment"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_margin="15dp"
+            android:hint="متن نظر سنجی"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/btnDialogComment"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/button_accent"
+        android:background="?attr/toolbarColorBackground"
         android:text="ثبت"
-        android:textColor="@color/colorWhite"
+        android:textColor="?attr/toolbarColorText"
         android:textSize="17sp" />
 </LinearLayout>

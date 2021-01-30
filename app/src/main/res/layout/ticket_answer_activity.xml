@@ -31,7 +31,7 @@
                 app:mrl_rippleColor="#10000000"
                 app:mrl_rippleRoundedCorners="100dp">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"

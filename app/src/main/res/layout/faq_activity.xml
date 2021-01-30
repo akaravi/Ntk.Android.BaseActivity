@@ -18,7 +18,9 @@
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             app:mrl_rippleAlpha="0.05"
             app:mrl_rippleColor="#10000000"
             app:mrl_rippleRoundedCorners="100dp">
@@ -27,13 +29,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerInParent="true"
                     android:contentDescription="@null"
                     android:rotation="180"
-                    app:srcCompat="@drawable/ic_back" />
+                    app:srcCompat="@drawable/ic_back"
+                    app:tint="?attr/toolbarColorText" />
             </RelativeLayout>
         </com.balysv.materialripple.MaterialRippleLayout>
 
@@ -42,7 +45,9 @@
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             app:mrl_rippleAlpha="0.05"
             app:mrl_rippleColor="#10000000"
             app:mrl_rippleRoundedCorners="100dp">
@@ -51,13 +56,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerInParent="true"
                     android:contentDescription="@null"
                     android:rotation="0"
-                    app:srcCompat="@drawable/ic_search" />
+                    app:srcCompat="@drawable/ic_search"
+                    app:tint="?attr/toolbarColorText" />
             </RelativeLayout>
         </com.balysv.materialripple.MaterialRippleLayout>
 
@@ -67,16 +73,18 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
             android:layout_toStartOf="@id/imgBackActFaq"
+            android:layout_toLeftOf="@id/imgBackActFaq"
             android:text="صندوق پیام"
-            android:textColor="@color/colorMenu"
+            android:textColor="?attr/toolbarColorText"
             tools:ignore="HardcodedText" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:background="@color/colorAccent" />
+        android:background="?attr/colorAccent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerFaq"

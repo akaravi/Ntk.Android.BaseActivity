@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="ارسال نظر"
-            android:textColor="@color/colorWhite"
+            android:textColor="?attr/toolbarColorText"
             android:textSize="17sp"
             tools:ignore="HardcodedText" />
     </RelativeLayout>
@@ -49,9 +49,9 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="10dp"
-        android:background="?attr/colorAccent"
+        android:background="?attr/toolbarColorBackground"
         android:text="ارسال"
-        android:textColor="@color/colorWhite"
+        android:textColor="?attr/toolbarColorText"
         android:textSize="17sp"
         tools:ignore="HardcodedText" />
 </LinearLayout>

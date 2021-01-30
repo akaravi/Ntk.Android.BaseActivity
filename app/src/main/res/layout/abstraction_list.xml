@@ -34,13 +34,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_centerInParent="true"
                         android:contentDescription="@null"
                         android:rotation="180"
-                        app:srcCompat="@drawable/ic_back" />
+                        app:srcCompat="@drawable/ic_back"
+                        app:tint="?attr/toolbarColorText" />
                 </RelativeLayout>
             </com.balysv.materialripple.MaterialRippleLayout>
 
@@ -60,13 +61,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_centerInParent="true"
                         android:contentDescription="@null"
                         android:rotation="0"
-                        app:srcCompat="@drawable/ic_search" />
+                        app:srcCompat="@drawable/ic_search"
+                        app:tint="?attr/toolbarColorText" />
                 </RelativeLayout>
             </com.balysv.materialripple.MaterialRippleLayout>
 
@@ -80,7 +82,7 @@
                 android:layout_toStartOf="@id/imgBack"
                 android:layout_toLeftOf="@id/imgBack"
                 android:text="بازگشت"
-                android:textColor="@color/colorTextBlack"
+                android:textColor="?attr/toolbarColorText"
                 tools:ignore="HardcodedText" />
         </RelativeLayout>
 
@@ -90,50 +92,52 @@
             android:layout_height="3dp"
             android:background="?attr/colorAccent" />
     </LinearLayout>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipRefresh"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent">
 
-        android:backgroundTint="?attr/colorAccent"
-        tools:targetApi="lollipop">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none"
-            tools:ignore="InvalidId" />
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            android:backgroundTint="?attr/colorAccent"
+            tools:targetApi="lollipop">
 
-    <LinearLayout
-        android:id="@+id/loadMoreProgress"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#251C1C1C"
-        android:gravity="center"
-        android:visibility="gone"
-        android:orientation="horizontal"
-        android:padding="8dp">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                tools:ignore="InvalidId" />
 
-        <ProgressBar
-            android:id="@+id/loadingProgress"
-            style="style/CircularProgressDrawableStylePrimary"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/loadMoreProgress"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="در حال دریافت اطلاعات"
-            android:textColor="?attr/colorAccent"
-            android:textSize="14sp" />
-    </LinearLayout>
-</RelativeLayout>
+            android:layout_alignParentBottom="true"
+            android:background="#251C1C1C"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/loadingProgress"
+                style="style/CircularProgressDrawableStylePrimary"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="در حال دریافت اطلاعات"
+                android:textColor="?attr/colorAccent"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

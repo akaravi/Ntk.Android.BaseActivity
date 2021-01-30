@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="QR Code"
-            android:textColor="@color/colorWhite"
+            android:textColor="?attr/toolbarColorText"
             android:textSize="17sp" />
     </RelativeLayout>
 
@@ -32,8 +32,8 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="10dp"
-        android:background="?attr/colorAccent"
+        android:background="?attr/toolbarColorBackground"
         android:text="اشتراک گذاری با سایر موارد ...."
-        android:textColor="@color/colorWhite"
+        android:textColor="?attr/toolbarColorText"
         android:textSize="17sp" />
 </LinearLayout>

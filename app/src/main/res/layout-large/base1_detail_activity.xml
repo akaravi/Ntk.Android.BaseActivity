@@ -14,7 +14,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentScrim="@color/colorPrimary"
+            app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="false">
 
@@ -49,7 +49,9 @@
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     app:mrl_rippleAlpha="0.05"
                     app:mrl_rippleColor="#10000000"
                     app:mrl_rippleRoundedCorners="100dp">
@@ -73,7 +75,9 @@
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
                     app:mrl_rippleAlpha="0.05"
                     app:mrl_rippleColor="#10000000"
                     app:mrl_rippleRoundedCorners="100dp">
@@ -96,6 +100,7 @@
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:layout_toEndOf="@id/imgShareDetail"
+                    android:layout_toRightOf="@id/imgShareDetail"
                     app:mrl_rippleAlpha="0.05"
                     app:mrl_rippleColor="#10000000"
                     app:mrl_rippleRoundedCorners="100dp">
@@ -119,6 +124,7 @@
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:layout_toEndOf="@id/imgFavDetail"
+                    android:layout_toRightOf="@id/imgFavDetail"
                     app:mrl_rippleAlpha="0.05"
                     app:mrl_rippleColor="#10000000"
                     app:mrl_rippleRoundedCorners="100dp">
@@ -142,7 +148,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
                     android:layout_toStartOf="@id/imgBackDetail"
+                    android:layout_toLeftOf="@id/imgBackDetail"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text=" وبلاگ"
@@ -154,7 +162,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
                     android:layout_alignParentBottom="true"
-                    android:background="@color/colorAccent" />
+                    android:background="?attr/colorAccent" />
             </RelativeLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -174,12 +182,14 @@
             android:orientation="vertical"
             android:visibility="gone"
             tools:ignore="WebViewLayout">
+
             <ImageView
                 android:id="@+id/RowTimeDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@null"
                 android:scaleType="fitXY" />
+
             <TextView
                 android:id="@+id/lblNameCommandDetail"
                 android:layout_width="wrap_content"
@@ -202,6 +212,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:orientation="horizontal">
 
@@ -210,6 +221,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
                         android:text=" 160"
                         android:textColor="@color/colorMenu" />
 
@@ -226,8 +238,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="19dp"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     android:progressDrawable="@drawable/rating_bar_layer"
                     android:rating="3" />
             </RelativeLayout>
@@ -273,6 +287,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:text="نظرات"
@@ -302,6 +317,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:text="موارد مشابه"
@@ -313,8 +329,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
                     app:mrl_rippleAlpha="0.05"
                     app:mrl_rippleColor="#10000000"
                     app:mrl_rippleRoundedCorners="100dp">
@@ -330,7 +348,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="لیست کامل"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="?attr/colorAccent"
                             android:textSize="14sp"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
@@ -369,7 +387,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="در حال دریافت اطلاعات..."
-            android:textColor="@color/colorAccent"
+            android:textColor="?attr/colorAccent"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
     </LinearLayout>

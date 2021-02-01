@@ -6,12 +6,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,14 +21,18 @@ import ntk.android.base.R;
 import ntk.android.base.adapter.BaseRecyclerAdapter;
 import ntk.android.base.entitymodel.polling.PollingContentModel;
 import ntk.android.base.utill.FontManager;
+import ntk.android.base.view.NViewUtils;
 
 public class DetailPolCategoryAdapter extends BaseRecyclerAdapter<PollingContentModel, DetailPolCategoryAdapter.ViewHolder> {
-
+    int lastPos = -1;
     private Context context;
+    int color;
 
     public DetailPolCategoryAdapter(Context context, List<PollingContentModel> arrayList) {
         super(arrayList);
         this.context = context;
+        int primaryColor = NViewUtils.getResIdFromAttribute(context, R.attr.colorPrimary);
+        color = NViewUtils.getColorWithAlpha(ContextCompat.getColor(context,primaryColor), 100);
     }
 
     @Override
@@ -42,51 +46,37 @@ public class DetailPolCategoryAdapter extends BaseRecyclerAdapter<PollingContent
         PollingContentModel opModel = getItem(position);
         holder.LblTitle.setText(opModel.Title);
         holder.LblDescription.setText(opModel.Question);
+        if (lastPos == position) {
+            holder.Root.setBackgroundColor( color);
+            holder.linOptions.setVisibility(View.VISIBLE);
+            holder.ImgDropDown.setRotation(180);
+        } else {
+            holder.Root.setBackgroundColor(ContextCompat.getColor(context, R.color.colorWhite));
+            holder.linOptions.setVisibility(View.GONE);
+            holder.Rv.setAdapter(null);
+            holder.ImgDropDown.setRotation(0);
+        }
         if (opModel.ViewStatisticsBeforeVote) {
             holder.Chart.setVisibility(View.VISIBLE);
         }
         holder.Root.setOnClickListener(v -> {
             //user can vote max 1 item
-            if (opModel.MaxVoteForThisContent == 1) {
-                if (holder.linOptions.getVisibility() == View.GONE) {
-                    PolRadioAdapter adapter = new PolRadioAdapter(context, opModel.Options, opModel, holder.Chart, holder.sendBtn, holder.clearBtn);
-                    holder.Rv.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    holder.linOptions.setVisibility(View.VISIBLE);
-                    holder.ImgDropDown.setRotation(180);
-                } else {
-                    holder.linOptions.setVisibility(View.GONE);
-                    holder.Rv.setAdapter(null);
-                    holder.Rv.removeAllViews();
-                    holder.ImgDropDown.setRotation(0);
-                }
-                //user can vote >1 and each item have 1 score
-            } else if (opModel.MaxVoteForThisContent > 1 && opModel.MaxVoteForEachOption == 1) {
-                if (holder.linOptions.getVisibility() == View.GONE) {
-                    PolCheckBoxAdapter adapter = new PolCheckBoxAdapter(context, opModel.Options, opModel, holder.Chart, holder.sendBtn, holder.clearBtn);
-                    holder.Rv.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    holder.linOptions.setVisibility(View.VISIBLE);
-                    holder.ImgDropDown.setRotation(180);
-                } else {
-                    holder.linOptions.setVisibility(View.GONE);
-                    holder.Rv.setAdapter(null);
-                    holder.Rv.removeAllViews();
-                    holder.ImgDropDown.setRotation(0);
-                }
+
+            if (lastPos == -1) {
+                lastPos = position;
+                holder.open(context, opModel);
+            } else if (position == lastPos) {
+                lastPos = -1;
+                holder.Root.setBackgroundColor(ContextCompat.getColor(context, R.color.colorWhite));
+                holder.linOptions.setVisibility(View.GONE);
+                holder.Rv.setAdapter(null);
+                holder.Rv.removeAllViews();
+                holder.ImgDropDown.setRotation(0);
             } else {
-                if (holder.linOptions.getVisibility() == View.GONE) {
-                    PolPlusMinesAdapter adapter = new PolPlusMinesAdapter(context, opModel.Options, opModel, holder.Chart, holder.sendBtn, holder.clearBtn);
-                    holder.Rv.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    holder.linOptions.setVisibility(View.VISIBLE);
-                    holder.ImgDropDown.setRotation(180);
-                } else {
-                    holder.linOptions.setVisibility(View.GONE);
-                    holder.Rv.setAdapter(null);
-                    holder.Rv.removeAllViews();
-                    holder.ImgDropDown.setRotation(0);
-                }
+                int toClose = lastPos;
+                lastPos = position;
+                notifyItemChanged(toClose);
+                holder.open(context, opModel);
             }
         });
 
@@ -118,7 +108,7 @@ public class DetailPolCategoryAdapter extends BaseRecyclerAdapter<PollingContent
         TextView LblDescription;
         ImageView ImgDropDown;
         RecyclerView Rv;
-        Button Chart;
+        View Chart;
         LinearLayout Root;
         LinearLayout linOptions;
         View sendBtn;
@@ -139,6 +129,28 @@ public class DetailPolCategoryAdapter extends BaseRecyclerAdapter<PollingContent
             Rv.setHasFixedSize(true);
             RecyclerView.LayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             Rv.setLayoutManager(manager);
+        }
+
+        public void open(Context context, PollingContentModel opModel) {
+            Root.setBackgroundColor(color);
+            if (opModel.MaxVoteForThisContent == 1) {
+                PolRadioAdapter adapter = new PolRadioAdapter(context, opModel.Options, opModel, Chart, sendBtn, clearBtn);
+                Rv.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
+            } else if (opModel.MaxVoteForThisContent > 1 && opModel.MaxVoteForEachOption == 1) {
+                PolCheckBoxAdapter adapter = new PolCheckBoxAdapter(context, opModel.Options, opModel, Chart, sendBtn, clearBtn);
+                Rv.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                linOptions.setVisibility(View.VISIBLE);
+                ImgDropDown.setRotation(180);
+            } else {
+                PolPlusMinesAdapter adapter = new PolPlusMinesAdapter(context, opModel.Options, opModel, Chart, sendBtn, clearBtn);
+                Rv.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+            linOptions.setVisibility(View.VISIBLE);
+            ImgDropDown.setRotation(180);
         }
     }
 }

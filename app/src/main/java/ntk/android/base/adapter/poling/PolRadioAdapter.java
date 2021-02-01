@@ -34,7 +34,7 @@ public class PolRadioAdapter extends BaseRecyclerAdapter<PollingOptionModel, Pol
     private final View BtnChart;
     private final View BtnSend;
 
-    public PolRadioAdapter(Context context, List<PollingOptionModel> arrayList, PollingContentModel pc, Button chart, View send, View clear) {
+    public PolRadioAdapter(Context context, List<PollingOptionModel> arrayList, PollingContentModel pc, View chart, View send, View clear) {
         super(arrayList);
         this.context = context;
         this.BtnChart = chart;

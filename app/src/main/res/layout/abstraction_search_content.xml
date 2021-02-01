@@ -58,6 +58,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:textColor="?attr/toolbarColorText"
+                android:textColorHint="?attr/toolbarColorText"
                 android:textSize="13sp"
                 tools:ignore="HardcodedText" />
 

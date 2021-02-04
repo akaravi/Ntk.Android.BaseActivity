@@ -43,8 +43,8 @@ import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.ScoreClickDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.base.FilterDataModel;
-import ntk.android.base.entitymodel.base.Filters;
 import ntk.android.base.entitymodel.article.ArticleCategoryModel;
 import ntk.android.base.entitymodel.article.ArticleCommentModel;
 import ntk.android.base.entitymodel.article.ArticleContentModel;
@@ -219,9 +219,9 @@ public abstract class BaseArticleDetail_1_Activity extends
 
 
     @NotNull
-    protected FilterDataModel otherInfoFilter(long ContentId) {
-        FilterDataModel Request = new FilterDataModel();
-        Filters f = new Filters();
+    protected FilterModel otherInfoFilter(long ContentId) {
+        FilterModel Request = new FilterModel();
+        FilterDataModel f = new FilterDataModel();
         f.PropertyName = "LinkContentId";
         f.IntValue1 = ContentId;
         Request.addFilter(f);
@@ -357,8 +357,8 @@ public abstract class BaseArticleDetail_1_Activity extends
     @Override
     public Function<Long, Observable<ErrorException<ArticleCommentModel>>> getCommentListService() {
         return linkLongId -> {
-            FilterDataModel Request = new FilterDataModel();
-            Filters f = new Filters();
+            FilterModel Request = new FilterModel();
+            FilterDataModel f = new FilterDataModel();
             f.PropertyName = "LinkContentId";
             f.IntValue1 = linkLongId;
             Request.addFilter(f);

@@ -21,8 +21,8 @@ import ntk.android.base.api.utill.NTKUtill;
 import ntk.android.base.config.ErrorExceptionObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.base.FilterDataModel;
-import ntk.android.base.entitymodel.base.Filters;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.config.GenericErrors;
@@ -67,13 +67,13 @@ public abstract class AbstractionSearchActivity<TEntity> extends BaseActivity {
 
     protected abstract RecyclerView.Adapter getAdapter();
 
-    public abstract Function<FilterDataModel, Observable<ErrorException<TEntity>>> getService();
+    public abstract Function<FilterModel, Observable<ErrorException<TEntity>>> getService();
 
     private void Search() {
         if (!searchLock) {
             searchLock = true;
             if (AppUtill.isNetworkAvailable(this)) {
-                FilterDataModel request = getDefaultFilterDataModel(Txt.getText().toString());
+                FilterModel request = getDefaultFilterDataModel(Txt.getText().toString());
 
                 switcher.showProgressView();
                 ServiceExecute.execute(getService().apply(request))
@@ -115,23 +115,23 @@ public abstract class AbstractionSearchActivity<TEntity> extends BaseActivity {
     }
 
     @NotNull
-    protected FilterDataModel getDefaultFilterDataModel(String stringValue) {
-        FilterDataModel request = new FilterDataModel();
-        Filters ft = new Filters();
+    protected FilterModel getDefaultFilterDataModel(String stringValue) {
+        FilterModel request = new FilterModel();
+        FilterDataModel ft = new FilterDataModel();
         ft.PropertyName = "Title";
         ft.StringValue = stringValue;
         ft.ClauseType = NTKUtill.ClauseType_Or;
         ft.SearchType = NTKUtill.Search_Type_Contains;
         request.addFilter(ft);
 
-        Filters fd = new Filters();
+        FilterDataModel fd = new FilterDataModel();
         fd.PropertyName = "Description";
         fd.StringValue = stringValue;
         fd.ClauseType = NTKUtill.ClauseType_Or;
         fd.SearchType = NTKUtill.Search_Type_Contains;
         request.addFilter(fd);
 
-        Filters fb = new Filters();
+        FilterDataModel fb = new FilterDataModel();
         fb.PropertyName = "Body";
         fb.StringValue = stringValue;
         fb.ClauseType = NTKUtill.ClauseType_Or;

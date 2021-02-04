@@ -25,7 +25,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,9 +33,7 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 import java9.util.function.BiFunction;
 import java9.util.function.Function;
 import ntk.android.base.Extras;
@@ -45,12 +42,11 @@ import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.appclass.UpdateClass;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
-import ntk.android.base.dtomodel.application.MainResponseDtoModel;
 import ntk.android.base.dtomodel.core.ScoreClickDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.base.FilterDataModel;
-import ntk.android.base.entitymodel.base.Filters;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
@@ -256,9 +252,9 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
 
 
     @NotNull
-    protected FilterDataModel otherInfoFilter(long ContentId) {
-        FilterDataModel Request = new FilterDataModel();
-        Filters f = new Filters();
+    protected FilterModel otherInfoFilter(long ContentId) {
+        FilterModel Request = new FilterModel();
+        FilterDataModel f = new FilterDataModel();
         f.PropertyName = "LinkContentId";
         f.IntValue1 = ContentId;
         Request.addFilter(f);

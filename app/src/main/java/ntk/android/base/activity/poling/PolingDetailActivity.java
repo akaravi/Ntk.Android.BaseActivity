@@ -19,8 +19,8 @@ import ntk.android.base.adapter.poling.DetailPolCategoryAdapter;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.base.FilterDataModel;
-import ntk.android.base.entitymodel.base.Filters;
 import ntk.android.base.entitymodel.polling.PollingContentModel;
 import ntk.android.base.services.pooling.PollingContentService;
 import ntk.android.base.utill.FontManager;
@@ -58,8 +58,8 @@ public class PolingDetailActivity extends AppCompatActivity {
     }
 
     private void HandelData() {
-        FilterDataModel request = new FilterDataModel();
-        Filters f = new Filters();
+        FilterModel request = new FilterModel();
+        FilterDataModel f = new FilterDataModel();
         if (id > 0) {
             f.PropertyName = "LinkCategoryId";
             f.IntValue1 = id;

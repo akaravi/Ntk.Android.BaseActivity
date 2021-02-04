@@ -43,7 +43,7 @@ import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
-import ntk.android.base.entitymodel.base.FilterDataModel;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.file.FileUploadModel;
 import ntk.android.base.entitymodel.ticketing.TicketingDepartemenModel;
 import ntk.android.base.entitymodel.ticketing.TicketingTaskModel;
@@ -175,7 +175,7 @@ public class NewTicketActivity extends BaseActivity {
 
     public void getDepartment() {
 
-        ServiceExecute.execute(new TicketingDepartemenService(this).getAll(new FilterDataModel()))
+        ServiceExecute.execute(new TicketingDepartemenService(this).getAll(new FilterModel()))
                 .subscribe(new NtkObserver<ErrorException<TicketingDepartemenModel>>() {
                     @Override
                     public void onNext(@NonNull ErrorException<TicketingDepartemenModel> model) {

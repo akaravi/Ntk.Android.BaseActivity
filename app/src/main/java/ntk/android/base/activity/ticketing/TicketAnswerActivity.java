@@ -40,8 +40,8 @@ import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.base.FilterDataModel;
-import ntk.android.base.entitymodel.base.Filters;
 import ntk.android.base.entitymodel.file.FileUploadModel;
 import ntk.android.base.entitymodel.ticketing.TicketingAnswerModel;
 import ntk.android.base.event.RemoveAttachEvent;
@@ -153,9 +153,9 @@ public class TicketAnswerActivity extends BaseActivity {
     private void HandelData(int i) {
         if (AppUtill.isNetworkAvailable(this)) {
             switcher.showProgressView();
-            FilterDataModel request = new FilterDataModel();
+            FilterModel request = new FilterModel();
             request.RowPerPage = 100;
-            request.addFilter(new Filters().setPropertyName("LinkTaskId").setIntValue1(ticketId));
+            request.addFilter(new FilterDataModel().setPropertyName("LinkTaskId").setIntValue1(ticketId));
 
             ServiceExecute.execute(new TicketingAnswerService(this).getAll(request))
                     .subscribe(new NtkObserver<ErrorException<TicketingAnswerModel>>() {

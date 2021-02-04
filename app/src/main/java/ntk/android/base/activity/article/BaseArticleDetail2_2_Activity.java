@@ -48,8 +48,8 @@ import ntk.android.base.entitymodel.article.ArticleContentModel;
 import ntk.android.base.entitymodel.article.ArticleContentOtherInfoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.base.FilterDataModel;
-import ntk.android.base.entitymodel.base.Filters;
 import ntk.android.base.event.HtmlBodyEvent;
 import ntk.android.base.services.article.ArticleCommentService;
 import ntk.android.base.services.article.ArticleContentOtherInfoService;
@@ -246,9 +246,9 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
 
 
     @NotNull
-    protected FilterDataModel otherInfoFilter(long ContentId) {
-        FilterDataModel Request = new FilterDataModel();
-        Filters f = new Filters();
+    protected FilterModel otherInfoFilter(long ContentId) {
+        FilterModel Request = new FilterModel();
+        FilterDataModel f = new FilterDataModel();
         f.PropertyName = "LinkContentId";
         f.IntValue1 = ContentId;
         Request.addFilter(f);
@@ -392,7 +392,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
     @Override
     public Function<Long, Observable<ErrorException<ArticleContentModel>>> getSimilarCategoryService() {
         return (id) -> {
-            FilterDataModel request = new FilterDataModel();
+            FilterModel request = new FilterModel();
             return new ArticleContentService(this).getAllWithCategoryUsedInContent(id, request);
         };
     }
@@ -400,8 +400,8 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
     @Override
     public Function<Long, Observable<ErrorException<ArticleContentModel>>> getSimilarContentService() {
         return (id) -> {
-            FilterDataModel Request = new FilterDataModel();
-            Filters f = new Filters();
+            FilterModel Request = new FilterModel();
+            FilterDataModel f = new FilterDataModel();
             f.PropertyName = "LinkContentId";
             f.IntValue1 = id;
             Request.addFilter(f);
@@ -412,8 +412,8 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
     @Override
     public Function<Long, Observable<ErrorException<ArticleCommentModel>>> getCommentListService() {
         return linkLongId -> {
-            FilterDataModel Request = new FilterDataModel();
-            Filters f = new Filters();
+            FilterModel Request = new FilterModel();
+            FilterDataModel f = new FilterDataModel();
             f.PropertyName = "LinkContentId";
             f.IntValue1 = linkLongId;
             Request.addFilter(f);
@@ -503,7 +503,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
 
     private void getSimilarCategoryContent(long id) {
         if (AppUtill.isNetworkAvailable(this)) {
-            FilterDataModel request = new FilterDataModel();
+            FilterModel request = new FilterModel();
             ServiceExecute.execute( new ArticleContentService(this).getAllWithCategoryUsedInContent(id, request))
                     .subscribe(new NtkObserver<ErrorException<ArticleContentModel>>() {
                         @Override

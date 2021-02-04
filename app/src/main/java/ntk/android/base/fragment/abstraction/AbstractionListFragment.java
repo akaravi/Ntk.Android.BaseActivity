@@ -23,7 +23,7 @@ import ntk.android.base.config.ErrorExceptionObserver;
 import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
-import ntk.android.base.entitymodel.base.FilterDataModel;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.fragment.BaseFragment;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
@@ -36,7 +36,7 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
     private int Total = 0;
     protected List<TEntity> models = new ArrayList<>();
     protected RecyclerView.Adapter adapter;
-    protected FilterDataModel request;
+    protected FilterModel request;
     private boolean loadingMore = true;
 
     @Override
@@ -53,12 +53,12 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
     @Override
     public final void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        request = new FilterDataModel();
+        request = new FilterModel();
         request.RowPerPage = 20;
         if (getArguments() != null) {
             String reqString = getArguments().getString(Extras.EXTRA_FIRST_ARG, "");
             if (!reqString.equalsIgnoreCase("")) {
-                request = new Gson().fromJson(reqString, FilterDataModel.class);
+                request = new Gson().fromJson(reqString, FilterModel.class);
             }
             String name = getArguments().getString(Extras.EXTRA_SECOND_ARG, "");
             if (!name.equalsIgnoreCase(""))
@@ -198,7 +198,7 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
     }
 
 
-    public abstract Function<FilterDataModel, Observable<ErrorException<TEntity>>> getService();
+    public abstract Function<FilterModel, Observable<ErrorException<TEntity>>> getService();
 
     public boolean withToolbar() {
         return toolbarShow;

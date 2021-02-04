@@ -8,15 +8,13 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.adapter.FaqAdapter;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
-import ntk.android.base.entitymodel.base.FilterDataModel;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.ticketing.TicketingFaqModel;
 import ntk.android.base.services.ticketing.TicketingFaqService;
 import ntk.android.base.utill.AppUtill;
@@ -51,7 +49,7 @@ public class FaqActivity extends BaseActivity {
             // show loading
             switcher.showProgressView();
 
-            FilterDataModel request = new FilterDataModel();
+            FilterModel request = new FilterModel();
             request.RowPerPage = 1000;
 
             ServiceExecute.execute(new TicketingFaqService(this).getAll(request))

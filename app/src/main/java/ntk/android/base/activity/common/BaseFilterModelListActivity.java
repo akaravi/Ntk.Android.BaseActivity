@@ -7,9 +7,9 @@ import java9.util.function.Function;
 import ntk.android.base.Extras;
 import ntk.android.base.activity.abstraction.AbstractionListActivity;
 import ntk.android.base.entitymodel.base.ErrorException;
-import ntk.android.base.entitymodel.base.FilterDataModel;
+import ntk.android.base.entitymodel.base.FilterModel;
 
-public abstract class BaseFilterModelListActivity<TEntity> extends AbstractionListActivity<FilterDataModel, TEntity> {
+public abstract class BaseFilterModelListActivity<TEntity> extends AbstractionListActivity<FilterModel, TEntity> {
     @Override
     public void afterInit() {
         super.afterInit();
@@ -17,13 +17,13 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractionLi
 
     @Override
     protected void requestOnIntent() {
-        request = new FilterDataModel();
+        request = new FilterModel();
         request.RowPerPage = 20;
         if (getIntent() != null)
             if (getIntent().getExtras() != null) {
                 String reqString = getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG, "");
                 if (!reqString.equalsIgnoreCase("")) {
-                    request = new Gson().fromJson(reqString, FilterDataModel.class);
+                    request = new Gson().fromJson(reqString, FilterModel.class);
                 }
             }
     }
@@ -37,7 +37,7 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractionLi
         };
     }
 
-    public abstract Function<FilterDataModel, Observable<ErrorException<TEntity>>> getService();
+    public abstract Function<FilterModel, Observable<ErrorException<TEntity>>> getService();
 
     @Override
     protected final void onSuccessNext(ErrorException<TEntity> newsContentResponse) {

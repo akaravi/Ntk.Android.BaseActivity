@@ -14,7 +14,7 @@ import ntk.android.base.adapter.poling.PolCategoryAdapter;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
-import ntk.android.base.entitymodel.base.FilterDataModel;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.polling.PollingCategoryModel;
 import ntk.android.base.services.pooling.PollingCategoryService;
 import ntk.android.base.utill.AppUtill;
@@ -43,7 +43,7 @@ public class PolingActivity extends BaseActivity {
         if (AppUtill.isNetworkAvailable(this)) {
             // show loading
             switcher.showProgressView();
-            ServiceExecute.execute(new PollingCategoryService(this).getAll(new FilterDataModel()))
+            ServiceExecute.execute(new PollingCategoryService(this).getAll(new FilterModel()))
                     .subscribe(new NtkObserver<ErrorException<PollingCategoryModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<PollingCategoryModel> poolingCategoryResponse) {

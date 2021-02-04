@@ -44,8 +44,8 @@ import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.ScoreClickDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.base.FilterDataModel;
-import ntk.android.base.entitymodel.base.Filters;
 import ntk.android.base.entitymodel.biography.BiographyCategoryModel;
 import ntk.android.base.entitymodel.biography.BiographyCommentModel;
 import ntk.android.base.entitymodel.biography.BiographyContentModel;
@@ -241,9 +241,9 @@ public abstract class BaseBiographyDetail_1_Activity extends AbstractDetailActiv
 
 
     @NotNull
-    protected FilterDataModel otherInfoFilter(long ContentId) {
-        FilterDataModel Request = new FilterDataModel();
-        Filters f = new Filters();
+    protected FilterModel otherInfoFilter(long ContentId) {
+        FilterModel Request = new FilterModel();
+        FilterDataModel f = new FilterDataModel();
         f.PropertyName = "LinkContentId";
         f.IntValue1 = ContentId;
         Request.addFilter(f);
@@ -396,7 +396,7 @@ public abstract class BaseBiographyDetail_1_Activity extends AbstractDetailActiv
     @Override
     public Function<Long, Observable<ErrorException<BiographyContentModel>>> getSimilarCategoryService() {
         return (id) -> {
-            FilterDataModel request = new FilterDataModel();
+            FilterModel request = new FilterModel();
             return new BiographyContentService(this).getAllWithCategoryUsedInContent(id, request);
         };
     }
@@ -404,8 +404,8 @@ public abstract class BaseBiographyDetail_1_Activity extends AbstractDetailActiv
     @Override
     public Function<Long, Observable<ErrorException<BiographyContentModel>>> getSimilarContentService() {
         return (id) -> {
-            FilterDataModel Request = new FilterDataModel();
-            Filters f = new Filters();
+            FilterModel Request = new FilterModel();
+            FilterDataModel f = new FilterDataModel();
             f.PropertyName = "LinkContentId";
             f.IntValue1 = id;
             Request.addFilter(f);
@@ -416,8 +416,8 @@ public abstract class BaseBiographyDetail_1_Activity extends AbstractDetailActiv
     @Override
     public Function<Long, Observable<ErrorException<BiographyCommentModel>>> getCommentListService() {
         return linkLongId -> {
-            FilterDataModel Request = new FilterDataModel();
-            Filters f = new Filters();
+            FilterModel Request = new FilterModel();
+            FilterDataModel f = new FilterDataModel();
             f.PropertyName = "LinkContentId";
             f.IntValue1 = linkLongId;
             Request.addFilter(f);

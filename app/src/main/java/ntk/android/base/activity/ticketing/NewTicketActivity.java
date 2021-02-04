@@ -181,24 +181,28 @@ public class NewTicketActivity extends BaseActivity {
                     public void onNext(@NonNull ErrorException<TicketingDepartemenModel> model) {
                         if (model.IsSuccess) {
                             departments = model.ListItems;
-                            MaterialAutoCompleteTextView spinner = (findViewById(R.id.SpinnerService));
-                            List<String> names = new ArrayList<>();
-                            for (TicketingDepartemenModel t : model.ListItems)
-                                names.add(t.Title);
-                            SpinnerAdapter<TicketingDepartemenModel> adapter_dpartman = new SpinnerAdapter<TicketingDepartemenModel>(NewTicketActivity.this, names);
-                            spinner.setOnItemClickListener((parent, view, position, id) -> {
-                                TicketingDepartemenModel selectedModel = departments.get(position);
-                                request.LinkTicketingDepartemenId = selectedModel.Id;
-                                DefaultAnswerBody = selectedModel.DefaultAnswerBody;
-                            });
-                            spinner.setAdapter(adapter_dpartman);
-                            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                            if (departments.size() > 0) {
+                                MaterialAutoCompleteTextView spinner = (findViewById(R.id.SpinnerService));
+                                List<String> names = new ArrayList<>();
+                                for (TicketingDepartemenModel t : model.ListItems)
+                                    names.add(t.Title);
+                                SpinnerAdapter<TicketingDepartemenModel> adapter_dpartman = new SpinnerAdapter<TicketingDepartemenModel>(NewTicketActivity.this, names);
+                                spinner.setOnItemClickListener((parent, view, position, id) -> {
+                                    TicketingDepartemenModel selectedModel = departments.get(position);
+                                    request.LinkTicketingDepartemenId = selectedModel.Id;
+                                    DefaultAnswerBody = selectedModel.DefaultAnswerBody;
+                                });
+                                spinner.setAdapter(adapter_dpartman);
                                 // Do something for lollipop and above versions
-                                spinner.setText(adapter_dpartman.getItem(0), false);
-                                request.LinkTicketingDepartemenId = departments.get(0).Id;
+                                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                                    //if departments is 0
+                                    spinner.setText(adapter_dpartman.getItem(0), false);
+                                    request.LinkTicketingDepartemenId = departments.get(0).Id;
+                                }
+
+                            } else {
+                                findViewById(R.id.SpinnerServiceTextInput).setEnabled(false);
                             }
-
-
                         } else {
                             switcher.showErrorView(model.ErrorMessage, () -> getDepartment());
                         }
@@ -263,10 +267,11 @@ public class NewTicketActivity extends BaseActivity {
             Toasty.warning(this, "آدرس پست الکترونیکی صحیح نمیباشد", Toasty.LENGTH_LONG, true).show();
             return;
         }
-        if (request.LinkTicketingDepartemenId == null || request.LinkTicketingDepartemenId == 0) {
-            Toasty.warning(this, "بخش مربوطه را انتخاب نمایید", Toasty.LENGTH_LONG, true).show();
-            return;
-        }
+        if (departments != null && departments.size() > 0)
+            if (request.LinkTicketingDepartemenId == null || request.LinkTicketingDepartemenId == 0) {
+                Toasty.warning(this, "بخش مربوطه را انتخاب نمایید", Toasty.LENGTH_LONG, true).show();
+                return;
+            }
         if (request.Priority == 0) {
             Toasty.warning(this, "میزان اهمیت درخواست خود را انتحاب نمایید", Toasty.LENGTH_LONG, true).show();
             return;

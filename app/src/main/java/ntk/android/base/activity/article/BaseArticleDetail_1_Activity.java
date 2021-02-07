@@ -223,7 +223,7 @@ public abstract class BaseArticleDetail_1_Activity extends
         FilterModel Request = new FilterModel();
         FilterDataModel f = new FilterDataModel();
         f.PropertyName = "LinkContentId";
-        f.IntValue1 = ContentId;
+        f.IntValue = ContentId;
         Request.addFilter(f);
         return Request;
     }
@@ -360,7 +360,7 @@ public abstract class BaseArticleDetail_1_Activity extends
             FilterModel Request = new FilterModel();
             FilterDataModel f = new FilterDataModel();
             f.PropertyName = "LinkContentId";
-            f.IntValue1 = linkLongId;
+            f.IntValue = linkLongId;
             Request.addFilter(f);
             return new ArticleCommentService(this).getAll(Request);
         };

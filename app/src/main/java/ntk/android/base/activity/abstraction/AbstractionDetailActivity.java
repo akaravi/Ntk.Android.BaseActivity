@@ -256,7 +256,7 @@ public abstract class AbstractionDetailActivity<TEntity, TComment, TOtherInfo> e
         FilterModel Request = new FilterModel();
         FilterDataModel f = new FilterDataModel();
         f.PropertyName = "LinkContentId";
-        f.IntValue1 = ContentId;
+        f.IntValue = ContentId;
         Request.addFilter(f);
         return Request;
     }

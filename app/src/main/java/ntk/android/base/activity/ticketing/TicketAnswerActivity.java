@@ -155,7 +155,7 @@ public class TicketAnswerActivity extends BaseActivity {
             switcher.showProgressView();
             FilterModel request = new FilterModel();
             request.RowPerPage = 100;
-            request.addFilter(new FilterDataModel().setPropertyName("LinkTaskId").setIntValue1(ticketId));
+            request.addFilter(new FilterDataModel().setPropertyName("LinkTaskId").setIntValue(ticketId));
 
             ServiceExecute.execute(new TicketingAnswerService(this).getAll(request))
                     .subscribe(new NtkObserver<ErrorException<TicketingAnswerModel>>() {

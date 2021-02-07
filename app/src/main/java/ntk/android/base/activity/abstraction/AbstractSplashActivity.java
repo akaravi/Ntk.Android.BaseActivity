@@ -194,16 +194,14 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                 startNewActivity(IntroActivity.class);
         }
     }
-    long l;
-    long x;
+
     public void startNewActivity(Class c) {
-        if (!debugIsVisible) {
-             l =  System.currentTimeMillis() - startTime ;
+
             new Handler().postDelayed(() -> {
-                x=System.currentTimeMillis() - startTime;
-                startActivity(new Intent(AbstractSplashActivity.this, c));
-                finish();
-            }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000-(System.currentTimeMillis() - startTime));
-        }
+                if (!debugIsVisible) {
+//                startActivity(new Intent(AbstractSplashActivity.this, c));
+                    finish();
+                }
+            }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - (System.currentTimeMillis() - startTime));
     }
 }

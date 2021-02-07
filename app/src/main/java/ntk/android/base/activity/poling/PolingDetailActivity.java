@@ -62,7 +62,7 @@ public class PolingDetailActivity extends AppCompatActivity {
         FilterDataModel f = new FilterDataModel();
         if (id > 0) {
             f.PropertyName = "LinkCategoryId";
-            f.IntValue1 = id;
+            f.IntValue = id;
             request.addFilter(f);
         }
         ServiceExecute.execute(new PollingContentService(this).getAll(request))

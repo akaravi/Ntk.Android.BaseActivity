@@ -250,7 +250,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
         FilterModel Request = new FilterModel();
         FilterDataModel f = new FilterDataModel();
         f.PropertyName = "LinkContentId";
-        f.IntValue1 = ContentId;
+        f.IntValue = ContentId;
         Request.addFilter(f);
         return Request;
     }
@@ -403,7 +403,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
             FilterModel Request = new FilterModel();
             FilterDataModel f = new FilterDataModel();
             f.PropertyName = "LinkContentId";
-            f.IntValue1 = id;
+            f.IntValue = id;
             Request.addFilter(f);
             return new ArticleContentService(this).getAllWithSimilarsId(id, Request);
         };
@@ -415,7 +415,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
             FilterModel Request = new FilterModel();
             FilterDataModel f = new FilterDataModel();
             f.PropertyName = "LinkContentId";
-            f.IntValue1 = linkLongId;
+            f.IntValue = linkLongId;
             Request.addFilter(f);
             return new ArticleCommentService(this).getAll(Request);
         };

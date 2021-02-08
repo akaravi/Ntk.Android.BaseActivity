@@ -40,7 +40,7 @@ import ntk.android.base.utill.prefrense.Preferences;
 public abstract class AbstractSplashActivity extends BaseActivity {
     long startTime;
     protected int debugBtnClickCount = 0;
-    boolean debugIsVisible = false;
+    volatile boolean debugIsVisible = false;
 
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
     public void showDebugView(View v) {
         if (debugBtnClickCount++ > 3) {
             Log.i("DEBUG_CLICK", debugBtnClickCount + "");
-            showDebug();
+            if (!debugIsVisible) showDebug();
 
         }
     }
@@ -67,32 +67,37 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         Dialog d = new Dialog(this);
         d.setContentView(R.layout.dialog_debug);
         d.setCancelable(false);
-        ((EditText) d.findViewById(R.id.txtUrl)).setText(RetrofitManager.BASE_URL);
-        ((EditText) d.findViewById(R.id.txtpackageName)).setText(BaseNtkApplication.get().getApplicationParameter().PACKAGE_NAME());
+        String debugUrl = Preferences.with(this).debugInfo().url();
+        String debugPackageName = Preferences.with(this).debugInfo().packageName();
+        ((EditText) d.findViewById(R.id.txtUrl)).setText(debugUrl.equalsIgnoreCase("") ? RetrofitManager.BASE_URL : debugUrl);
+        ((EditText) d.findViewById(R.id.txtpackageName)).setText(debugPackageName.equalsIgnoreCase("") ?
+                BaseNtkApplication.get().getApplicationParameter().PACKAGE_NAME() : debugPackageName);
+        ((EditText) d.findViewById(R.id.txtLinkSiteId)).setText(Preferences.with(this).UserInfo().siteId().toString());
+        ((EditText) d.findViewById(R.id.txtlinkUserId)).setText(Preferences.with(this).UserInfo().linkUserId().toString());
+        ((EditText) d.findViewById(R.id.txtLinkMemberId)).setText(Preferences.with(this).UserInfo().linkMemberId().toString());
+        ((EditText) d.findViewById(R.id.txtDeviceId)).setText(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+        ((EditText) d.findViewById(R.id.txtApplicationId)).setText(NTKApplication.get().getApplicationParameter().APPLICATION_ID());
         d.findViewById(R.id.debugReset).setOnClickListener(v -> {
-            debugIsVisible = false;
+
             ApplicationStaticParameter.URL = "";
             ApplicationStaticParameter.PACKAGE_NAME = "";
             Preferences.with(this).debugInfo().setUrl("");
             Preferences.with(this).debugInfo().setPackageName("");
             d.dismiss();
+            debugIsVisible = false;
             getTokenDevice();
         });
         d.findViewById(R.id.debugStart).setOnClickListener(v -> {
-            debugIsVisible = false;
             ApplicationStaticParameter.URL = ((EditText) d.findViewById(R.id.txtUrl)).getText().toString();
             ApplicationStaticParameter.PACKAGE_NAME = ((EditText) d.findViewById(R.id.txtpackageName)).getText().toString();
             Preferences.with(this).debugInfo().setCount(20);
             Preferences.with(this).debugInfo().setUrl(ApplicationStaticParameter.URL);
             Preferences.with(this).debugInfo().setPackageName(ApplicationStaticParameter.PACKAGE_NAME);
             d.dismiss();
+            debugIsVisible = false;
             getTokenDevice();
         });
-        ((EditText) d.findViewById(R.id.txtLinkSiteId)).setText(Preferences.with(this).UserInfo().siteId().toString());
-        ((EditText) d.findViewById(R.id.txtlinkUserId)).setText(Preferences.with(this).UserInfo().linkUserId().toString());
-        ((EditText) d.findViewById(R.id.txtLinkMemberId)).setText(Preferences.with(this).UserInfo().linkMemberId().toString());
-        ((EditText) d.findViewById(R.id.txtDeviceId)).setText(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
-        ((EditText) d.findViewById(R.id.txtApplicationId)).setText(NTKApplication.get().getApplicationParameter().APPLICATION_ID());
+
         d.show();
     }
 
@@ -197,11 +202,11 @@ public abstract class AbstractSplashActivity extends BaseActivity {
 
     public void startNewActivity(Class c) {
 
-            new Handler().postDelayed(() -> {
-                if (!debugIsVisible) {
+        new Handler().postDelayed(() -> {
+            if (!debugIsVisible) {
                 startActivity(new Intent(AbstractSplashActivity.this, c));
-                    finish();
-                }
-            }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - (System.currentTimeMillis() - startTime));
+                finish();
+            }
+        }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - (System.currentTimeMillis() - startTime));
     }
 }

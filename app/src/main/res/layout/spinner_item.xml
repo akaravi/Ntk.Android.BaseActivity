@@ -7,5 +7,5 @@
     android:gravity="right"
     android:padding="7dp"
     android:ellipsize="end"
-    android:textColor="@color/colorGrayText"
+    android:textColor="?colorTextSecondary"
     android:textSize="13sp" />

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -12,7 +13,8 @@
         android:layout_margin="16dp"
         android:contentDescription="@null"
         android:src="@drawable/ic_plus_pool"
-        android:tint="@color/colorAccent" />
+        app:tint="?colorAccent"
+        android:layout_alignParentRight="true" />
 
     <TextView
         android:id="@+id/lblRecyclerPoolPlus"
@@ -21,8 +23,9 @@
         android:layout_centerVertical="true"
         android:layout_toStartOf="@id/imgPlusRecyclerPoolPlus"
         android:text="0"
-        android:textColor="@color/colorGrayText"
-        android:textSize="17sp" />
+        android:textColor="?colorTextSecondary"
+        android:textSize="17sp"
+        android:layout_toLeftOf="@id/imgPlusRecyclerPoolPlus" />
 
     <ImageView
         android:id="@+id/imgMinusRecyclerPoolPlus"
@@ -32,7 +35,8 @@
         android:layout_toStartOf="@id/lblRecyclerPoolPlus"
         android:contentDescription="@null"
         android:src="@drawable/ic_minus_pool"
-        android:tint="@color/colorAccent" />
+        android:layout_toLeftOf="@id/lblRecyclerPoolPlus"
+        app:tint="?colorAccent" />
 
     <TextView
         android:id="@+id/lblTitleRecyclerPoolPlus"
@@ -41,6 +45,7 @@
         android:layout_centerVertical="true"
         android:layout_toStartOf="@id/imgMinusRecyclerPoolPlus"
         android:text="0"
-        android:textColor="@color/colorGrayText"
-        android:textSize="17sp" />
+        android:textColor="?colorTextSecondary"
+        android:textSize="17sp"
+        android:layout_toLeftOf="@id/imgMinusRecyclerPoolPlus" />
 </RelativeLayout>

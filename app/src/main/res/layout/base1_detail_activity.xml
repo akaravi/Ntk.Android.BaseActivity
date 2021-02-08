@@ -201,7 +201,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:text="نام اخبار"
-                android:textColor="@color/colorMenu"
+                android:textColor="?colorTextPrimary"
                 android:textSize="17sp"
                 tools:ignore="HardcodedText" />
 
@@ -227,14 +227,14 @@
                         android:layout_marginEnd="10dp"
                         android:layout_marginRight="10dp"
                         android:text=" 160"
-                        android:textColor="@color/colorMenu" />
+                        android:textColor="?colorTextPrimary" />
 
                     <TextView
                         android:id="@+id/lblKeySeenDetail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="تعداد مشاهدات:"
-                        android:textColor="@color/colorMenu" />
+                        android:textColor="?colorTextPrimary" />
                 </LinearLayout>
 
                 <RatingBar

@@ -169,7 +169,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:text="نام دستور آشپزی"
-                        android:textColor="@color/colorMenu"
+                        android:textColor="?colorTextPrimary"
                         android:textSize="17sp"
                         tools:ignore="HardcodedText" />
 
@@ -194,7 +194,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="10dp"
                                 android:text="..."
-                                android:textColor="@color/colorMenu"
+                                android:textColor="@?colorTextPrimary"
                                 android:layout_marginRight="10dp" />
 
                             <TextView
@@ -202,7 +202,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="تعداد مشاهدات:"
-                                android:textColor="@color/colorMenu" />
+                                android:textColor="@?colorTextPrimary" />
                         </LinearLayout>
 
                         <RatingBar
@@ -224,7 +224,7 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginRight="15dp"
-                        android:background="@color/colorMenu" />
+                        android:background="@?colorTextPrimary" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -248,7 +248,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="ارزش غذایی"
-                                android:textColor="@color/colorMenu"
+                                android:textColor="@?colorTextPrimary"
                                 android:textSize="10sp" />
 
                             <ImageView
@@ -265,7 +265,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginTop="5dp"
                             android:layout_weight="0.01"
-                            android:background="@color/colorMenu" />
+                            android:background="@?colorTextPrimary" />
 
                         <LinearLayout
                             android:id="@+id/playDetail"
@@ -288,7 +288,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginTop="5dp"
                             android:layout_weight="0.01"
-                            android:background="@color/colorMenu" />
+                            android:background="@?colorTextPrimary" />
 
                         <LinearLayout
                             android:id="@+id/RowGalleryDetail"
@@ -309,7 +309,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="عکس بیشتر"
-                                android:textColor="@color/colorMenu"
+                                android:textColor="@?colorTextPrimary"
                                 android:textSize="10sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -320,7 +320,7 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="15dp"
-                        android:background="@color/colorMenu" />
+                        android:background="@?colorTextPrimary" />
 
                     <LinearLayout
                         android:id="@+id/RowTimeDetail"
@@ -360,7 +360,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="... دقیقه"
-                                android:textColor="@color/colorMenu" />
+                                android:textColor="@?colorTextPrimary" />
 
                             <TextView
                                 android:id="@+id/lblTimerTwo"
@@ -383,7 +383,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="... دقیقه"
-                                android:textColor="@color/colorMenu" />
+                                android:textColor="@?colorTextPrimary" />
 
                             <TextView
                                 android:id="@+id/lblTimerFour"
@@ -406,7 +406,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="... دقیقه"
-                                android:textColor="@color/colorMenu" />
+                                android:textColor="@?colorTextPrimary" />
 
                             <TextView
                                 android:id="@+id/lblTimerSix"
@@ -424,7 +424,7 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="15dp"
-                        android:background="@color/colorMenu" />
+                        android:background="@?colorTextPrimary" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

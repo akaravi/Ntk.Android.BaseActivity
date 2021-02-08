@@ -24,7 +24,7 @@
 
             android:text="seda seda seda seas sadwdasd w asd adw adwd aw seda seda seas sadwdasd w asd adw adwd aw seda seda seas sadwdasd w asd adw adwd aw"
 
-            android:textColor="@color/colorGrayText"
+            android:textColor="?colorTextSecondary"
             android:textSize="14sp" />
 
 

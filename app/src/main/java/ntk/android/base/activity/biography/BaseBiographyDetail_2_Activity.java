@@ -58,7 +58,7 @@ import ntk.android.base.services.biography.BiographyContentService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
 
-public abstract class BaseBiographyDetail_1_Activity extends AbstractDetailActivity<BiographyContentModel, BiographyCategoryModel, BiographyCommentModel, BiographyContentOtherInfoModel> {
+public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActivity<BiographyContentModel, BiographyCategoryModel, BiographyCommentModel, BiographyContentOtherInfoModel> {
     ProgressBar Progress;
     LinearLayout Loading;
     protected ImageView ImgHeader;
@@ -169,9 +169,9 @@ public abstract class BaseBiographyDetail_1_Activity extends AbstractDetailActiv
                         public void onNext(ErrorExceptionBase biographyContentResponse) {
                             Loading.setVisibility(View.GONE);
                             if (biographyContentResponse.IsSuccess) {
-                                Toasty.success(BaseBiographyDetail_1_Activity.this, "نظر شمابا موفقیت ثبت گردید").show();
+                                Toasty.success(BaseBiographyDetail_2_Activity.this, "نظر شمابا موفقیت ثبت گردید").show();
                             } else {
-                                Toasty.warning(BaseBiographyDetail_1_Activity.this, biographyContentResponse.ErrorMessage).show();
+                                Toasty.warning(BaseBiographyDetail_2_Activity.this, biographyContentResponse.ErrorMessage).show();
                             }
                         }
 
@@ -336,10 +336,10 @@ public abstract class BaseBiographyDetail_1_Activity extends AbstractDetailActiv
 
         Btn.setOnClickListener(v -> {
             if (Txt[0].getText().toString().isEmpty()) {
-                Toast.makeText(BaseBiographyDetail_1_Activity.this, "لطفا مقادیر را وارد نمایید", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseBiographyDetail_2_Activity.this, "لطفا مقادیر را وارد نمایید", Toast.LENGTH_SHORT).show();
             } else {
                 if (Txt[1].getText().toString().isEmpty()) {
-                    Toast.makeText(BaseBiographyDetail_1_Activity.this, "لطفا مقادیر را وارد نمایید", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BaseBiographyDetail_2_Activity.this, "لطفا مقادیر را وارد نمایید", Toast.LENGTH_SHORT).show();
                 } else {
                     if (AppUtill.isNetworkAvailable(this)) {
 //                        BiographyCommentModel add = new BiographyCommentModel();
@@ -355,10 +355,10 @@ public abstract class BaseBiographyDetail_1_Activity extends AbstractDetailActiv
                                         if (e.IsSuccess) {
                                             HandelDataComment(Id);
                                             dialog.dismiss();
-                                            Toasty.success(BaseBiographyDetail_1_Activity.this, "نظر شما با موفقیت ثبت شد").show();
+                                            Toasty.success(BaseBiographyDetail_2_Activity.this, "نظر شما با موفقیت ثبت شد").show();
                                         } else {
                                             dialog.dismiss();
-                                            Toasty.warning(BaseBiographyDetail_1_Activity.this, e.ErrorMessage).show();
+                                            Toasty.warning(BaseBiographyDetail_2_Activity.this, e.ErrorMessage).show();
                                         }
                                     }
 

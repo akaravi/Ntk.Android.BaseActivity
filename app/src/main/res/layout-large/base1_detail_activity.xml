@@ -154,7 +154,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text=" وبلاگ"
-                    android:textColor="@color/colorMenu"
+                    android:textColor="?toolbarColorText"
                     tools:ignore="HardcodedText" />
 
                 <View
@@ -310,6 +310,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/headerRecyclerMenu"
                 android:layout_marginTop="15dp">
 
                 <TextView

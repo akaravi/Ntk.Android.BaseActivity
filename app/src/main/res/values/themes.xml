@@ -3,7 +3,8 @@
     <style name="NTK.Theme.BaseActivity" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="ntk_base_logo">@drawable/ic_back</item>
         <item name="ntk_splash_background">@drawable/ic_back</item>
-        <item name="ntk_splash_loading">@raw/fingerprint</item>
+        <item name="ntk_splash_lottie_loading">@raw/fingerprint</item>
+        <item name="ntk_splash_lottie_logo">@raw/fingerprint</item>
         <item name="ntk_splash_logo">@drawable/ic_back</item>
         <item name="colorTextPrimary">#fff</item>
         <item name="ntk_notification_color">@color/colorWhite</item>

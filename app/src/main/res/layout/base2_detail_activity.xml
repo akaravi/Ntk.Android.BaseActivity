@@ -125,7 +125,7 @@
                 android:layout_marginEnd="15dp"
                 android:layout_toStartOf="@id/imgBackDetail"
                 android:text="دستور آشپزی"
-                android:textColor="@color/colorMenu"
+                android:textColor="?toolbarColorText"
                 tools:ignore="HardcodedText"
                 android:layout_marginRight="15dp"
                 android:layout_toLeftOf="@id/imgBackDetail" />

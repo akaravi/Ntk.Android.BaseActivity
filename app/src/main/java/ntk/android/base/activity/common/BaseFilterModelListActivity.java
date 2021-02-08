@@ -5,11 +5,11 @@ import com.google.gson.Gson;
 import io.reactivex.Observable;
 import java9.util.function.Function;
 import ntk.android.base.Extras;
-import ntk.android.base.activity.abstraction.AbstractionListActivity;
+import ntk.android.base.activity.abstraction.AbstractListActivity;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterModel;
 
-public abstract class BaseFilterModelListActivity<TEntity> extends AbstractionListActivity<FilterModel, TEntity> {
+public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListActivity<FilterModel, TEntity> {
     @Override
     public void afterInit() {
         super.afterInit();

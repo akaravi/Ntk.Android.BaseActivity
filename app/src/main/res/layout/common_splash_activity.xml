@@ -31,7 +31,7 @@
         android:layout_marginTop="-40dp"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="?attr/ntk_splash_loading" />
+        app:lottie_rawRes="?attr/ntk_splash_lottie_loading" />
 
     <View
         android:id="@+id/splash_debugView"

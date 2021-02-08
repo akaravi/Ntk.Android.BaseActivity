@@ -8,7 +8,8 @@
     <attr name="ntk_base_logo" format="reference" />
     <attr name="ntk_splash_background" format="reference" />
     <attr name="ntk_splash_logo" format="reference" />
-    <attr name="ntk_splash_loading" format="reference" />
+    <attr name="ntk_splash_lottie_loading" format="reference" />
+    <attr name="ntk_splash_lottie_logo" format="reference" />
     <attr name="ntk_notification_color" format="color|reference" />
     <attr name="Theme_NTK_Intro" format="reference" />
     <attr name="Theme_NTK_Register" format="reference" />

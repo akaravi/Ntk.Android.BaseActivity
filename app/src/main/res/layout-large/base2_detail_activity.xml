@@ -127,7 +127,7 @@
                 android:layout_toStartOf="@id/imgBackDetail"
                 android:layout_toLeftOf="@id/imgBackDetail"
                 android:text="دستور آشپزی"
-                android:textColor="@color/colorMenu"
+                android:textColor="?toolbarColorText"
                 tools:ignore="HardcodedText" />
         </RelativeLayout>
 

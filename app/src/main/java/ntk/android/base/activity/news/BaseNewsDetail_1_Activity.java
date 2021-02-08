@@ -44,8 +44,8 @@ import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.ScoreClickDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
-import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.base.FilterDataModel;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.news.NewsCategoryModel;
 import ntk.android.base.entitymodel.news.NewsCommentModel;
 import ntk.android.base.entitymodel.news.NewsContentModel;
@@ -64,7 +64,7 @@ public abstract class BaseNewsDetail_1_Activity extends
     protected ImageView ImgHeader;
     public RecyclerView RvTab;
     RecyclerView RvComment;
-//    public RecyclerView Rv;
+    //    public RecyclerView Rv;
     protected RatingBar Rate;
     LinearLayout Page;
     CoordinatorLayout layout;
@@ -106,7 +106,7 @@ public abstract class BaseNewsDetail_1_Activity extends
         ImgHeader = findViewById(R.id.imgHeaderDetail);
         RvTab = findViewById(R.id.recyclerTabDetail);
         RvComment = findViewById(R.id.recyclerCommentDetail);
-//        Rv = findViewById(R.id.recyclerMenuDetail);
+
         Rate = findViewById(R.id.ratingBarDetail);
         Page = findViewById(R.id.PageDetail);
         layout = findViewById(R.id.mainLayoutDetail);
@@ -272,8 +272,11 @@ public abstract class BaseNewsDetail_1_Activity extends
             }
         }
         RecyclerView.Adapter adapter = createOtherInfoAdapter(Info);
-        RvTab.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        if (Info.size() > 0) {
+            RvTab.setVisibility(View.VISIBLE);
+            RvTab.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     protected abstract RecyclerView.Adapter createOtherInfoAdapter(List<NewsContentOtherInfoModel> info);

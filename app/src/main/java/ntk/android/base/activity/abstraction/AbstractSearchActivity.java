@@ -27,7 +27,7 @@ import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.config.GenericErrors;
 
-public abstract class AbstractionSearchActivity<TEntity> extends BaseActivity {
+public abstract class AbstractSearchActivity<TEntity> extends BaseActivity {
     EditText Txt;
     RecyclerView Rv;
 
@@ -98,7 +98,7 @@ public abstract class AbstractionSearchActivity<TEntity> extends BaseActivity {
 
                             @Override
                             protected Runnable tryAgainMethod() {
-                                return AbstractionSearchActivity.this::Search;
+                                return AbstractSearchActivity.this::Search;
                             }
 
                             @Override

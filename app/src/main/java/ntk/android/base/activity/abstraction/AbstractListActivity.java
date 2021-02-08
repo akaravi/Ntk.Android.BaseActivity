@@ -24,7 +24,7 @@ import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.config.GenericErrors;
 
-public abstract class AbstractionListActivity<TREq, TEntity> extends BaseActivity {
+public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
     protected TextView LblTitle;
 
 

@@ -19,7 +19,10 @@ public abstract class ErrorExceptionObserver<T> implements Observer<ErrorExcepti
 
     @Override
     public void onNext(@NonNull ErrorException<T> tErrorException) {
-
+        if (tErrorException.IsSuccess)
+            SuccessResponse(tErrorException);
+        else
+            failResponse(tErrorException);
     }
 
     private void failResponse(ErrorException<T> tErrorException) {

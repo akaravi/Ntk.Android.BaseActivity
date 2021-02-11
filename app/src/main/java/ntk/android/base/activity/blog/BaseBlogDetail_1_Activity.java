@@ -43,8 +43,8 @@ import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.ScoreClickDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
-import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.base.FilterDataModel;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.blog.BlogCategoryModel;
 import ntk.android.base.entitymodel.blog.BlogCommentModel;
 import ntk.android.base.entitymodel.blog.BlogContentModel;
@@ -134,6 +134,7 @@ public abstract class BaseBlogDetail_1_Activity extends
             }
         }).show();
     }
+
     @Override
     protected void showErrorDialog(String toString, Runnable onTryingAgain) {
 
@@ -223,7 +224,7 @@ public abstract class BaseBlogDetail_1_Activity extends
         FilterModel Request = new FilterModel();
         FilterDataModel f = new FilterDataModel();
         f.PropertyName = "LinkContentId";
-        f.IntValue = ContentId;
+        f.setIntValue(ContentId);
         Request.addFilter(f);
         return Request;
     }
@@ -360,7 +361,7 @@ public abstract class BaseBlogDetail_1_Activity extends
             FilterModel Request = new FilterModel();
             FilterDataModel f = new FilterDataModel();
             f.PropertyName = "LinkContentId";
-            f.IntValue = linkLongId;
+            f.setIntValue(linkLongId);
             Request.addFilter(f);
             return new BlogCommentService(this).getAll(Request);
         };

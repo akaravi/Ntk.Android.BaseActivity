@@ -48,8 +48,8 @@ import ntk.android.base.entitymodel.article.ArticleContentModel;
 import ntk.android.base.entitymodel.article.ArticleContentOtherInfoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
-import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.base.FilterDataModel;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.event.HtmlBodyEvent;
 import ntk.android.base.services.article.ArticleCommentService;
 import ntk.android.base.services.article.ArticleContentOtherInfoService;
@@ -209,7 +209,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
 
     private void HandelDataComment(long ContentId) {
         if (AppUtill.isNetworkAvailable(this)) {
-            ServiceExecute.execute( getCommentListService().apply(ContentId))
+            ServiceExecute.execute(getCommentListService().apply(ContentId))
                     .subscribe(new NtkObserver<ErrorException<ArticleCommentModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<ArticleCommentModel> model) {
@@ -250,7 +250,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
         FilterModel Request = new FilterModel();
         FilterDataModel f = new FilterDataModel();
         f.PropertyName = "LinkContentId";
-        f.IntValue = ContentId;
+        f.setIntValue(ContentId);
         Request.addFilter(f);
         return Request;
     }
@@ -344,7 +344,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
                         ArticleCommentModel model = new ArticleCommentModel();
                         model.Writer = writer;
                         model.Comment = comment;
-                        ServiceExecute.execute( new ArticleCommentService(this).add(model))
+                        ServiceExecute.execute(new ArticleCommentService(this).add(model))
                                 .subscribe(new NtkObserver<ErrorException<ArticleCommentModel>>() {
                                     @Override
                                     public void onNext(@NonNull ErrorException<ArticleCommentModel> e) {
@@ -403,7 +403,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
             FilterModel Request = new FilterModel();
             FilterDataModel f = new FilterDataModel();
             f.PropertyName = "LinkContentId";
-            f.IntValue = id;
+            f.setIntValue(id);
             Request.addFilter(f);
             return new ArticleContentService(this).getAllWithSimilarsId(id, Request);
         };
@@ -415,7 +415,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
             FilterModel Request = new FilterModel();
             FilterDataModel f = new FilterDataModel();
             f.PropertyName = "LinkContentId";
-            f.IntValue = linkLongId;
+            f.setIntValue(linkLongId);
             Request.addFilter(f);
             return new ArticleCommentService(this).getAll(Request);
         };
@@ -469,7 +469,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
 
     private void getSimilarContent(long id) {
         if (AppUtill.isNetworkAvailable(this)) {
-            ServiceExecute.execute( getSimilarContentService().apply(id))
+            ServiceExecute.execute(getSimilarContentService().apply(id))
                     .subscribe(new NtkObserver<ErrorException<ArticleContentModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<ArticleContentModel> response) {
@@ -504,7 +504,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
     private void getSimilarCategoryContent(long id) {
         if (AppUtill.isNetworkAvailable(this)) {
             FilterModel request = new FilterModel();
-            ServiceExecute.execute( new ArticleContentService(this).getAllWithCategoryUsedInContent(id, request))
+            ServiceExecute.execute(new ArticleContentService(this).getAllWithCategoryUsedInContent(id, request))
                     .subscribe(new NtkObserver<ErrorException<ArticleContentModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<ArticleContentModel> response) {

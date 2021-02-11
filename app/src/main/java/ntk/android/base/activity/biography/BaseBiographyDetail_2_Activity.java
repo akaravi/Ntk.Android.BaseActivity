@@ -44,8 +44,8 @@ import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.ScoreClickDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
-import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.base.FilterDataModel;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.biography.BiographyCategoryModel;
 import ntk.android.base.entitymodel.biography.BiographyCommentModel;
 import ntk.android.base.entitymodel.biography.BiographyContentModel;
@@ -86,7 +86,10 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
         initChild();
     }
 
-    protected void initChild(){};
+    protected void initChild() {
+    }
+
+    ;
 
     @SuppressLint("SetJavaScriptEnabled")
     private void initView() {
@@ -162,7 +165,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
     protected void setContentRate(ScoreClickDtoModel request) {
         if (AppUtill.isNetworkAvailable(this)) {
 
-            ServiceExecute.execute( new BiographyContentService(this).scoreClick(request))
+            ServiceExecute.execute(new BiographyContentService(this).scoreClick(request))
                     .subscribe(new NtkObserver<ErrorExceptionBase>() {
 
                         @Override
@@ -202,7 +205,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
 
     private void HandelDataComment(long ContentId) {
         if (AppUtill.isNetworkAvailable(this)) {
-            ServiceExecute.execute( getCommentListService().apply(ContentId))
+            ServiceExecute.execute(getCommentListService().apply(ContentId))
                     .subscribe(new NtkObserver<ErrorException<BiographyCommentModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<BiographyCommentModel> model) {
@@ -245,7 +248,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
         FilterModel Request = new FilterModel();
         FilterDataModel f = new FilterDataModel();
         f.PropertyName = "LinkContentId";
-        f.IntValue = ContentId;
+        f.setIntValue(ContentId);
         Request.addFilter(f);
         return Request;
     }
@@ -407,7 +410,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
             FilterModel Request = new FilterModel();
             FilterDataModel f = new FilterDataModel();
             f.PropertyName = "LinkContentId";
-            f.IntValue = id;
+            f.setIntValue(id);
             Request.addFilter(f);
             return new BiographyContentService(this).getAllWithSimilarsId(id, Request);
         };
@@ -419,7 +422,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
             FilterModel Request = new FilterModel();
             FilterDataModel f = new FilterDataModel();
             f.PropertyName = "LinkContentId";
-            f.IntValue = linkLongId;
+            f.setIntValue(linkLongId);
             Request.addFilter(f);
             return new BiographyCommentService(this).getAll(Request);
         };

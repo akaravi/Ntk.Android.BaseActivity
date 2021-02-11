@@ -119,21 +119,21 @@ public abstract class AbstractSearchActivity<TEntity> extends BaseActivity {
         FilterModel request = new FilterModel();
         FilterDataModel ft = new FilterDataModel();
         ft.PropertyName = "Title";
-        ft.StringValue = stringValue;
+        ft.setStringValue(stringValue);
         ft.ClauseType = NTKUtill.ClauseType_Or;
         ft.SearchType = NTKUtill.Search_Type_Contains;
         request.addFilter(ft);
 
         FilterDataModel fd = new FilterDataModel();
         fd.PropertyName = "Description";
-        fd.StringValue = stringValue;
+        ft.setStringValue(stringValue);
         fd.ClauseType = NTKUtill.ClauseType_Or;
         fd.SearchType = NTKUtill.Search_Type_Contains;
         request.addFilter(fd);
 
         FilterDataModel fb = new FilterDataModel();
         fb.PropertyName = "Body";
-        fb.StringValue = stringValue;
+        ft.setStringValue(stringValue);
         fb.ClauseType = NTKUtill.ClauseType_Or;
         fb.SearchType = NTKUtill.Search_Type_Contains;
         request.addFilter(fb);

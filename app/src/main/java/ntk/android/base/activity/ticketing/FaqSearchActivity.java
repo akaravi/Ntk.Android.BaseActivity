@@ -20,8 +20,8 @@ import ntk.android.base.api.utill.NTKUtill;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
-import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.base.FilterDataModel;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.ticketing.TicketingFaqModel;
 import ntk.android.base.services.ticketing.TicketingFaqService;
 import ntk.android.base.utill.AppUtill;
@@ -73,14 +73,14 @@ public class FaqSearchActivity extends BaseActivity {
                 FilterModel request = new FilterModel();
                 FilterDataModel fa = new FilterDataModel();
                 fa.PropertyName = "Answer";
-                fa.StringValue = Txt.getText().toString();
+                fa.setStringValue(Txt.getText().toString());
                 fa.ClauseType = NTKUtill.ClauseType_Or;
                 fa.SearchType = NTKUtill.Search_Type_Contains;
                 request.addFilter(fa);
 
                 FilterDataModel fq = new FilterDataModel();
                 fq.PropertyName = "Question";
-                fq.StringValue = Txt.getText().toString();
+                fq.setStringValue(Txt.getText().toString());
                 fq.ClauseType = NTKUtill.ClauseType_Or;
                 fq.SearchType = NTKUtill.Search_Type_Contains;
                 request.addFilter(fq);

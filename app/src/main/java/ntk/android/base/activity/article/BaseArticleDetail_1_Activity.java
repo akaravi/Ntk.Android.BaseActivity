@@ -41,18 +41,18 @@ import ntk.android.base.activity.abstraction.AbstractDetailActivity;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.ScoreClickDtoModel;
-import ntk.android.base.entitymodel.base.ErrorException;
-import ntk.android.base.entitymodel.base.ErrorExceptionBase;
-import ntk.android.base.entitymodel.base.FilterModel;
-import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.entitymodel.article.ArticleCategoryModel;
 import ntk.android.base.entitymodel.article.ArticleCommentModel;
 import ntk.android.base.entitymodel.article.ArticleContentModel;
 import ntk.android.base.entitymodel.article.ArticleContentOtherInfoModel;
-import ntk.android.base.services.base.CmsApiScoreApi;
+import ntk.android.base.entitymodel.base.ErrorException;
+import ntk.android.base.entitymodel.base.ErrorExceptionBase;
+import ntk.android.base.entitymodel.base.FilterDataModel;
+import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.services.article.ArticleCommentService;
 import ntk.android.base.services.article.ArticleContentOtherInfoService;
 import ntk.android.base.services.article.ArticleContentService;
+import ntk.android.base.services.base.CmsApiScoreApi;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.FontManager;
 
@@ -134,6 +134,7 @@ public abstract class BaseArticleDetail_1_Activity extends
             }
         }).show();
     }
+
     @Override
     protected void showErrorDialog(String toString, Runnable onTryingAgain) {
 
@@ -223,7 +224,7 @@ public abstract class BaseArticleDetail_1_Activity extends
         FilterModel Request = new FilterModel();
         FilterDataModel f = new FilterDataModel();
         f.PropertyName = "LinkContentId";
-        f.IntValue = ContentId;
+        f.setIntValue(ContentId);
         Request.addFilter(f);
         return Request;
     }
@@ -360,7 +361,7 @@ public abstract class BaseArticleDetail_1_Activity extends
             FilterModel Request = new FilterModel();
             FilterDataModel f = new FilterDataModel();
             f.PropertyName = "LinkContentId";
-            f.IntValue = linkLongId;
+            f.setIntValue(linkLongId);
             Request.addFilter(f);
             return new ArticleCommentService(this).getAll(Request);
         };

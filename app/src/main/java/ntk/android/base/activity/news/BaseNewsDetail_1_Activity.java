@@ -225,7 +225,7 @@ public abstract class BaseNewsDetail_1_Activity extends
         FilterModel Request = new FilterModel();
         FilterDataModel f = new FilterDataModel();
         f.PropertyName = "LinkContentId";
-        f.IntValue = ContentId;
+        f.setIntValue(ContentId);
         Request.addFilter(f);
         return Request;
     }
@@ -370,7 +370,7 @@ public abstract class BaseNewsDetail_1_Activity extends
             FilterModel Request = new FilterModel();
             FilterDataModel f = new FilterDataModel();
             f.PropertyName = "LinkContentId";
-            f.IntValue = linkLongId;
+            f.setIntValue(linkLongId);
             Request.addFilter(f);
             return new NewsCommentService(this).getAll(Request);
         };

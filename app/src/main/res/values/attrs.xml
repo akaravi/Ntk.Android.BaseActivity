@@ -22,4 +22,18 @@
     <attr name="Theme_NTK_Poll" format="reference" />
     <attr name="Theme_NTK_Poll_Detail" format="reference" />
 
+    <declare-styleable name="sweet_Rotate3dAnimation">
+        <attr name="sweet_rollType" format="enum">
+            <enum name="x" value="0"/>
+            <enum name="y" value="1"/>
+            <enum name="z" value="2"/>
+        </attr>
+        <attr name="sweet_fromDeg" format="float" />
+        <attr name="sweet_toDeg" format="float" />
+        <attr name="sweet_pivotX" format="fraction"/>
+        <attr name="sweet_pivotY" format="fraction" />
+    </declare-styleable>
+    <attr name="sweet_alert_bg_drawable" format="reference" />
+    <attr name="sweet_alert_title_text_color" format="color|reference" />
+    <attr name="sweet_alert_content_text_color" format="color|reference" />
 </resources>

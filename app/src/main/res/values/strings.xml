@@ -5,4 +5,12 @@
         <item>مهم</item>
         <item>ضروری</item>
     </string-array>
+
+    <string name="sweet_app_name">SweetAlertDialog</string>
+    <string name="sweet_dialog_default_title">Here\'s a message!</string>
+    <string name="sweet_dialog_ok">OK</string>
+    <string name="sweet_dialog_cancel">Cancel</string>
+    <string name="sweet_LOADING">Loading...</string>
+
+
 </resources>

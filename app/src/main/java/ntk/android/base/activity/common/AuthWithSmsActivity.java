@@ -61,6 +61,10 @@ public class AuthWithSmsActivity extends BaseActivity {
         Loading = findViewById(R.id.progressActRegister);
         Txt = findViewById(R.id.txtActRegister);
         findViewById(R.id.btnActRegister).setOnClickListener(v -> ClickBtn());
+        if (NTKApplication.getApplicationStyle().show_notInterestedBtn)
+            findViewById(R.id.RowNoPhoneActRegister).setVisibility(View.VISIBLE);
+        else
+            findViewById(R.id.RowNoPhoneActRegister).setVisibility(View.GONE);
         findViewById(R.id.RowNoPhoneActRegister).setOnClickListener(v -> ClickNoPhone());
     }
 
@@ -83,12 +87,12 @@ public class AuthWithSmsActivity extends BaseActivity {
             Toast.makeText(this, "متن کپچا را وارد نمایید", Toast.LENGTH_SHORT).show();
         else {
             PhoneNumber = Txt.getText().toString();
-                if (CheckPermission()) {
-                    Register();
-                } else {
-                    ActivityCompat.requestPermissions(AuthWithSmsActivity.this, new String[]{Manifest.permission.RECEIVE_SMS}, REQ_PERMISSION);
-                }
+            if (CheckPermission()) {
+                Register();
+            } else {
+                ActivityCompat.requestPermissions(AuthWithSmsActivity.this, new String[]{Manifest.permission.RECEIVE_SMS}, REQ_PERMISSION);
             }
+        }
     }
 
 

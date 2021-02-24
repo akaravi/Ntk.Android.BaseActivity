@@ -20,6 +20,7 @@ public abstract class ApplicationStyle extends StyleHelper {
     //need user to sign in in app
     public boolean SIGNING_REQUIRED = false;
 
+    public boolean show_notInterestedBtn = true;
     //@deprecated replace with loginStyle
     public Class<? extends BaseSplashActivity> LoginActivity;
     //@deprecated replace with RegisterStyle
@@ -33,7 +34,14 @@ public abstract class ApplicationStyle extends StyleHelper {
 
         return baseModuleStyle;
     }
+
+    public void Init() {
+
+    }
+
     public abstract ViewController getViewController();
+
     public abstract Class<?> getMainActivity();
+
 }
 

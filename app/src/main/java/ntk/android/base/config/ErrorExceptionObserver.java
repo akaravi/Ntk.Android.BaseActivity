@@ -25,7 +25,7 @@ public abstract class ErrorExceptionObserver<T> implements Observer<ErrorExcepti
         failResponse(tErrorException);
     }
 
-    private void failResponse(ErrorException<T> tErrorException) {
+    protected void failResponse(ErrorException<T> tErrorException) {
         if (tErrorException.ErrorMessage == null)
             tErrorException.ErrorMessage = "خطای Ntk رخ داد";
         new GenericErrors().ntkException(switcher, tErrorException.ErrorMessage, tryAgainMethod());

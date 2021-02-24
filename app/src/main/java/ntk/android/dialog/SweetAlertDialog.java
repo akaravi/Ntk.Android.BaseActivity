@@ -27,6 +27,8 @@ import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.util.List;
 
+import ntk.android.base.R;
+
 public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     private View mDialogView;
     private AnimationSet mModalInAnim;
@@ -101,13 +103,13 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     }
 
     public SweetAlertDialog(Context context, int alertType) {
-        super(context, DARK_STYLE ? cn.pedant.SweetAlert.R.style.alert_dialog_dark : cn.pedant.SweetAlert.R.style.sweet_alert_dialog_light);
+        super(context, DARK_STYLE ? R.style.alert_dialog_dark : R.style.sweet_alert_dialog_light);
         setCancelable(true);
         setCanceledOnTouchOutside(true); //TODO was false
         mProgressHelper = new ProgressHelper(context);
         mAlertType = alertType;
-        mErrorInAnim = OptAnimationLoader.loadAnimation(getContext(), cn.pedant.SweetAlert.R.anim.sweet_error_frame_in);
-        mErrorXInAnim = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), cn.pedant.SweetAlert.R.anim.sweet_error_x_in);
+        mErrorInAnim = OptAnimationLoader.loadAnimation(getContext(), R.anim.sweet_error_frame_in);
+        mErrorXInAnim = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), R.anim.sweet_error_x_in);
         // 2.3.x system don't support alpha-animation on layer-list drawable
         // remove it from animation set
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
@@ -122,10 +124,10 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
                 childAnims.remove(idx);
             }
         }
-        mSuccessBowAnim = OptAnimationLoader.loadAnimation(getContext(), cn.pedant.SweetAlert.R.anim.sweet_success_bow_roate);
-        mSuccessLayoutAnimSet = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), cn.pedant.SweetAlert.R.anim.sweet_success_mask_layout);
-        mModalInAnim = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), cn.pedant.SweetAlert.R.anim.sweet_modal_in);
-        mModalOutAnim = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), cn.pedant.SweetAlert.R.anim.sweet_modal_out);
+        mSuccessBowAnim = OptAnimationLoader.loadAnimation(getContext(), R.anim.sweet_success_bow_roate);
+        mSuccessLayoutAnimSet = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), R.anim.sweet_success_mask_layout);
+        mModalInAnim = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), R.anim.sweet_modal_in);
+        mModalOutAnim = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), R.anim.sweet_modal_out);
         mModalOutAnim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -166,33 +168,33 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(cn.pedant.SweetAlert.R.layout.sweet_alert_dialog);
+        setContentView(R.layout.sweet_alert_dialog);
 
         mDialogView = getWindow().getDecorView().findViewById(android.R.id.content);
-        mTitleTextView = findViewById(cn.pedant.SweetAlert.R.id.title_text);
-        mContentTextView = findViewById(cn.pedant.SweetAlert.R.id.content_text);
-        mCustomViewContainer = findViewById(cn.pedant.SweetAlert.R.id.custom_view_container);
-        mErrorFrame = findViewById(cn.pedant.SweetAlert.R.id.error_frame);
-        mErrorX = mErrorFrame.findViewById(cn.pedant.SweetAlert.R.id.error_x);
-        mSuccessFrame = findViewById(cn.pedant.SweetAlert.R.id.success_frame);
-        mProgressFrame = findViewById(cn.pedant.SweetAlert.R.id.progress_dialog);
-        mSuccessTick = mSuccessFrame.findViewById(cn.pedant.SweetAlert.R.id.success_tick);
-        mSuccessLeftMask = mSuccessFrame.findViewById(cn.pedant.SweetAlert.R.id.mask_left);
-        mSuccessRightMask = mSuccessFrame.findViewById(cn.pedant.SweetAlert.R.id.mask_right);
-        mCustomImage = findViewById(cn.pedant.SweetAlert.R.id.custom_image);
-        mCustomBitmap = findViewById(cn.pedant.SweetAlert.R.id.image);
-        mWarningFrame = findViewById(cn.pedant.SweetAlert.R.id.warning_frame);
-        mButtonsContainer = findViewById(cn.pedant.SweetAlert.R.id.buttons_container);
-        mConfirmButton = findViewById(cn.pedant.SweetAlert.R.id.confirm_button);
+        mTitleTextView = findViewById(R.id.title_text);
+        mContentTextView = findViewById(R.id.content_text);
+        mCustomViewContainer = findViewById(R.id.custom_view_container);
+        mErrorFrame = findViewById(R.id.error_frame);
+        mErrorX = mErrorFrame.findViewById(R.id.error_x);
+        mSuccessFrame = findViewById(R.id.success_frame);
+        mProgressFrame = findViewById(R.id.progress_dialog);
+        mSuccessTick = mSuccessFrame.findViewById(R.id.success_tick);
+        mSuccessLeftMask = mSuccessFrame.findViewById(R.id.mask_left);
+        mSuccessRightMask = mSuccessFrame.findViewById(R.id.mask_right);
+        mCustomImage = findViewById(R.id.custom_image);
+        mCustomBitmap = findViewById(R.id.image);
+        mWarningFrame = findViewById(R.id.warning_frame);
+        mButtonsContainer = findViewById(R.id.buttons_container);
+        mConfirmButton = findViewById(R.id.confirm_button);
         mConfirmButton.setOnClickListener(this);
         mConfirmButton.setOnTouchListener(Constants.FOCUS_TOUCH_LISTENER);
-        mCancelButton = findViewById(cn.pedant.SweetAlert.R.id.cancel_button);
+        mCancelButton = findViewById(R.id.cancel_button);
         mCancelButton.setOnClickListener(this);
         mCancelButton.setOnTouchListener(Constants.FOCUS_TOUCH_LISTENER);
-        mNeutralButton = findViewById(cn.pedant.SweetAlert.R.id.neutral_button);
+        mNeutralButton = findViewById(R.id.neutral_button);
         mNeutralButton.setOnClickListener(this);
         mNeutralButton.setOnTouchListener(Constants.FOCUS_TOUCH_LISTENER);
-        mProgressHelper.setProgressWheel((ProgressWheel) findViewById(cn.pedant.SweetAlert.R.id.progressWheel));
+        mProgressHelper.setProgressWheel((ProgressWheel) findViewById(R.id.progressWheel));
 
         setTitleText(mTitleText);
         setContentText(mContentText);
@@ -215,7 +217,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
 
         adjustButtonContainerVisibility();
 
-        mConfirmButton.setBackgroundResource(cn.pedant.SweetAlert.R.drawable.sweet_green_button_background);
+        mConfirmButton.setBackgroundResource(R.drawable.sweet_green_button_background);
         mErrorFrame.clearAnimation();
         mErrorX.clearAnimation();
         mSuccessTick.clearAnimation();
@@ -556,19 +558,19 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == cn.pedant.SweetAlert.R.id.cancel_button) {
+        if (v.getId() == R.id.cancel_button) {
             if (mCancelClickListener != null) {
                 mCancelClickListener.onClick(SweetAlertDialog.this);
             } else {
                 dismissWithAnimation();
             }
-        } else if (v.getId() == cn.pedant.SweetAlert.R.id.confirm_button) {
+        } else if (v.getId() == R.id.confirm_button) {
             if (mConfirmClickListener != null) {
                 mConfirmClickListener.onClick(SweetAlertDialog.this);
             } else {
                 dismissWithAnimation();
             }
-        } else if (v.getId() == cn.pedant.SweetAlert.R.id.neutral_button) {
+        } else if (v.getId() == R.id.neutral_button) {
             if (mNeutralClickListener != null) {
                 mNeutralClickListener.onClick(SweetAlertDialog.this);
             } else {

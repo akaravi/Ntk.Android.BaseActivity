@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.pnikosis.materialishprogress.ProgressWheel;
 
+import ntk.android.base.R;
+
 public class ProgressHelper {
     private ProgressWheel mProgressWheel;
     private boolean mToSpin;
@@ -19,13 +21,13 @@ public class ProgressHelper {
     public ProgressHelper(Context ctx) {
         mToSpin = true;
         mSpinSpeed = 0.75f;
-        mBarWidth = ctx.getResources().getDimensionPixelSize(cn.pedant.SweetAlert.R.dimen.sweet_common_circle_width) + 1;
-        mBarColor = ctx.getResources().getColor(cn.pedant.SweetAlert.R.color.sweet_success_stroke_color);
+        mBarWidth = ctx.getResources().getDimensionPixelSize(R.dimen.sweet_common_circle_width) + 1;
+        mBarColor = ctx.getResources().getColor(R.color.sweet_success_stroke_color);
         mRimWidth = 0;
         mRimColor = 0x00000000;
         mIsInstantProgress = false;
         mProgressVal = -1;
-        mCircleRadius = ctx.getResources().getDimensionPixelOffset(cn.pedant.SweetAlert.R.dimen.sweet_progress_circle_radius);
+        mCircleRadius = ctx.getResources().getDimensionPixelOffset(R.dimen.sweet_progress_circle_radius);
     }
 
     public ProgressWheel getProgressWheel () {

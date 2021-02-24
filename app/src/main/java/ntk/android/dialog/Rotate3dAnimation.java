@@ -9,6 +9,8 @@ import android.util.TypedValue;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
+import ntk.android.base.R;
+
 public class Rotate3dAnimation extends Animation {
     private int mPivotXType = ABSOLUTE;
     private int mPivotYType = ABSOLUTE;
@@ -64,16 +66,16 @@ public class Rotate3dAnimation extends Animation {
     public Rotate3dAnimation (Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, cn.pedant.SweetAlert.R.styleable.sweet_Rotate3dAnimation);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.sweet_Rotate3dAnimation);
 
-        mFromDegrees = a.getFloat(cn.pedant.SweetAlert.R.styleable.sweet_Rotate3dAnimation_sweet_fromDeg, 0.0f);
-        mToDegrees = a.getFloat(cn.pedant.SweetAlert.R.styleable.sweet_Rotate3dAnimation_sweet_toDeg, 0.0f);
-        mRollType = a.getInt(cn.pedant.SweetAlert.R.styleable.sweet_Rotate3dAnimation_sweet_rollType, ROLL_BY_X);
-        Description d = parseValue(a.peekValue(cn.pedant.SweetAlert.R.styleable.sweet_Rotate3dAnimation_sweet_pivotX));
+        mFromDegrees = a.getFloat(R.styleable.sweet_Rotate3dAnimation_sweet_fromDeg, 0.0f);
+        mToDegrees = a.getFloat(R.styleable.sweet_Rotate3dAnimation_sweet_toDeg, 0.0f);
+        mRollType = a.getInt(R.styleable.sweet_Rotate3dAnimation_sweet_rollType, ROLL_BY_X);
+        Description d = parseValue(a.peekValue(R.styleable.sweet_Rotate3dAnimation_sweet_pivotX));
         mPivotXType = d.type;
         mPivotXValue = d.value;
 
-        d = parseValue(a.peekValue(cn.pedant.SweetAlert.R.styleable.sweet_Rotate3dAnimation_sweet_pivotY));
+        d = parseValue(a.peekValue(R.styleable.sweet_Rotate3dAnimation_sweet_pivotY));
         mPivotYType = d.type;
         mPivotYValue = d.value;
 

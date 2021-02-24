@@ -83,7 +83,8 @@ dependencies {
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
     //for rating
     implementation 'me.zhanghai.android.materialratingbar:library:1.3.1'
-
+    //for sweetDialog
+    implementation 'com.pnikosis:materialish-progress:1.0'
     //for base
     api  'com.github.akaravi:Ntk.Android.Base:1.3.109'
 //    api project(path: ':baseApi')

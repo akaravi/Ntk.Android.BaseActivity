@@ -2,19 +2,19 @@
 
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sweet="http://schemas.android.com/apk/res-auto"
-     android:interpolator="@android:anim/linear_interpolator"
-     android:shareInterpolator="true">
+    android:interpolator="@android:anim/linear_interpolator"
+    android:shareInterpolator="true">
 
     <alpha
         android:fromAlpha="0"
         android:toAlpha="1"
         android:duration="400"/>
 
-    <ntk.android.dialog.Rotate3dAnimation
-        sweet:rollType="x"
-        sweet:fromDeg="100"
-        sweet:toDeg="0"
-        sweet:pivotX="50%"
-        sweet:pivotY="50%"
+    <sweet:ntk.android.base.view.dialog.Rotate3dAnimation
+        sweet:sweet_rollType="x"
+        sweet:sweet_fromDeg="100"
+        sweet:sweet_toDeg="0"
+        sweet:sweet_pivotX="50%"
+        sweet:sweet_pivotY="50%"
         android:duration="400"/>
 </set>

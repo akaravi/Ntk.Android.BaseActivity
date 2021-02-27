@@ -93,7 +93,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/sweet_success_circle" />
 
-            <ntk.android.dialog.SuccessTickView
+            <ntk.android.base.view.dialog.SuccessTickView
                 android:id="@+id/success_tick"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

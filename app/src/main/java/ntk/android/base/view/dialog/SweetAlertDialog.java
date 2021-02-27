@@ -1,4 +1,4 @@
-package ntk.android.dialog;
+package ntk.android.base.view.dialog;
 
 
 import android.app.Dialog;

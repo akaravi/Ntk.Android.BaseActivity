@@ -15,12 +15,17 @@ import ntk.android.base.view.ViewController;
 public abstract class ApplicationStyle extends StyleHelper {
     public ApplicationStyle() {
         modules = new HashMap();
+        Init();
     }
 
     //need user to sign in in app
     public boolean SIGNING_REQUIRED = false;
 
-    public boolean show_notInterestedBtn = true;
+    public boolean show_NotInterested_Btn() {
+        return show_notInterestedBtn;
+    }
+
+    protected boolean show_notInterestedBtn = true;
     //@deprecated replace with loginStyle
     public Class<? extends BaseSplashActivity> LoginActivity;
     //@deprecated replace with RegisterStyle

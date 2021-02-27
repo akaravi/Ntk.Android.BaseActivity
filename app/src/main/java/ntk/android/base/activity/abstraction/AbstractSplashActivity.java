@@ -188,7 +188,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         } else {//if user seen intro
             if (Preferences.with(this).appVariableInfo().IntroSeen()) {
                 //if user not interested to login
-                if (NTKApplication.getApplicationStyle().show_notInterestedBtn & Preferences.with(this).appVariableInfo().isRegisterNotInterested())
+                if (NTKApplication.getApplicationStyle().show_NotInterested_Btn() & Preferences.with(this).appVariableInfo().isRegisterNotInterested())
                     startNewActivity(NTKApplication.getApplicationStyle().getMainActivity());
                     //user maybe interest to login
                 else if (Preferences.with(this).appVariableInfo().isLogin())

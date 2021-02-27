@@ -61,7 +61,7 @@ public class AuthWithSmsActivity extends BaseActivity {
         Loading = findViewById(R.id.progressActRegister);
         Txt = findViewById(R.id.txtActRegister);
         findViewById(R.id.btnActRegister).setOnClickListener(v -> ClickBtn());
-        if (NTKApplication.getApplicationStyle().show_notInterestedBtn)
+        if (NTKApplication.getApplicationStyle().show_NotInterested_Btn())
             findViewById(R.id.RowNoPhoneActRegister).setVisibility(View.VISIBLE);
         else
             findViewById(R.id.RowNoPhoneActRegister).setVisibility(View.GONE);

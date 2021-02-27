@@ -133,6 +133,7 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
                                 return;
                             }
                             Preferences.with(AuthWithSmsConfirmActivity.this).appVariableInfo().setIsLogin(true);
+                            Preferences.with(AuthWithSmsConfirmActivity.this).UserInfo().setUserId(response.Item.UserId);
                             startActivity(new Intent(AuthWithSmsConfirmActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                             finish();
                         }

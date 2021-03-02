@@ -9,7 +9,7 @@ public class GenericErrors {
     }
 
     public void throwableException(ErrorViewInterface switcher, Throwable e, Runnable ss) {
-        switcher.showError("عملیات با خطا مواجه شد لطفا مجدد تلاش فرمایید", ss);
+        switcher.showError("عملیات با خطا مواجه شد لطفا مجدد تلاش فرمایید" + "\n" + e.getMessage(), ss);
     }
 
 

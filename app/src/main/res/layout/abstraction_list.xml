@@ -114,30 +114,11 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <LinearLayout
-            android:id="@+id/loadMoreProgress"
+        <include
+            layout="@layout/abstraction_load_more"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="#251C1C1C"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:visibility="gone">
+            android:layout_alignParentBottom="true" />
 
-            <ProgressBar
-                android:id="@+id/loadingProgress"
-                style="style/CircularProgressDrawableStylePrimary"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="در حال دریافت اطلاعات"
-                android:textColor="?attr/colorAccent"
-                android:textSize="14sp" />
-        </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

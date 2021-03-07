@@ -18,9 +18,9 @@ public class Element {
     private Intent intent;
     private Integer gravity;
     private Boolean autoIconColor = true;
-
     private View.OnClickListener onClickListener;
 
+    private Element innerElement;
     public Element() {
 
     }
@@ -199,6 +199,15 @@ public class Element {
      */
     public Element setAutoApplyIconTint(Boolean autoIconColor) {
         this.autoIconColor = autoIconColor;
+        return this;
+    }
+
+    public Element getInnerElement() {
+        return innerElement;
+    }
+
+    public Element setInnerElement(Element innerElement) {
+        this.innerElement = innerElement;
         return this;
     }
 }

@@ -32,8 +32,8 @@ public abstract class BaseAboutActivity extends BaseActivity {
                     .addGroup("آدرس : ")
                     .addItem(new Element().setTitle(about.AboutUsAddress))
                     .addGroup("تماس با ما")
-                    .addPhone(about.AboutUsTel, "َشماره تلفن تماس")
-                    .addPhone(about.AboutUsFax, "َشماره فکس")
+                    .addPhone(about.AboutUsTel, "َشماره تلفن تماس :")
+                    .addPhone(about.AboutUsFax, "َشماره فکس :")
                     .addEmail(about.AboutUsEmail, "ایمیل :")
 //                    .addPhone(about., about.Item.TitleMobileNo)
 //                    .addPhone(about.Item.OfficeNo, about.Item.TitleOfficeNo)
@@ -41,13 +41,17 @@ public abstract class BaseAboutActivity extends BaseActivity {
 //                                    .addInstagram(about.Instagram, about.Item.TitleInstagram)
 //                                    .addWebsite(about.Item.WebUrl, about.Item.TitleWebUrl)
 //                                    .addTelegram(about.Item.Telegram, about.Item.TitleTelegram)
-                    .addItem(new Element().setTitle(" " + getVersionName() + " version"))
+                    .addItem(new Element().setTitle("نسخه ی کنونی :").setInnerElement(new Element().setTitle("نسخه ی " + getVersionName()+"   "+"( "+getVersionCode()+" Build Code )")))
                     .create();
             setContentView(aboutPage);
         }
     }
 
     public String getVersionName() {
+        return NTKApplication.get().getApplicationParameter().VERSION_NAME();
+    }
+
+    public String getVersionCode() {
         return NTKApplication.get().getApplicationParameter().VERSION_NAME();
     }
 }

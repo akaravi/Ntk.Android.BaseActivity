@@ -3,7 +3,6 @@ package ntk.android.base.view.aboutus;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -19,13 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.DrawableRes;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import ntk.android.base.R;
 import ntk.android.base.utill.FontManager;
-
 
 
 public class AboutPage {
@@ -74,6 +70,7 @@ public class AboutPage {
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
         emailElement.setIntent(intent);
 
+        emailElement.setInnerElement(new Element().setTitle(email));
         addItem(emailElement);
         return this;
     }
@@ -251,13 +248,14 @@ public class AboutPage {
         if (title == null || title.isEmpty())
             title = mContext.getString(R.string.about_phone);
         Element phoneElement = new Element();
+        //set title
         phoneElement.setTitle(title);
         phoneElement.setIconDrawable(R.drawable.about_icon_phone);
         phoneElement.setValue(id);
-
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + id));
-
+        //set phone
         phoneElement.setIntent(intent);
+        phoneElement.setInnerElement(new Element().setTitle(id));
         addItem(phoneElement);
 
         return this;
@@ -485,10 +483,23 @@ public class AboutPage {
         LinearLayout.LayoutParams wrapperParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         wrapper.setLayoutParams(wrapperParams);
 
+        LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        ;
+        //create text index 3 of linear
+        TextView descriptionTextView = null;
+        if (element.getInnerElement() != null) {
+            descriptionTextView = new TextView(mContext);
+            descriptionTextView.setTypeface(FontManager.GetTypeface(mContext, FontManager.IranSans));
+            descriptionTextView.setLayoutParams(textParams);
+            if (mCustomFont != null) {
+                descriptionTextView.setTypeface(mCustomFont);
+            }
+            descriptionTextView.setText(element.getInnerElement().getTitle());
 
+        }
+        //create text index 2 of linear
         TextView textView = new TextView(mContext);
         textView.setTypeface(FontManager.GetTypeface(mContext, FontManager.IranSans));
-        LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         textView.setLayoutParams(textParams);
         if (mCustomFont != null) {
             textView.setTypeface(mCustomFont);
@@ -496,6 +507,7 @@ public class AboutPage {
 
         ImageView iconView = null;
 
+        //create icon index 0 of linear
         if (element.getIconDrawable() != null) {
             iconView = new ImageView(mContext);
             int size = mContext.getResources().getDimensionPixelSize(R.dimen.about_icon_size);
@@ -503,7 +515,8 @@ public class AboutPage {
             iconView.setLayoutParams(iconParams);
             int iconPadding = mContext.getResources().getDimensionPixelSize(R.dimen.about_icon_padding);
             iconView.setPadding(iconPadding, 0, iconPadding, 0);
-
+            if(descriptionTextView!=null)
+                descriptionTextView.setPadding(padding,0,padding,0);
             if (Build.VERSION.SDK_INT < 21) {
                 Drawable drawable = VectorDrawableCompat.create(iconView.getResources(), element.getIconDrawable(), iconView.getContext().getTheme());
                 iconView.setImageDrawable(drawable);
@@ -511,23 +524,23 @@ public class AboutPage {
                 iconView.setImageResource(element.getIconDrawable());
             }
 
-            Drawable wrappedDrawable = DrawableCompat.wrap(iconView.getDrawable());
-            wrappedDrawable = wrappedDrawable.mutate();
-            if (element.getAutoApplyIconTint()) {
-                int currentNightMode = mContext.getResources().getConfiguration().uiMode
-                        & Configuration.UI_MODE_NIGHT_MASK;
-                if (currentNightMode != Configuration.UI_MODE_NIGHT_YES) {
-                    if (element.getIconTint() != null) {
-                        DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(mContext, element.getIconTint()));
-                    } else {
-                        DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(mContext, R.color.about_item_icon_color));
-                    }
-                } else if (element.getIconNightTint() != null) {
-                    DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(mContext, element.getIconNightTint()));
-                } else {
-                    DrawableCompat.setTint(wrappedDrawable, AboutPageUtils.getThemeAccentColor(mContext));
-                }
-            }
+//            Drawable wrappedDrawable = DrawableCompat.wrap(iconView.getDrawable());
+//            wrappedDrawable = wrappedDrawable.mutate();
+//            if (element.getAutoApplyIconTint()) {
+//                int currentNightMode = mContext.getResources().getConfiguration().uiMode
+//                        & Configuration.UI_MODE_NIGHT_MASK;
+//                if (currentNightMode != Configuration.UI_MODE_NIGHT_YES) {
+//                    if (element.getIconTint() != null) {
+//                        DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(mContext, element.getIconTint()));
+//                    } else {
+//                        DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(mContext, R.color.about_item_icon_color));
+//                    }
+//                } else if (element.getIconNightTint() != null) {
+//                    DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(mContext, element.getIconNightTint()));
+//                } else {
+//                    DrawableCompat.setTint(wrappedDrawable, AboutPageUtils.getThemeAccentColor(mContext));
+//                }
+//            }
 
         } else {
             int iconPadding = mContext.getResources().getDimensionPixelSize(R.dimen.about_icon_padding);
@@ -545,6 +558,9 @@ public class AboutPage {
             wrapper.setGravity(gravity | Gravity.CENTER_VERTICAL);
             //noinspection ResourceType
             textParams.gravity = gravity | Gravity.CENTER_VERTICAL;
+            textParams.gravity = gravity | Gravity.CENTER_VERTICAL;
+            if (descriptionTextView != null)
+                wrapper.addView(descriptionTextView);
             wrapper.addView(textView);
             if (element.getIconDrawable() != null) {
                 wrapper.addView(iconView);
@@ -559,6 +575,8 @@ public class AboutPage {
                 wrapper.addView(iconView);
             }
             wrapper.addView(textView);
+            if (descriptionTextView != null)
+                wrapper.addView(descriptionTextView);
         }
 
         return wrapper;

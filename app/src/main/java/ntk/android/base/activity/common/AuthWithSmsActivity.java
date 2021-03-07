@@ -44,7 +44,9 @@ public class AuthWithSmsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         Boolean islogin = Preferences.with(this).appVariableInfo().isLogin();
         if (islogin) {
-            startActivity(new Intent(AuthWithSmsActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
+            Intent intent = new Intent(AuthWithSmsActivity.this, NTKApplication.getApplicationStyle().getMainActivity());
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
             finish();
             return;
         }
@@ -82,8 +84,10 @@ public class AuthWithSmsActivity extends BaseActivity {
     public void ClickBtn() {
         CaptchaView captchaView = (CaptchaView) findViewById(R.id.captchaView);
         if (Txt.getText().toString().isEmpty())
-            Toast.makeText(this, "شماره موبایل خود را وارد نمایید", Toast.LENGTH_SHORT).show();
-        else if (captchaView.getCaptchaText().isEmpty())
+            Toast.makeText(this, "شماره تلفن همراه خود را وارد نمایید", Toast.LENGTH_SHORT).show();
+        else if (!Txt.getText().toString().startsWith("09") || Txt.getText().toString().length() != 11) {
+            Toasty.warning(this, "شماره تلفن همراه را به صورت صحیح وارد کنید", Toasty.LENGTH_LONG, true).show();
+        }else if (captchaView.getCaptchaText().isEmpty())
             Toast.makeText(this, "متن کپچا را وارد نمایید", Toast.LENGTH_SHORT).show();
         else {
             PhoneNumber = Txt.getText().toString();
@@ -121,13 +125,16 @@ public class AuthWithSmsActivity extends BaseActivity {
                                 return;
                             }
                             Preferences.with(AuthWithSmsActivity.this).UserInfo().setMobile(PhoneNumber);
-                            startActivity(new Intent(AuthWithSmsActivity.this, AuthWithSmsConfirmActivity.class));
+                            Intent intent = new Intent(AuthWithSmsActivity.this, AuthWithSmsConfirmActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                            startActivity(intent);
                             finish();
                         }
 
                         @Override
                         public void onError(@io.reactivex.annotations.NonNull Throwable e) {
                             ((CaptchaView) findViewById(R.id.captchaView)).getNewCaptcha();
+                            findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
                             Loading.setVisibility(View.GONE);
                             new GenericErrors().throwableException((error, tryAgain) -> Toasty.warning(AuthWithSmsActivity.this, error, Toasty.LENGTH_LONG, true).show()
                                     , e, () -> {
@@ -146,7 +153,9 @@ public class AuthWithSmsActivity extends BaseActivity {
 
     public void ClickNoPhone() {
         Preferences.with(this).appVariableInfo().set_registerNotInterested(true);
-        startActivity(new Intent(this, NTKApplication.getApplicationStyle().getMainActivity()));
+        Intent intent = new Intent(this, NTKApplication.getApplicationStyle().getMainActivity());
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
         finish();
     }
 

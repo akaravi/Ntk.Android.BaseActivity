@@ -134,7 +134,9 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
                             }
                             Preferences.with(AuthWithSmsConfirmActivity.this).appVariableInfo().setIsLogin(true);
                             Preferences.with(AuthWithSmsConfirmActivity.this).UserInfo().setUserId(response.Item.UserId);
-                            startActivity(new Intent(AuthWithSmsConfirmActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
+                            Intent intent = new Intent(AuthWithSmsConfirmActivity.this, NTKApplication.getApplicationStyle().getMainActivity());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                            startActivity(intent);
                             finish();
                         }
 
@@ -150,6 +152,7 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
                     });
         } else {
             Loading.setVisibility(View.GONE);
+            findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
             new GenericErrors().netError((error, tryAgain) -> Toasty.warning(AuthWithSmsConfirmActivity.this, error, Toasty.LENGTH_LONG, true).show(), () -> {
             });
         }

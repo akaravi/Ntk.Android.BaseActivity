@@ -5,9 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import es.dmoral.toasty.Toasty;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.Extras;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
@@ -17,7 +15,7 @@ import ntk.android.base.entitymodel.hypershop.HyperShopContentModel;
 import ntk.android.base.services.hypershop.HyperShopContentService;
 
 public abstract class BaseHyperShopContentDetail_1_Activity extends BaseActivity {
-   protected HyperShopContentModel model;
+    protected HyperShopContentModel model;
     String Id;
 
     @Override
@@ -39,6 +37,8 @@ public abstract class BaseHyperShopContentDetail_1_Activity extends BaseActivity
                         if (response.IsSuccess) {
                             switcher.showContentView();
                             model = response.Item;
+                            if (model.Unit == null)
+                                model.Unit = "";
                             bindData();
                         } else
                             switcher.showErrorView();

@@ -126,7 +126,7 @@ public class RegisterMobileConfirmActivity extends BaseActivity {
                                 captchaView.getNewCaptcha();
                                 Toasty.warning(RegisterMobileConfirmActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
                                 findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
-                                return;
+                                Loading.setVisibility(View.GONE);  return;
                             }
 //                            EasyPreference.with(RegisterActivity.this).addLong("UserId", response.Item.UserId);
 //                            EasyPreference.with(RegisterActivity.this).addLong("MemberUserId", response.Item.MemberId);
@@ -141,7 +141,6 @@ public class RegisterMobileConfirmActivity extends BaseActivity {
                         public void onError(@NonNull Throwable e) {
                             captchaView.getNewCaptcha();
                             findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
-                            Loading.setVisibility(View.GONE);
                             Loading.setVisibility(View.GONE);
                             Toasty.warning(RegisterMobileConfirmActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
 //

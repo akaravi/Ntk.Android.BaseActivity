@@ -204,7 +204,9 @@ public abstract class AbstractSplashActivity extends BaseActivity {
 
         new Handler().postDelayed(() -> {
             if (!debugIsVisible) {
-                startActivity(new Intent(AbstractSplashActivity.this, c));
+                Intent intent = new Intent(AbstractSplashActivity.this, c);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
                 finish();
             }
         }, System.currentTimeMillis() - startTime >= 3000 ? 100 : 3000 - (System.currentTimeMillis() - startTime));

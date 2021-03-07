@@ -254,7 +254,7 @@ public class NewTicketActivity extends BaseActivity {
             Toasty.warning(NewTicketActivity.this, "شماره تلفن همراه را وارد کنید", Toasty.LENGTH_LONG, true).show();
             return;
         }
-        if (!phone.getText().toString().startsWith("09")) {
+        if (!phone.getText().toString().startsWith("09")||phone.getText().toString().length()!=11) {
             Toasty.warning(NewTicketActivity.this, "شماره تلفن همراه را به صورت صحیح وارد کنید", Toasty.LENGTH_LONG, true).show();
             return;
         }

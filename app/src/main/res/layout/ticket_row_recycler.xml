@@ -85,7 +85,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/circlegreen"
+                    android:background="@drawable/circle_green"
                     android:paddingLeft="12dp"
                     android:paddingTop="3dp"
                     android:paddingRight="12dp"

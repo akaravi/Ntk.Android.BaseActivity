@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mxn.soul.flowingdrawer_core.FlowingMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menulayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/container_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.flaviofaria.kenburnsview.KenBurnsView
+            android:id="@+id/HeaderImageActMain"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:src="@drawable/header" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RecyclerDrawer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" />
+    </LinearLayout>
+
+</com.mxn.soul.flowingdrawer_core.FlowingMenuLayout>

@@ -3,7 +3,6 @@ package ntk.android.base.adapter.common;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,11 +66,11 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
             holder.attachment.setVisibility(View.GONE);
         switch (model.TicketStatus) {
             case 1:
-                holder.Lbls.get(1).setBackgroundResource(R.drawable.circlegreen);
+                holder.Lbls.get(1).setBackgroundResource(R.drawable.circle_green);
                 holder.Lbls.get(1).setText("پاسخ داده شد");
                 break;
             case 2:
-                holder.Lbls.get(1).setBackgroundResource(R.drawable.circlered);
+                holder.Lbls.get(1).setBackgroundResource(R.drawable.circle_red);
                 holder.Lbls.get(1).setText("در حال رسیدگی");
                 break;
             case 3:

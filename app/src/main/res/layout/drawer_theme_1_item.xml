@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RootContainerRecyclerDrawerChild"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ImgRecyclerDrawerChild"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="15dp"
+        android:alpha=".5"
+        android:contentDescription="@null"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@+id/lblRecyclerDrawerChild"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/ImgRecyclerDrawerChild"
+        tools:ignore="HardcodedText"
+        android:layout_toLeftOf="@id/ImgRecyclerDrawerChild" />
+
+    <TextView
+        android:id="@+id/lblBadgeRecyclerDrawerChild"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/circle_red"
+        android:gravity="center"
+        android:textColor="?attr/colorPrimary"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp" />
+</RelativeLayout>

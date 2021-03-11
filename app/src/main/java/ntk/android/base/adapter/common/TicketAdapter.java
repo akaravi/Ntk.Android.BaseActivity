@@ -37,7 +37,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
     private Context context;
     FragmentManager fm;
 
-    public TicketAdapter(BaseActivity act, ArrayList<TicketingTaskModel> arrayList) {
+    public TicketAdapter(BaseActivity act, List<TicketingTaskModel> arrayList) {
         this.arrayList = arrayList;
         this.context = act;
         fm = act.getSupportFragmentManager();
@@ -53,14 +53,14 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         TicketingTaskModel model = arrayList.get(position);
-        holder.id.setText("شماره ی "+model.Id );
+        holder.id.setText("شماره ی " + model.Id);
         holder.Lbls.get(0).setText(model.Title);
         holder.Lbls.get(2).setText(AppUtill.GregorianToPersian(model.CreatedDate) + "");
         holder.webView.loadData("<html dir=\"rtl\" lang=\"\"><body>" + model.HtmlBody + "</body></html>", "text/html; charset=utf-8", "UTF-8");
         if (model.LinkFileIdsSrc != null && model.LinkFileIdsSrc.size() != 0) {
             holder.attachment.setVisibility(View.VISIBLE);
             holder.attachment.setOnClickListener(v -> {
-                DownloadFileDialog.SHOW_DIALOG(v.getContext(),fm,model.LinkFileIdsSrc);
+                DownloadFileDialog.SHOW_DIALOG(v.getContext(), fm, model.LinkFileIdsSrc);
             });
         } else
             holder.attachment.setVisibility(View.GONE);
@@ -137,7 +137,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
                     add(view.findViewById(R.id.ticketId));
                 }
             };
-             id = view.findViewById(R.id.ticketId);
+            id = view.findViewById(R.id.ticketId);
             Root = view.findViewById(R.id.rootTicket);
             Lbls.get(0).setTypeface(FontManager.T1_BOLD_Typeface(context));
             Lbls.get(1).setTypeface(FontManager.T1_Typeface(context));

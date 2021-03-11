@@ -1,8 +1,8 @@
 package ntk.android.base.activity;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +22,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         initBase();
     }
 
+    public Context getContext() {
+        return this;
+    }
 
     protected void initBase() {
     }
@@ -33,6 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * create view base on layoutRes as ContentView and create View Switcher dynamically
      * base of parent of id ContentId
+     *
      * @param layoutResID
      * @param contentId
      */

@@ -183,7 +183,7 @@
                 android:id="@+id/debugReset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="reset" />
+                android:text="reset all(static  debug)" />
         </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

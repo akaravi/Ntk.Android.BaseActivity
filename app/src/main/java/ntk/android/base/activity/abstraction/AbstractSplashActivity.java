@@ -69,7 +69,9 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         d.setCancelable(false);
         String debugUrl = Preferences.with(this).debugInfo().url();
         String debugPackageName = Preferences.with(this).debugInfo().packageName();
-        ((EditText) d.findViewById(R.id.txtUrl)).setText(debugUrl.equalsIgnoreCase("") ? RetrofitManager.BASE_URL : debugUrl);
+        String staticPackageName = ApplicationStaticParameter.PACKAGE_NAME;
+        ((EditText) d.findViewById(R.id.txtUrl)).setText(!debugUrl.equalsIgnoreCase("") ? debugUrl :
+                !staticPackageName.equalsIgnoreCase("") ? staticPackageName : RetrofitManager.BASE_URL);
         ((EditText) d.findViewById(R.id.txtpackageName)).setText(debugPackageName.equalsIgnoreCase("") ?
                 BaseNtkApplication.get().getApplicationParameter().PACKAGE_NAME() : debugPackageName);
         ((EditText) d.findViewById(R.id.txtLinkSiteId)).setText(Preferences.with(this).UserInfo().siteId().toString());

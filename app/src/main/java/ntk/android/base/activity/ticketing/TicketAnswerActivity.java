@@ -107,7 +107,7 @@ public class TicketAnswerActivity extends BaseActivity {
         Lbl.setTypeface(FontManager.T1_Typeface(this));
         ((TextView) findViewById(R.id.txtNoAnswers)).setTypeface(FontManager.T1_Typeface(this));
         ticketId = getIntent().getExtras().getLong(Extras.EXTRA_FIRST_ARG);
-        Lbl.setText("پاسخ تیکت  " + ticketId);
+        Lbl.setText(getString(R.string.ticket_answer) + ticketId);
         RecyclerView answersRv = findViewById(R.id.recyclerAnswer);
         answersRv.setHasFixedSize(true);
         answersRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -177,13 +177,13 @@ public class TicketAnswerActivity extends BaseActivity {
                         @Override
                         public void onError(Throwable e) {
                             switcher.showErrorView();
-                            Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", v -> init()).show();
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, v -> init()).show();
                         }
 
 
                     });
         } else {
-            Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", v -> init()).show();
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, v -> init()).show();
         }
     }
 
@@ -207,7 +207,7 @@ public class TicketAnswerActivity extends BaseActivity {
                             @Override
                             public void onNext(ErrorException<TicketingAnswerModel> model) {
                                 if (model.IsSuccess) {
-                                    Toasty.success(TicketAnswerActivity.this, "با موفقیت ثبت شد", Toasty.LENGTH_LONG, true).show();
+                                    Toasty.success(TicketAnswerActivity.this,  R.string.per_success, Toasty.LENGTH_LONG, true).show();
                                     finish();
                                 } else
                                     Toasty.error(TicketAnswerActivity.this, model.ErrorMessage).show();
@@ -222,7 +222,7 @@ public class TicketAnswerActivity extends BaseActivity {
 
                         });
             } else {
-                Toasty.warning(this, "عدم دسترسی به اینترنت", Toasty.LENGTH_LONG, true).show();
+                Toasty.warning(this, R.string.per_no_net, Toasty.LENGTH_LONG, true).show();
             }
         }
     }
@@ -268,7 +268,7 @@ public class TicketAnswerActivity extends BaseActivity {
                             Btn.setVisibility(View.VISIBLE);
                             attaches.remove(attaches.size() - 1);
                             adapter.notifyDataSetChanged();
-                            Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     init();
@@ -280,7 +280,7 @@ public class TicketAnswerActivity extends BaseActivity {
 
         } else {
             Btn.setVisibility(View.VISIBLE);
-            Toasty.warning(this, "عدم دسترسی به اینترنت", Toasty.LENGTH_LONG, true).show();
+            Toasty.warning(this, R.string.per_no_net, Toasty.LENGTH_LONG, true).show();
         }
     }
 }

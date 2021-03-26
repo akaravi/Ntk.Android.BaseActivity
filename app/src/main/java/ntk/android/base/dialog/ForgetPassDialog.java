@@ -79,7 +79,7 @@ public class ForgetPassDialog extends DialogFragment {
 
                 @Override
                 public void onError(@NonNull Throwable e) {
-                    Toasty.warning(getContext(), "خطای سامانه", Toasty.LENGTH_LONG, true).show();
+                    Toasty.warning(getContext(), R.string.error_raised, Toasty.LENGTH_LONG, true).show();
 
                 }
             });

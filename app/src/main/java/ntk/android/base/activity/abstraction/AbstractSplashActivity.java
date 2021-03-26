@@ -177,7 +177,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                             {
                                 Preferences.with(AbstractSplashActivity.this).UserInfo().setUserId(0);
                                 Preferences.with(AbstractSplashActivity.this).appVariableInfo().setIsLogin(false);
-                                Toasty.warning(AbstractSplashActivity.this, "َشما به صفحه ی ورود کاربر هدایت می شوید", Toasty.LENGTH_LONG, true).show();
+                                Toasty.warning(AbstractSplashActivity.this, R.string.per_navigate_login, Toasty.LENGTH_LONG, true).show();
                                 startNewActivity(AuthWithSmsActivity.class);
                             }
                         }

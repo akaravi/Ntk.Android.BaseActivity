@@ -81,7 +81,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_toStartOf="@id/imgBack"
                 android:layout_toLeftOf="@id/imgBack"
-                android:text="بازگشت"
+                android:text="@string/back"
                 android:textColor="?attr/toolbarColorText"
                 tools:ignore="HardcodedText" />
         </RelativeLayout>

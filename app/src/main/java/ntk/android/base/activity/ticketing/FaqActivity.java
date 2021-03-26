@@ -42,7 +42,7 @@ public class FaqActivity extends BaseActivity {
         Lbl = findViewById(R.id.lblTitleActFaq);
         Rv = findViewById(R.id.recyclerFaq);
         Lbl.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Lbl.setText("پرسش های متداول");
+        Lbl.setText(R.string.faq);
         Rv.setHasFixedSize(true);
         Rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         if (AppUtill.isNetworkAvailable(this)) {
@@ -68,12 +68,12 @@ public class FaqActivity extends BaseActivity {
 
                         @Override
                         public void onError(Throwable e) {
-                            switcher.showErrorView("خطای سامانه مجددا تلاش کنید", () -> init());
+                            switcher.showErrorView(getString(R.string.per_no_net), () -> init());
 
                         }
                     });
         } else {
-            switcher.showErrorView("عدم دسترسی به اینترنت", () -> init());
+            switcher.showErrorView(getString(R.string.per_no_net), () -> init());
 
         }
     }

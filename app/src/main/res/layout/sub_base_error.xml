@@ -37,7 +37,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_accent"
-        android:text="تلاش مجدد"
+        android:text="@string/try_again"
         android:textColor="@color/colorWhite" />
 
     <View

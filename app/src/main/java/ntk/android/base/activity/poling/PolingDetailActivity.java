@@ -38,7 +38,7 @@ public class PolingDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_detail_pooling);
         id = 0L;
-        title = "نظرسنجی ها";
+        title = getString(R.string.pollings);
         if (getIntent() != null && getIntent().getExtras() != null) {
             id = getIntent().getExtras().getLong(Extras.EXTRA_FIRST_ARG);
             title = getIntent().getStringExtra(Extras.EXTRA_SECOND_ARG);
@@ -85,7 +85,7 @@ public class PolingDetailActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Toasty.warning(PolingDetailActivity.this, "خطای سامانه", Toasty.LENGTH_LONG, true).show();
+                        Toasty.warning(PolingDetailActivity.this, R.string.error_raised, Toasty.LENGTH_LONG, true).show();
 
                     }
                 });

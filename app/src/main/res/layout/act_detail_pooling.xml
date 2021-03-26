@@ -48,7 +48,7 @@
             android:layout_marginRight="15dp"
             android:layout_toStartOf="@id/imgBackActDetailPooling"
             android:layout_toLeftOf="@id/imgBackActDetailPooling"
-            android:text="نظرسنجی"
+            android:text="@string/poling"
             android:textColor="?attr/toolbarColorText"
             tools:ignore="HardcodedText" />
     </RelativeLayout>

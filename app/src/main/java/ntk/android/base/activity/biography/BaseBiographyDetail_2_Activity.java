@@ -149,7 +149,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
 
     @Override
     protected void showError(String toString, Runnable onTryingAgain) {
-        Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getContent();
@@ -172,7 +172,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
                         public void onNext(ErrorExceptionBase biographyContentResponse) {
                             Loading.setVisibility(View.GONE);
                             if (biographyContentResponse.IsSuccess) {
-                                Toasty.success(BaseBiographyDetail_2_Activity.this, "نظر شمابا موفقیت ثبت گردید").show();
+                                Toasty.success(BaseBiographyDetail_2_Activity.this, , R.string.success_comment).show();
                             } else {
                                 Toasty.warning(BaseBiographyDetail_2_Activity.this, biographyContentResponse.ErrorMessage).show();
                             }
@@ -181,7 +181,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
                         @Override
                         public void onError(Throwable e) {
                             Loading.setVisibility(View.GONE);
-                            Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //todo init();
@@ -191,7 +191,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
                     });
         } else {
             Loading.setVisibility(View.GONE);
-            Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //todo init();
@@ -223,7 +223,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //todo add to  init();
@@ -233,7 +233,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
                     });
         } else {
             findViewById(R.id.lblCommentDetail).setVisibility(View.GONE);
-            Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //todo add to  init();
@@ -259,14 +259,14 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
         List<BiographyContentOtherInfoModel> Info = new ArrayList<>();
         if (this.model.Description != null) {
             BiographyContentOtherInfoModel i = new BiographyContentOtherInfoModel();
-            i.Title = "توضیحات";
+            i.Title = getString(R.string.Description);
             i.TypeId = 0;
             i.HtmlBody = this.model.Description;
             Info.add(i);
         }
         if (this.model.Body != null) {
             BiographyContentOtherInfoModel i1 = new BiographyContentOtherInfoModel();
-            i1.Title = "بیوگرافی";
+            i1.Title = getString(R.string.biography);
             i1.TypeId = 0;
             i1.HtmlBody = this.model.Body;
             Info.add(i1);
@@ -302,7 +302,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
         }
         if (this.model.Source != null) {
             BiographyContentOtherInfoModel i2 = new BiographyContentOtherInfoModel();
-            i2.Title = "منبع";
+            i2.Title = getString(R.string.source);
             i2.TypeId = 0;
             i2.HtmlBody = this.model.Source;
             Info.add(i2);
@@ -339,10 +339,10 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
 
         Btn.setOnClickListener(v -> {
             if (Txt[0].getText().toString().isEmpty()) {
-                Toast.makeText(BaseBiographyDetail_2_Activity.this, "لطفا مقادیر را وارد نمایید", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseBiographyDetail_2_Activity.this,  R.string.per_insert_num, Toast.LENGTH_SHORT).show();
             } else {
                 if (Txt[1].getText().toString().isEmpty()) {
-                    Toast.makeText(BaseBiographyDetail_2_Activity.this, "لطفا مقادیر را وارد نمایید", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BaseBiographyDetail_2_Activity.this,  R.string.per_insert_num, Toast.LENGTH_SHORT).show();
                 } else {
                     if (AppUtill.isNetworkAvailable(this)) {
 //                        BiographyCommentModel add = new BiographyCommentModel();
@@ -358,7 +358,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
                                         if (e.IsSuccess) {
                                             HandelDataComment(Id);
                                             dialog.dismiss();
-                                            Toasty.success(BaseBiographyDetail_2_Activity.this, "نظر شما با موفقیت ثبت شد").show();
+                                            Toasty.success(BaseBiographyDetail_2_Activity.this, R.string.success_comment).show();
                                         } else {
                                             dialog.dismiss();
                                             Toasty.warning(BaseBiographyDetail_2_Activity.this, e.ErrorMessage).show();
@@ -367,7 +367,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
 
                                     @Override
                                     public void onError(@NonNull Throwable e) {
-                                        Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+                                        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 //todo add
@@ -376,7 +376,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
                                     }
                                 });
                     } else {
-                        Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+                        Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 //todo add instead of init();
@@ -494,7 +494,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     // todo init();
@@ -503,7 +503,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
                         }
                     });
         } else {
-            Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 //                  todo  init();
@@ -535,7 +535,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //todo init();
@@ -544,7 +544,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
                         }
                     });
         } else {
-            Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //todo init();

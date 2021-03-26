@@ -93,7 +93,7 @@ public class IntroActivity extends BaseActivity {
 
                         @Override
                         public void onError(Throwable e) {
-                            Toasty.error(IntroActivity.this, "خطا در اتصال به مرکز", Toasty.LENGTH_LONG, true).show();
+                            Toasty.error(IntroActivity.this, R.string.error_raised, Toasty.LENGTH_LONG, true).show();
                         }
 
                         @Override
@@ -122,7 +122,7 @@ public class IntroActivity extends BaseActivity {
                 findViewById(R.id.btnBeforeActIntro).setVisibility(View.INVISIBLE);
                 HandelIntro();
             }
-            Lbls.get(2).setText("بعدی");
+            Lbls.get(2).setText(R.string.next);
         }
     }
 
@@ -135,7 +135,7 @@ public class IntroActivity extends BaseActivity {
             findViewById(R.id.btnBeforeActIntro).setVisibility(View.VISIBLE);
             HandelIntro();
             if (CountIntro == IntroModels.size()) {
-                Lbls.get(2).setText("شروع");
+                Lbls.get(2).setText(R.string.start);
             }
         } else {
 

@@ -107,15 +107,15 @@ public class RegisterMobileActivity extends AppCompatActivity {
 
     public void ClickBtn() {
         if (Txt.getText().toString().isEmpty())
-            Toast.makeText(this, "شماره موبایل خود را وارد نمایید", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.plz_insert_num, Toast.LENGTH_SHORT).show();
         else if (passTxt.getText().toString().trim().equalsIgnoreCase(""))
-            Toast.makeText(this, "کلمه عبور را وارد نمایید", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,  R.string.plz_insert_password, Toast.LENGTH_SHORT).show();
         else if (rePassTxt.getText().toString().trim().equalsIgnoreCase(""))
-            Toast.makeText(this, "تکرار کلمه عبور را وارد نمایید", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,  R.string.plz_insert_password, Toast.LENGTH_SHORT).show();
         else if (!passTxt.getText().toString().equalsIgnoreCase(rePassTxt.getText().toString()))
-            Toast.makeText(this, "مقادیر ورودی کلمه عبور برابر نیستند", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.passowrd_not_same, Toast.LENGTH_SHORT).show();
         else if (((CaptchaView) findViewById(R.id.captchaView)).getCaptchaText().isEmpty())
-            Toast.makeText(this, "متن کپچا را وارد نمایید", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,  R.string.plz_insert_capcha, Toast.LENGTH_SHORT).show();
         else {
             PhoneNumber = Txt.getText().toString();
             if (AppUtill.isNetworkAvailable(this)) {
@@ -125,7 +125,7 @@ public class RegisterMobileActivity extends AppCompatActivity {
                     ActivityCompat.requestPermissions(RegisterMobileActivity.this, new String[]{Manifest.permission.RECEIVE_SMS}, REQ_PERMISSION);
                 }
             } else {
-                Toast.makeText(this, "عدم دسترسی به اینترنت", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.per_no_net, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -161,7 +161,7 @@ public class RegisterMobileActivity extends AppCompatActivity {
                         public void onError(@io.reactivex.annotations.NonNull Throwable e) {
                             ((CaptchaView) findViewById(R.id.captchaView)).getNewCaptcha();
                             Loading.setVisibility(View.GONE);
-                            Toasty.warning(RegisterMobileActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
+                            Toasty.warning(RegisterMobileActivity.this, R.string.error_raised, Toasty.LENGTH_LONG, true).show();
                             findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
                             findViewById(R.id.cardPassRegister).setVisibility(View.VISIBLE);
                             findViewById(R.id.cardRePassRegister).setVisibility(View.VISIBLE);
@@ -169,7 +169,7 @@ public class RegisterMobileActivity extends AppCompatActivity {
                     });
         } else {
             Loading.setVisibility(View.GONE);
-            Toasty.warning(this, "عدم دسترسی به اینترنت", Toasty.LENGTH_LONG, true).show();
+            Toasty.warning(this, R.string.per_no_net, Toasty.LENGTH_LONG, true).show();
         }
     }
 
@@ -206,7 +206,7 @@ public class RegisterMobileActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQ_PERMISSION:
                 if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, " کد اعتبار سنجی که برایتان ارسال شده است را وارد کنید", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,  R.string.plz_insert_code_login, Toast.LENGTH_SHORT).show();
                     Register();
                 } else {
                     Register();

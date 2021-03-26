@@ -83,14 +83,14 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
             window.setGravity(Gravity.CENTER);
             dialog.setContentView(R.layout.dialog_permission);
             ((TextView) dialog.findViewById(R.id.lbl1PernissionDialog)).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
-            ((TextView) dialog.findViewById(R.id.lbl1PernissionDialog)).setText("توجه");
+            ((TextView) dialog.findViewById(R.id.lbl1PernissionDialog)).setText(R.string.per_notice);
             ((TextView) dialog.findViewById(R.id.lbl2PernissionDialog)).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
-            ((TextView) dialog.findViewById(R.id.lbl2PernissionDialog)).setText("پیام مورد نظر حذف گردد؟");
+            ((TextView) dialog.findViewById(R.id.lbl2PernissionDialog)).setText(R.string.notice_delete_notification);
             Button Ok = dialog.findViewById(R.id.btnOkPermissionDialog);
             Ok.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
             Ok.setOnClickListener(view1 -> {
                 RoomDb.getRoomDb(context).NotificationDoa().Delete(arrayList.get(position));
-                Toast.makeText(context, "پیام مورد نظر حذف گردید", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.delete_notification, Toast.LENGTH_SHORT).show();
                 arrayList.remove(position);
                 notifyDataSetChanged();
                 dialog.dismiss();

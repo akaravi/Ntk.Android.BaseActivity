@@ -64,7 +64,7 @@ public class AbstractMainActivity extends BaseActivity {
                     if (event.getDownTime() - lastPressedTime < PERIOD) {
                         finish();
                     } else {
-                        Toasty.warning(getApplicationContext(), "برای خروج مجددا کلید بازگشت را فشار دهید",
+                        Toasty.warning(getApplicationContext(), R.string.per_push_back,
                                 Toast.LENGTH_SHORT, true).show();
                         lastPressedTime = event.getEventTime();
                     }
@@ -105,9 +105,9 @@ public class AbstractMainActivity extends BaseActivity {
         window.setGravity(Gravity.CENTER);
         dialog.setContentView(R.layout.dialog_permission);
         ((TextView) dialog.findViewById(R.id.lbl1PernissionDialog)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        ((TextView) dialog.findViewById(R.id.lbl1PernissionDialog)).setText("توجه");
+        ((TextView) dialog.findViewById(R.id.lbl1PernissionDialog)).setText(R.string.per_notice);
         ((TextView) dialog.findViewById(R.id.lbl2PernissionDialog)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        ((TextView) dialog.findViewById(R.id.lbl2PernissionDialog)).setText("نسخه جدید اپلیکیشن اومده دوست داری آبدیت بشه؟؟");
+        ((TextView) dialog.findViewById(R.id.lbl2PernissionDialog)).setText(R.string.per_update_version);
         Button Ok = dialog.findViewById(R.id.btnOkPermissionDialog);
         Ok.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
         Ok.setOnClickListener(view1 -> {
@@ -136,9 +136,9 @@ public class AbstractMainActivity extends BaseActivity {
         window.setGravity(Gravity.CENTER);
         dialog.setContentView(R.layout.dialog_update);
         ((TextView) dialog.findViewById(R.id.lbl1PernissionDialogUpdate)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        ((TextView) dialog.findViewById(R.id.lbl1PernissionDialogUpdate)).setText("توجه");
+        ((TextView) dialog.findViewById(R.id.lbl1PernissionDialogUpdate)).setText(R.string.per_notice);
         ((TextView) dialog.findViewById(R.id.lbl2PernissionDialogUpdate)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        ((TextView) dialog.findViewById(R.id.lbl2PernissionDialogUpdate)).setText("نسخه جدید اپلیکیشن اومده حتما باید آبدیت بشه");
+        ((TextView) dialog.findViewById(R.id.lbl2PernissionDialogUpdate)).setText(R.string.per_update_version2);
         Button Ok = dialog.findViewById(R.id.btnOkPermissionDialogUpdate);
         Ok.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
         Ok.setOnClickListener(view1 -> {
@@ -185,9 +185,9 @@ public class AbstractMainActivity extends BaseActivity {
         }
         dialog.findViewById(R.id.qrCodeDialogQRCode).setOnClickListener(v -> {
             ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("لینک دانلود فایل نصبی", Preferences.with(v.getContext()).appVariableInfo().updateInfo().url);
+            ClipData clip = ClipData.newPlainText(getString(R.string.per_link_download), Preferences.with(v.getContext()).appVariableInfo().updateInfo().url);
             clipboard.setPrimaryClip(clip);
-            Toasty.success(AbstractMainActivity.this, "لینک دانلود برنامه", Toast.LENGTH_LONG, true).show();
+            Toasty.success(AbstractMainActivity.this, R.string.per_link_download2, Toast.LENGTH_LONG, true).show();
         });
         Button Btn = dialog.findViewById(R.id.btnDialogQRCode);
         Btn.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
@@ -195,10 +195,10 @@ public class AbstractMainActivity extends BaseActivity {
             dialog.dismiss();
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, this.getString(R.string.app_name) + "\n" + "لینک دانلود:" + "\n" + updateInfo.url);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, this.getString(R.string.app_name) + "\n" + getString(R.string.per_link) + "\n" + updateInfo.url);
             shareIntent.setType("text/txt");
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            this.startActivity(Intent.createChooser(shareIntent, "به اشتراک گزاری با...."));
+            this.startActivity(Intent.createChooser(shareIntent, getString(R.string.per_shareto)));
         });
     }
 
@@ -232,7 +232,7 @@ public class AbstractMainActivity extends BaseActivity {
         Btn.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
         Btn.setOnClickListener(v -> {
             if (Txt.getText().toString().isEmpty()) {
-                Toasty.error(this, "لطفا نظر خود را وارد نمایید", Toasty.LENGTH_LONG, true).show();
+                Toasty.error(this, R.string.per_insert_comment, Toasty.LENGTH_LONG, true).show();
             } else {
                 if (AppUtill.isNetworkAvailable(this)) {
                     request.ScoreComment = Txt.getText().toString();
@@ -245,7 +245,7 @@ public class AbstractMainActivity extends BaseActivity {
                                 public void onNext(@NonNull ErrorExceptionBase response) {
                                     if (response.IsSuccess) {
                                         Preferences.with(AbstractMainActivity.this).appVariableInfo().setFeedback(request);
-                                        Toasty.success(AbstractMainActivity.this, "با موفقیت ثبت شد", Toast.LENGTH_LONG, true).show();
+                                        Toasty.success(AbstractMainActivity.this,  R.string.per_success, Toast.LENGTH_LONG, true).show();
                                     } else {
                                         Toasty.warning(AbstractMainActivity.this, response.ErrorMessage, Toast.LENGTH_LONG, true).show();
                                     }
@@ -259,7 +259,7 @@ public class AbstractMainActivity extends BaseActivity {
                                 }
                             });
                 } else {
-                    Toasty.error(this, "عدم دسترسی به اینترنت", Toasty.LENGTH_LONG, true).show();
+                    Toasty.error(this, R.string.per_no_net, Toasty.LENGTH_LONG, true).show();
                 }
                 dialog.dismiss();
             }

@@ -84,10 +84,10 @@ public class PolPlusMinesAdapter extends BaseRecyclerAdapter<PollingOptionModel,
                     MapVote.put(Long.parseLong(String.valueOf(optionModel.Id)), val);
                     notifyDataSetChanged();
                 } else {
-                    Toasty.warning(context, "حداکثر تعداد انتخاب مجاز برای هر گزینه " + PC.MaxVoteForEachOption + " می باشد", Toasty.LENGTH_LONG, true).show();
+                    Toasty.warning(context, context.getString(R.string.max_vote_each_item) + PC.MaxVoteForEachOption +context.getString(R.string.is_string), Toasty.LENGTH_LONG, true).show();
                 }
             } else {
-                Toasty.warning(context, "حداکثر تعداد انتخاب  برای این نظر سنجی " + PC.MaxVoteForThisContent + " می باشد", Toasty.LENGTH_LONG, true).show();
+                Toasty.warning(context, context.getString(R.string.max_vote_poll) + PC.MaxVoteForThisContent + context.getString(R.string.is_string), Toasty.LENGTH_LONG, true).show();
             }
         });
         holder.Minus.setOnClickListener(v -> {
@@ -95,7 +95,7 @@ public class PolPlusMinesAdapter extends BaseRecyclerAdapter<PollingOptionModel,
             vibe.vibrate(1000);
             int val = Integer.parseInt(holder.Number.getText().toString());
             if (val == 0) {
-                Toasty.warning(context, "امکان دادن امتیاز منفی وجود ندارد", Toasty.LENGTH_LONG, true).show();
+                Toasty.warning(context, R.string.no_negative_vote, Toasty.LENGTH_LONG, true).show();
             } else {
                 val = val - 1;
                 holder.Number.setText(String.valueOf(val));
@@ -109,7 +109,7 @@ public class PolPlusMinesAdapter extends BaseRecyclerAdapter<PollingOptionModel,
         });
         BtnSend.setOnClickListener(v -> {
             if (MapVote.size() == 0) {
-                Toasty.warning(context, "مقداری انتخاب نشده است", Toasty.LENGTH_LONG, true).show();
+                Toasty.warning(context, R.string.no_value_selected, Toasty.LENGTH_LONG, true).show();
                 return;
             }
             BtnSend.setEnabled(false);
@@ -129,7 +129,7 @@ public class PolPlusMinesAdapter extends BaseRecyclerAdapter<PollingOptionModel,
                         public void onNext(ErrorException<PollingVoteModel> poolingSubmitResponse) {
                             BtnSend.setEnabled(true);
                             if (poolingSubmitResponse.IsSuccess) {
-                                Toasty.info(context, "نظر شما با موققیت ثبت شد", Toasty.LENGTH_LONG, true).show();
+                                Toasty.info(context, R.string.success_comment, Toasty.LENGTH_LONG, true).show();
                                 if (PC.ViewStatisticsAfterVote) {
                                     BtnChart.setVisibility(View.VISIBLE);
                                 }
@@ -141,7 +141,7 @@ public class PolPlusMinesAdapter extends BaseRecyclerAdapter<PollingOptionModel,
                         @Override
                         public void onError(Throwable e) {
                             BtnSend.setEnabled(true);
-                            Toasty.warning(context, "خطا در ارسال اطلاعات، لطفا مجدد تلاش فرمایید", Toasty.LENGTH_LONG, true).show();
+                            Toasty.warning(context,  R.string.error_raised, Toasty.LENGTH_LONG, true).show();
                         }
 
 

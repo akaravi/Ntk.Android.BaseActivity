@@ -66,7 +66,7 @@ public class PolRadioAdapter extends BaseRecyclerAdapter<PollingOptionModel, Pol
         });
         BtnSend.setOnClickListener(v -> {
             if (lastSelectedPosition == -1) {
-                Toasty.warning(context, "مقداری انتخاب نشده است", Toasty.LENGTH_LONG, true).show();
+                Toasty.warning(context, R.string.no_value_selected, Toasty.LENGTH_LONG, true).show();
                 return;
             }
             BtnSend.setEnabled(false);
@@ -80,7 +80,7 @@ public class PolRadioAdapter extends BaseRecyclerAdapter<PollingOptionModel, Pol
                         public void onNext(@NonNull ErrorException<PollingVoteModel> poolingSubmitResponse) {
                             BtnSend.setEnabled(true);
                             if (poolingSubmitResponse.IsSuccess) {
-                                Toasty.info(context, "نظر شما با موققیت ثبت شد", Toasty.LENGTH_LONG, true).show();
+                                Toasty.info(context, R.string.success_comment, Toasty.LENGTH_LONG, true).show();
                                 //if user can see statics after vote
                                 if (pollingContentModel.ViewStatisticsAfterVote) {
                                     BtnChart.setVisibility(View.VISIBLE);
@@ -93,7 +93,7 @@ public class PolRadioAdapter extends BaseRecyclerAdapter<PollingOptionModel, Pol
                         @Override
                         public void onError(Throwable e) {
                             BtnSend.setEnabled(true);
-                            Toasty.warning(context, "خطا در ارسال اطلاعات، لطفا مجدد تلاش فرمایید", Toasty.LENGTH_LONG, true).show();
+                            Toasty.warning(context,  R.string.error_raised, Toasty.LENGTH_LONG, true).show();
                         }
 
                     });

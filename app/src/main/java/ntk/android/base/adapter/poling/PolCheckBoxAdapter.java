@@ -73,14 +73,14 @@ public class PolCheckBoxAdapter extends BaseRecyclerAdapter<PollingOptionModel, 
                     votesList.add(((optionModel.Id)));
                     notifyDataSetChanged();
                 } else {
-                    Toasty.warning(context, "حداکثز تعداد پاسخ مجاز برای این نظر سنجی " + PC.MaxVoteForThisContent + " می باشد", Toasty.LENGTH_LONG, true).show();
+                    Toasty.warning(context, context.getString(R.string.max_vote) + PC.MaxVoteForThisContent +context.getString(R.string.is_string), Toasty.LENGTH_LONG, true).show();
                 }
             }
         });
 
         BtnSend.setOnClickListener(v -> {
             if (votesList.size() == 0) {
-                Toasty.warning(context, "مقداری انتخاب نشده است", Toasty.LENGTH_LONG, true).show();
+                Toasty.warning(context, R.string.no_value_selected, Toasty.LENGTH_LONG, true).show();
                 return;
             }
             BtnSend.setEnabled(false);
@@ -99,7 +99,7 @@ public class PolCheckBoxAdapter extends BaseRecyclerAdapter<PollingOptionModel, 
                         public void onNext(ErrorException<PollingVoteModel> poolingSubmitResponse) {
                             BtnSend.setEnabled(true);
                             if (poolingSubmitResponse.IsSuccess) {
-                                Toasty.info(context, "نظر شما با موققیت ثبت شد", Toasty.LENGTH_LONG, true).show();
+                                Toasty.info(context, R.string.success_comment, Toasty.LENGTH_LONG, true).show();
                                 if (PC.ViewStatisticsAfterVote) {
                                     BtnChart.setVisibility(View.VISIBLE);
                                 }
@@ -111,7 +111,7 @@ public class PolCheckBoxAdapter extends BaseRecyclerAdapter<PollingOptionModel, 
                         @Override
                         public void onError(Throwable e) {
                             BtnSend.setEnabled(true);
-                            Toasty.warning(context, "خطا در ارسال اطلاعات، لطفا مجدد تلاش فرمایید", Toasty.LENGTH_LONG, true).show();
+                            Toasty.warning(context, R.string.error_raised, Toasty.LENGTH_LONG, true).show();
                         }
 
                     });

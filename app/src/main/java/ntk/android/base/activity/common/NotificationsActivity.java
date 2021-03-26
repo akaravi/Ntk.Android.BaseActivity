@@ -47,7 +47,7 @@ public class NotificationsActivity extends AppCompatActivity {
         Rv.setLayoutManager(manager);
         notifies.addAll(RoomDb.getRoomDb(this).NotificationDoa().All());
         if (notifies.size() == 0) {
-            Toast.makeText(this, "پیامی برای نمایش وجود ندارد", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_new_message, Toast.LENGTH_SHORT).show();
             finish();
         } else {
             adapter = new NotificationListAdapter(this, notifies);

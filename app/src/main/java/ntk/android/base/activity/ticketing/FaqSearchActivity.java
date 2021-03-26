@@ -113,7 +113,7 @@ public class FaqSearchActivity extends BaseActivity {
                             public void onError(Throwable e) {
                                 searchLock = false;
                                 btnRefresh.setVisibility(View.VISIBLE);
-                                switcher.showErrorView("خطا در دسترسی به سامانه", () -> init());
+                                switcher.showErrorView(getString(R.string.error_raised), () -> init());
 
                             }
 
@@ -125,7 +125,7 @@ public class FaqSearchActivity extends BaseActivity {
             } else {
                 btnRefresh.setVisibility(View.VISIBLE);
                 searchLock = false;
-                switcher.showErrorView("عدم دسترسی به اینترنت", () -> Search());
+                switcher.showErrorView(getString(R.string.per_no_net), () -> Search());
             }
         }
     }

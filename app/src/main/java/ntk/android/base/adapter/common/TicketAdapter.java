@@ -53,7 +53,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         TicketingTaskModel model = arrayList.get(position);
-        holder.id.setText("شماره ی " + model.Id);
+        holder.id.setText(context.getString(R.string.number_string) + model.Id);
         holder.Lbls.get(0).setText(model.Title);
         holder.Lbls.get(2).setText(AppUtill.GregorianToPersian(model.CreatedDate) + "");
         holder.webView.loadData("<html dir=\"rtl\" lang=\"\"><body>" + model.HtmlBody + "</body></html>", "text/html; charset=utf-8", "UTF-8");
@@ -67,23 +67,23 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
         switch (model.TicketStatus) {
             case 1:
                 holder.Lbls.get(1).setBackgroundResource(R.drawable.circle_green);
-                holder.Lbls.get(1).setText("پاسخ داده شد");
+                holder.Lbls.get(1).setText(R.string.answer_mode);
                 break;
             case 2:
                 holder.Lbls.get(1).setBackgroundResource(R.drawable.circle_red);
-                holder.Lbls.get(1).setText("در حال رسیدگی");
+                holder.Lbls.get(1).setText(R.string.inProcess_mode);
                 break;
             case 3:
                 holder.Lbls.get(1).setBackgroundResource(R.drawable.circle_oranje);
-                holder.Lbls.get(1).setText("انتظار پاسخ");
+                holder.Lbls.get(1).setText(R.string.waiting_mode);
                 break;
             case 4:
                 holder.Lbls.get(1).setBackgroundResource(R.drawable.circle_oranje);
-                holder.Lbls.get(1).setText("پاسخ مشتری");
+                holder.Lbls.get(1).setText(R.string.customer_answer_mode);
                 break;
             case 5:
                 holder.Lbls.get(1).setBackgroundResource(R.drawable.circle_blue_full);
-                holder.Lbls.get(1).setText("بسته شد");
+                holder.Lbls.get(1).setText(R.string.close_mode);
                 break;
         }
         holder.ll.setOnClickListener(v -> {

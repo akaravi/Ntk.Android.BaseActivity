@@ -3,6 +3,8 @@ package ntk.android.base.config;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
+import ntk.android.base.NTKApplication;
+import ntk.android.base.R;
 import ntk.android.base.entitymodel.base.ErrorException;
 
 public abstract class ErrorExceptionObserver<T> implements Observer<ErrorException<T>> {
@@ -22,12 +24,12 @@ public abstract class ErrorExceptionObserver<T> implements Observer<ErrorExcepti
         if (tErrorException.IsSuccess)
             SuccessResponse(tErrorException);
         else
-        failResponse(tErrorException);
+            failResponse(tErrorException);
     }
 
     protected void failResponse(ErrorException<T> tErrorException) {
         if (tErrorException.ErrorMessage == null)
-            tErrorException.ErrorMessage = "خطای Ntk رخ داد";
+            tErrorException.ErrorMessage = NTKApplication.get().getString(R.string.ntk_error);
         new GenericErrors().ntkException(switcher, tErrorException.ErrorMessage, tryAgainMethod());
     }
 

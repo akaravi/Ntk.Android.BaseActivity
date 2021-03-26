@@ -76,8 +76,8 @@ public class RegisterMobileConfirmActivity extends BaseActivity {
         filterArray[0] = new InputFilter.LengthFilter(4);
         Txt.setFilters(filterArray);
         Txt.setText("");
-        Txt.setHint("کد اعتبار سنجی");
-        ((Button) findViewById(R.id.btnActRegister)).setText("ادامــه");
+        Txt.setHint(R.string.login_code);
+        ((Button) findViewById(R.id.btnActRegister)).setText(R.string.Continue_string);
         Txt.setInputType(InputType.TYPE_CLASS_NUMBER);
         Timer = new CountDownTimer(timeSmsTryAgain, 1000) {
             @Override
@@ -85,12 +85,12 @@ public class RegisterMobileConfirmActivity extends BaseActivity {
                 int seconds = (int) (l / 1000) % 60;
                 int minutes = (int) ((l / (1000 * 60)) % 60);
                 Lbls.get(1).setClickable(false);
-                Lbls.get(1).setText(" لطفا منتظر دریافت کد اعتبار سنجی بمانید " + String.format("%d:%d", minutes, seconds));
+                Lbls.get(1).setText(getString(R.string.plz_wait_recieve_code) + String.format("%d:%d", minutes, seconds));
             }
 
             @Override
             public void onFinish() {
-                Lbls.get(1).setText("ارسال مجدد کد اعتبار سنجی ");
+                Lbls.get(1).setText(R.string.send_login_code_again);
                 Lbls.get(1).setClickable(true);
                 Timer.cancel();
             }
@@ -99,7 +99,7 @@ public class RegisterMobileConfirmActivity extends BaseActivity {
 
     private void ClickBtn() {
         if (Txt.getText().toString().isEmpty()) {
-            Toast.makeText(this, "کد اعتبار سنجی را وارد نمایید", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.plz_insert_code, Toast.LENGTH_SHORT).show();
         } else {
             Verify();
 
@@ -142,13 +142,13 @@ public class RegisterMobileConfirmActivity extends BaseActivity {
                             captchaView.getNewCaptcha();
                             findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
                             Loading.setVisibility(View.GONE);
-                            Toasty.warning(RegisterMobileConfirmActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
+                            Toasty.warning(RegisterMobileConfirmActivity.this, R.string.error_raised, Toasty.LENGTH_LONG, true).show();
 //
                         }
                     });
         } else {
             Loading.setVisibility(View.GONE);
-            Toasty.warning(this, "عدم دسترسی به اینترنت", Toasty.LENGTH_LONG, true).show();
+            Toasty.warning(this, R.string.per_no_net, Toasty.LENGTH_LONG, true).show();
         }
 
     }

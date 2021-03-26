@@ -36,7 +36,7 @@ public class DownloadFileDialog extends DialogFragment {
             dialog.setArguments(b);
             dialog.show(fm, "fragment_captcha");
         } else
-            Toasty.error(c, "فایلی جهت نمایش وجود ندارد", Toasty.LENGTH_LONG, true).show();
+            Toasty.error(c, R.string.download_url_not_exist, Toasty.LENGTH_LONG, true).show();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class DownloadFileDialog extends DialogFragment {
                 urls) {
             View innerV = inflater.inflate(R.layout.item_file_download, null, false);
             lin.addView(innerV);
-            ((TextView) innerV.findViewById(R.id.tvFile)).setText(" فایل شماره " + (++index)  );
+            ((TextView) innerV.findViewById(R.id.tvFile)).setText(getString(R.string.file_number) + (++index)  );
             innerV.setOnClickListener(v1 -> showLink(link));
         }
         return v;

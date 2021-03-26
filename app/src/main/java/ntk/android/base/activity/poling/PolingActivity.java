@@ -61,11 +61,11 @@ public class PolingActivity extends BaseActivity {
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            switcher.showErrorView("خطای سامانه مجددا تلاش کنید", () -> init());
+                            switcher.showErrorView(R.string.error_raised, () -> init());
                         }
                     });
         } else {
-            switcher.showErrorView("عدم دسترسی به اینترنت", () -> init());
+            switcher.showErrorView(R.string.per_no_net, () -> init());
 
         }
     }

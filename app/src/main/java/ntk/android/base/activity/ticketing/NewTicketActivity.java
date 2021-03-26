@@ -238,42 +238,42 @@ public class NewTicketActivity extends BaseActivity {
         TextInputEditText email = (findViewById(R.id.txtEmailActSendTicket));
         findViewById(R.id.txtSubjectActSendTicket);
         if (subject.getText().toString().isEmpty()) {
-            Toasty.warning(NewTicketActivity.this, "موضوع درخواست خود را وارد کنید", Toasty.LENGTH_LONG, true).show();
+            Toasty.warning(NewTicketActivity.this, R.string.plz_insert_ticket_subject, Toasty.LENGTH_LONG, true).show();
             return;
         }
         if (message.getText().toString().isEmpty()) {
-            Toasty.warning(NewTicketActivity.this, "متن درخواست خود را وارد کنید", Toasty.LENGTH_LONG, true).show();
+            Toasty.warning(NewTicketActivity.this, R.string.plz_insert_ticket_desc, Toasty.LENGTH_LONG, true).show();
             return;
         }
         if (name.getText().toString().isEmpty()) {
-            Toasty.warning(NewTicketActivity.this, "نام و نام خانوادگی را وارد کنید", Toasty.LENGTH_LONG, true).show();
+            Toasty.warning(NewTicketActivity.this, R.string.plz_insert_name, Toasty.LENGTH_LONG, true).show();
             return;
         }
         Preferences.with(this).ticketVariableInfo().setNameFamily(name.getText().toString());
         if (phone.getText().toString().isEmpty()) {
-            Toasty.warning(NewTicketActivity.this, "شماره تلفن همراه را وارد کنید", Toasty.LENGTH_LONG, true).show();
+            Toasty.warning(NewTicketActivity.this, R.string.plz_insert_num, Toasty.LENGTH_LONG, true).show();
             return;
         }
         if (!phone.getText().toString().startsWith("09")||phone.getText().toString().length()!=11) {
-            Toasty.warning(NewTicketActivity.this, "شماره تلفن همراه را به صورت صحیح وارد کنید", Toasty.LENGTH_LONG, true).show();
+            Toasty.warning(NewTicketActivity.this, R.string.plz_insert_mobile_correct, Toasty.LENGTH_LONG, true).show();
             return;
         }
         Preferences.with(this).ticketVariableInfo().setMobile(phone.getText().toString());
         if (email.getText().toString().isEmpty()) {
-            Toasty.warning(NewTicketActivity.this, "پست الکترونیک را وارد کنید", Toasty.LENGTH_LONG, true).show();
+            Toasty.warning(NewTicketActivity.this, R.string.plz_insert_email, Toasty.LENGTH_LONG, true).show();
             return;
         }
         if (!Regex.ValidateEmail(email.getText().toString())) {
-            Toasty.warning(this, "آدرس پست الکترونیکی صحیح نمیباشد", Toasty.LENGTH_LONG, true).show();
+            Toasty.warning(this, R.string.plz_insert_email_correctly, Toasty.LENGTH_LONG, true).show();
             return;
         }
         if (departments != null && departments.size() > 0)
             if (request.LinkTicketingDepartemenId == null || request.LinkTicketingDepartemenId == 0) {
-                Toasty.warning(this, "بخش مربوطه را انتخاب نمایید", Toasty.LENGTH_LONG, true).show();
+                Toasty.warning(this, R.string.plz_insert_email_departman, Toasty.LENGTH_LONG, true).show();
                 return;
             }
         if (request.Priority == 0) {
-            Toasty.warning(this, "میزان اهمیت درخواست خود را انتحاب نمایید", Toasty.LENGTH_LONG, true).show();
+            Toasty.warning(this, R.string.plz_insert_parioty, Toasty.LENGTH_LONG, true).show();
             return;
         }
         Preferences.with(this).ticketVariableInfo().setEmail(email.getText().toString());
@@ -312,7 +312,7 @@ public class NewTicketActivity extends BaseActivity {
                                 if (DefaultAnswerBody == null)
                                     DefaultAnswerBody = "";
                                 String reply = Html.fromHtml(DefaultAnswerBody.replace("<p>", "")
-                                        .replace("</p>", "")) + "\n" + "َشماره درخواست : " + model.Item.Id;
+                                        .replace("</p>", "")) + "\n" + getString(R.string.ticket_number) + model.Item.Id;
                                 Toasty.success(NewTicketActivity.this, reply, Toasty.LENGTH_LONG, true).show();
                                 setResult(RESULT_OK);
                                 finish();
@@ -330,7 +330,7 @@ public class NewTicketActivity extends BaseActivity {
                         }
                     });
         } else {
-            Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", v -> init()).show();
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, v -> init()).show();
         }
 
 
@@ -380,7 +380,7 @@ public class NewTicketActivity extends BaseActivity {
                             Btn.setVisibility(View.VISIBLE);
                             attaches.remove(attaches.size() - 1);
                             adapter.notifyDataSetChanged();
-                            Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     init();
@@ -390,7 +390,7 @@ public class NewTicketActivity extends BaseActivity {
                     });
         } else {
             Btn.setVisibility(View.VISIBLE);
-            Toasty.warning(this, "عدم دسترسی به اینترنت", Toasty.LENGTH_LONG, true).show();
+            Toasty.warning(this, R.string.per_no_net, Toasty.LENGTH_LONG, true).show();
         }
     }
 

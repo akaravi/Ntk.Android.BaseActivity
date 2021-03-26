@@ -84,11 +84,11 @@ public class AuthWithSmsActivity extends BaseActivity {
     public void ClickBtn() {
         CaptchaView captchaView = (CaptchaView) findViewById(R.id.captchaView);
         if (Txt.getText().toString().isEmpty())
-            Toast.makeText(this, "شماره تلفن همراه خود را وارد نمایید", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.plz_insert_num, Toast.LENGTH_SHORT).show();
         else if (!Txt.getText().toString().startsWith("09") || Txt.getText().toString().length() != 11) {
-            Toasty.warning(this, "شماره تلفن همراه را به صورت صحیح وارد کنید", Toasty.LENGTH_LONG, true).show();
+            Toasty.warning(this, R.string.plz_insert_mobile_correct, Toasty.LENGTH_LONG, true).show();
         }else if (captchaView.getCaptchaText().isEmpty())
-            Toast.makeText(this, "متن کپچا را وارد نمایید", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.plz_insert_capcha, Toast.LENGTH_SHORT).show();
         else {
             PhoneNumber = Txt.getText().toString();
             if (CheckPermission()) {
@@ -174,7 +174,7 @@ public class AuthWithSmsActivity extends BaseActivity {
         switch (requestCode) {
             case REQ_PERMISSION:
                 if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, " کد اعتبار سنجی که برایتان ارسال شده است را وارد کنید", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.plz_insert_code_login, Toast.LENGTH_SHORT).show();
                     Register();
                 } else {
                     Register();

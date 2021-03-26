@@ -34,7 +34,7 @@ public abstract class BaseSplashActivity extends AbstractSplashActivity {
                 findViewById(R.id.splash_debugView).setOnClickListener(BaseSplashActivity.this::showDebugView);
                 findViewById(R.id.activity_BaseError).findViewById(R.id.debugModeView).setOnClickListener(BaseSplashActivity.this::showDebugView);
                 Lbl.setTypeface(FontManager.T1_Typeface(BaseSplashActivity.this));
-                Lbl.setText("نسخه ی  " + (int) Float.parseFloat(BaseNtkApplication.get().getApplicationParameter().VERSION_NAME())
+                Lbl.setText(getString(R.string.version_number) + (int) Float.parseFloat(BaseNtkApplication.get().getApplicationParameter().VERSION_NAME())
                         + "   .build   " + BaseNtkApplication.get().getApplicationParameter().VERSION_CODE());
             }
         };

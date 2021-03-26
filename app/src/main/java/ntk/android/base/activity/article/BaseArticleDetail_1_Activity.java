@@ -127,7 +127,7 @@ public abstract class BaseArticleDetail_1_Activity extends
 
     @Override
     protected void showError(String toString, Runnable onTryingAgain) {
-        Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getContent();
@@ -150,7 +150,7 @@ public abstract class BaseArticleDetail_1_Activity extends
                         public void onNext(ErrorExceptionBase biographyContentResponse) {
                             Loading.setVisibility(View.GONE);
                             if (biographyContentResponse.IsSuccess) {
-                                Toasty.success(BaseArticleDetail_1_Activity.this, "نظر شمابا موفقیت ثبت گردید").show();
+                                Toasty.success(BaseArticleDetail_1_Activity.this, , R.string.success_comment).show();
                             } else {
                                 Toasty.warning(BaseArticleDetail_1_Activity.this, biographyContentResponse.ErrorMessage).show();
                             }
@@ -159,7 +159,7 @@ public abstract class BaseArticleDetail_1_Activity extends
                         @Override
                         public void onError(Throwable e) {
                             Loading.setVisibility(View.GONE);
-                            Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //todo init();
@@ -169,7 +169,7 @@ public abstract class BaseArticleDetail_1_Activity extends
                     });
         } else {
             Loading.setVisibility(View.GONE);
-            Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //todo init();
@@ -199,7 +199,7 @@ public abstract class BaseArticleDetail_1_Activity extends
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //todo add to  init();
@@ -209,7 +209,7 @@ public abstract class BaseArticleDetail_1_Activity extends
                     });
         } else {
             findViewById(R.id.lblCommentDetail).setVisibility(View.GONE);
-            Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //todo add to  init();
@@ -298,10 +298,10 @@ public abstract class BaseArticleDetail_1_Activity extends
 
         Btn.setOnClickListener(v -> {
             if (Txt[0].getText().toString().isEmpty()) {
-                Toast.makeText(BaseArticleDetail_1_Activity.this, "لطفا مقادیر را وارد نمایید", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseArticleDetail_1_Activity.this, R.string.per_insert_num, Toast.LENGTH_SHORT).show();
             } else {
                 if (Txt[1].getText().toString().isEmpty()) {
-                    Toast.makeText(BaseArticleDetail_1_Activity.this, "لطفا مقادیر را وارد نمایید", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BaseArticleDetail_1_Activity.this,  R.string.per_insert_num, Toast.LENGTH_SHORT).show();
                 } else {
                     if (AppUtill.isNetworkAvailable(this)) {
 //                        ArticleCommentModel add = new ArticleCommentModel();
@@ -317,7 +317,7 @@ public abstract class BaseArticleDetail_1_Activity extends
                                         if (e.IsSuccess) {
                                             HandelDataComment(Id);
                                             dialog.dismiss();
-                                            Toasty.success(BaseArticleDetail_1_Activity.this, "نظر شما با موفقیت ثبت شد").show();
+                                            Toasty.success(BaseArticleDetail_1_Activity.this, R.string.success_comment).show();
                                         } else {
                                             dialog.dismiss();
                                             Toasty.warning(BaseArticleDetail_1_Activity.this, e.ErrorMessage).show();
@@ -326,7 +326,7 @@ public abstract class BaseArticleDetail_1_Activity extends
 
                                     @Override
                                     public void onError(@NonNull Throwable e) {
-                                        Snackbar.make(layout, "خطای سامانه مجددا تلاش کنید", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+                                        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 //todo add
@@ -335,7 +335,7 @@ public abstract class BaseArticleDetail_1_Activity extends
                                     }
                                 });
                     } else {
-                        Snackbar.make(layout, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE).setAction("تلاش مجددا", new View.OnClickListener() {
+                        Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 //todo add instead of init();

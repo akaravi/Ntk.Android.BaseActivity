@@ -80,8 +80,8 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
         filterArray[0] = new InputFilter.LengthFilter(4);
         Txt.setFilters(filterArray);
         Txt.setText("");
-        Txt.setHint("کد اعتبار سنجی");
-        ((Button) findViewById(R.id.btnActRegister)).setText("ادامــه");
+        Txt.setHint(R.string.login_code);
+        ((Button) findViewById(R.id.btnActRegister)).setText(R.string.Continue_string);
         Txt.setInputType(InputType.TYPE_CLASS_NUMBER);
         Timer = new CountDownTimer(timeSmsTryAgain, 1000) {
             @Override
@@ -89,12 +89,12 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
                 int seconds = (int) (l / 1000) % 60;
                 int minutes = (int) ((l / (1000 * 60)) % 60);
                 Lbls.get(1).setClickable(false);
-                Lbls.get(1).setText(" لطفا منتظر دریافت کد اعتبار سنجی بمانید " + String.format("%d:%d", minutes, seconds));
+                Lbls.get(1).setText(getString(R.string.plz_wait_recieve_code) + String.format("%d:%d", minutes, seconds));
             }
 
             @Override
             public void onFinish() {
-                Lbls.get(1).setText("ارسال مجدد کد اعتبار سنجی ");
+                Lbls.get(1).setText(R.string.send_login_code_again);
                 Lbls.get(1).setClickable(true);
                 Timer.cancel();
             }
@@ -103,7 +103,7 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
 
     private void ClickBtn() {
         if (Txt.getText().toString().isEmpty()) {
-            Toast.makeText(this, "کد اعتبار سنجی را وارد نمایید", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.plz_insert_code, Toast.LENGTH_SHORT).show();
         } else {
             Verify();
         }
@@ -187,7 +187,7 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
                                     Toasty.error(AuthWithSmsConfirmActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
                                     return;
                                 }
-                                Toasty.success(AuthWithSmsConfirmActivity.this, "کد اعتبار سنجی مجددا ارسال شد").show();
+                                Toasty.success(AuthWithSmsConfirmActivity.this, R.string.code_sent_again).show();
                                 Timer.start();
                                 if (dialog.isShow())
                                     dialog.dismiss();
@@ -199,7 +199,7 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
                                     dialog.lockButton(false);
                                     dialog.getCaptcha().getNewCaptcha();
                                 }
-                                Toasty.warning(AuthWithSmsConfirmActivity.this, "خطای سامانه مجددا تلاش کنید", Toasty.LENGTH_LONG, true).show();
+                                Toasty.warning(AuthWithSmsConfirmActivity.this, R.string.error_raised, Toasty.LENGTH_LONG, true).show();
                             }
                         });
             });

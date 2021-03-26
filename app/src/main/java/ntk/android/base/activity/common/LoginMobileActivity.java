@@ -112,11 +112,11 @@ public class LoginMobileActivity extends BaseActivity {
 
     private void signIn() {
         if (Txt.getText().toString().isEmpty())
-            Toast.makeText(this, "شماره موبایل خود را وارد نمایید", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.plz_insert_num, Toast.LENGTH_SHORT).show();
         else if (passTxt.getText().toString().trim().equalsIgnoreCase(""))
-            Toast.makeText(this, "کلمه عبور را وارد نمایید", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.plz_insert_password, Toast.LENGTH_SHORT).show();
         else if (CaptchaTxt.getText().toString().isEmpty())
-            Toast.makeText(this, "متن کپچا را وارد نمایید", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,  R.string.plz_insert_capcha, Toast.LENGTH_SHORT).show();
         else {
             AuthUserSignInModel req = new AuthUserSignInModel();
             req.Mobile = Txt.getText().toString();

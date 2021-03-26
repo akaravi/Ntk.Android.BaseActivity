@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="خطا رخ داد بعدا تلاش فرمایید"
+        android:text="@string/error_raised"
         android:textSize="24sp"
         android:textStyle="bold" />
 

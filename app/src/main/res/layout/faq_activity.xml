@@ -76,7 +76,7 @@
             android:layout_marginRight="15dp"
             android:layout_toStartOf="@id/imgBackActFaq"
             android:layout_toLeftOf="@id/imgBackActFaq"
-            android:text="صندوق پیام"
+             android:text="@string/notification_inbox"
             android:textColor="?attr/toolbarColorText"
             tools:ignore="HardcodedText" />
     </RelativeLayout>

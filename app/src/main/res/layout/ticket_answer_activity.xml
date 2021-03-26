@@ -54,7 +54,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_toStartOf="@id/imgBackActTicketAnswer"
                 android:layout_toLeftOf="@id/imgBackActTicketAnswer"
-                android:text="صندوق پیام"
+                 android:text="@string/notification_inbox"
                 android:textColor="?attr/toolbarColorText"
                 android:textSize="17sp"
                 tools:ignore="HardcodedText" />
@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
-                android:text="پاسخی ارسال نشده است"
+                android:text="@string/no_answers"
                 android:textColor="?colorTextSecondary" />
         </LinearLayout>
 
@@ -167,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:text="فایل های پیوست"
+                android:text="@string/attach_files"
                 android:textSize="11sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -194,7 +194,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_margin="15dp"
 
-                android:text="ارسال پاسخ"
+                android:text="@string/send_answer"
                 android:textColor="@color/colorWhite"
                 android:textSize="17sp"
                 android:textStyle="bold"

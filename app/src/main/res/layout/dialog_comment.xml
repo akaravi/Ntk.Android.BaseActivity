@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="ثبت بازخورد"
+            android:text="@string/send_feedback"
             android:textColor="?attr/toolbarColorText"
             android:textSize="17sp" />
     </RelativeLayout>
@@ -56,7 +56,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginBottom="10dp"
         android:background="?attr/toolbarColorBackground"
-        android:text="ثبت"
+        android:text="@string/submit"
         android:textColor="?attr/toolbarColorText"
         android:textSize="17sp" />
 </LinearLayout>

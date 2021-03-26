@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="ارسال نظر"
+            android:text="@string/send_comment"
             android:textColor="?attr/toolbarColorText"
             android:textSize="17sp"
             tools:ignore="HardcodedText" />
@@ -50,7 +50,7 @@
         android:layout_height="55dp"
         android:layout_marginTop="10dp"
         android:background="?attr/toolbarColorBackground"
-        android:text="ارسال"
+        android:text="@string/send"
         android:textColor="?attr/toolbarColorText"
         android:textSize="17sp"
         tools:ignore="HardcodedText" />

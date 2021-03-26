@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checkable="true"
-        android:text="asdaw"
+
         android:textColor="@color/checkable_black_primary"
         android:textSize="15sp"
         app:checkedIcon="@null"

@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@id/RadioRecyclerPoolCheckBox"
-        android:text="پاسخ"
+        android:text="@string/answer"
         android:textColor="?colorTextPrimary"
         android:textSize="17sp"
         android:layout_toLeftOf="@id/RadioRecyclerPoolCheckBox" />

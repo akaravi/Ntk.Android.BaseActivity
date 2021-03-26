@@ -50,7 +50,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:text="باشه"
+            android:text="@string/ok"
             android:textColor="@color/colorWhite"
             android:textStyle="bold" />
 

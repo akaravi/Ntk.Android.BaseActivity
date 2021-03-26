@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="تایید شماره تلفن همراه"
+   android:text="@string/submit_mobile"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:text="تایید شماره"
+          android:text="@string/submit_num"
             android:textColor="@color/colorWhite"
             android:textSize="17sp"
             android:textStyle="bold" />

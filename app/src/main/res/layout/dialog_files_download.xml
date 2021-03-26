@@ -18,7 +18,7 @@
             android:minWidth="100dp"
             android:paddingLeft="34dp"
             android:paddingRight="10dp"
-            android:text="لیست فایل ها"
+            android:text="@string/file_list"
             android:textColor="?attr/toolbarColorText"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -51,7 +51,7 @@
         android:minWidth="100dp"
         android:paddingLeft="34dp"
         android:paddingRight="10dp"
-        android:text="لیست فایل ها"
+        android:text="@string/file_list"
         android:textColor="?attr/toolbarColorText"
         android:textSize="16sp"
         android:textStyle="bold" />
@@ -64,7 +64,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
         android:padding="10dp"
-        android:text="بستن"
+        android:text="@string/close"
         android:textColor="?attr/toolbarColorText"
         app:backgroundTint="?colorPrimary" />
 </LinearLayout>

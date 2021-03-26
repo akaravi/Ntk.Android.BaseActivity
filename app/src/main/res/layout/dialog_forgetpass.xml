@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
-                android:text="تایید شماره"
+              android:text="@string/submit_num"
                 android:textColor="@color/colorWhite"
                 android:textSize="17sp"
                 android:textStyle="bold" />

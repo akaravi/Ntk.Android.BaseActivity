@@ -90,7 +90,7 @@
                     android:paddingTop="3dp"
                     android:paddingRight="12dp"
                     android:paddingBottom="3dp"
-                    android:text="فعال"
+                    android:text="@string/active"
                     android:textColor="@color/colorWhite"
                     android:textSize="15sp"
                     android:textStyle="bold"
@@ -117,7 +117,7 @@
                     android:layout_height="wrap_content"
 
                     android:ellipsize="end"
-                    android:text="جزئیات"
+                    android:text="@string/details"
                     android:textColor="?attr/colorTextSecondary"
                     android:textSize="11sp"
 
@@ -141,7 +141,6 @@
 
                 android:ellipsize="end"
                 android:padding="8dp"
-                android:text="هاست لینوکس حرفه ای خارج - 4GB"
                 android:textColor="?attr/colorTextPrimary"
                 android:textSize="15sp"
                 android:textStyle="bold"

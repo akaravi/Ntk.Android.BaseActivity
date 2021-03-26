@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
         android:gravity="center"
-        android:text="در حال دریافت اطلاعات"
+ android:text="@string/loading"
         android:textColor="?attr/colorAccent"
         android:textSize="15sp" />
 </LinearLayout>

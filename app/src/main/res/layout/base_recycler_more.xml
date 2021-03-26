@@ -15,7 +15,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="بیشتر"
+            android:text="@string/more"
             android:textColor="?colorPrimary"
             android:textSize="12sp"
             android:textStyle="bold" />

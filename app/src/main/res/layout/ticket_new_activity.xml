@@ -37,7 +37,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@id/imgBackActSendTicket"
                 android:layout_toLeftOf="@id/imgBackActSendTicket"
-                android:text="ارسال تیکت جدید"
+                android:text="@string/new_ticket"
                 android:textColor="?attr/toolbarColorText"
                 android:textSize="17sp"
                 tools:ignore="MissingPrefix" />
@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentBottom="true"
-            android:text="ارسال درخواست"
+            android:text="@string/send_ticket"
             android:textColor="@color/colorWhite"
             android:textSize="17sp"
             android:textStyle="bold"
@@ -275,7 +275,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
-                        android:text="فایل های پیوست"
+                        android:text="@string/attach_files"
                         android:textSize="11sp" />
 
                     <androidx.recyclerview.widget.RecyclerView

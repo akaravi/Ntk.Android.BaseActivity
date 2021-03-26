@@ -124,7 +124,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="15dp"
                 android:layout_toStartOf="@id/imgBackDetail"
-                android:text="دستور آشپزی"
+                 android:text="@string/order_food"
                 android:textColor="?toolbarColorText"
                 tools:ignore="HardcodedText"
                 android:layout_marginRight="15dp"
@@ -192,7 +192,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="10dp"
-                                android:text="..."
+                              android:text="@string/three_dot"
                                 android:textColor="?attr/colorTextPrimary"
                                 android:layout_marginRight="10dp" />
 
@@ -246,7 +246,7 @@
                                 android:id="@+id/lblCalDetail"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="ارزش غذایی"
+                                android:text="@string/food_value"
                                 android:textColor="?attr/colorTextPrimary"
                                 android:textSize="10sp" />
 
@@ -307,7 +307,7 @@
                                 android:id="@+id/lblPhotoExtraDetail"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="عکس بیشتر"
+                               android:text="@string/more_pic"
                                 android:textColor="?attr/colorTextPrimary"
                                 android:textSize="10sp" />
                         </LinearLayout>
@@ -358,7 +358,7 @@
                                 android:id="@+id/lblTimerOne"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="... دقیقه"
+                                 android:text="@string/time_min"
                                 android:textColor="?attr/colorTextPrimary" />
 
                             <TextView
@@ -366,7 +366,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="زمان آمادسازی"
+                            android:text="@string/time_ready"
                                 android:textSize="10sp" />
                         </LinearLayout>
 
@@ -381,7 +381,7 @@
                                 android:id="@+id/lblTimerThree"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="... دقیقه"
+                                 android:text="@string/time_min"
                                 android:textColor="?attr/colorTextPrimary" />
 
                             <TextView
@@ -389,7 +389,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="زمان استراحت"
+                                 android:text="@string/rest_time"
                                 android:textSize="10sp" />
                         </LinearLayout>
 
@@ -404,7 +404,7 @@
                                 android:id="@+id/lblTimerFive"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="... دقیقه"
+                                 android:text="@string/time_min"
                                 android:textColor="?attr/colorTextPrimary" />
 
                             <TextView
@@ -412,7 +412,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="زمان پخت"
+                                 android:text="@string/cook_time"
                                 android:textSize="10sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -493,7 +493,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp"
-                            android:text="دستورات مشابه"
+                           android:text="@string/similar_order"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
                             tools:ignore="HardcodedText"

@@ -61,11 +61,11 @@ public class PolingActivity extends BaseActivity {
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            switcher.showErrorView(R.string.error_raised, () -> init());
+                            switcher.showErrorView(getString(R.string.error_raised), () -> init());
                         }
                     });
         } else {
-            switcher.showErrorView(R.string.per_no_net, () -> init());
+            switcher.showErrorView(getString(R.string.per_no_net), () -> init());
 
         }
     }

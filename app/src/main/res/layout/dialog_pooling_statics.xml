@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="نتیجه نظرسنجی"
+            android:text="@string/resutl_poll"
             android:textColor="?attr/toolbarColorText"
             android:textSize="17sp"
             tools:ignore="HardcodedText" />
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="تعداد آرا :"
+                android:text="@string/vote_count"
                 android:textSize="17sp" />
         </LinearLayout>
 
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="تعداد نفر :"
+                android:text="@string/person_count"
                 android:textSize="17sp" />
         </LinearLayout>
     </LinearLayout>

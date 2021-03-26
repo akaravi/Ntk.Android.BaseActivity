@@ -19,7 +19,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:layout_weight="1"
-        android:text=" بازگشت"
+        android:text="@string/back"
         android:textColor="?attr/toolbarColorText"
         tools:ignore="HardcodedText" />
 

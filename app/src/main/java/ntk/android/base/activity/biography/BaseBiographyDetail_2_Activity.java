@@ -172,7 +172,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
                         public void onNext(ErrorExceptionBase biographyContentResponse) {
                             Loading.setVisibility(View.GONE);
                             if (biographyContentResponse.IsSuccess) {
-                                Toasty.success(BaseBiographyDetail_2_Activity.this, , R.string.success_comment).show();
+                                Toasty.success(BaseBiographyDetail_2_Activity.this, R.string.success_comment).show();
                             } else {
                                 Toasty.warning(BaseBiographyDetail_2_Activity.this, biographyContentResponse.ErrorMessage).show();
                             }

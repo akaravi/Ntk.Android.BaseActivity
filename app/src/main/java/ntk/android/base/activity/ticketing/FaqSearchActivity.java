@@ -52,7 +52,7 @@ public class FaqSearchActivity extends BaseActivity {
         Rv.setHasFixedSize(true);
         Rv.setLayoutManager(new GridLayoutManager(this, 2));
 
-        Txt.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        Txt.setTypeface(FontManager.T1_Typeface(this));
         Txt.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_SEARCH) {
                 Search();

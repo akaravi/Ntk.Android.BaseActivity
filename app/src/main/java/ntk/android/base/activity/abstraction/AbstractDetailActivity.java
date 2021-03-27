@@ -55,7 +55,7 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
 
     public final void setTypeFace(List<TextView> Lbls) {
         for (TextView tv : Lbls) {
-            tv.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+            tv.setTypeface(FontManager.T1_Typeface(this ));
         }
     }
 

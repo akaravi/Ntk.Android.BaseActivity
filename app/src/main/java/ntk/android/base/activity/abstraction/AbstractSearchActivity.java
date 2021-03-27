@@ -56,7 +56,7 @@ public abstract class AbstractSearchActivity<TEntity> extends BaseActivity {
         RecyclerView.LayoutManager layoutManager = getLayoutManager();
         Rv.setLayoutManager(layoutManager);
 
-        Txt.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        Txt.setTypeface(FontManager.T1_Typeface(this));
         Txt.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_SEARCH) {
                 models.clear();

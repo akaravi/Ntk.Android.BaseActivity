@@ -89,13 +89,13 @@ public class DetailPolCategoryAdapter extends BaseRecyclerAdapter<PollingContent
             window.setGravity(Gravity.CENTER);
             dialog.setContentView(R.layout.dialog_pooling_statics);
             TextView Title = dialog.findViewById(R.id.lblTitleDialogPoolingStatic);
-            Title.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            Title.setTypeface(FontManager.T1_Typeface(context));
             TextView Score = dialog.findViewById(R.id.lblScore);
             Score.setText(String.valueOf(opModel.Options.get(0).ScoreOfVotes));
-            Score.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            Score.setTypeface(FontManager.T1_Typeface(context));
             TextView Owner = dialog.findViewById(R.id.lblOwnerScore);
             Owner.setText(String.valueOf(opModel.Options.get(0).NumberOfVotes));
-            Owner.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            Owner.setTypeface(FontManager.T1_Typeface(context));
             dialog.show();
         });
     }
@@ -125,7 +125,7 @@ public class DetailPolCategoryAdapter extends BaseRecyclerAdapter<PollingContent
             Rv = view.findViewById(R.id.recyclerOptionPooling);
             Chart = view.findViewById(R.id.btnChartRecyclerDeialPooling);
             Root = view.findViewById(R.id.rootDetailPooling);
-            LblTitle.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            LblTitle.setTypeface(FontManager.T1_Typeface(context));
             Rv.setHasFixedSize(true);
             RecyclerView.LayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             Rv.setLayoutManager(manager);

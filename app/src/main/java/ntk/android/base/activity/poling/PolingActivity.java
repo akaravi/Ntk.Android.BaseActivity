@@ -37,7 +37,7 @@ public class PolingActivity extends BaseActivity {
         LblTitle = findViewById(R.id.lblTitleActPooling);
         Rv = findViewById(R.id.recyclerPooling);
         findViewById(R.id.imgBackActPooling).setOnClickListener(v -> ClickBack());
-        LblTitle.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        LblTitle.setTypeface(FontManager.T1_Typeface(this));
         Rv.setHasFixedSize(true);
         Rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         if (AppUtill.isNetworkAvailable(this)) {

@@ -60,7 +60,7 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
         SwipeRefreshLayout Refresh = findViewById(R.id.swipRefresh);
         findViewById(R.id.imgBack).setOnClickListener(v -> ClickBack());
         findViewById(R.id.imgSearch).setOnClickListener(v -> ClickSearch());
-        LblTitle.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        LblTitle.setTypeface(FontManager.T1_Typeface(this));
         Rv.setHasFixedSize(true);
         RecyclerView.LayoutManager LMC = getRvLayoutManager();
         Rv.setLayoutManager(LMC);

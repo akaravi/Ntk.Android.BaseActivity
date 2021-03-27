@@ -93,13 +93,13 @@ public class RegisterMobileActivity extends AppCompatActivity {
         ((CaptchaView) findViewById(R.id.captchaView)).getNewCaptcha();
         Loading.setVisibility(View.GONE);
 //        Loading.getIndeterminateDrawable().setColorFilter(getResources().getColor(ColorUtils.FETCH_Attr_COLOR(this, R.attr.colorAccent)), PorterDuff.Mode.SRC_IN);
-        Txt.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        passTxt.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        rePassTxt.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Lbls.get(0).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Lbls.get(1).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        Lbls.get(2).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        ((Button) findViewById(R.id.btnActRegister)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        Txt.setTypeface(FontManager.T1_Typeface(this));
+        passTxt.setTypeface(FontManager.T1_Typeface(this));
+        rePassTxt.setTypeface(FontManager.T1_Typeface(this));
+        Lbls.get(0).setTypeface(FontManager.T1_Typeface(this));
+        Lbls.get(1).setTypeface(FontManager.T1_Typeface(this));
+        Lbls.get(2).setTypeface(FontManager.T1_Typeface(this));
+        ((Button) findViewById(R.id.btnActRegister)).setTypeface(FontManager.T1_Typeface(this));
         findViewById(R.id.passToggle).setOnClickListener(v -> Toggle(findViewById(R.id.passToggle), findViewById(R.id.txtpass)));
         findViewById(R.id.repassToggle).setOnClickListener(v -> Toggle(findViewById(R.id.repassToggle), findViewById(R.id.txtRepass)));
     }

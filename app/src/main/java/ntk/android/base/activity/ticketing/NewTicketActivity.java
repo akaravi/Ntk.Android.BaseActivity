@@ -101,7 +101,7 @@ public class NewTicketActivity extends BaseActivity {
             add(findViewById(R.id.SpinnerState));
         }};
 
-        ((TextView) findViewById(R.id.lblTitleActSendTicket)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        ((TextView) findViewById(R.id.lblTitleActSendTicket)).setTypeface(FontManager.T1_Typeface(this));
 
 
         List<EditText> Txts = new ArrayList() {{
@@ -126,13 +126,13 @@ public class NewTicketActivity extends BaseActivity {
         findViewById(R.id.RippleAttachActSendTicket).setOnClickListener(v -> ClickAttach());
         for (TextInputLayout ti :
                 Inputs) {
-            ti.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+            ti.setTypeface(FontManager.T1_Typeface(this));
         }
         for (EditText ti :
                 Txts) {
-            ti.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+            ti.setTypeface(FontManager.T1_Typeface(this));
         }
-        Btn.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        Btn.setTypeface(FontManager.T1_Typeface(this));
 
         ((TextInputEditText) findViewById(R.id.txtNameFamilyActSendTicket)).setText(Preferences.with(this).ticketVariableInfo().nameFamily());
         ((TextInputEditText) findViewById(R.id.txtPhoneNumberActSendTicket)).setText(Preferences.with(this).ticketVariableInfo().mobile());

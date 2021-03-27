@@ -110,7 +110,7 @@ public class PolRadioAdapter extends BaseRecyclerAdapter<PollingOptionModel, Pol
             super(view);
             Radio = view.findViewById(R.id.RadioRecyclerPoolRadio);
             LblTitle = view.findViewById(R.id.lblRecyclerPoolRadio);
-            LblTitle.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            LblTitle.setTypeface(FontManager.T1_Typeface(context));
 
         }
     }

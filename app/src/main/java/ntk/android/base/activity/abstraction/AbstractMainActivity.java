@@ -104,12 +104,12 @@ public class AbstractMainActivity extends BaseActivity {
         window.setLayout(LinearLayoutCompat.LayoutParams.WRAP_CONTENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
         window.setGravity(Gravity.CENTER);
         dialog.setContentView(R.layout.dialog_permission);
-        ((TextView) dialog.findViewById(R.id.lbl1PernissionDialog)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        ((TextView) dialog.findViewById(R.id.lbl1PernissionDialog)).setTypeface(FontManager.T1_Typeface(this));
         ((TextView) dialog.findViewById(R.id.lbl1PernissionDialog)).setText(R.string.per_notice);
-        ((TextView) dialog.findViewById(R.id.lbl2PernissionDialog)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        ((TextView) dialog.findViewById(R.id.lbl2PernissionDialog)).setTypeface(FontManager.T1_Typeface(this));
         ((TextView) dialog.findViewById(R.id.lbl2PernissionDialog)).setText(R.string.per_update_version);
         Button Ok = dialog.findViewById(R.id.btnOkPermissionDialog);
-        Ok.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        Ok.setTypeface(FontManager.T1_Typeface(this));
         Ok.setOnClickListener(view1 -> {
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
@@ -117,7 +117,7 @@ public class AbstractMainActivity extends BaseActivity {
             dialog.dismiss();
         });
         Button Cancel = dialog.findViewById(R.id.btnCancelPermissionDialog);
-        Cancel.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        Cancel.setTypeface(FontManager.T1_Typeface(this));
         Cancel.setOnClickListener(view12 -> dialog.dismiss());
         dialog.show();
     }
@@ -135,12 +135,12 @@ public class AbstractMainActivity extends BaseActivity {
         window.setLayout(LinearLayoutCompat.LayoutParams.WRAP_CONTENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
         window.setGravity(Gravity.CENTER);
         dialog.setContentView(R.layout.dialog_update);
-        ((TextView) dialog.findViewById(R.id.lbl1PernissionDialogUpdate)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        ((TextView) dialog.findViewById(R.id.lbl1PernissionDialogUpdate)).setTypeface(FontManager.T1_Typeface(this));
         ((TextView) dialog.findViewById(R.id.lbl1PernissionDialogUpdate)).setText(R.string.per_notice);
-        ((TextView) dialog.findViewById(R.id.lbl2PernissionDialogUpdate)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        ((TextView) dialog.findViewById(R.id.lbl2PernissionDialogUpdate)).setTypeface(FontManager.T1_Typeface(this));
         ((TextView) dialog.findViewById(R.id.lbl2PernissionDialogUpdate)).setText(R.string.per_update_version2);
         Button Ok = dialog.findViewById(R.id.btnOkPermissionDialogUpdate);
-        Ok.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        Ok.setTypeface(FontManager.T1_Typeface(this));
         Ok.setOnClickListener(view1 -> {
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
@@ -169,7 +169,7 @@ public class AbstractMainActivity extends BaseActivity {
         dialog.setContentView(R.layout.dialog_qrcode);
         dialog.show();
         TextView Lbl = dialog.findViewById(R.id.lblTitleDialogQRCode);
-        Lbl.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        Lbl.setTypeface(FontManager.T1_Typeface(this));
         String qrCode = Preferences.with(this).appVariableInfo().qrCode();
         QRGEncoder qrgEncoder = new QRGEncoder(qrCode, null, QRGContents.Type.TEXT, 300);
         try {
@@ -190,7 +190,7 @@ public class AbstractMainActivity extends BaseActivity {
             Toasty.success(AbstractMainActivity.this, R.string.per_link_download2, Toast.LENGTH_LONG, true).show();
         });
         Button Btn = dialog.findViewById(R.id.btnDialogQRCode);
-        Btn.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        Btn.setTypeface(FontManager.T1_Typeface(this));
         Btn.setOnClickListener(v -> {
             dialog.dismiss();
             Intent shareIntent = new Intent();
@@ -217,9 +217,9 @@ public class AbstractMainActivity extends BaseActivity {
         dialog.setContentView(R.layout.dialog_comment);
         dialog.show();
         TextView Lbl = dialog.findViewById(R.id.lblTitleDialogComment);
-        Lbl.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        Lbl.setTypeface(FontManager.T1_Typeface(this));
         final EditText Txt = dialog.findViewById(R.id.txtDialogComment);
-        Txt.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        Txt.setTypeface(FontManager.T1_Typeface(this));
 //        Txt.setText(EasyPreference.with(this).getString("RateMessage", ""));
         final MaterialRatingBar Rate = dialog.findViewById(R.id.rateDialogComment);
 //        Rate.setRating(EasyPreference.with(this).getInt("Rate", 0));
@@ -229,7 +229,7 @@ public class AbstractMainActivity extends BaseActivity {
                 request.ScorePercent = 100;
         });
         Button Btn = dialog.findViewById(R.id.btnDialogComment);
-        Btn.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        Btn.setTypeface(FontManager.T1_Typeface(this));
         Btn.setOnClickListener(v -> {
             if (Txt.getText().toString().isEmpty()) {
                 Toasty.error(this, R.string.per_insert_comment, Toasty.LENGTH_LONG, true).show();

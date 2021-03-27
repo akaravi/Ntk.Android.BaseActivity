@@ -48,7 +48,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         holder.Lbls.get(0).setText(arrayList.get(position).Title);
         holder.Lbls.get(1).setText(arrayList.get(position).Content);
         if (arrayList.get(position).IsRead == 0) {
-            holder.Lbls.get(0).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans), Typeface.BOLD);
+            holder.Lbls.get(0).setTypeface(FontManager.T1_Typeface(context), Typeface.BOLD);
         }
         if (arrayList.get(position).BigImageSrc != null) {
             ImageLoader.getInstance().displayImage(arrayList.get(position).BigImageSrc, holder.ImgInbox);
@@ -60,17 +60,17 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                     holder.Lbls.get(2).setText(arrayList.get(position).Content);
                     holder.Lbls.get(1).setVisibility(View.GONE);
                     holder.Root.get(1).setVisibility(View.VISIBLE);
-                    holder.Lbls.get(0).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans), Typeface.NORMAL);
+                    holder.Lbls.get(0).setTypeface(FontManager.T1_Typeface(context), Typeface.NORMAL);
                     arrayList.get(position).IsRead = 1;
                     RoomDb.getRoomDb(context).NotificationDoa().Update(arrayList.get(position));
                 } else {
                     holder.Root.get(1).setVisibility(View.GONE);
                     holder.Lbls.get(2).setText("");
                     holder.Lbls.get(1).setVisibility(View.VISIBLE);
-                    holder.Lbls.get(0).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans), Typeface.NORMAL);
+                    holder.Lbls.get(0).setTypeface(FontManager.T1_Typeface(context), Typeface.NORMAL);
                 }
             } else {
-                holder.Lbls.get(0).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans), Typeface.NORMAL);
+                holder.Lbls.get(0).setTypeface(FontManager.T1_Typeface(context), Typeface.NORMAL);
             }
         });
 
@@ -82,12 +82,12 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
             window.setLayout(LinearLayoutCompat.LayoutParams.WRAP_CONTENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
             window.setGravity(Gravity.CENTER);
             dialog.setContentView(R.layout.dialog_permission);
-            ((TextView) dialog.findViewById(R.id.lbl1PernissionDialog)).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            ((TextView) dialog.findViewById(R.id.lbl1PernissionDialog)).setTypeface(FontManager.T1_Typeface(context));
             ((TextView) dialog.findViewById(R.id.lbl1PernissionDialog)).setText(R.string.per_notice);
-            ((TextView) dialog.findViewById(R.id.lbl2PernissionDialog)).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            ((TextView) dialog.findViewById(R.id.lbl2PernissionDialog)).setTypeface(FontManager.T1_Typeface(context));
             ((TextView) dialog.findViewById(R.id.lbl2PernissionDialog)).setText(R.string.notice_delete_notification);
             Button Ok = dialog.findViewById(R.id.btnOkPermissionDialog);
-            Ok.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            Ok.setTypeface(FontManager.T1_Typeface(context));
             Ok.setOnClickListener(view1 -> {
                 RoomDb.getRoomDb(context).NotificationDoa().Delete(arrayList.get(position));
                 Toast.makeText(context, R.string.delete_notification, Toast.LENGTH_SHORT).show();
@@ -96,7 +96,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                 dialog.dismiss();
             });
             Button Cancel = dialog.findViewById(R.id.btnCancelPermissionDialog);
-            Cancel.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            Cancel.setTypeface(FontManager.T1_Typeface(context));
             Cancel.setOnClickListener(view12 -> dialog.dismiss());
             dialog.show();
         });
@@ -131,9 +131,9 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                 add(view.findViewById(R.id.rowDetailInbox));
 
             }};
-            Lbls.get(0).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
-            Lbls.get(1).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
-            Lbls.get(2).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            Lbls.get(0).setTypeface(FontManager.T1_Typeface(context));
+            Lbls.get(1).setTypeface(FontManager.T1_Typeface(context));
+            Lbls.get(2).setTypeface(FontManager.T1_Typeface(context));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 //todo
 //                Lbls.get(0).setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);

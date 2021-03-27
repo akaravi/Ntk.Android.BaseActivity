@@ -109,8 +109,8 @@ public class TicketAnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             desc = (view.findViewById(R.id.lblTypeRecyclerTicketAnswer));
             date = (view.findViewById(R.id.lblDateRecyclerTicketAnswer));
             attach = view.findViewById(R.id.answerAttaches);
-            desc.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
-            date.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            desc.setTypeface(FontManager.T1_Typeface(context));
+            date.setTypeface(FontManager.T1_Typeface(context));
         }
     }
 
@@ -126,8 +126,8 @@ public class TicketAnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             date = (view.findViewById(R.id.lblDateRecyclerTicketAnswer));
             attach = view.findViewById(R.id.answerAttaches);
             desc.setMaxWidth(getScreenWidth() - iconSize - 100);
-            desc.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
-            date.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            desc.setTypeface(FontManager.T1_Typeface(context));
+            date.setTypeface(FontManager.T1_Typeface(context));
         }
     }
 }

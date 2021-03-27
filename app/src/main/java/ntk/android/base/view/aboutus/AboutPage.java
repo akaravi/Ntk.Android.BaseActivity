@@ -42,12 +42,12 @@ public class AboutPage {
     /**
      * Provide a valid path to a font here to use another font for the text inside this AboutPage
      *
-     * @param path
+
      * @return this AboutPage instance for builder pattern support
      */
-    public AboutPage setCustomFont(String path) {
+    public AboutPage setCustomFont() {
         //TODO: check if file exists
-        mCustomFont = FontManager.GetTypeface(mContext, FontManager.IranSans);
+        mCustomFont = FontManager.T1_Typeface(mContext);
         return this;
     }
 
@@ -386,7 +386,7 @@ public class AboutPage {
     public AboutPage addGroup(String name) {
 
         TextView textView = new TextView(mContext);
-        textView.setTypeface(FontManager.GetTypeface(mContext, FontManager.IranSans));
+        textView.setTypeface(FontManager.T1_Typeface(mContext));
         textView.setText(name);
         LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -435,7 +435,7 @@ public class AboutPage {
      */
     public View create() {
         TextView description = mView.findViewById(R.id.description);
-        description.setTypeface(FontManager.GetTypeface(mContext, FontManager.IranSans));
+        description.setTypeface(FontManager.T1_Typeface(mContext));
         ImageView image = mView.findViewById(R.id.image);
         if (mImage > 0) {
             image.setImageResource(mImage);
@@ -489,7 +489,7 @@ public class AboutPage {
         TextView descriptionTextView = null;
         if (element.getInnerElement() != null) {
             descriptionTextView = new TextView(mContext);
-            descriptionTextView.setTypeface(FontManager.GetTypeface(mContext, FontManager.IranSans));
+            descriptionTextView.setTypeface(FontManager.T1_Typeface(mContext));
             descriptionTextView.setLayoutParams(textParams);
             if (mCustomFont != null) {
                 descriptionTextView.setTypeface(mCustomFont);
@@ -499,7 +499,7 @@ public class AboutPage {
         }
         //create text index 2 of linear
         TextView textView = new TextView(mContext);
-        textView.setTypeface(FontManager.GetTypeface(mContext, FontManager.IranSans));
+        textView.setTypeface(FontManager.T1_Typeface(mContext));
         textView.setLayoutParams(textParams);
         if (mCustomFont != null) {
             textView.setTypeface(mCustomFont);

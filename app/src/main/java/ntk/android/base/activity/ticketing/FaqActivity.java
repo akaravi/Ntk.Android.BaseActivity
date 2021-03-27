@@ -41,7 +41,7 @@ public class FaqActivity extends BaseActivity {
         findViewById(R.id.imgSearchActFaq).setOnClickListener(v -> ClickSearch());
         Lbl = findViewById(R.id.lblTitleActFaq);
         Rv = findViewById(R.id.recyclerFaq);
-        Lbl.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        Lbl.setTypeface(FontManager.T1_Typeface(this));
         Lbl.setText(R.string.faq);
         Rv.setHasFixedSize(true);
         Rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

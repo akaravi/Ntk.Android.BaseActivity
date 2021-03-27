@@ -57,9 +57,9 @@ public class LoginMobileActivity extends BaseActivity {
     private void init() {
         callCaptchaApi();
         Loading.setVisibility(View.GONE);
-        Txt.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        CaptchaTxt.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        passTxt.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        Txt.setTypeface(FontManager.T1_Typeface(this));
+        CaptchaTxt.setTypeface(FontManager.T1_Typeface(this));
+        passTxt.setTypeface(FontManager.T1_Typeface(this));
 
     }
 

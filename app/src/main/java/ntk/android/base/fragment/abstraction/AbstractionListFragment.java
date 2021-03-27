@@ -87,7 +87,7 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
         SwipeRefreshLayout Refresh = findViewById(R.id.swipRefresh);
         findViewById(R.id.imgBack).setOnClickListener(v -> ClickBack());
         findViewById(R.id.imgSearch).setOnClickListener(v -> ClickSearch());
-        LblTitle.setTypeface(FontManager.GetTypeface(getContext(), FontManager.IranSans));
+        LblTitle.setTypeface(FontManager.T1_Typeface(getContext()));
         Rv.setHasFixedSize(true);
         RecyclerView.LayoutManager LMC = getRvLayoutManager();
         Rv.setLayoutManager(LMC);

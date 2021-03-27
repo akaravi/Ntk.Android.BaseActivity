@@ -50,7 +50,7 @@ public class PolingDetailActivity extends AppCompatActivity {
         LblTitle = findViewById(R.id.lblTitleActDetailPooling);
         Rv = findViewById(R.id.recyclerDetailPooling);
         findViewById(R.id.imgBackActDetailPooling).setOnClickListener(v -> ClickBack());
-        LblTitle.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        LblTitle.setTypeface(FontManager.T1_Typeface(this));
         LblTitle.setText(title);
         Rv.setHasFixedSize(true);
         Rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

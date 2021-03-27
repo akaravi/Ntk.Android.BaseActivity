@@ -129,7 +129,7 @@ public class PolCheckBoxAdapter extends BaseRecyclerAdapter<PollingOptionModel, 
 
 
             checkBox = view.findViewById(R.id.RadioRecyclerPoolCheckBox);
-            LblTitle.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            LblTitle.setTypeface(FontManager.T1_Typeface(context));
         }
     }
 }

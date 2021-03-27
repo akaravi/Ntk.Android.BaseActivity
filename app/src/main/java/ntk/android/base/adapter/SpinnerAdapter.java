@@ -42,14 +42,14 @@ public class SpinnerAdapter<S> extends ArrayAdapter<String> {
 //    @Override
 //    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 //        TextView textView = (TextView) super.getView(position, convertView, parent);
-//        textView.setTypeface(FontManager.GetTypeface(getContext(), FontManager.IranSans));
+//        textView.setTypeface(FontManager.T1_Typeface(getContext()));
 //        return textView;
 //    }
 
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         TextView textView = (TextView) super.getDropDownView(position, convertView, parent);
-        textView.setTypeface(FontManager.GetTypeface(getContext(), FontManager.IranSans));
+        textView.setTypeface(FontManager.T1_Typeface(getContext()));
         return textView;
     }
 

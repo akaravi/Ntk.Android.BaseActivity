@@ -163,8 +163,8 @@ public class PolPlusMinesAdapter extends BaseRecyclerAdapter<PollingOptionModel,
             Title = view.findViewById(R.id.lblTitleRecyclerPoolPlus);
             Plus = view.findViewById(R.id.imgPlusRecyclerPoolPlus);
             Minus = view.findViewById(R.id.imgMinusRecyclerPoolPlus);
-            Number.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
-            Title.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            Number.setTypeface(FontManager.T1_Typeface(context));
+            Title.setTypeface(FontManager.T1_Typeface(context));
         }
     }
 }

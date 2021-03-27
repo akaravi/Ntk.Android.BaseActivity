@@ -63,7 +63,7 @@ public class PolCategoryAdapter extends RecyclerView.Adapter<PolCategoryAdapter.
 
             Root = view.findViewById(R.id.rootPooling);
 
-            LblTitle.setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            LblTitle.setTypeface(FontManager.T1_Typeface(context));
         }
     }
 }

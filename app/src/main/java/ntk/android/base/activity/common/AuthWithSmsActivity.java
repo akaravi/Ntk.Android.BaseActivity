@@ -75,9 +75,9 @@ public class AuthWithSmsActivity extends BaseActivity {
         ((CaptchaView) findViewById(R.id.captchaView)).getNewCaptcha();
         Loading.setVisibility(View.GONE);
 //        Loading.getIndeterminateDrawable().setColorFilter(getResources().getColor(ColorUtils.FETCH_Attr_COLOR(this, R.attr.colorAccent)), PorterDuff.Mode.SRC_IN);
-        Txt.setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        ((TextView) findViewById(R.id.lblVerificationActRegister)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
-        ((Button) findViewById(R.id.btnActRegister)).setTypeface(FontManager.GetTypeface(this, FontManager.IranSans));
+        Txt.setTypeface(FontManager.T1_Typeface(this));
+        ((TextView) findViewById(R.id.lblVerificationActRegister)).setTypeface(FontManager.T1_Typeface(this));
+        ((Button) findViewById(R.id.btnActRegister)).setTypeface(FontManager.T1_Typeface(this));
     }
 
 

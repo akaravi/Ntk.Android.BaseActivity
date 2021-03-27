@@ -72,8 +72,8 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
 
 
             Web = view.findViewById(R.id.WebViewFaqList);
-            Lbls.get(0).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
-            Lbls.get(1).setTypeface(FontManager.GetTypeface(context, FontManager.IranSans));
+            Lbls.get(0).setTypeface(FontManager.T1_Typeface(context));
+            Lbls.get(1).setTypeface(FontManager.T1_Typeface(context));
             Web.getSettings().setJavaScriptEnabled(true);
             Web.getSettings().setBuiltInZoomControls(true);
             Web.setVisibility(View.GONE);

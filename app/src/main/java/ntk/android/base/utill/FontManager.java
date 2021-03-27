@@ -5,14 +5,12 @@ import android.graphics.Typeface;
 
 public class FontManager {
 
-    public static final String IranSans = "fonts/1_req.ttf";
-    public static final String IranSansBold = "fonts/1_bold.ttf";
-    public static final String Harlow = "fonts/HARLOWSI.TTF";
-    public static final String DastNevis = "fonts/2_req.otf";
+     static final String IranSans = "fonts/1_req.ttf";
+     static final String IranSansBold = "fonts/1_bold.ttf";
+     static final String Harlow = "fonts/HARLOWSI.TTF";
+     static final String DastNevis = "fonts/2_req.otf";
 
-    public static Typeface GetTypeface(Context context, String font) {
-        return Typeface.createFromAsset(context.getAssets(), font);
-    }
+
 
     public static Typeface T1_Typeface(Context context) {
         return Typeface.createFromAsset(context.getAssets(), IranSans);

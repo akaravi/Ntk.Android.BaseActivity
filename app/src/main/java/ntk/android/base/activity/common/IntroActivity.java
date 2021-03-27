@@ -64,7 +64,7 @@ public class IntroActivity extends BaseActivity {
     }
 
     private void init() {
-        Lbls.get(0).setTypeface(FontManager.GetTypeface(this, FontManager.IranSansBold));
+        Lbls.get(0).setTypeface(FontManager.T1_BOLD_Typeface(this));
         Lbls.get(1).setTypeface(FontManager.T1_Typeface(this));
         Lbls.get(2).setTypeface(FontManager.T1_Typeface(this));
         getdata();

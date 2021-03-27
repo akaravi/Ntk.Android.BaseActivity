@@ -87,7 +87,7 @@ dependencies {
     implementation 'com.pnikosis:materialish-progress:1.0'
     //for base
     api  'com.github.akaravi:Ntk.Android.Base:1.3.113'
-    api project(path: ':baseApi')
+//    api project(path: ':baseApi')
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

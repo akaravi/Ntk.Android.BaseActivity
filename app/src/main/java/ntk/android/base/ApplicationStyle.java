@@ -13,6 +13,18 @@ import ntk.android.base.view.ViewController;
  */
 
 public abstract class ApplicationStyle extends StyleHelper {
+    static String APP_LANGUAGE;
+
+    public static void setAppLanguage(String appLanguage) {
+        if (appLanguage == null)
+            appLanguage = "fa";
+        APP_LANGUAGE = appLanguage.toLowerCase().trim();
+    }
+
+    public static String getAppLanguage() {
+        return APP_LANGUAGE;
+    }
+
     public ApplicationStyle() {
         modules = new HashMap();
         Init();

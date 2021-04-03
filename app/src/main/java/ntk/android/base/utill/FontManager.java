@@ -27,5 +27,8 @@ public class FontManager {
     public static Typeface T2_BOLD_Typeface(Context context) {
         return Typeface.createFromAsset(context.getAssets(), Harlow);
     }
+   public static Typeface Harlow(Context context) {
+        return Typeface.createFromAsset(context.getAssets(), Harlow);
+    }
 
 }

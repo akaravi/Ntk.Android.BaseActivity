@@ -149,7 +149,7 @@ public abstract class BaseNewsDetail_1_Activity extends
                     .subscribe(new NtkObserver<ErrorExceptionBase>() {
 
                         @Override
-                        public void onNext(ErrorExceptionBase biographyContentResponse) {
+                        public void onNext(@NonNull ErrorExceptionBase biographyContentResponse) {
                             Loading.setVisibility(View.GONE);
                             if (biographyContentResponse.IsSuccess) {
                                 Toasty.success(BaseNewsDetail_1_Activity.this, R.string.success_comment).show();

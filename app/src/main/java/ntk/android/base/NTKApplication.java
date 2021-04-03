@@ -50,16 +50,15 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
                 .setTextSize(14).apply();
     }
 
-//    @Override
-//    protected ApplicationStaticParameter getConfig() {
-//        ApplicationStaticParameter applicationStaticParameter = new ApplicationStaticParameter();
-//        applicationStaticParameter.URL = "http://dd9ecb640aee.ngrok.io/";
-//        return applicationStaticParameter;
-//    }
+
 
     @Override
     public void bindFireBase() {
         FirebaseMessaging.getInstance().subscribeToTopic(getApplicationParameter().PACKAGE_NAME());
     }
-//   public abstract ApplicationParameter getApplicationParameter();
+
+    @Override
+    public String getLanguage() {
+        return null;
+    }
 }

@@ -22,6 +22,7 @@ import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterModel;
+import ntk.android.base.entitymodel.enums.EnumSortType;
 import ntk.android.base.entitymodel.ticketing.TicketingTaskModel;
 import ntk.android.base.services.ticketing.TicketingTaskService;
 import ntk.android.base.utill.AppUtill;
@@ -110,7 +111,7 @@ public class TicketListActivity extends BaseActivity {
             FilterModel request = new FilterModel();
             request.RowPerPage = 10;
             request.CurrentPageNumber = nextPage;
-            request.SortType = NTKUtill.Descnding_Sort;
+            request.SortType = EnumSortType.Descending.index();
             request.SortColumn = "Id";
             switcher.showProgressView();
             ServiceExecute.execute(new TicketingTaskService(this).getAll(request))

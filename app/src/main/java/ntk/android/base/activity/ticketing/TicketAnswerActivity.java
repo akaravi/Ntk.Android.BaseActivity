@@ -177,13 +177,13 @@ public class TicketAnswerActivity extends BaseActivity {
                         @Override
                         public void onError(Throwable e) {
                             switcher.showErrorView();
-                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, v -> init()).show();
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, v -> init()).show();
                         }
 
 
                     });
         } else {
-            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, v -> init()).show();
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, v -> init()).show();
         }
     }
 
@@ -268,7 +268,7 @@ public class TicketAnswerActivity extends BaseActivity {
                             Btn.setVisibility(View.VISIBLE);
                             attaches.remove(attaches.size() - 1);
                             adapter.notifyDataSetChanged();
-                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     init();

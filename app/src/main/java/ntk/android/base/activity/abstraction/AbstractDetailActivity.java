@@ -47,8 +47,10 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
         setViewListener(findViewById(R.id.imgShareDetail), (v -> ClickShare()));
         setViewListener(findViewById(R.id.imgFavDetail), (v -> ClickFav()));
         webViewBody = findViewById(R.id.WebViewBodyDetail);
-        webViewBody.getSettings().setJavaScriptEnabled(true);
-        webViewBody.getSettings().setBuiltInZoomControls(true);
+        if(webViewBody!=null) {
+            webViewBody.getSettings().setJavaScriptEnabled(true);
+            webViewBody.getSettings().setBuiltInZoomControls(true);
+        }
         Id = getIntent().getExtras().getLong(Extras.EXTRA_FIRST_ARG);
         getContent();
     }

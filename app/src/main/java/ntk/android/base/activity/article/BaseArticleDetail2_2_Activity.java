@@ -68,7 +68,6 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
     RecyclerView RvComment;
 
 
-    public RecyclerView Rv;
     protected RatingBar Rate;
     LinearLayout Page;
     CoordinatorLayout layout;
@@ -117,7 +116,6 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
         ImgHeader = findViewById(R.id.imgHeaderDetail);
         RvTab = findViewById(R.id.recyclerTabDetail);
         RvComment = findViewById(R.id.recyclerCommentDetail);
-        Rv = findViewById(R.id.recyclerMenuDetail);
         Rate = findViewById(R.id.ratingBarDetail);
         Page = findViewById(R.id.PageDetail);
         layout = findViewById(R.id.mainLayoutDetail);
@@ -153,7 +151,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
 
     @Override
     protected void showError(String toString, Runnable onTryingAgain) {
-        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getContent();
@@ -185,7 +183,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
                         @Override
                         public void onError(Throwable e) {
                             Loading.setVisibility(View.GONE);
-                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //todo init();
@@ -195,7 +193,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
                     });
         } else {
             Loading.setVisibility(View.GONE);
-            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //todo init();
@@ -215,6 +213,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
                         public void onNext(@NonNull ErrorException<ArticleCommentModel> model) {
                             if (model.ListItems.size() == 0) {
                                 findViewById(R.id.RowCommentDetail).setVisibility(View.GONE);
+                                RvComment.setVisibility(View.GONE);
                             } else {
                                 RecyclerView.Adapter adapter = createCommentAdapter(model.ListItems);
                                 RvComment.setAdapter(adapter);
@@ -225,7 +224,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //todo add to  init();
@@ -235,7 +234,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
                     });
         } else {
             findViewById(R.id.lblCommentDetail).setVisibility(View.GONE);
-            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //todo add to  init();
@@ -475,6 +474,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
                         public void onNext(@NonNull ErrorException<ArticleContentModel> response) {
                             if (response.ListItems.size() == 0) {
                                 findViewById(R.id.RowSimilaryDetail).setVisibility(View.GONE);
+                                findViewById(R.id.RowSimilaryDetail).setVisibility(View.GONE);
                             } else {
                                 RecyclerView.Adapter adapter = createSimilarContentAdapter(response.ListItems);
                                 RvSimilarArticle.setAdapter(adapter);
@@ -489,7 +489,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
                         }
                     });
         } else {
-            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 //                  todo  init();

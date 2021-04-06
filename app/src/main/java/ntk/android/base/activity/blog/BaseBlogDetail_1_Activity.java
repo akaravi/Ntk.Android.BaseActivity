@@ -63,7 +63,6 @@ public abstract class BaseBlogDetail_1_Activity extends
     protected ImageView ImgHeader;
     public RecyclerView RvTab;
     RecyclerView RvComment;
-    public RecyclerView Rv;
     protected RatingBar Rate;
     LinearLayout Page;
     CoordinatorLayout layout;
@@ -105,7 +104,6 @@ public abstract class BaseBlogDetail_1_Activity extends
         ImgHeader = findViewById(R.id.imgHeaderDetail);
         RvTab = findViewById(R.id.recyclerTabDetail);
         RvComment = findViewById(R.id.recyclerCommentDetail);
-        Rv = findViewById(R.id.recyclerMenuDetail);
         Rate = findViewById(R.id.ratingBarDetail);
         Page = findViewById(R.id.PageDetail);
         layout = findViewById(R.id.mainLayoutDetail);
@@ -127,7 +125,7 @@ public abstract class BaseBlogDetail_1_Activity extends
 
     @Override
     protected void showError(String toString, Runnable onTryingAgain) {
-        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getContent();
@@ -159,7 +157,7 @@ public abstract class BaseBlogDetail_1_Activity extends
                         @Override
                         public void onError(Throwable e) {
                             Loading.setVisibility(View.GONE);
-                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //todo init();
@@ -169,7 +167,7 @@ public abstract class BaseBlogDetail_1_Activity extends
                     });
         } else {
             Loading.setVisibility(View.GONE);
-            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //todo init();
@@ -194,12 +192,13 @@ public abstract class BaseBlogDetail_1_Activity extends
                                 commentAdapter.notifyDataSetChanged();
                             } else {
                                 findViewById(R.id.lblCommentDetail).setVisibility(View.GONE);
+                                RvComment.setVisibility(View.GONE);
                             }
                         }
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //todo add to  init();
@@ -209,7 +208,7 @@ public abstract class BaseBlogDetail_1_Activity extends
                     });
         } else {
             findViewById(R.id.lblCommentDetail).setVisibility(View.GONE);
-            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //todo add to  init();
@@ -298,10 +297,10 @@ public abstract class BaseBlogDetail_1_Activity extends
 
         Btn.setOnClickListener(v -> {
             if (Txt[0].getText().toString().isEmpty()) {
-                Toast.makeText(BaseBlogDetail_1_Activity.this,  R.string.per_insert_num, Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseBlogDetail_1_Activity.this, R.string.per_insert_num, Toast.LENGTH_SHORT).show();
             } else {
                 if (Txt[1].getText().toString().isEmpty()) {
-                    Toast.makeText(BaseBlogDetail_1_Activity.this,  R.string.per_insert_num, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BaseBlogDetail_1_Activity.this, R.string.per_insert_num, Toast.LENGTH_SHORT).show();
                 } else {
                     if (AppUtill.isNetworkAvailable(this)) {
 //                        BlogCommentModel add = new BlogCommentModel();
@@ -326,7 +325,7 @@ public abstract class BaseBlogDetail_1_Activity extends
 
                                     @Override
                                     public void onError(@NonNull Throwable e) {
-                                        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+                                        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 //todo add
@@ -335,7 +334,7 @@ public abstract class BaseBlogDetail_1_Activity extends
                                     }
                                 });
                     } else {
-                        Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+                        Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 //todo add instead of init();

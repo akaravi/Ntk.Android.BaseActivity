@@ -64,7 +64,7 @@ public abstract class BaseNewsDetail_1_Activity extends
     protected ImageView ImgHeader;
     public RecyclerView RvTab;
     RecyclerView RvComment;
-    //    public RecyclerView Rv;
+
     protected RatingBar Rate;
     LinearLayout Page;
     CoordinatorLayout layout;
@@ -128,7 +128,7 @@ public abstract class BaseNewsDetail_1_Activity extends
 
     @Override
     protected void showError(String toString, Runnable onTryingAgain) {
-//        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+//        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //                onTryingAgain.run();
@@ -161,7 +161,7 @@ public abstract class BaseNewsDetail_1_Activity extends
                         @Override
                         public void onError(Throwable e) {
                             Loading.setVisibility(View.GONE);
-                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //todo init();
@@ -171,7 +171,7 @@ public abstract class BaseNewsDetail_1_Activity extends
                     });
         } else {
             Loading.setVisibility(View.GONE);
-            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //todo replace();
@@ -197,6 +197,7 @@ public abstract class BaseNewsDetail_1_Activity extends
                                     commentAdapter.notifyDataSetChanged();
                                 } else {
                                     findViewById(R.id.lblCommentDetail).setVisibility(View.GONE);
+                                    RvComment.setVisibility(View.GONE);
                                 }
                             } else
                                 new GenericErrors().ntkException(BaseNewsDetail_1_Activity.this::showError, model.ErrorMessage, () -> HandelDataComment(ContentId));
@@ -210,7 +211,7 @@ public abstract class BaseNewsDetail_1_Activity extends
         } else {
             findViewById(R.id.lblCommentDetail).setVisibility(View.GONE);
             new GenericErrors().netError(this::showError, () -> HandelDataComment(ContentId));
-//            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+//            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
 //
@@ -325,7 +326,7 @@ public abstract class BaseNewsDetail_1_Activity extends
                                         if (e.IsSuccess) {
                                             HandelDataComment(Id);
                                             dialog.dismiss();
-                                            Toasty.success(BaseNewsDetail_1_Activity.this, R.string.success_comment).show();
+                                            Toasty.success(BaseNewsDetail_1_Activity.this, R.string.try_again).show();
                                         } else {
                                             dialog.dismiss();
                                             Toasty.warning(BaseNewsDetail_1_Activity.this, e.ErrorMessage).show();
@@ -334,7 +335,7 @@ public abstract class BaseNewsDetail_1_Activity extends
 
                                     @Override
                                     public void onError(@NonNull Throwable e) {
-                                        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+                                        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 //todo add
@@ -344,7 +345,7 @@ public abstract class BaseNewsDetail_1_Activity extends
                                 });
                     } else {
                         new GenericErrors().netError(this::showErrorDialog, Btn::performClick);
-//                        Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+//                        Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
 //                            @Override
 //                            public void onClick(View v) {
 //

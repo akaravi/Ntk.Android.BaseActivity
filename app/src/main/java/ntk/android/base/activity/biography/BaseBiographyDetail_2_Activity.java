@@ -68,7 +68,6 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
     RecyclerView RvComment;
 
 
-    public RecyclerView Rv;
     protected RatingBar Rate;
     LinearLayout Page;
     CoordinatorLayout layout;
@@ -76,7 +75,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
     protected int unFavoriteDrawableId = R.drawable.ic_fav;
 
     public void setContentView() {
-        setContentView(R.layout.base2_detail_activity);
+        setContentView(R.layout.base3_detail_activity);
     }
 
     @Override
@@ -101,14 +100,6 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
             add(findViewById(R.id.lblNameCommandDetail));
             add(findViewById(R.id.lblKeySeenDetail));
             add(findViewById(R.id.lblValueSeenDetail));
-            add(findViewById(R.id.lblPhotoExtraDetail));
-            add(findViewById(R.id.lblCalDetail));
-            add(findViewById(R.id.lblTimerOne));
-            add(findViewById(R.id.lblTimerTwo));
-            add(findViewById(R.id.lblTimerThree));
-            add(findViewById(R.id.lblTimerFour));
-            add(findViewById(R.id.lblTimerFive));
-            add(findViewById(R.id.lblTimerSix));
             add(findViewById(R.id.lblMenuDetail));
             add(findViewById(R.id.lblMenuTwoDetail));
             add(findViewById(R.id.lblCommentDetail));
@@ -118,7 +109,6 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
         ImgHeader = findViewById(R.id.imgHeaderDetail);
         RvTab = findViewById(R.id.recyclerTabDetail);
         RvComment = findViewById(R.id.recyclerCommentDetail);
-        Rv = findViewById(R.id.recyclerMenuDetail);
         Rate = findViewById(R.id.ratingBarDetail);
         Page = findViewById(R.id.PageDetail);
         layout = findViewById(R.id.mainLayoutDetail);
@@ -149,7 +139,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
 
     @Override
     protected void showError(String toString, Runnable onTryingAgain) {
-        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getContent();
@@ -159,7 +149,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
 
     @Subscribe
     public void EventHtmlBody(HtmlBodyEvent event) {
-        webViewBody.loadData("<html dir=\"rtl\" lang=\"\"><body>" + event.GetMessage() + "</body></html>", "text/html; charset=utf-8", "UTF-8");
+//        webViewBody.loadData("<html dir=\"rtl\" lang=\"\"><body>" + event.GetMessage() + "</body></html>", "text/html; charset=utf-8", "UTF-8");
     }
 
     protected void setContentRate(ScoreClickDtoModel request) {
@@ -181,7 +171,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
                         @Override
                         public void onError(Throwable e) {
                             Loading.setVisibility(View.GONE);
-                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //todo init();
@@ -191,7 +181,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
                     });
         } else {
             Loading.setVisibility(View.GONE);
-            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //todo init();
@@ -223,7 +213,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //todo add to  init();
@@ -233,7 +223,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
                     });
         } else {
             findViewById(R.id.lblCommentDetail).setVisibility(View.GONE);
-            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //todo add to  init();
@@ -367,7 +357,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
 
                                     @Override
                                     public void onError(@NonNull Throwable e) {
-                                        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+                                        Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 //todo add
@@ -376,7 +366,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
                                     }
                                 });
                     } else {
-                        Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+                        Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 //todo add instead of init();
@@ -494,7 +484,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     // todo init();
@@ -503,7 +493,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
                         }
                     });
         } else {
-            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 //                  todo  init();
@@ -535,7 +525,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+                            Snackbar.make(layout, R.string.error_raised, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //todo init();
@@ -544,7 +534,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
                         }
                     });
         } else {
-            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.success_comment, new View.OnClickListener() {
+            Snackbar.make(layout, R.string.per_no_net, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //todo init();

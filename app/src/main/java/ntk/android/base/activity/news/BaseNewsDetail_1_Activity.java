@@ -89,6 +89,7 @@ public abstract class BaseNewsDetail_1_Activity extends
 
     @SuppressLint("SetJavaScriptEnabled")
     private void initView() {
+     findViewById(R.id.headerRecyclerMenu).setVisibility(View.GONE);
         Progress = findViewById(R.id.progressDetail);
 
         Loading = findViewById(R.id.rowProgressDetail);

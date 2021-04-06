@@ -272,32 +272,35 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
         Info.add(i);
 
         for (ArticleContentOtherInfoModel ai : model.ListItems) {
-            switch (ai.TypeId) {
-                case 21:
-                    ((TextView) findViewById(R.id.lblTimerTwo)).setText(ai.Title);
-                    ai.HtmlBody = ai.HtmlBody.replace("<p>", "");
-                    ai.HtmlBody = ai.HtmlBody.replace("</p>", "");
-                    ((TextView) findViewById(R.id.lblTimerOne)).setText(Html.fromHtml(ai.HtmlBody));
-                    findViewById(R.id.RowTimeDetail).setVisibility(View.VISIBLE);
-                    break;
-                case 22:
-                    ((TextView) findViewById(R.id.lblTimerFour)).setText(ai.Title);
-                    ai.HtmlBody = ai.HtmlBody.replace("<p>", "");
-                    ai.HtmlBody = ai.HtmlBody.replace("</p>", "");
-                    ((TextView) findViewById(R.id.lblTimerThree)).setText(Html.fromHtml(ai.HtmlBody));
-                    findViewById(R.id.RowTimeDetail).setVisibility(View.VISIBLE);
-                    break;
-                case 23:
-                    ((TextView) findViewById(R.id.lblTimerSix)).setText(ai.Title);
-                    ai.HtmlBody = ai.HtmlBody.replace("<p>", "");
-                    ai.HtmlBody = ai.HtmlBody.replace("</p>", "");
-                    ((TextView) findViewById(R.id.lblTimerFive)).setText(Html.fromHtml(ai.HtmlBody));
-                    findViewById(R.id.RowTimeDetail).setVisibility(View.VISIBLE);
-                    break;
-                default:
-                    Info.add(ai);
-                    break;
-            }
+            if (ai.TypeId == null)
+                Info.add(ai);
+            else
+                switch (ai.TypeId) {
+                    case 21:
+                        ((TextView) findViewById(R.id.lblTimerTwo)).setText(ai.Title);
+                        ai.HtmlBody = ai.HtmlBody.replace("<p>", "");
+                        ai.HtmlBody = ai.HtmlBody.replace("</p>", "");
+                        ((TextView) findViewById(R.id.lblTimerOne)).setText(Html.fromHtml(ai.HtmlBody));
+                        findViewById(R.id.RowTimeDetail).setVisibility(View.VISIBLE);
+                        break;
+                    case 22:
+                        ((TextView) findViewById(R.id.lblTimerFour)).setText(ai.Title);
+                        ai.HtmlBody = ai.HtmlBody.replace("<p>", "");
+                        ai.HtmlBody = ai.HtmlBody.replace("</p>", "");
+                        ((TextView) findViewById(R.id.lblTimerThree)).setText(Html.fromHtml(ai.HtmlBody));
+                        findViewById(R.id.RowTimeDetail).setVisibility(View.VISIBLE);
+                        break;
+                    case 23:
+                        ((TextView) findViewById(R.id.lblTimerSix)).setText(ai.Title);
+                        ai.HtmlBody = ai.HtmlBody.replace("<p>", "");
+                        ai.HtmlBody = ai.HtmlBody.replace("</p>", "");
+                        ((TextView) findViewById(R.id.lblTimerFive)).setText(Html.fromHtml(ai.HtmlBody));
+                        findViewById(R.id.RowTimeDetail).setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        Info.add(ai);
+                        break;
+                }
         }
         RecyclerView.Adapter adapter = createOtherInfoAdapter(Info);
         RvTab.setAdapter(adapter);
@@ -334,7 +337,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
                 Toast.makeText(BaseArticleDetail2_2_Activity.this, R.string.per_insert_num, Toast.LENGTH_SHORT).show();
             } else {
                 if (Txt[1].getText().toString().isEmpty()) {
-                    Toast.makeText(BaseArticleDetail2_2_Activity.this,  R.string.per_insert_num, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BaseArticleDetail2_2_Activity.this, R.string.per_insert_num, Toast.LENGTH_SHORT).show();
                 } else {
                     if (AppUtill.isNetworkAvailable(this)) {
 //                        ArticleCommentModel add = new ArticleCommentModel();

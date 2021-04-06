@@ -3,16 +3,12 @@ package ntk.android.base.adapter;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.LayoutRes;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -23,15 +19,13 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import ntk.android.base.R;
-
 /**
  *
  */
 
 public abstract class BaseRecyclerAdapter<Entity, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
     protected List<Entity> list;
-    protected int drawable =-1;
+    protected int drawable = -1;
 
     public BaseRecyclerAdapter(ArrayList<Entity> list) {
         this.list = list;
@@ -48,13 +42,21 @@ public abstract class BaseRecyclerAdapter<Entity, VH extends RecyclerView.ViewHo
     }
 
     public void clearAll() {
-        list.clear();
-        notifyDataSetChanged();
+        int size = list.size();
+        notifyItemRangeRemoved(0, size);
     }
 
     public void addToEnd(Entity item) {
         list.add(item);
         notifyItemInserted(list.size() - 1);
+    }
+
+    public void addToEnd(List<Entity> newList) {
+        int s = list.size() - 1;
+        if (s < 0)
+            s = 0;
+        list.addAll(list);
+        notifyItemRangeInserted(s, list.size());
     }
 
     public List<Entity> list() {
@@ -89,10 +91,11 @@ public abstract class BaseRecyclerAdapter<Entity, VH extends RecyclerView.ViewHo
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 if (loading != null) loading.setVisibility(View.GONE);
-            if(loadedImage==null){
-                holder.setImageResource(drawable);
+                if (loadedImage == null) {
+                    holder.setImageResource(drawable);
 
-            }}
+                }
+            }
 
             @Override
             public void onLoadingCancelled(String imageUri, View view) {

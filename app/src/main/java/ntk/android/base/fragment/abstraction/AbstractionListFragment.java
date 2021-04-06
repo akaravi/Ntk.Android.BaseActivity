@@ -10,34 +10,31 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import java9.util.function.Function;
-import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.config.ErrorExceptionObserver;
 import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
-import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.fragment.BaseFragment;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
 import ntk.android.base.utill.FontManager;
 
-public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
+public abstract class AbstractionListFragment<TREq, TEntity> extends BaseFragment {
+    final String EXTRA_SHOW_TOOLBAR = "ASF_ARG_TOOLBAR";
     TextView LblTitle;
     String title = "";
     boolean toolbarShow = false;
-    private int Total = 0;
+    protected int Total = 0;
     protected List<TEntity> models = new ArrayList<>();
     protected RecyclerView.Adapter adapter;
-    protected FilterModel request;
-    private boolean loadingMore = true;
+    protected TREq request;
+    protected boolean loadingMore = true;
 
     @Override
     public void onCreated() {
@@ -48,31 +45,24 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
     @Override
     public void onCreateFragment() {
         setContentView(R.layout.abstraction_list);
+        requestOnIntent();
     }
 
     @Override
     public final void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        request = new FilterModel();
-        request.RowPerPage = 20;
-        if (getArguments() != null) {
-            String reqString = getArguments().getString(Extras.EXTRA_FIRST_ARG, "");
-            if (!reqString.equalsIgnoreCase("")) {
-                request = new Gson().fromJson(reqString, FilterModel.class);
-            }
-            String name = getArguments().getString(Extras.EXTRA_SECOND_ARG, "");
-            if (!name.equalsIgnoreCase(""))
-                title = name;
-            toolbarShow = getArguments().getBoolean(Extras.Extra_THIRD_ARG, true);
-        }
-        if (!withToolbar() || !toolbarShow) {
+        if (getArguments() != null)
+            toolbarShow = getArguments().getBoolean(EXTRA_SHOW_TOOLBAR, false);
+
+        if (!withToolbar()) {
             findViewById(R.id.ToolbarRv).setVisibility(View.GONE);
             findViewById(R.id.toolbarShadow).setVisibility(View.GONE);
         }
         switcher.setLoadMore(findViewById(R.id.loadMoreProgress));
         init();
-        afterInit();
+
     }
+
 
     protected RecyclerView.LayoutManager getRvLayoutManager() {
         return new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -148,9 +138,6 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
     }
 
 
-    public void afterInit() {
-
-    }
 
     private void RestCall(int nextPage) {
         if (AppUtill.isNetworkAvailable(getContext())) {
@@ -158,24 +145,13 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
                 switcher.showProgressView();
             else
                 switcher.showLoadMore();
-            request.CurrentPageNumber = nextPage;
-            ServiceExecute.execute(getService().apply(request))
+
+            ServiceExecute.execute(apiService().apply((nextPage)))
                     .subscribe(new ErrorExceptionObserver<TEntity>(switcher::showErrorView) {
 
                         @Override
-                        protected void SuccessResponse(ErrorException<TEntity> newsContentResponse) {
-                            models.addAll(newsContentResponse.ListItems);
-                            Total = newsContentResponse.TotalRowCount;
-                            if (newsContentResponse.ListItems.size() < request.RowPerPage) {
-                                loadingMore = false;
-                            }
-                            adapter.notifyDataSetChanged();
-                            if (models.size() > 0) {
-                                switcher.showContentView();
-                                switcher.hideLoadMore();
-                                onListCreate();
-                            } else
-                                switcher.showEmptyView();
+                        protected void SuccessResponse(ErrorException<TEntity> response) {
+                            onSuccessNext(response);
 
                         }
 
@@ -192,26 +168,32 @@ public abstract class AbstractionListFragment<TEntity> extends BaseFragment {
         }
     }
 
-    protected void onListCreate() {
-
-
-    }
-
-
-    public abstract Function<FilterModel, Observable<ErrorException<TEntity>>> getService();
-
     public boolean withToolbar() {
         return toolbarShow;
     }
 
-    public abstract RecyclerView.Adapter createAdapter();
-
     public void ClickBack() {
         getActivity().finish();
+    }
+    public void afterInit() {
+
     }
 
     public void ClickSearch() {
     }
+
+    /**
+     * this abstract method for creating Request Object
+     * also can get from Intent
+     */
+    protected abstract void requestOnIntent();
+
+
+    protected abstract void onSuccessNext(ErrorException<TEntity> response);
+
+    protected abstract Function<Integer, Observable<ErrorException<TEntity>>> apiService();
+
+    public abstract RecyclerView.Adapter createAdapter();
 
     public abstract static class IntegrationView {
         public abstract boolean isShown();

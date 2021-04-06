@@ -240,14 +240,17 @@ public abstract class BaseBlogDetail_1_Activity extends
         List<BlogContentOtherInfoModel> Info = new ArrayList<>();
 
         for (BlogContentOtherInfoModel ai : model.ListItems) {
-            switch (ai.TypeId) {
-                case 21:
-                    ((TextView) findViewById(R.id.lblAllMenuDetail)).setText(ai.Title);
-                    ai.HtmlBody = ai.HtmlBody.replace("<p>", "");
-                    ai.HtmlBody = ai.HtmlBody.replace("</p>", "");
-                    ((TextView) findViewById(R.id.lblMenuDetail)).setText(Html.fromHtml(ai.HtmlBody));
-                    break;
-                //todo add later
+            if (ai.TypeId == null)
+                Info.add(ai);
+            else
+                switch (ai.TypeId) {
+                    case 21:
+                        ((TextView) findViewById(R.id.lblAllMenuDetail)).setText(ai.Title);
+                        ai.HtmlBody = ai.HtmlBody.replace("<p>", "");
+                        ai.HtmlBody = ai.HtmlBody.replace("</p>", "");
+                        ((TextView) findViewById(R.id.lblMenuDetail)).setText(Html.fromHtml(ai.HtmlBody));
+                        break;
+                    //todo add later
 //                case 22:
 //                    Lbls.get(9).setText(ai.Title);
 //                    ai.HtmlBody = ai.HtmlBody.replace("<p>", "");
@@ -260,10 +263,10 @@ public abstract class BaseBlogDetail_1_Activity extends
 //                    ai.HtmlBody = ai.HtmlBody.replace("</p>", "");
 //                    Lbls.get(10).setText(Html.fromHtml(ai.HtmlBody));
 //                    break;
-                default:
-                    Info.add(ai);
-                    break;
-            }
+                    default:
+                        Info.add(ai);
+                        break;
+                }
         }
         RecyclerView.Adapter adapter = createOtherInfoAdapter(Info);
         RvTab.setAdapter(adapter);

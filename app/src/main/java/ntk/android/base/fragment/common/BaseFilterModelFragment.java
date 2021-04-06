@@ -1,15 +1,15 @@
-package ntk.android.base.activity.common;
+package ntk.android.base.fragment.common;
 
 import com.google.gson.Gson;
 
 import io.reactivex.Observable;
 import java9.util.function.Function;
 import ntk.android.base.Extras;
-import ntk.android.base.activity.abstraction.AbstractListActivity;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterModel;
+import ntk.android.base.fragment.abstraction.AbstractionListFragment;
 
-public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListActivity<FilterModel, TEntity> {
+public abstract class BaseFilterModelFragment<TEntity> extends AbstractionListFragment<FilterModel, TEntity> {
     @Override
     public void afterInit() {
         super.afterInit();
@@ -19,15 +19,14 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListA
     protected void requestOnIntent() {
         request = new FilterModel();
         request.RowPerPage = 20;
-        if (getIntent() != null)
-            if (getIntent().getExtras() != null) {
-                String reqString = getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG, "");
-                if (!reqString.equalsIgnoreCase("")) {
-                    request = new Gson().fromJson(reqString, FilterModel.class);
-                }
+        if (getArguments() != null) {
+            String reqString = getArguments().getString(Extras.EXTRA_FIRST_ARG, "");
+            if (!reqString.equalsIgnoreCase("")) {
+                request = new Gson().fromJson(reqString, FilterModel.class);
             }
+        }
     }
-    
+
 
     @Override
     protected Function<Integer, Observable<ErrorException<TEntity>>> apiService() {
@@ -36,7 +35,6 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListA
             return getService().apply(request);
         };
     }
-
 
     @Override
     protected final void onSuccessNext(ErrorException<TEntity> newsContentResponse) {
@@ -50,12 +48,14 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListA
             switcher.showContentView();
             switcher.hideLoadMore();
             onListCreate();
-        }
-        else
+        } else
             switcher.showEmptyView();
     }
-    public abstract Function<FilterModel, Observable<ErrorException<TEntity>>> getService();
 
     protected void onListCreate() {
     }
+
+    public abstract Function<FilterModel, Observable<ErrorException<TEntity>>> getService();
+
+
 }

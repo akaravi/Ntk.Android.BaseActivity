@@ -16,18 +16,16 @@ import java9.util.function.Function;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.ErrorExceptionObserver;
+import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.fragment.abstraction.AbstractionListFragment;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
 import ntk.android.base.utill.FontManager;
-import ntk.android.base.config.GenericErrors;
 
 public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
     protected TextView LblTitle;
-
-
     protected int Total = 0;
     protected List<TEntity> models = new ArrayList<>();
     protected RecyclerView.Adapter adapter;
@@ -43,11 +41,6 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
         onCreated();
     }
 
-    protected abstract void requestOnIntent();
-
-    protected void onCreated() {
-
-    }
 
     public RecyclerView.LayoutManager getRvLayoutManager() {
         return new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -120,9 +113,6 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
         };
     }
 
-    public void afterInit() {
-
-    }
 
     private void RestCall(int nextPage) {
         if (AppUtill.isNetworkAvailable(this)) {
@@ -149,15 +139,32 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
         }
     }
 
+    public void ClickBack() {
+        finish();
+    }
+
+    public void afterInit() {
+
+    }
+
+    public void ClickSearch() {
+    }
+
+    protected void onCreated() {
+
+    }
+
+    /**
+     * this abstract method for creating Request Object
+     * also can get from Intent
+     */
+    protected abstract void requestOnIntent();
+
     protected abstract void onSuccessNext(ErrorException<TEntity> response);
 
     protected abstract Function<Integer, Observable<ErrorException<TEntity>>> apiService();
 
     public abstract RecyclerView.Adapter createAdapter();
 
-    public void ClickBack() {
-        finish();
-    }
 
-    public  void ClickSearch(){}
 }

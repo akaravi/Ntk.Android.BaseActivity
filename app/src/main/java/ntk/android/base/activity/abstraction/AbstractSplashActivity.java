@@ -40,7 +40,7 @@ import ntk.android.base.utill.prefrense.Preferences;
 public abstract class AbstractSplashActivity extends BaseActivity {
     long startTime;
     protected int debugBtnClickCount = 0;
-    volatile boolean debugIsVisible = false;
+    protected volatile boolean debugIsVisible = false;
 
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         }
     }
 
-    private void showDebug() {
+    protected void showDebug() {
         debugIsVisible = true;
         Dialog d = new Dialog(this);
         d.setContentView(R.layout.dialog_debug);
@@ -106,7 +106,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
     /**
      * get token device
      */
-    private void getTokenDevice() {
+    protected void getTokenDevice() {
         //check connectivity
         if (AppUtill.isNetworkAvailable(this)) {
             switcher.showContentView();

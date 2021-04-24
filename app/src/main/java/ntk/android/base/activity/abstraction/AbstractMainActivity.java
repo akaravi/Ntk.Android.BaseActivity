@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.util.Base64;
 import android.view.Gravity;
@@ -21,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
-
 import com.google.zxing.WriterException;
 
 import androidmads.library.qrgenearator.QRGContents;

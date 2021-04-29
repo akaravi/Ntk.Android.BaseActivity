@@ -6,6 +6,7 @@ import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.activity.common.BaseSplashActivity;
 import ntk.android.base.styles.BaseModuleStyle;
 import ntk.android.base.styles.StyleHelper;
+import ntk.android.base.utill.prefrense.EasyPreference;
 import ntk.android.base.view.ViewController;
 
 /**
@@ -13,15 +14,18 @@ import ntk.android.base.view.ViewController;
  */
 
 public abstract class ApplicationStyle extends StyleHelper {
-    static String APP_LANGUAGE;
+    String APP_LANGUAGE;
 
-    public static void setAppLanguage(String appLanguage) {
+    public void setAppLanguage(String appLanguage) {
         if (appLanguage == null)
             appLanguage = "fa";
+        EasyPreference.with(NTKApplication.instance.getApplicationContext()).addString("DEFUALT_APP_LANG", appLanguage);
         APP_LANGUAGE = appLanguage.toLowerCase().trim();
     }
 
-    public static String getAppLanguage() {
+    public String getAppLanguage() {
+        if (APP_LANGUAGE == null)
+            APP_LANGUAGE = EasyPreference.with(NTKApplication.instance.getApplicationContext()).getString("DEFUALT_APP_LANG", "en");
         return APP_LANGUAGE;
     }
 

@@ -59,6 +59,6 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
 
     @Override
     public String getLanguage() {
-        return null;
+        return applicationStyle.getAppLanguage();
     }
 }

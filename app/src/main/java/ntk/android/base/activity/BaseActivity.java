@@ -19,8 +19,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        setlocale();
         initBase();
     }
+
 
     public Context getContext() {
         return this;
@@ -94,6 +96,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         inflate.addView(child);
     }
 
+    private void setlocale() {
+
+    }
 
 }
 

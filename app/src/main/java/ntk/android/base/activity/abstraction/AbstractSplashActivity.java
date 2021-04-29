@@ -2,6 +2,9 @@ package ntk.android.base.activity.abstraction;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -12,6 +15,8 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
+
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.annotations.NonNull;
@@ -46,8 +51,27 @@ public abstract class AbstractSplashActivity extends BaseActivity {
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onCreated();
+        setLocale();
         startTime = System.currentTimeMillis();
         getTokenDevice();
+    }
+
+    private void setLocale() {
+        Resources resources = NTKApplication.get().getResources();
+        Configuration overrideConfiguration = resources.getConfiguration();
+        Locale overrideLocale = new Locale(NTKApplication.get().getLanguage());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            overrideConfiguration.setLocale(overrideLocale);
+        } else {
+            overrideConfiguration.locale = overrideLocale;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            NTKApplication.get().createConfigurationContext(overrideConfiguration);
+        } else {
+            resources.updateConfiguration(overrideConfiguration, null);
+        }
     }
 
     //onCreate method of child
@@ -140,6 +164,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                     .subscribe(new ErrorExceptionObserver<ApplicationAppModel>(switcher::showErrorView) {
                         @Override
                         protected void SuccessResponse(ErrorException<ApplicationAppModel> response) {
+//                            NTKApplication.getApplicationStyle().setAppLanguage(response.Item.);
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setUpdateInfo(new UpdateClass(response.Item));
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setQRCode(response.Item.DownloadLinkSrcByDomainQRCodeBase64);
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setAboutUs(new AboutUsClass(response.Item));

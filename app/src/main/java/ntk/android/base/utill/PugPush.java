@@ -43,14 +43,34 @@ public class PugPush {
         i.setData(Uri.parse(notification.Content));
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent = PendingIntent.getActivity(context, 0, i, 0);
-        if (notification.ContentType == 0) {
-            mBuilder.setSmallIcon(R.attr.ntk_base_logo)
-                    .setStyle(new NotificationCompat.BigTextStyle().bigText(notification.Content))
-                    .setContentTitle(notification.Title)
-                    .setDefaults(Notification.DEFAULT_ALL)
-                    .setContentIntent(intent)
-                    .setContentText(notification.Content);
-        } else if (notification.ContentType == 5) {
+        if (notification.ContentType == 0) {//massage
+            if(notification.BigImageSrc==null) {
+                mBuilder.setSmallIcon(R.attr.ntk_base_logo)
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(notification.Content))
+                        .setContentTitle(notification.Title)
+                        .setDefaults(Notification.DEFAULT_ALL)
+                        .setContentIntent(intent)
+                        .setContentText(notification.Content);
+            }else{
+                mBuilder.setSmallIcon(R.attr.ntk_base_logo)
+                        .setDefaults(Notification.DEFAULT_ALL)
+                        .setContentIntent(intent)
+                        .setStyle(new NotificationCompat.BigPictureStyle()
+                                .bigPicture(ImageLoader.getInstance().loadImageSync(notification.BigImageSrc))
+                                .setSummaryText(notification.Title)
+                                .setBigContentTitle(notification.Content));
+            }
+            //link =1
+        } else if (notification.ContentType == 1) {
+
+            //ads
+        } else if (notification.ContentType == 2) {
+
+            //Login 3
+        } else if (notification.ContentType == 3) {
+
+            //logout 4
+        } else if (notification.ContentType == 4) {
             mBuilder.setSmallIcon(R.attr.ntk_base_logo)
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setContentIntent(intent)

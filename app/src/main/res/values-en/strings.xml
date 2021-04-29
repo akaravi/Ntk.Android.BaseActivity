@@ -42,7 +42,6 @@
     <string name="login_code">login code</string>
     <string name="Continue_string">continue</string>
     <string name="send_login_code_again">we send sms code again</string>
-    <string name="plz_wait_recieve_code">\please wait to receive code</string>
     <string name="address">address</string>
     <string name="contact_us">contact us</string>
     <string name="call_number">mobile number</string>
@@ -56,7 +55,7 @@
     <string name="passowrd_not_same">password is not same</string>
     <string name="no_new_message">no new message</string>
     <string name="pollings">polling</string>
-    <string name="faq">faq</string>
+    <string name="faq">Faq</string>
     <string name="plz_insert_ticket_subject">please insert subject</string>
     <string name="plz_insert_ticket_desc">please insert desc</string>
     <string name="plz_insert_name">please insert name</string>
@@ -78,7 +77,7 @@
     <string name="is_string">is</string>
     <string name="max_vote">max vote"</string>
     <string name="ntk_error">ntk error raised</string>
-    <string name="plz_check_network">please check your network</string>
+    <string name="plz_check_network">Bitte überprüfen Sie Ihr Netzwerk</string>
     <string name="file_number">file numebr</string>
     <string name="download_url_not_exist">no file exist</string>
     <string name="max_vote_each_item">max vote for each item</string>
@@ -135,4 +134,16 @@
     <string name="send_ticket">send ticket</string>
     <string name="details">details</string>
     <string name="active">active</string>
+    <string name="about_page_description" translatable="false">test</string>
+    <string name="about_contact_us">contact us</string>
+    <string name="about_instagram">instagram link</string>
+    <string name="about_telegram">telegram link</string>
+    <string name="about_facebook">facebook link</string>
+    <string name="about_play_store">playstore link</string>
+    <string name="about_youtube">youtube link</string>
+    <string name="about_twitter">twiter link</string>
+    <string name="about_phone">"telephone "</string>
+    <string name="about_github">Fork uns auf GitHub</string>
+    <string name="about_website">Webseite</string>
+    <string name="plz_wait_recieve_code">\\please wait to receive code</string>
 </resources>

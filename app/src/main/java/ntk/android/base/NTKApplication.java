@@ -1,5 +1,11 @@
 package ntk.android.base;
 
+import android.content.Context;
+import android.content.res.Configuration;
+
+import androidx.annotation.NonNull;
+
+import com.akexorcist.localizationactivity.core.LocalizationApplicationDelegate;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -19,7 +25,24 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
     //@Notify please note that not change this value to True
 
     protected static ApplicationStyle applicationStyle;
+    LocalizationApplicationDelegate delegate = new LocalizationApplicationDelegate();
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        delegate.setDefaultLanguage(base, "fa");
+        super.attachBaseContext(base);
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        delegate.onConfigurationChanged(this);
+    }
+
+    @Override
+    public Context getApplicationContext() {
+        return delegate.getApplicationContext(super.getApplicationContext());
+    }
 
     public static ApplicationStyle getApplicationStyle() {
         return applicationStyle;
@@ -49,7 +72,6 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
                 .setToastTypeface(FontManager.T1_Typeface(getApplicationContext()))
                 .setTextSize(14).apply();
     }
-
 
 
     @Override

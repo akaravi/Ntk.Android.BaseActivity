@@ -13,7 +13,7 @@
     <color name="about_item_text_color">#7c7c7c</color>
     <color name="about_text_color">#595959</color>
 <!--Strings  -->
-    <string name="about_page_description" translatable="false">نوشته تستی</string>
+    <string name="about_page_description">نوشته تستی</string>
     <string name="about_contact_us">تماس با ما</string>
     <string name="about_instagram">ما را در اینستاگرام دنبال کنید</string>
     <string name="about_telegram">ما را در تلگرام دنبال کنید</string>

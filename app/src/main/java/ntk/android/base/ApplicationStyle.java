@@ -1,5 +1,7 @@
 package ntk.android.base;
 
+import android.content.Context;
+
 import java.util.HashMap;
 
 import ntk.android.base.activity.BaseActivity;
@@ -16,19 +18,27 @@ import ntk.android.base.view.ViewController;
 public abstract class ApplicationStyle extends StyleHelper {
     String APP_LANGUAGE;
 
-    public void setAppLanguage(String appLanguage) {
-        if (appLanguage == null)
+    public void setAppLanguage(int enumLang) {
+        String appLanguage = "fa";
+        if (enumLang == 0)
             appLanguage = "fa";
+        else if (enumLang==1)
+            appLanguage="en";
+        else if (enumLang==2)
+            appLanguage="de";
+
         EasyPreference.with(NTKApplication.instance.getApplicationContext()).addString("DEFUALT_APP_LANG", appLanguage);
         APP_LANGUAGE = appLanguage.toLowerCase().trim();
     }
 
     public String getAppLanguage() {
+        return getAppLanguage(NTKApplication.instance.getApplicationContext());
+    }
+    public String getAppLanguage(Context context) {
         if (APP_LANGUAGE == null)
-            APP_LANGUAGE = EasyPreference.with(NTKApplication.instance.getApplicationContext()).getString("DEFUALT_APP_LANG", "en");
+            APP_LANGUAGE = EasyPreference.with(context).getString("DEFUALT_APP_LANG", "fa");
         return APP_LANGUAGE;
     }
-
     public ApplicationStyle() {
         modules = new HashMap();
         Init();

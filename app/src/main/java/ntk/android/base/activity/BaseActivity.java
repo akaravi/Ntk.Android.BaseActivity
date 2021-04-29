@@ -7,22 +7,28 @@ import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.akexorcist.localizationactivity.core.OnLocaleChangedListener;
+
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
+import ntk.android.base.styles.LocaleHelper;
 import ntk.android.base.view.ViewController;
 import ntk.android.base.view.swicherview.Switcher;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements OnLocaleChangedListener {
 
     protected Switcher switcher;
 
     @Override
     protected void onStart() {
         super.onStart();
-        setlocale();
         initBase();
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
 
     public Context getContext() {
         return this;
@@ -96,9 +102,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         inflate.addView(child);
     }
 
-    private void setlocale() {
 
-    }
 
 }
 

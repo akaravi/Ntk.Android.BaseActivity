@@ -59,7 +59,7 @@ dependencies {
     implementation 'androidx.room:room-rxjava2:2.2.5'
     //compact
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     //for retrofit
@@ -86,9 +86,7 @@ dependencies {
     //for sweetDialog
     implementation 'com.pnikosis:materialish-progress:1.0'
     //for locale
-    api ('com.akexorcist:localization:1.2.9') {
-        exclude group: 'androidx.core', module: 'core'
-    }
+    implementation ('com.akexorcist:localization:1.2.9')
     //for base
     api  'com.github.akaravi:Ntk.Android.Base:1.3.119'
 //    api project(path: ':baseApi')

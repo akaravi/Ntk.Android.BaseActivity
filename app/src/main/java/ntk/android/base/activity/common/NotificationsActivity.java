@@ -15,12 +15,13 @@ import java.util.ArrayList;
 
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
+import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.adapter.NotificationListAdapter;
 import ntk.android.base.event.notificationEvent;
 import ntk.android.base.model.NotificationModel;
 import ntk.android.base.room.RoomDb;
 
-public class NotificationsActivity extends AppCompatActivity {
+public class NotificationsActivity extends BaseActivity {
 
     RecyclerView Rv;
 

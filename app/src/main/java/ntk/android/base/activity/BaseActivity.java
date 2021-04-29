@@ -11,11 +11,10 @@ import com.akexorcist.localizationactivity.core.OnLocaleChangedListener;
 
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
-import ntk.android.base.styles.LocaleHelper;
 import ntk.android.base.view.ViewController;
 import ntk.android.base.view.swicherview.Switcher;
 
-public abstract class BaseActivity extends AppCompatActivity implements OnLocaleChangedListener {
+public abstract class BaseActivity extends BaseLocaleActivity {
 
     protected Switcher switcher;
 
@@ -25,10 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnLocale
         initBase();
     }
 
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(LocaleHelper.onAttach(base));
-    }
+
 
     public Context getContext() {
         return this;

@@ -23,9 +23,19 @@ public abstract class ApplicationStyle extends StyleHelper {
         if (enumLang == 0)
             appLanguage = "fa";
         else if (enumLang==1)
-            appLanguage="en";
+            appLanguage="fa";
         else if (enumLang==2)
+            appLanguage="en";
+        else if (enumLang==3)
             appLanguage="de";
+        else if (enumLang==4)
+            appLanguage="fr";
+        else if (enumLang==5)
+            appLanguage="ch";
+        else if (enumLang==6)
+            appLanguage="jp";
+        else if (enumLang==7)
+            appLanguage="es";
 
         EasyPreference.with(NTKApplication.instance.getApplicationContext()).addString("DEFUALT_APP_LANG", appLanguage);
         APP_LANGUAGE = appLanguage.toLowerCase().trim();
@@ -34,7 +44,10 @@ public abstract class ApplicationStyle extends StyleHelper {
     public String getAppLanguage() {
         return getAppLanguage(NTKApplication.instance.getApplicationContext());
     }
-    public String getAppLanguage(Context context) {
+    public static String GET_DEFAULT(Context context) {
+        return  EasyPreference.with(context).getString("DEFUALT_APP_LANG", "fa");
+    }
+    public  String getAppLanguage(Context context) {
         if (APP_LANGUAGE == null)
             APP_LANGUAGE = EasyPreference.with(context).getString("DEFUALT_APP_LANG", "fa");
         return APP_LANGUAGE;

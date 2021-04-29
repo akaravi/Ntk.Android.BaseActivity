@@ -15,6 +15,7 @@ import es.dmoral.toasty.Toasty;
 import io.reactivex.annotations.NonNull;
 import ntk.android.base.Extras;
 import ntk.android.base.R;
+import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.adapter.poling.DetailPolCategoryAdapter;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
@@ -25,7 +26,7 @@ import ntk.android.base.entitymodel.polling.PollingContentModel;
 import ntk.android.base.services.pooling.PollingContentService;
 import ntk.android.base.utill.FontManager;
 
-public class PolingDetailActivity extends AppCompatActivity {
+public class PolingDetailActivity extends BaseActivity {
 
     TextView LblTitle;
     Long id;

@@ -28,6 +28,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
+import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.AuthUserSignUpModel;
@@ -39,7 +40,7 @@ import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
 import ntk.android.base.view.CaptchaView;
 
-public class RegisterMobileActivity extends AppCompatActivity {
+public class RegisterMobileActivity extends BaseActivity {
 
     private static final int REQ_PERMISSION = 100;
     ProgressBar Loading;

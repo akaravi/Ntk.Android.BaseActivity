@@ -86,10 +86,10 @@ dependencies {
     //for sweetDialog
     implementation 'com.pnikosis:materialish-progress:1.0'
     //for locale
-    implementation 'com.akexorcist:localization:1.2.7'
+    api 'com.akexorcist:localization:1.2.7'
     //for base
-//    api  'com.github.akaravi:Ntk.Android.Base:1.3.118'
-    api project(path: ':baseApi')
+    api  'com.github.akaravi:Ntk.Android.Base:1.3.119'
+//    api project(path: ':baseApi')
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

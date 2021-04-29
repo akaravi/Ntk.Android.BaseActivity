@@ -1,15 +1,10 @@
 package ntk.android.base.activity.abstraction;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -17,8 +12,6 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
-
-import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.annotations.NonNull;
@@ -41,7 +34,6 @@ import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.TokenInfoModel;
 import ntk.android.base.services.application.ApplicationAppService;
 import ntk.android.base.services.core.CoreAuthService;
-import ntk.android.base.styles.LocaleHelper;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.prefrense.Preferences;
 
@@ -49,34 +41,13 @@ public abstract class AbstractSplashActivity extends BaseActivity {
     long startTime;
     protected int debugBtnClickCount = 0;
     protected volatile boolean debugIsVisible = false;
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(LocaleHelper.onAttach(base));
-    }
+
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onCreated();
         startTime = System.currentTimeMillis();
         getTokenDevice();
-    }
-
-    private void setLocale() {
-        Resources resources = NTKApplication.get().getResources();
-        Configuration overrideConfiguration = resources.getConfiguration();
-        Locale overrideLocale = new Locale(NTKApplication.get().getLanguage());
-        Locale.setDefault(overrideLocale);
-        DisplayMetrics dm = resources.getDisplayMetrics();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            overrideConfiguration.setLocale(overrideLocale);
-        } else {
-            overrideConfiguration.locale = overrideLocale;
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            NTKApplication.get().createConfigurationContext(overrideConfiguration);
-        } else {
-            resources.updateConfiguration(overrideConfiguration, dm);
-        }
     }
 
     //onCreate method of child
@@ -170,6 +141,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                         @Override
                         protected void SuccessResponse(ErrorException<ApplicationAppModel> response) {
                             NTKApplication.getApplicationStyle().setAppLanguage(response.Item.Lang);
+                            setLanguage(NTKApplication.getApplicationStyle().getAppLanguage());
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setUpdateInfo(new UpdateClass(response.Item));
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setQRCode(response.Item.DownloadLinkSrcByDomainQRCodeBase64);
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setAboutUs(new AboutUsClass(response.Item));

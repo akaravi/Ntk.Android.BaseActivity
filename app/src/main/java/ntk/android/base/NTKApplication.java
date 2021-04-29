@@ -29,7 +29,7 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
 
     @Override
     protected void attachBaseContext(Context base) {
-        delegate.setDefaultLanguage(base, "fa");
+        delegate.setDefaultLanguage(base, ApplicationStyle.GET_DEFAULT(base));
         super.attachBaseContext(base);
     }
 
@@ -81,6 +81,6 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
 
     @Override
     public String getLanguage() {
-        return applicationStyle.getAppLanguage();
+        throw new RuntimeException("NTKAPPLICAITON ERROR");
     }
 }

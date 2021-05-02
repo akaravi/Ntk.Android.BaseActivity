@@ -439,7 +439,7 @@
                             android:layout_height="45dp" />
                     </LinearLayout>
 
-                    <WebView
+                    <ntk.android.base.view.NWebView
                         android:id="@+id/WebViewBodyDetail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

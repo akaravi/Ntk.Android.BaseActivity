@@ -60,7 +60,7 @@
                 android:visibility="gone"
                 tools:ignore="WebViewLayout">
 
-                <WebView
+                <ntk.android.base.view.NWebView
                     android:id="@+id/WebViewFaqList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

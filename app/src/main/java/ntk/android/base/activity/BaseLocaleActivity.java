@@ -1,6 +1,7 @@
 package ntk.android.base.activity;
 
-import com.akexorcist.localizationactivity.ui.LocalizationActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
-class BaseLocaleActivity extends LocalizationActivity {
+
+class BaseLocaleActivity extends AppCompatActivity {
 }

@@ -1,13 +1,10 @@
 package ntk.android.base.activity;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.akexorcist.localizationactivity.core.OnLocaleChangedListener;
 
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
@@ -25,7 +22,10 @@ public abstract class BaseActivity extends BaseLocaleActivity {
     }
 
 
-
+    @Override
+    public AssetManager getAssets() {
+        return getResources().getAssets();
+    }
     public Context getContext() {
         return this;
     }

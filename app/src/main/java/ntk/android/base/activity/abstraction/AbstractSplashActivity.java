@@ -12,6 +12,7 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
+import com.yariksoffice.lingver.Lingver;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.annotations.NonNull;
@@ -141,7 +142,8 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                         @Override
                         protected void SuccessResponse(ErrorException<ApplicationAppModel> response) {
                             NTKApplication.getApplicationStyle().setAppLanguage(response.Item.Lang);
-                            setLanguage(NTKApplication.getApplicationStyle().getAppLanguage());
+//                            Lingver.getInstance().setLocale(AbstractSplashActivity.this,(NTKApplication.getApplicationStyle().getAppLanguage()));
+                            Lingver.getInstance().setLocale(AbstractSplashActivity.this,"en");
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setUpdateInfo(new UpdateClass(response.Item));
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setQRCode(response.Item.DownloadLinkSrcByDomainQRCodeBase64);
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setAboutUs(new AboutUsClass(response.Item));

@@ -95,7 +95,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:hint="نام و نام خانوادگی">
+                        android:hint="@string/fullName">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/txtNameFamilyActSendTicket"

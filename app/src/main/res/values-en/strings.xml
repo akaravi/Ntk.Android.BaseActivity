@@ -146,4 +146,5 @@
     <string name="about_github">Fork uns auf GitHub</string>
     <string name="about_website">Webseite</string>
     <string name="plz_wait_recieve_code">\\please wait to receive code</string>
+    <string name="fullName">full name</string>
 </resources>

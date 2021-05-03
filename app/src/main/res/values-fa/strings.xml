@@ -135,4 +135,5 @@
     <string name="send_ticket">ارسال درخواست</string>
     <string name="details">جزئیات</string>
     <string name="active">فعال</string>
+    <string name="fullName">نام و نام خانوادگی</string>
 </resources>

@@ -146,4 +146,5 @@
     <string name="blog">blog</string>
     <string name="new_ticket">neues Ticket senden</string>
     <string name="faq">faq</string>
+    <string name="fullName">vollständiger Name</string>
 </resources>

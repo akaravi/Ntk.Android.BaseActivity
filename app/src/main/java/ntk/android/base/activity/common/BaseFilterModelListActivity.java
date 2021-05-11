@@ -8,6 +8,7 @@ import ntk.android.base.Extras;
 import ntk.android.base.activity.abstraction.AbstractListActivity;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterModel;
+import ntk.android.base.entitymodel.enums.EnumSortType;
 
 public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListActivity<FilterModel, TEntity> {
     @Override
@@ -19,6 +20,8 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListA
     protected void requestOnIntent() {
         request = new FilterModel();
         request.RowPerPage = 20;
+        request.SortColumn = sortColumn();
+        request.SortType = EnumSortType.Descending.index();
         if (getIntent() != null)
             if (getIntent().getExtras() != null) {
                 String reqString = getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG, "");
@@ -27,7 +30,10 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListA
                 }
             }
     }
-    
+
+    protected String sortColumn() {
+        return "Id";
+    }
 
     @Override
     protected Function<Integer, Observable<ErrorException<TEntity>>> apiService() {
@@ -50,10 +56,10 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListA
             switcher.showContentView();
             switcher.hideLoadMore();
             onListCreate();
-        }
-        else
+        } else
             switcher.showEmptyView();
     }
+
     public abstract Function<FilterModel, Observable<ErrorException<TEntity>>> getService();
 
     protected void onListCreate() {

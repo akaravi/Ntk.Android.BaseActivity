@@ -7,6 +7,7 @@ import java9.util.function.Function;
 import ntk.android.base.Extras;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterModel;
+import ntk.android.base.entitymodel.enums.EnumSortType;
 import ntk.android.base.fragment.abstraction.AbstractionListFragment;
 
 public abstract class BaseFilterModelFragment<TEntity> extends AbstractionListFragment<FilterModel, TEntity> {
@@ -19,6 +20,8 @@ public abstract class BaseFilterModelFragment<TEntity> extends AbstractionListFr
     protected void requestOnIntent() {
         request = new FilterModel();
         request.RowPerPage = 20;
+        request.SortColumn = sortColumn();
+        request.SortType = EnumSortType.Descending.index();
         if (getArguments() != null) {
             String reqString = getArguments().getString(Extras.EXTRA_FIRST_ARG, "");
             if (!reqString.equalsIgnoreCase("")) {
@@ -27,6 +30,9 @@ public abstract class BaseFilterModelFragment<TEntity> extends AbstractionListFr
         }
     }
 
+    protected String sortColumn() {
+        return "Id";
+    }
 
     @Override
     protected Function<Integer, Observable<ErrorException<TEntity>>> apiService() {

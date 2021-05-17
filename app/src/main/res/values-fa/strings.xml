@@ -49,7 +49,7 @@
     <string name="fax_numebr">َشماره فکس</string>
     <string name="email">\"ایمیل \"</string>
     <string name="current_version">نسخه ی کنونی :</string>
-    <string name="version_number">\"نسخه ی \"</string>
+    <string name="version_number">نسخه ی </string>
     <string name="start">شروع</string>
     <string name="next">بعدی</string>
     <string name="plz_insert_password">کلمه عبور را وارد نمایید</string>

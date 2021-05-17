@@ -48,7 +48,7 @@
     <string name="fax_numebr">Faxnummer</string>
     <string name="email">email</string>
     <string name="current_version">aktuelle Version</string>
-    <string name="version_number">bauen</string>
+    <string name="version_number">version</string>
     <string name="start">start</string>
     <string name="next">Nächster</string>
     <string name="plz_insert_password">Bitte Passwort eingeben</string>

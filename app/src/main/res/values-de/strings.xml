@@ -147,4 +147,5 @@
     <string name="new_ticket">neues Ticket senden</string>
     <string name="faq">faq</string>
     <string name="fullName">vollständiger Name</string>
+    <string name="build_number" >bauen</string>
 </resources>

@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">NTK.Android.BaseActivity</string>
     <string-array name="StateTicket">
         <item>normal</item>
         <item>important</item>

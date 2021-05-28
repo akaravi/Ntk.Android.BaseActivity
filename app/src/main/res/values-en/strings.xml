@@ -147,4 +147,7 @@
     <string name="plz_wait_recieve_code">\\please wait to receive code</string>
     <string name="fullName">full name</string>
     <string name="build_number">build</string>
+    <string name="splashGetTokenStep">obtaining token step</string>
+    <string name="splashGetCurrentAppStep">Getting app information</string>
+    <string name="splashGetUserInformationStep">Receiving user information</string>
 </resources>

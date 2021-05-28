@@ -8,6 +8,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -111,6 +112,9 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         //check connectivity
         if (AppUtill.isNetworkAvailable(this)) {
             switcher.showContentView();
+            TextView Lb2 = findViewById(R.id.lblWorkActSplash);
+            if (Lb2!=null)
+                Lb2.setText(R.string.splashGetTokenStep);
             ServiceExecute.execute(new CoreAuthService(this).getTokenDevice())
                     .subscribe(new ErrorExceptionObserver<TokenInfoModel>(switcher::showErrorView) {
                         @Override
@@ -137,6 +141,9 @@ public abstract class AbstractSplashActivity extends BaseActivity {
 
         if (AppUtill.isNetworkAvailable(this)) {
             switcher.showContentView();
+            TextView Lb2 = findViewById(R.id.lblWorkActSplash);
+            if (Lb2!=null)
+                Lb2.setText(R.string.splashGetCurrentAppStep);
             ServiceExecute.execute(new ApplicationAppService(this).currentApp())
                     .subscribe(new ErrorExceptionObserver<ApplicationAppModel>(switcher::showErrorView) {
                         @Override
@@ -171,6 +178,9 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         Preferences.with(this).appVariableInfo().setApplicationAppModel(new Gson().toJson(model));
         //user has token
         if (userId > 0) {
+            TextView Lb2 = findViewById(R.id.lblWorkActSplash);
+            if (Lb2!=null)
+                Lb2.setText(R.string.splashGetUserInformationStep);
             ServiceExecute.execute(new CoreAuthService(this).correctTokenInfo())
                     .subscribe(new NtkObserver<Boolean>() {
                         @Override

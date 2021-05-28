@@ -147,4 +147,7 @@
     <string name="faq">faq</string>
     <string name="fullName">vollständiger Name</string>
     <string name="build_number" >bauen</string>
+    <string name="splashGetTokenStep">Token-Schritt erhalten</string>
+    <string name="splashGetCurrentAppStep">App-informatie ophalen</string>
+    <string name="splashGetUserInformationStep">Gebruikersinformatie ontvangen</string>
 </resources>

@@ -136,4 +136,7 @@
     <string name="active">فعال</string>
     <string name="fullName">نام و نام خانوادگی</string>
     <string name="build_number">نگارش </string>
+    <string name="splashGetTokenStep">در حال گرفتن توکن</string>
+    <string name="splashGetCurrentAppStep">در حال گرفتن اطلاعات برنامه</string>
+    <string name="splashGetUserInformationStep">در حال دریافت اطلاعات کاربری</string>
 </resources>

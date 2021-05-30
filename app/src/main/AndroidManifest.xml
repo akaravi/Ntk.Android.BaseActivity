@@ -61,6 +61,7 @@
         <activity android:name=".activity.common.AuthWithSmsConfirmActivity" />
         <activity android:name=".activity.ticketing.NewTicketActivity" />
         <activity android:name=".activity.common.FeedbackListActivity" />
+        <activity android:name=".activity.common.VideoPlayerActivity" />
 
 
         <service

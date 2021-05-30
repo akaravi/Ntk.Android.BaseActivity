@@ -87,8 +87,10 @@ dependencies {
     implementation 'com.pnikosis:materialish-progress:1.0'
     //for locale
     implementation "com.github.YarikSOffice:lingver:1.3.0"    //for base
-    api  'com.github.akaravi:Ntk.Android.Base:1.3.120'
+    api 'com.github.akaravi:Ntk.Android.Base:1.3.120'
 //    api project(path: ':baseApi')
+    // full exoplayer library
+    implementation 'com.google.android.exoplayer:exoplayer:2.13.3'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

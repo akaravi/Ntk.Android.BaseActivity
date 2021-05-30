@@ -17,10 +17,9 @@
         android:id="@+id/lblWorkActSplash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/lblVersionActSplash"
+        android:layout_above="@+id/splashIndicator"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"
-        android:text="awwd"
         android:textColor="?colorTextPrimary"
         android:textSize="13sp" />
 
@@ -30,8 +29,21 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
-        android:text="awwd" />
+        android:layout_marginBottom="15dp" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/splashIndicator"   android:visibility="visible"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginRight="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_above="@+id/lblVersionActSplash"
+        android:layout_centerHorizontal="true"
+        android:indeterminate="false"
+        android:progress="10"
+        app:indeterminateAnimationType="disjoint"
+        app:indicatorSize="18dp"
+        app:trackThickness="5dp" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/AnimationActSplash"

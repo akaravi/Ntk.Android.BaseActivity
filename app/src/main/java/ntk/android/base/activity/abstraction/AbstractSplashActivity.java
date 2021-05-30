@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.gson.Gson;
 import com.yariksoffice.lingver.Lingver;
 
@@ -113,8 +114,13 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         if (AppUtill.isNetworkAvailable(this)) {
             switcher.showContentView();
             TextView Lb2 = findViewById(R.id.lblWorkActSplash);
-            if (Lb2!=null)
+            if (Lb2 != null)
                 Lb2.setText(R.string.splashGetTokenStep);
+            LinearProgressIndicator indicator = findViewById(R.id.splashIndicator);
+            if (indicator != null) {
+                indicator.setProgress(20);
+                indicator.show();
+            }
             ServiceExecute.execute(new CoreAuthService(this).getTokenDevice())
                     .subscribe(new ErrorExceptionObserver<TokenInfoModel>(switcher::showErrorView) {
                         @Override
@@ -142,14 +148,18 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         if (AppUtill.isNetworkAvailable(this)) {
             switcher.showContentView();
             TextView Lb2 = findViewById(R.id.lblWorkActSplash);
-            if (Lb2!=null)
+            if (Lb2 != null)
                 Lb2.setText(R.string.splashGetCurrentAppStep);
+            LinearProgressIndicator indicator = findViewById(R.id.splashIndicator);
+            if (indicator != null) {
+                indicator.setProgress(50);
+            }
             ServiceExecute.execute(new ApplicationAppService(this).currentApp())
                     .subscribe(new ErrorExceptionObserver<ApplicationAppModel>(switcher::showErrorView) {
                         @Override
                         protected void SuccessResponse(ErrorException<ApplicationAppModel> response) {
                             NTKApplication.getApplicationStyle().setAppLanguage(response.Item.Lang);
-                            Lingver.getInstance().setLocale(AbstractSplashActivity.this,(NTKApplication.getApplicationStyle().getAppLanguage()));
+                            Lingver.getInstance().setLocale(AbstractSplashActivity.this, (NTKApplication.getApplicationStyle().getAppLanguage()));
 //                            Lingver.getInstance().setLocale(AbstractSplashActivity.this,"en");
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setUpdateInfo(new UpdateClass(response.Item));
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setQRCode(response.Item.DownloadLinkSrcByDomainQRCodeBase64);
@@ -179,8 +189,12 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         //user has token
         if (userId > 0) {
             TextView Lb2 = findViewById(R.id.lblWorkActSplash);
-            if (Lb2!=null)
+            if (Lb2 != null)
                 Lb2.setText(R.string.splashGetUserInformationStep);
+            LinearProgressIndicator indicator = findViewById(R.id.splashIndicator);
+            if (indicator != null) {
+                indicator.setProgress(70);
+            }
             ServiceExecute.execute(new CoreAuthService(this).correctTokenInfo())
                     .subscribe(new NtkObserver<Boolean>() {
                         @Override

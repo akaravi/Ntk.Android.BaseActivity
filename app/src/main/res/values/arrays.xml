@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="progress_colors">
+        <item>@color/common_google_signin_btn_text_light_default</item>
+        <item>@color/colorRed</item>
+        <item>@color/gray</item>
+    </string-array>
+</resources>

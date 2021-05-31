@@ -1,8 +1,9 @@
 package ntk.android.base.activity.common;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -12,21 +13,24 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.util.Util;
 
+import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 
 public class VideoPlayerActivity extends BaseActivity {
     private SimpleExoPlayer player;
     private PlayerView playerView;
-    final static int PODCAST = 0;
-    final static int VIDEO = 1;
+    final int podcast = 0;
+    final int video = 1;
 
     int type = 0;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.videoplayer_activity);
+        findViewById(R.id.imgToolbarBack).setOnClickListener(v -> finish());
         playerView = findViewById(R.id.playerView);
         player = new SimpleExoPlayer.Builder(this).build();
         playerView.setPlayer(player);
@@ -45,9 +49,9 @@ public class VideoPlayerActivity extends BaseActivity {
     }
 
     private void initializePlayer() {
-//        MediaItem mediaItem = MediaItem.fromUri(getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG));
+
         if (player != null) {
-            MediaItem mediaItem = MediaItem.fromUri("https://dls.music-fa.com/tagdl/99/Reza%20Sadeghi%20-%20Rade%20Pa%20(320).mp3");
+            MediaItem mediaItem = MediaItem.fromUri(getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG));
             player.setMediaItem(mediaItem);
             player.setPlayWhenReady(playWhenReady);
             player.seekTo(currentWindow, playbackPosition);
@@ -105,4 +109,17 @@ public class VideoPlayerActivity extends BaseActivity {
             player = null;
         }
     }
+
+    public static void VIDEO(Context c, String url) {
+        Intent i = new Intent(c, VideoPlayerActivity.class);
+        i.putExtra(Extras.EXTRA_FIRST_ARG, url);
+        c.startActivity(i);
+    }
+
+    public static void PODCAST(Context c, String url) {
+        Intent i = new Intent(c, VideoPlayerActivity.class);
+        i.putExtra(Extras.EXTRA_FIRST_ARG, url);
+        c.startActivity(i);
+    }
+
 }

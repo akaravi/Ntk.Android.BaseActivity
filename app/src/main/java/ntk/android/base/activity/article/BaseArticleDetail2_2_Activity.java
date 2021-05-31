@@ -39,6 +39,7 @@ import io.reactivex.annotations.NonNull;
 import java9.util.function.Function;
 import ntk.android.base.R;
 import ntk.android.base.activity.abstraction.AbstractDetailActivity;
+import ntk.android.base.activity.common.VideoPlayerActivity;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.core.ScoreClickDtoModel;
@@ -455,6 +456,15 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
         if (Id > 0) {
             getContentOtherInfo(Id);
             HandelDataComment(Id);
+        }
+        if (model.Item.LinkFileMovieIdSrc != null && !model.Item.LinkFileMovieIdSrc.equalsIgnoreCase("")) {
+            View videoPlay = findViewById(R.id.videPlayback);
+            videoPlay.setVisibility(View.VISIBLE);
+            videoPlay.setOnClickListener(v -> VideoPlayerActivity.VIDEO(this, model.Item.LinkFileMovieIdSrc));
+        } if (model.Item.LinkFilePodcastIdSrc != null && !model.Item.LinkFilePodcastIdSrc.equalsIgnoreCase("")) {
+            View videoPlay = findViewById(R.id.musicPlayback);
+            videoPlay.setVisibility(View.VISIBLE);
+            videoPlay.setOnClickListener(v -> VideoPlayerActivity.PODCAST(this, model.Item.LinkFilePodcastIdSrc));
         }
         Loading.setVisibility(View.GONE);
         Page.setVisibility(View.VISIBLE);

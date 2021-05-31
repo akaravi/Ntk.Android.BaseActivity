@@ -18,7 +18,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="false">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_collapseMode="parallax">
@@ -30,7 +30,63 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@null"
                     android:scaleType="centerCrop" />
-            </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/imgHeaderDetail">
+
+                    <com.balysv.materialripple.MaterialRippleLayout
+                        android:id="@+id/videPlayback"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="15dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:visibility="gone"
+                        app:mrl_rippleAlpha="0.05"
+                        app:mrl_rippleColor="#10000000"
+                        app:mrl_rippleRoundedCorners="100dp">
+
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            android:contentDescription="@null"
+                            app:srcCompat="@drawable/video"
+                            app:tint="?attr/toolbarColorText" />
+                    </com.balysv.materialripple.MaterialRippleLayout>
+
+                    <com.balysv.materialripple.MaterialRippleLayout
+                        android:id="@+id/musicPlayback"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="15dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_toEndOf="@+id/videPlayback"
+                        android:layout_toRightOf="@+id/videPlayback"
+                        android:visibility="gone"
+                        app:mrl_rippleAlpha="0.05"
+                        app:mrl_rippleColor="#10000000"
+                        app:mrl_rippleRoundedCorners="100dp">
+
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            android:contentDescription="@null"
+                            app:srcCompat="@drawable/music"
+                            app:tint="?attr/toolbarColorText" />
+                    </com.balysv.materialripple.MaterialRippleLayout>
+                </RelativeLayout>
+            </RelativeLayout>
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
@@ -141,8 +197,8 @@
                             android:layout_height="30dp"
                             android:layout_centerInParent="true"
                             android:contentDescription="@null"
-                            app:tint="?attr/toolbarColorText"
-                            app:srcCompat="@drawable/ic_comment" />
+                            app:srcCompat="@drawable/ic_comment"
+                            app:tint="?attr/toolbarColorText" />
                     </RelativeLayout>
                 </com.balysv.materialripple.MaterialRippleLayout>
 
@@ -276,9 +332,9 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerTabDetail"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp" />
+                    android:layout_height="45dp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <RelativeLayout
@@ -294,7 +350,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                     android:text="@string/comments"
+                    android:text="@string/comments"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     android:visibility="gone"
@@ -325,7 +381,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                         android:text="@string/similar"
+                    android:text="@string/similar"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     tools:ignore="HardcodedText" />
@@ -352,7 +408,7 @@
                             android:id="@+id/lblAllMenuDetail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                             android:text="@string/all_list"
+                            android:text="@string/all_list"
                             android:textColor="?attr/colorAccent"
                             android:textSize="14sp"
                             tools:ignore="HardcodedText" />

@@ -24,12 +24,12 @@
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
                 app:mrl_rippleAlpha="0.05"
                 app:mrl_rippleColor="#10000000"
-                app:mrl_rippleRoundedCorners="100dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp">
+                app:mrl_rippleRoundedCorners="100dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -50,12 +50,12 @@
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 app:mrl_rippleAlpha="0.05"
                 app:mrl_rippleColor="#10000000"
-                app:mrl_rippleRoundedCorners="100dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="10dp">
+                app:mrl_rippleRoundedCorners="100dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -75,10 +75,10 @@
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:layout_toEndOf="@id/imgShareDetail"
+                android:layout_toRightOf="@id/imgShareDetail"
                 app:mrl_rippleAlpha="0.05"
                 app:mrl_rippleColor="#10000000"
-                app:mrl_rippleRoundedCorners="100dp"
-                android:layout_toRightOf="@id/imgShareDetail">
+                app:mrl_rippleRoundedCorners="100dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -99,10 +99,10 @@
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:layout_toEndOf="@id/imgFavDetail"
+                android:layout_toRightOf="@id/imgFavDetail"
                 app:mrl_rippleAlpha="0.05"
                 app:mrl_rippleColor="#10000000"
-                app:mrl_rippleRoundedCorners="100dp"
-                android:layout_toRightOf="@id/imgFavDetail">
+                app:mrl_rippleRoundedCorners="100dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -123,18 +123,19 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="15dp"
-                android:layout_toStartOf="@id/imgBackDetail"
-                 android:text="@string/order_food"
-                android:textColor="?toolbarColorText"
-                tools:ignore="HardcodedText"
                 android:layout_marginRight="15dp"
-                android:layout_toLeftOf="@id/imgBackDetail" />
+                android:layout_toStartOf="@id/imgBackDetail"
+                android:layout_toLeftOf="@id/imgBackDetail"
+                android:text="@string/order_food"
+                android:textColor="?toolbarColorText"
+                tools:ignore="HardcodedText" />
         </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/PageDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/playLin"
             android:layout_below="@id/ToolbarDetail"
             android:orientation="vertical"
             android:visibility="gone">
@@ -183,18 +184,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:orientation="horizontal"
-                            android:layout_alignParentRight="true">
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/lblValueSeenDetail"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="10dp"
-                              android:text="@string/three_dot"
-                                android:textColor="?attr/colorTextPrimary"
-                                android:layout_marginRight="10dp" />
+                                android:layout_marginRight="10dp"
+                                android:text="@string/three_dot"
+                                android:textColor="?attr/colorTextPrimary" />
 
                             <TextView
                                 android:id="@+id/lblKeySeenDetail"
@@ -209,12 +210,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="19dp"
                             android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="10dp"
+                            android:layout_marginRight="10dp"
                             android:progressDrawable="@drawable/rating_bar_layer"
-                            android:rating="3"
-                            android:layout_alignParentLeft="true"
-                            android:layout_marginRight="10dp" />
+                            android:rating="3" />
                     </RelativeLayout>
 
                     <View
@@ -307,7 +308,7 @@
                                 android:id="@+id/lblPhotoExtraDetail"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                               android:text="@string/more_pic"
+                                android:text="@string/more_pic"
                                 android:textColor="?attr/colorTextPrimary"
                                 android:textSize="10sp" />
                         </LinearLayout>
@@ -358,7 +359,7 @@
                                 android:id="@+id/lblTimerOne"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                 android:text="@string/time_min"
+                                android:text="@string/time_min"
                                 android:textColor="?attr/colorTextPrimary" />
 
                             <TextView
@@ -366,7 +367,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                            android:text="@string/time_ready"
+                                android:text="@string/time_ready"
                                 android:textSize="10sp" />
                         </LinearLayout>
 
@@ -381,7 +382,7 @@
                                 android:id="@+id/lblTimerThree"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                 android:text="@string/time_min"
+                                android:text="@string/time_min"
                                 android:textColor="?attr/colorTextPrimary" />
 
                             <TextView
@@ -389,7 +390,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                 android:text="@string/rest_time"
+                                android:text="@string/rest_time"
                                 android:textSize="10sp" />
                         </LinearLayout>
 
@@ -404,7 +405,7 @@
                                 android:id="@+id/lblTimerFive"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                 android:text="@string/time_min"
+                                android:text="@string/time_min"
                                 android:textColor="?attr/colorTextPrimary" />
 
                             <TextView
@@ -412,7 +413,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                 android:text="@string/cook_time"
+                                android:text="@string/cook_time"
                                 android:textSize="10sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -460,13 +461,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp"
-                             android:text="@string/comments"
+                            android:text="@string/comments"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
-                            tools:ignore="HardcodedText"
-                            android:layout_alignParentRight="true" />
+                            tools:ignore="HardcodedText" />
 
                     </RelativeLayout>
 
@@ -491,13 +492,13 @@
                             android:layout_height="wrap_content"
 
                             android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp"
-                           android:text="@string/similar_order"
+                            android:text="@string/similar_order"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
-                            tools:ignore="HardcodedText"
-                            android:layout_alignParentRight="true" />
+                            tools:ignore="HardcodedText" />
 
                     </RelativeLayout>
 
@@ -522,13 +523,13 @@
                             android:layout_height="wrap_content"
 
                             android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp"
                             android:text="دسته بندی مشابه"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
-                            tools:ignore="HardcodedText"
-                            android:layout_alignParentRight="true" />
+                            tools:ignore="HardcodedText" />
 
                     </RelativeLayout>
 
@@ -542,6 +543,30 @@
                         tools:targetApi="lollipop" />
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/playLin"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/videPlayback"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="پخش ویدیو"
+                android:visibility="gone" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/musicPlayback"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="پخش پادکست"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout

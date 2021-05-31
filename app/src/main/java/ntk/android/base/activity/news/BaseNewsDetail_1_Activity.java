@@ -38,6 +38,7 @@ import java9.util.function.Function;
 import kotlin.NotImplementedError;
 import ntk.android.base.R;
 import ntk.android.base.activity.abstraction.AbstractDetailActivity;
+import ntk.android.base.activity.common.VideoPlayerActivity;
 import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
@@ -89,7 +90,7 @@ public abstract class BaseNewsDetail_1_Activity extends
 
     @SuppressLint("SetJavaScriptEnabled")
     private void initView() {
-     findViewById(R.id.headerRecyclerMenu).setVisibility(View.GONE);
+        findViewById(R.id.headerRecyclerMenu).setVisibility(View.GONE);
         Progress = findViewById(R.id.progressDetail);
 
         Loading = findViewById(R.id.rowProgressDetail);
@@ -308,10 +309,10 @@ public abstract class BaseNewsDetail_1_Activity extends
 
         Btn.setOnClickListener(v -> {
             if (Txt[0].getText().toString().isEmpty()) {
-                Toast.makeText(BaseNewsDetail_1_Activity.this,  R.string.per_insert_num, Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseNewsDetail_1_Activity.this, R.string.per_insert_num, Toast.LENGTH_SHORT).show();
             } else {
                 if (Txt[1].getText().toString().isEmpty()) {
-                    Toast.makeText(BaseNewsDetail_1_Activity.this,  R.string.per_insert_num, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BaseNewsDetail_1_Activity.this, R.string.per_insert_num, Toast.LENGTH_SHORT).show();
                 } else {
                     if (AppUtill.isNetworkAvailable(this)) {
 //                        NewsCommentModel add = new NewsCommentModel();
@@ -420,6 +421,15 @@ public abstract class BaseNewsDetail_1_Activity extends
         if (Id > 0) {
             getContentOtherInfo(Id);
             HandelDataComment(Id);
+        }
+        if (model.Item.LinkFileMovieIdSrc != null && !model.Item.LinkFileMovieIdSrc.equalsIgnoreCase("")) {
+            View videoPlay = findViewById(R.id.videPlayback);
+            videoPlay.setVisibility(View.VISIBLE);
+            videoPlay.setOnClickListener(v -> VideoPlayerActivity.VIDEO(this, model.Item.LinkFileMovieIdSrc));
+        } if (model.Item.LinkFilePodcastIdSrc != null && !model.Item.LinkFilePodcastIdSrc.equalsIgnoreCase("")) {
+            View videoPlay = findViewById(R.id.musicPlayback);
+            videoPlay.setVisibility(View.VISIBLE);
+            videoPlay.setOnClickListener(v -> VideoPlayerActivity.PODCAST(this, model.Item.LinkFilePodcastIdSrc));
         }
         Loading.setVisibility(View.GONE);
         Page.setVisibility(View.VISIBLE);

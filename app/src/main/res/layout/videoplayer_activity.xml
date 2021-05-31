@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include
         android:id="@+id/videoToolbar"
         layout="@layout/base_toolbar_back"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="?actionBarSize" />
 
     <FrameLayout
         android:id="@+id/root"
@@ -16,20 +17,21 @@
         android:layout_below="@+id/videoToolbar"
         android:focusable="true"
         android:keepScreenOn="true">
-
-        <com.google.android.exoplayer2.ui.StyledPlayerView
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+        <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/playerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:show_buffering="when_playing"
+            app:show_next_button="false"
+            app:show_previous_button="false"
             android:focusable="true">
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone" />
-
-        </com.google.android.exoplayer2.ui.StyledPlayerView>
+        </com.google.android.exoplayer2.ui.PlayerView>
     </FrameLayout>
 </RelativeLayout>

@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.activity.common.BaseSplashActivity;
+import ntk.android.base.entitymodel.application.ApplicationAppModel;
 import ntk.android.base.styles.BaseModuleStyle;
 import ntk.android.base.styles.StyleHelper;
 import ntk.android.base.utill.prefrense.EasyPreference;
@@ -17,41 +18,56 @@ import ntk.android.base.view.ViewController;
 
 public abstract class ApplicationStyle extends StyleHelper {
     String APP_LANGUAGE;
+    protected String theme;
 
     public void setAppLanguage(int enumLang) {
         String appLanguage = "fa";
         if (enumLang == 0)
             appLanguage = "fa";
-        else if (enumLang==1)
-            appLanguage="fa";
-        else if (enumLang==2)
-            appLanguage="en";
-        else if (enumLang==3)
-            appLanguage="de";
-        else if (enumLang==4)
-            appLanguage="fr";
-        else if (enumLang==5)
-            appLanguage="ch";
-        else if (enumLang==6)
-            appLanguage="jp";
-        else if (enumLang==7)
-            appLanguage="es";
+        else if (enumLang == 1)
+            appLanguage = "fa";
+        else if (enumLang == 2)
+            appLanguage = "en";
+        else if (enumLang == 3)
+            appLanguage = "de";
+        else if (enumLang == 4)
+            appLanguage = "fr";
+        else if (enumLang == 5)
+            appLanguage = "ch";
+        else if (enumLang == 6)
+            appLanguage = "jp";
+        else if (enumLang == 7)
+            appLanguage = "es";
 
         EasyPreference.with(NTKApplication.instance.getApplicationContext()).addString("DEFUALT_APP_LANG", appLanguage);
         APP_LANGUAGE = appLanguage.toLowerCase().trim();
     }
 
+    public void setTheme(ApplicationAppModel appTheme) {
+        if (appTheme == null || appTheme.ThemeConfig == null || appTheme.ThemeConfig.TypeId == null)
+            theme = "default";
+        else if (appTheme.ThemeConfig.TypeId.equals("1"))
+            theme = "theme1";
+        else if (appTheme.ThemeConfig.TypeId.equals("2"))
+            theme = "theme2";
+        else
+            theme = "default";
+    }
+
     public String getAppLanguage() {
         return getAppLanguage(NTKApplication.instance.getApplicationContext());
     }
+
     public static String GET_DEFAULT(Context context) {
-        return  EasyPreference.with(context).getString("DEFUALT_APP_LANG", "fa");
+        return EasyPreference.with(context).getString("DEFUALT_APP_LANG", "fa");
     }
-    public  String getAppLanguage(Context context) {
+
+    public String getAppLanguage(Context context) {
         if (APP_LANGUAGE == null)
             APP_LANGUAGE = EasyPreference.with(context).getString("DEFUALT_APP_LANG", "fa");
         return APP_LANGUAGE;
     }
+
     public ApplicationStyle() {
         modules = new HashMap();
         Init();

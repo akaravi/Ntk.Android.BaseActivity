@@ -22,13 +22,6 @@ public abstract class BaseActivity extends BaseLocaleActivity {
     }
 
 
-    @Override
-    public AssetManager getAssets() {
-        return getResources().getAssets();
-    }
-    public Context getContext() {
-        return this;
-    }
 
     protected void initBase() {
     }

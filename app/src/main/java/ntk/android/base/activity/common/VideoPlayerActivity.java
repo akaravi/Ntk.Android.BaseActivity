@@ -12,7 +12,6 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.util.Util;
 
-import ntk.android.base.Extras;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 
@@ -25,12 +24,15 @@ public class VideoPlayerActivity extends BaseActivity {
     int type = 0;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.videoplayer_activity);
         playerView = findViewById(R.id.playerView);
         player = new SimpleExoPlayer.Builder(this).build();
         playerView.setPlayer(player);
+        initializePlayer();
+        player.prepare();
+        initializePlayer();
 
     }
 
@@ -44,11 +46,13 @@ public class VideoPlayerActivity extends BaseActivity {
 
     private void initializePlayer() {
 //        MediaItem mediaItem = MediaItem.fromUri(getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG));
-        MediaItem mediaItem = MediaItem.fromUri("https://dls.music-fa.com/tagdl/99/Reza%20Sadeghi%20-%20Rade%20Pa%20(320).mp3");
-        player.setMediaItem(mediaItem);
-        player.setPlayWhenReady(playWhenReady);
-        player.seekTo(currentWindow, playbackPosition);
-        player.prepare();
+        if (player != null) {
+            MediaItem mediaItem = MediaItem.fromUri("https://dls.music-fa.com/tagdl/99/Reza%20Sadeghi%20-%20Rade%20Pa%20(320).mp3");
+            player.setMediaItem(mediaItem);
+            player.setPlayWhenReady(playWhenReady);
+            player.seekTo(currentWindow, playbackPosition);
+
+        }
     }
 
     @Override
@@ -62,13 +66,16 @@ public class VideoPlayerActivity extends BaseActivity {
 
     @SuppressLint("InlinedApi")
     private void hideSystemUi() {
-        playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        if (playerView != null) {
+            playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        }
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -84,6 +91,7 @@ public class VideoPlayerActivity extends BaseActivity {
             releasePlayer();
         }
     }
+
     private boolean playWhenReady = true;
     private int currentWindow = 0;
     private long playbackPosition = 0;

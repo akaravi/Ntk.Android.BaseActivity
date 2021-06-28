@@ -6,10 +6,11 @@ import java.util.HashMap;
 
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.activity.common.BaseSplashActivity;
-import ntk.android.base.entitymodel.application.ApplicationAppModel;
+import ntk.android.base.entitymodel.application.ApplicationThemeConfigModel;
 import ntk.android.base.styles.BaseModuleStyle;
 import ntk.android.base.styles.StyleHelper;
 import ntk.android.base.utill.prefrense.EasyPreference;
+import ntk.android.base.view.ThemeNameEnum;
 import ntk.android.base.view.ViewController;
 
 /**
@@ -18,7 +19,7 @@ import ntk.android.base.view.ViewController;
 
 public abstract class ApplicationStyle extends StyleHelper {
     String APP_LANGUAGE;
-    protected String theme;
+    protected ThemeNameEnum theme;
 
     public void setAppLanguage(int enumLang) {
         String appLanguage = "fa";
@@ -43,15 +44,22 @@ public abstract class ApplicationStyle extends StyleHelper {
         APP_LANGUAGE = appLanguage.toLowerCase().trim();
     }
 
-    public void setTheme(ApplicationAppModel appTheme) {
-        if (appTheme == null || appTheme.ThemeConfig == null || appTheme.ThemeConfig.TypeId == null)
-            theme = "default";
-        else if (appTheme.ThemeConfig.TypeId.equals("1"))
-            theme = "theme1";
-        else if (appTheme.ThemeConfig.TypeId.equals("2"))
-            theme = "theme2";
-        else
-            theme = "default";
+    public void setTheme(ApplicationThemeConfigModel appTheme) {
+        if (appTheme == null || appTheme.TypeId == null) {
+            theme = ThemeNameEnum.DEFAULT;
+            return;
+        }
+        String typeId = appTheme.TypeId;
+        ThemeNameEnum.get(typeId);
+        EasyPreference.with(NTKApplication.instance.getApplicationContext()).addString("DEFAULT_APP_THEME", theme.code());
+    }
+
+    public ThemeNameEnum getTheme() {
+        if (theme == null) {
+            String themeName = EasyPreference.with(NTKApplication.instance.getApplicationContext()).getString("DEFAULT_APP_THEME", ThemeNameEnum.DEFAULT.code());
+            theme = ThemeNameEnum.get(themeName);
+        }
+        return theme;
     }
 
     public String getAppLanguage() {

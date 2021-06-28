@@ -150,4 +150,5 @@
     <string name="splashGetTokenStep">obtaining token step</string>
     <string name="splashGetCurrentAppStep">Getting app information</string>
     <string name="splashGetUserInformationStep">Receiving user information</string>
+    <string name="splashGetTheme" />
 </resources>

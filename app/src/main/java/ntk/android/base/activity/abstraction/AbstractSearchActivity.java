@@ -28,6 +28,11 @@ import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
 import ntk.android.base.utill.FontManager;
 
+/**
+ * base search activity base on title searching for each Entity
+ * @param <TEntity>
+ */
+
 public abstract class AbstractSearchActivity<TEntity> extends BaseActivity {
     EditText Txt;
     RecyclerView Rv;

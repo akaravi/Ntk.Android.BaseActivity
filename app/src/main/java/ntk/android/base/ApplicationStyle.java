@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.activity.common.BaseSplashActivity;
+import ntk.android.base.dtomodel.application.AppThemeDtoModel;
 import ntk.android.base.entitymodel.application.ApplicationThemeConfigModel;
 import ntk.android.base.styles.BaseModuleStyle;
 import ntk.android.base.styles.StyleHelper;

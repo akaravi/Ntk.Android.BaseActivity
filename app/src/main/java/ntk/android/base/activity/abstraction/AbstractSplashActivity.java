@@ -191,7 +191,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
             }
             //call api
             ServiceExecute.execute(new ApplicationAppService(this).getAppTheme())
-                    .subscribe(new ErrorExceptionObserver<ApplicationThemeConfigModel>(switcher::showErrorView) {
+                    .subscribe(new  ErrorExceptionObserver<ApplicationThemeConfigModel>(switcher::showErrorView) {
                         @Override
                         protected void SuccessResponse(ErrorException<ApplicationThemeConfigModel> response) {
                             //set thmeme of app

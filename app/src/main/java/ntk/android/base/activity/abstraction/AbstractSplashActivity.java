@@ -38,6 +38,7 @@ import ntk.android.base.entitymodel.application.ApplicationThemeConfigModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.TokenInfoModel;
 import ntk.android.base.services.application.ApplicationAppService;
+import ntk.android.base.services.application.ApplicationThemeService;
 import ntk.android.base.services.core.CoreAuthService;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.prefrense.Preferences;
@@ -190,7 +191,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                 indicator.setProgress(30);
             }
             //call api
-            ServiceExecute.execute(new ApplicationAppService(this).getAppTheme())
+            ServiceExecute.execute(new ApplicationThemeService(this).getAppTheme())
                     .subscribe(new  ErrorExceptionObserver<ApplicationThemeConfigModel>(switcher::showErrorView) {
                         @Override
                         protected void SuccessResponse(ErrorException<ApplicationThemeConfigModel> response) {

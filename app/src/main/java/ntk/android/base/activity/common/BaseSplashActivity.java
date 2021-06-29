@@ -19,7 +19,8 @@ public abstract class BaseSplashActivity extends AbstractSplashActivity {
     protected void onCreated() {
         SplashViewController splashViewController;
         //create splash base on theme
-        if (NTKApplication.getApplicationStyle().getTheme() == ThemeNameEnum.THEME1)
+        ThemeNameEnum theme = NTKApplication.getApplicationStyle().getTheme();
+        if (theme == ThemeNameEnum.THEME1 || theme == ThemeNameEnum.DEFAULT)
             splashViewController = SplashViewController1();
         else
             splashViewController = SplashViewController2();

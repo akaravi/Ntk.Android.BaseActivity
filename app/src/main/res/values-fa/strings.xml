@@ -139,5 +139,5 @@
     <string name="splashGetTokenStep">در حال گرفتن توکن</string>
     <string name="splashGetCurrentAppStep">در حال گرفتن اطلاعات برنامه</string>
     <string name="splashGetUserInformationStep">در حال دریافت اطلاعات کاربری</string>
-    <string name="splashGetTheme" />
+    <string name="splashGetTheme" >در حال دریافت قالب</string>
 </resources>

@@ -6,9 +6,9 @@ import ntk.android.base.NTKApplication;
 
 public enum ThemeNameEnum {
     DEFAULT("default"),
-    THEME1("THEME1"),
-    THEME2("THEME2"),
-    THEME3("THEME3");
+    THEME1("1"),
+    THEME2("2"),
+    THEME3("3");
     private final String name;
 
     ThemeNameEnum(String name) {
@@ -21,6 +21,8 @@ public enum ThemeNameEnum {
             theme = ThemeNameEnum.THEME1;
         else if (typeId.equals(ThemeNameEnum.THEME2.code()))
             theme = ThemeNameEnum.THEME2;
+        else if(typeId.equals(ThemeNameEnum.THEME3.code()))
+            theme=ThemeNameEnum.THEME3;
         else {
             Toast.makeText(NTKApplication.get(), "تم حالت پیش فرض", Toast.LENGTH_SHORT).show();
             theme = ThemeNameEnum.DEFAULT;

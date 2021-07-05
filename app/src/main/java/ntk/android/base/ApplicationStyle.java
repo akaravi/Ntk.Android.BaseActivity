@@ -51,7 +51,7 @@ public abstract class ApplicationStyle extends StyleHelper {
             return;
         }
         String typeId = appTheme.TypeId;
-        ThemeNameEnum.get(typeId);
+        theme=ThemeNameEnum.get(typeId);
         EasyPreference.with(NTKApplication.instance.getApplicationContext()).addString("DEFAULT_APP_THEME", theme.code());
     }
 

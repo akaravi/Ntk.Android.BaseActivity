@@ -8,21 +8,24 @@ public enum ThemeNameEnum {
     DEFAULT("default"),
     THEME1("1"),
     THEME2("2"),
-    THEME3("3");
+    THEME3("3"),
+    THEME4("4");
     private final String name;
 
     ThemeNameEnum(String name) {
         this.name = name;
     }
 
-    public static ThemeNameEnum  get(String typeId) {
+    public static ThemeNameEnum get(String typeId) {
         ThemeNameEnum theme;
-        if (typeId.equals(ThemeNameEnum.THEME1.code()))
-            theme = ThemeNameEnum.THEME1;
-        else if (typeId.equals(ThemeNameEnum.THEME2.code()))
-            theme = ThemeNameEnum.THEME2;
-        else if(typeId.equals(ThemeNameEnum.THEME3.code()))
-            theme=ThemeNameEnum.THEME3;
+        if (typeId.equals(THEME1.code()))
+            theme = THEME1;
+        else if (typeId.equals(THEME2.code()))
+            theme = THEME2;
+        else if (typeId.equals(THEME3.code()))
+            theme = THEME3;
+        else if (typeId.equals(THEME4.code()))
+            theme = THEME4;
         else {
             Toast.makeText(NTKApplication.get(), "تم حالت پیش فرض", Toast.LENGTH_SHORT).show();
             theme = ThemeNameEnum.DEFAULT;

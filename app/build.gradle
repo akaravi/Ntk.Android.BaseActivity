@@ -1,6 +1,5 @@
-plugins {
-    id 'com.android.library'
-}
+apply plugin: 'com.android.library'
+apply plugin:'maven-publish'
 
 android {
     compileSdkVersion 31
@@ -38,7 +37,18 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 }
-
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = "ntk.android.base"
+                artifactId = 'baseActivity'
+                version = version
+            }
+        }
+    }
+}
 dependencies {
 
     //for configHeader

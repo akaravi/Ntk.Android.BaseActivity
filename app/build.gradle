@@ -3,14 +3,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
 
         minSdkVersion 16
-        compileSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        compileSdkVersion 31
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -33,12 +31,11 @@ android {
         }
         debug {
             minifyEnabled false
-            debuggable true
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
@@ -53,13 +50,13 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     //room
     implementation 'androidx.room:room-runtime:2.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
 
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
     implementation 'androidx.room:room-rxjava2:2.3.0'
     //compact
-    implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     //for retrofit
@@ -86,12 +83,12 @@ dependencies {
     implementation 'com.pnikosis:materialish-progress:1.0'
     //for locale
     implementation "com.github.YarikSOffice:lingver:1.3.0"    //for base
-    api 'com.github.akaravi:Ntk.Android.Base:1.3.126'
+    api 'com.github.akaravi:Ntk.Android.Base:1.4.111'
 //    api project(path: ':baseApi')
     // full exoplayer library
-    implementation 'com.google.android.exoplayer:exoplayer:2.14.1'
+    implementation 'com.google.android.exoplayer:exoplayer:2.15.0'
 
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }

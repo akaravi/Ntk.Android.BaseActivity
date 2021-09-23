@@ -25,7 +25,8 @@ public class MainTagAdapter extends BaseRecyclerAdapter<String, MainTagAdapter.V
     @NonNull
     @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new VH(inflate(parent, R.layout.chip_row_item));
+//        return new VH(inflate(parent, R.layout.chip_row_item));
+        return null;
     }
 
     @Override

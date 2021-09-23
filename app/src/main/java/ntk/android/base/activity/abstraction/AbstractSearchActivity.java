@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.ArrayList;
 
@@ -166,7 +166,7 @@ public abstract class AbstractSearchActivity<TEntity> extends BaseActivity {
 
     }
 
-    @NotNull
+    @NonNull
     protected FilterModel getDefaultFilterDataModel(String stringValue) {
         FilterModel request = new FilterModel();
         FilterDataModel ft = new FilterDataModel();

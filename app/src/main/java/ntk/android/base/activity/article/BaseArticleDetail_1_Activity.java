@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,6 @@ import es.dmoral.toasty.Toasty;
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import java9.util.function.Function;
-import kotlin.NotImplementedError;
 import ntk.android.base.R;
 import ntk.android.base.activity.abstraction.AbstractDetailActivity;
 import ntk.android.base.activity.common.VideoPlayerActivity;
@@ -219,7 +218,7 @@ public abstract class BaseArticleDetail_1_Activity extends
     }
 
 
-    @NotNull
+    @NonNull
     protected FilterModel otherInfoFilter(long ContentId) {
         FilterModel Request = new FilterModel();
         FilterDataModel f = new FilterDataModel();
@@ -372,12 +371,12 @@ public abstract class BaseArticleDetail_1_Activity extends
 
     @Override
     public Function<Long, Observable<ErrorException<ArticleContentModel>>> getSimilarCategoryService() {
-        throw new NotImplementedError("getSimilarCategoryService not implement in  Article base activity");
+        throw new RuntimeException("getSimilarCategoryService not implement in  Article base activity");
     }
 
     @Override
     public Function<Long, Observable<ErrorException<ArticleContentModel>>> getSimilarContentService() {
-        throw new NotImplementedError("getSimilarContentService not implement in  Article base activity");
+        throw new RuntimeException("getSimilarContentService not implement in  Article base activity");
     }
 
     @Override

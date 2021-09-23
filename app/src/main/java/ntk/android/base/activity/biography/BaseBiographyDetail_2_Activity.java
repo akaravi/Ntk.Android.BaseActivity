@@ -28,7 +28,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -234,7 +234,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
     }
 
 
-    @NotNull
+    @NonNull
     protected FilterModel otherInfoFilter(long ContentId) {
         FilterModel Request = new FilterModel();
         FilterDataModel f = new FilterDataModel();

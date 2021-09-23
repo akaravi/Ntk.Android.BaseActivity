@@ -82,11 +82,12 @@ dependencies {
     //for animating splash image
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
     //for toggle switch
-    implementation 'com.llollox:androidtoggleswitch:2.0.1'
+//    implementation 'com.llollox:androidtoggleswitch:2.0.1'
     //for java 8 features
     implementation 'net.sourceforge.streamsupport:android-retrostreams:1.7.2'
     //for qrcode
-    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
+    implementation  'com.github.idindevelop:QRGenerator:1.0.1'
+//    implementation 'com.google.zxing:core:3.3.2'
     //for rating
     implementation 'me.zhanghai.android.materialratingbar:library:1.3.1'
     //for sweetDialog
@@ -98,7 +99,7 @@ dependencies {
     // full exoplayer library
     implementation 'com.google.android.exoplayer:exoplayer:2.15.0'
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+//    testImplementation 'junit:junit:4.13.2'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }

@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
-import com.google.zxing.WriterException;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -170,10 +169,10 @@ public class AbstractMainActivity extends BaseActivity {
         String qrCode = Preferences.with(this).appVariableInfo().qrCode();
         QRGEncoder qrgEncoder = new QRGEncoder(qrCode, null, QRGContents.Type.TEXT, 300);
         try {
-            Bitmap bitmap = qrgEncoder.encodeAsBitmap();
+            Bitmap bitmap = qrgEncoder.getBitmap();
             ImageView img = dialog.findViewById(R.id.qrCodeDialogQRCode);
             img.setImageBitmap(bitmap);
-        } catch (WriterException e) {
+        } catch (Exception e) {
             String base64Image = qrCode.split(",")[1];
             byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);

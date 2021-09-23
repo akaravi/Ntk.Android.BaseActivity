@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.llollox.androidtoggleswitch.widgets.ToggleSwitch;
+//import com.llollox.androidtoggleswitch.widgets.ToggleSwitch;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import es.dmoral.toasty.Toasty;
@@ -48,13 +48,13 @@ public class ForgetPassDialog extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         // Get field from view
 //        getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        ((ToggleSwitch) view.findViewById(R.id.forgetPatternSw)).setOnChangeListener(position -> {
-            Type=position;
-            if (position == 0)
-                view.findViewById(R.id.txtActRegister).setVisibility(View.VISIBLE);
-            else
-                view.findViewById(R.id.txtActRegister).setVisibility(View.GONE);
-        });
+//        ((ToggleSwitch) view.findViewById(R.id.forgetPatternSw)).setOnChangeListener(position -> {
+//            Type=position;
+//            if (position == 0)
+//                view.findViewById(R.id.txtActRegister).setVisibility(View.VISIBLE);
+//            else
+//                view.findViewById(R.id.txtActRegister).setVisibility(View.GONE);
+//        });
         view.findViewById(R.id.txtActRegister).requestFocus();
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);

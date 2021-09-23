@@ -9,18 +9,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center_horizontal"
     android:orientation="vertical">
-    <com.llollox.androidtoggleswitch.widgets.ToggleSwitch
-        android:id="@+id/forgetPatternSw"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content"
+<!--    <com.llollox.androidtoggleswitch.widgets.ToggleSwitch-->
+<!--        android:id="@+id/forgetPatternSw"-->
+<!--        android:layout_width="240dp"-->
+<!--        android:layout_height="wrap_content"-->
 
-        app:checkedBorderColor="?attr/colorAccent"
-        app:checkedBackgroundColor="?attr/colorPrimary"
-        app:checkedTextColor="@android:color/white"
-        app:textToggleLeft="موبایل"
-        app:textToggleRight="ایمیل"
-        app:uncheckedBackgroundColor="#BBBBBB"
-        app:uncheckedTextColor="@color/colorGrayText" />
+<!--        app:checkedBorderColor="?attr/colorAccent"-->
+<!--        app:checkedBackgroundColor="?attr/colorPrimary"-->
+<!--        app:checkedTextColor="@android:color/white"-->
+<!--        app:textToggleLeft="موبایل"-->
+<!--        app:textToggleRight="ایمیل"-->
+<!--        app:uncheckedBackgroundColor="#BBBBBB"-->
+<!--        app:uncheckedTextColor="@color/colorGrayText" />-->
 <LinearLayout
     android:layout_width="match_parent"
     android:orientation="vertical"

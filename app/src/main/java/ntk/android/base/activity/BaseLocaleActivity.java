@@ -13,7 +13,7 @@ import ntk.android.base.NTKApplication;
 class BaseLocaleActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Lingver.getInstance().setLocale(this, NTKApplication.getApplicationStyle().getAppLanguage());
     }

@@ -38,7 +38,6 @@ import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.adapter.BaseRecyclerAdapter;
 import ntk.android.base.adapter.SpinnerAdapter;
 import ntk.android.base.adapter.common.TicketAttachAdapter;
-import ntk.android.base.api.member.model.MemberUserActAddRequest;
 import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
@@ -67,7 +66,6 @@ public class NewTicketActivity extends BaseActivity {
     CoordinatorLayout layout;
 
     private TicketingTaskModel request = new TicketingTaskModel();
-    private MemberUserActAddRequest requestMember = new MemberUserActAddRequest();
     private List<String> attaches = new ArrayList<>();
     private List<String> fileId = new ArrayList<>();
     private TicketAttachAdapter adapter;
@@ -295,10 +293,10 @@ public class NewTicketActivity extends BaseActivity {
 //            }
             request.UploadFileGUID = fileId;
 
-            requestMember.FirstName = name.getText().toString();
-            requestMember.LastName = name.getText().toString();
-            requestMember.PhoneNo = phone.getText().toString();
-            requestMember.Email = email.getText().toString();
+//            requestMember.FirstName = name.getText().toString();
+//            requestMember.LastName = name.getText().toString();
+//            requestMember.PhoneNo = phone.getText().toString();
+//            requestMember.Email = email.getText().toString();
 
 
             findViewById(R.id.btnSubmitActSendTicket).setClickable(false);

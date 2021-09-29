@@ -2,6 +2,8 @@ package ntk.android.base.activity.common;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 import io.reactivex.Observable;
 import java9.util.function.Function;
 import ntk.android.base.Extras;
@@ -45,10 +47,10 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListA
 
 
     @Override
-    protected final void onSuccessNext(ErrorException<TEntity> newsContentResponse) {
-        models.addAll(newsContentResponse.ListItems);
-        Total = newsContentResponse.TotalRowCount;
-        if (newsContentResponse.ListItems.size() < request.RowPerPage) {
+    protected final void onSuccessNext(ErrorException<TEntity> response) {
+        models.addAll(response.ListItems);
+        Total = response.TotalRowCount;
+        if (response.ListItems.size() < request.RowPerPage) {
             loadingMore = false;
         }
         adapter.notifyDataSetChanged();

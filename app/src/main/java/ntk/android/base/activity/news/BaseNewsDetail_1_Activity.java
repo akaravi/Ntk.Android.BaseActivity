@@ -26,8 +26,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 

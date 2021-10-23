@@ -35,12 +35,14 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.abstraction_list);
+        setContentView(getResourceLayout());
         requestOnIntent();
         init();
         onCreated();
     }
-
+    protected int getResourceLayout(){
+        return R.layout.abstraction_list;
+    }
 
     public RecyclerView.LayoutManager getRvLayoutManager() {
         return new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

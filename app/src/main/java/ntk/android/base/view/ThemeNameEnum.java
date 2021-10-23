@@ -3,6 +3,7 @@ package ntk.android.base.view;
 import android.widget.Toast;
 
 import ntk.android.base.NTKApplication;
+import ntk.android.base.styles.BaseModuleStyle;
 
 public enum ThemeNameEnum {
     DEFAULT("default"),
@@ -33,6 +34,9 @@ public enum ThemeNameEnum {
         return theme;
     }
 
+    public static ThemeNameEnum get(BaseModuleStyle style){
+        return get(style.getTAG());
+    }
     public String code() {
         return name;
     }

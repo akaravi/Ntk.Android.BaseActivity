@@ -30,6 +30,9 @@ public class BaseModuleStyle implements Serializable {
         return Type;
     }
 
+    public String getTAG() {
+        return TAG;
+    }
 //    public BaseDialog styleBaseDialog(String placeTag, int styleType) {
 //        return null;
 //    }

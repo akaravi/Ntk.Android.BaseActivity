@@ -6,10 +6,10 @@ import java.util.HashMap;
 
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.activity.common.BaseSplashActivity;
-import ntk.android.base.dtomodel.application.AppThemeDtoModel;
 import ntk.android.base.entitymodel.application.ApplicationThemeConfigModel;
 import ntk.android.base.styles.BaseModuleStyle;
 import ntk.android.base.styles.StyleHelper;
+import ntk.android.base.styles.UnitStyleEnum;
 import ntk.android.base.utill.prefrense.EasyPreference;
 import ntk.android.base.view.ThemeNameEnum;
 import ntk.android.base.view.ViewController;
@@ -51,7 +51,7 @@ public abstract class ApplicationStyle extends StyleHelper {
             return;
         }
         String typeId = appTheme.TypeId;
-        theme=ThemeNameEnum.get(typeId);
+        theme = ThemeNameEnum.get(typeId);
         EasyPreference.with(NTKApplication.instance.getApplicationContext()).addString("DEFAULT_APP_THEME", theme.code());
     }
 
@@ -94,12 +94,13 @@ public abstract class ApplicationStyle extends StyleHelper {
     public Class<? extends BaseSplashActivity> LoginActivity;
     //@deprecated replace with RegisterStyle
     public Class<? extends BaseActivity> RegisterActivity;
-    public HashMap<String, BaseModuleStyle> modules;
+    public HashMap<UnitStyleEnum, BaseModuleStyle> modules;
 
-    public BaseModuleStyle getModule(String key) {
+    public BaseModuleStyle getModule(UnitStyleEnum key) {
         BaseModuleStyle baseModuleStyle = modules.get(key);
-        if (baseModuleStyle == null)
-            throw new RuntimeException("MODULE IS NULL AND NOT SET IN APPLICATION STYLE CLASS");
+        //todo for next release
+//        if (baseModuleStyle == null)
+//            throw new RuntimeException("MODULE IS NULL AND NOT SET IN APPLICATION STYLE CLASS");
 
         return baseModuleStyle;
     }

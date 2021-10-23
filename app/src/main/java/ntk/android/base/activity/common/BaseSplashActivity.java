@@ -9,6 +9,8 @@ import ntk.android.base.BaseNtkApplication;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.abstraction.AbstractSplashActivity;
+import ntk.android.base.styles.BaseModuleStyle;
+import ntk.android.base.styles.UnitStyleEnum;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.view.ThemeNameEnum;
 
@@ -18,13 +20,18 @@ public abstract class BaseSplashActivity extends AbstractSplashActivity {
     @Override
     protected void onCreated() {
         SplashViewController splashViewController;
+        ThemeNameEnum theme;
         //create splash base on theme
-        ThemeNameEnum theme = NTKApplication.getApplicationStyle().getTheme();
+        BaseModuleStyle moduleStyle = NTKApplication.getApplicationStyle().getModule(UnitStyleEnum.Splash);
+        if (moduleStyle != null) {
+            theme = ThemeNameEnum.get(moduleStyle);
+        } else {
+            theme = NTKApplication.getApplicationStyle().getTheme();
+        }
         if (theme == ThemeNameEnum.THEME1 || theme == ThemeNameEnum.DEFAULT)
             splashViewController = SplashViewController1();
         else
             splashViewController = SplashViewController2();
-
         setContentView(splashViewController.getLayout());
         splashViewController.buildUi();
     }

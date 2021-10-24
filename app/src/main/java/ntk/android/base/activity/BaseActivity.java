@@ -1,10 +1,17 @@
 package ntk.android.base.activity;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
@@ -14,14 +21,19 @@ import ntk.android.base.view.swicherview.Switcher;
 public abstract class BaseActivity extends BaseLocaleActivity {
 
     protected Switcher switcher;
-
+    ActivityResultLauncher<Intent> activityResultLauncher;
     @Override
     protected void onStart() {
         super.onStart();
+        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                this::onActivityResult);
         initBase();
     }
 
+    protected void onActivityResult(ActivityResult result) {
 
+    }
 
     protected void initBase() {
     }

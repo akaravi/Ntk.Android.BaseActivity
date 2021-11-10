@@ -27,9 +27,6 @@ public abstract class BaseRecyclerAdapter<Entity, VH extends RecyclerView.ViewHo
     protected List<Entity> list;
     protected int drawable = -1;
 
-    public BaseRecyclerAdapter(ArrayList<Entity> list) {
-        this.list = list;
-    }
 
     public BaseRecyclerAdapter(List<Entity> list) {
         this.list = list;

@@ -50,7 +50,8 @@ afterEvaluate {
     }
 }
 dependencies {
-
+    //for result
+    implementation "androidx.activity:activity:1.4.0"
     //for configHeader
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
     //image loader

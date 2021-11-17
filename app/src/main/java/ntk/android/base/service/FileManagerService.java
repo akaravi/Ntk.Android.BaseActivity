@@ -19,9 +19,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import ntk.android.base.activity.BaseActivity;
-import ntk.android.base.activity.ticketing.NewTicketActivity;
+import ntk.android.base.utill.FileUtils;
 
 public class FileManagerService {
+    //new pattern for getting file name from 2021
+    public static String getFilePath(Context context, Uri uri) {
+        return FileUtils.getPath(context, uri);
+    }
 
     public void clickAttach(AppCompatActivity activity, int readRequestCode) {
         if (CheckPermission(activity)) {
@@ -33,6 +37,7 @@ public class FileManagerService {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 220);
         }
     }
+
     public void clickAttach(BaseActivity activity, int readRequestCode) {
         if (CheckPermission(activity)) {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -43,6 +48,7 @@ public class FileManagerService {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 220);
         }
     }
+
     public void clickAttach(BaseActivity activity, ActivityResultCallback<ActivityResult> callback) {
         if (CheckPermission(activity)) {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -53,6 +59,7 @@ public class FileManagerService {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 220);
         }
     }
+
     private boolean CheckPermission(AppCompatActivity activity) {
         if (Build.VERSION.SDK_INT >= 23) {
             return activity.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
@@ -106,7 +113,7 @@ public class FileManagerService {
     }
 
     private static String getDataColumn(Context context, Uri uri, String selection,
-                                       String[] selectionArgs) {
+                                        String[] selectionArgs) {
         Cursor cursor = null;
         final String column = "_data";
         final String[] projection = {

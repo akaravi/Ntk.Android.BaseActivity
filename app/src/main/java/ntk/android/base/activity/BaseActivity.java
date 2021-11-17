@@ -1,9 +1,6 @@
 package ntk.android.base.activity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -19,12 +16,22 @@ import ntk.android.base.view.ViewController;
 import ntk.android.base.view.swicherview.Switcher;
 
 public abstract class BaseActivity extends BaseLocaleActivity {
-
+    private ActivityResultCallback<ActivityResult> resultInterface;
+    ActivityResultLauncher<Intent> someActivityResultLauncher;
     protected Switcher switcher;
+
     @Override
     protected void onStart() {
         super.onStart();
-
+        someActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        resultInterface.onActivityResult(result);
+                    }
+                }
+        );
         initBase();
     }
 
@@ -107,18 +114,17 @@ public abstract class BaseActivity extends BaseLocaleActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        BaseActivityResult(result,readRequestCode);
+                        BaseActivityResult(result, readRequestCode);
                     }
                 });
         someActivityResultLauncher.launch(intent);
     }
-    public void lunchActivityForResult(Intent intent, ActivityResultCallback resultInterface) {
-        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                resultInterface
-                );
+
+    public void lunchActivityForResult(Intent intent, ActivityResultCallback myInterface) {
+        resultInterface = myInterface;
         someActivityResultLauncher.launch(intent);
     }
+
     private void BaseActivityResult(ActivityResult result, int readRequestCode) {
 
     }

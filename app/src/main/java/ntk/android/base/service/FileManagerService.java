@@ -12,10 +12,13 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.activity.ticketing.NewTicketActivity;
 
 public class FileManagerService {
@@ -30,7 +33,26 @@ public class FileManagerService {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 220);
         }
     }
-
+    public void clickAttach(BaseActivity activity, int readRequestCode) {
+        if (CheckPermission(activity)) {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("*/*");
+            activity.lunchActivityForResult(intent, readRequestCode);
+        } else {
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 220);
+        }
+    }
+    public void clickAttach(BaseActivity activity, ActivityResultCallback<ActivityResult> callback) {
+        if (CheckPermission(activity)) {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("*/*");
+            activity.lunchActivityForResult(intent, callback);
+        } else {
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 220);
+        }
+    }
     private boolean CheckPermission(AppCompatActivity activity) {
         if (Build.VERSION.SDK_INT >= 23) {
             return activity.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;

@@ -21,13 +21,10 @@ import ntk.android.base.view.swicherview.Switcher;
 public abstract class BaseActivity extends BaseLocaleActivity {
 
     protected Switcher switcher;
-    ActivityResultLauncher<Intent> activityResultLauncher;
     @Override
     protected void onStart() {
         super.onStart();
-        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                this::onActivityResult);
+
         initBase();
     }
 
@@ -104,6 +101,26 @@ public abstract class BaseActivity extends BaseLocaleActivity {
     }
 
 
+    public void lunchActivityForResult(Intent intent, int readRequestCode) {
+        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        BaseActivityResult(result,readRequestCode);
+                    }
+                });
+        someActivityResultLauncher.launch(intent);
+    }
+    public void lunchActivityForResult(Intent intent, ActivityResultCallback resultInterface) {
+        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                resultInterface
+                );
+        someActivityResultLauncher.launch(intent);
+    }
+    private void BaseActivityResult(ActivityResult result, int readRequestCode) {
 
+    }
 }
 

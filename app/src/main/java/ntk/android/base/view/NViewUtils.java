@@ -34,7 +34,7 @@ public class NViewUtils {
     }
 
     public static String PriceFormat(double price) {
-        return convert(new DecimalFormat("###,###,###,###").format(price));
+        return convert(new DecimalFormat("###,###,###,###,###,###").format(price));
     }
 
     private static String convert(String text) {

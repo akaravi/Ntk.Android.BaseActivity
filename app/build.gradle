@@ -53,7 +53,7 @@ dependencies {
     //for result
     implementation "androidx.activity:activity:1.4.0"
     //for configHeader
-    implementation 'com.google.firebase:firebase-messaging:23.0.0'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
     //image loader
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     //rxjava

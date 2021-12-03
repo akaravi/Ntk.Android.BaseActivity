@@ -42,7 +42,6 @@ public class SingleChooseAdapter extends BaseRecyclerAdapter<String, SingleChoos
         };
 
         holder.itemView.setOnClickListener(listener);
-        holder.rb.setOnClickListener(listener);
     }
 
     public String getIndex() {

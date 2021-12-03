@@ -65,12 +65,7 @@ public abstract class BaseRecyclerAdapter<Entity, VH extends RecyclerView.ViewHo
     }
 
     public void loadImage(String path, ImageView holder, View loading) {
-//        if(drawable==-1){
-//            TypedValue typedValue = new TypedValue();
-//            Resources.Theme theme = holder.getContext().getTheme();
-//            theme.resolveAttribute(R.attr.ntk_base_logo, typedValue, true);
-//            drawable = typedValue.data;
-//        }
+
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnFail(drawable).cacheOnDisk(true).build();
         ImageLoader.getInstance().displayImage(path, holder, options, new ImageLoadingListener() {

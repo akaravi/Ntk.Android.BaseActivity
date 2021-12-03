@@ -53,7 +53,7 @@ dependencies {
     //for result
     implementation "androidx.activity:activity:1.4.0"
     //for configHeader
-    implementation 'com.google.firebase:firebase-messaging:22.0.0'
+    implementation 'com.google.firebase:firebase-messaging:23.0.0'
     //image loader
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     //rxjava
@@ -61,7 +61,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     //room
     implementation 'androidx.room:room-runtime:2.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
 
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
     implementation 'androidx.room:room-rxjava2:2.3.0'
@@ -95,10 +95,10 @@ dependencies {
     implementation 'com.pnikosis:materialish-progress:1.0'
     //for locale
     implementation "com.github.YarikSOffice:lingver:1.3.0"    //for base
-//    api 'com.github.akaravi:Ntk.Android.Base:1.4.111'
-    api project(path: ':baseApi')
+    api 'com.github.akaravi:Ntk.Android.Base:1.4.300'
+//    api project(path: ':baseApi')
     // full exoplayer library
-    implementation 'com.google.android.exoplayer:exoplayer:2.15.1'
+    implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
     //for gallery view
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 //    testImplementation 'junit:junit:4.13.2'

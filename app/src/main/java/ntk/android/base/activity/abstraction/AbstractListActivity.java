@@ -1,12 +1,15 @@
 package ntk.android.base.activity.abstraction;
 
 import android.os.Bundle;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +22,8 @@ import ntk.android.base.config.ErrorExceptionObserver;
 import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
+import ntk.android.base.entitymodel.base.FilterDataModel;
+import ntk.android.base.entitymodel.enums.EnumFilterDataModelSearchTypes;
 import ntk.android.base.fragment.abstraction.AbstractionListFragment;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
@@ -168,5 +173,21 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
 
     public abstract RecyclerView.Adapter createAdapter();
 
+    public List<FilterDataModel> getSortList(){
+        ArrayList<FilterDataModel> objects = new ArrayList<>();
+        objects.add(new FilterDataModel().setPropertyName("Id"));
+        return objects;
+    }
+    showFilter(){
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(R.layout.sort_filter_bottom_dialog);
 
+        LinearLayout copy = bottomSheetDialog.findViewById(R.id.copyLinearLayout);
+        LinearLayout share = bottomSheetDialog.findViewById(R.id.shareLinearLayout);
+        LinearLayout upload = bottomSheetDialog.findViewById(R.id.uploadLinearLayout);
+        LinearLayout download = bottomSheetDialog.findViewById(R.id.download);
+        LinearLayout delete = bottomSheetDialog.findViewById(R.id.delete);
+
+        bottomSheetDialog.show();
+    }
 }

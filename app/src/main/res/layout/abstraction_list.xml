@@ -14,7 +14,7 @@
         <RelativeLayout
             android:id="@+id/ToolbarRv"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="200dp"
             android:background="?attr/toolbarColorBackground"
             tools:ignore="UselessParent">
 
@@ -81,7 +81,8 @@
                 android:layout_toRightOf="@+id/imgSearch"
                 app:mrl_rippleAlpha="0.05"
                 app:mrl_rippleColor="#10000000"
-                app:mrl_rippleRoundedCorners="100dp">
+                app:mrl_rippleRoundedCorners="100dp"
+                android:layout_toEndOf="@+id/imgSearch">
 
                 <RelativeLayout
                     android:layout_width="match_parent"

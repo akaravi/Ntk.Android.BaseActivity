@@ -1,7 +1,8 @@
 package ntk.android.base.activity.abstraction;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.widget.LinearLayout;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -18,12 +19,12 @@ import io.reactivex.Observable;
 import java9.util.function.Function;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
+import ntk.android.base.adapter.SortingFilterAdapter;
 import ntk.android.base.config.ErrorExceptionObserver;
 import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
-import ntk.android.base.entitymodel.base.FilterDataModel;
-import ntk.android.base.entitymodel.enums.EnumFilterDataModelSearchTypes;
+import ntk.android.base.entitymodel.base.SearchTypeModel;
 import ntk.android.base.fragment.abstraction.AbstractionListFragment;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
@@ -36,6 +37,7 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
     protected RecyclerView.Adapter adapter;
     protected TREq request;
     protected boolean loadingMore = true;
+    SearchTypeModel sortFilter;
 
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +47,8 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
         init();
         onCreated();
     }
-    protected int getResourceLayout(){
+
+    protected int getResourceLayout() {
         return R.layout.abstraction_list;
     }
 
@@ -60,6 +63,9 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
         SwipeRefreshLayout Refresh = findViewById(R.id.swipRefresh);
         findViewById(R.id.imgBack).setOnClickListener(v -> ClickBack());
         findViewById(R.id.imgSearch).setOnClickListener(v -> ClickSearch());
+        if (getSortList()==null)
+            findViewById(R.id.imgSort).setVisibility(View.GONE);
+        findViewById(R.id.imgSort).setOnClickListener(v -> showFilter());
         LblTitle.setTypeface(FontManager.T1_Typeface(this));
         Rv.setHasFixedSize(true);
         RecyclerView.LayoutManager LMC = getRvLayoutManager();
@@ -173,20 +179,29 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
 
     public abstract RecyclerView.Adapter createAdapter();
 
-    public List<FilterDataModel> getSortList(){
-        ArrayList<FilterDataModel> objects = new ArrayList<>();
-        objects.add(new FilterDataModel().setPropertyName("Id"));
+    public List<SearchTypeModel> getSortList() {
+        ArrayList<SearchTypeModel> objects = new ArrayList<>();
+        objects.add(new SearchTypeModel().setSortColumn("Id").setSortType(SearchTypeModel.SORT_ASCENDING).setSortColumn("جدیدترین"));
+        objects.add(new SearchTypeModel().setSortColumn("Id").setSortType(SearchTypeModel.SORT_DESCENDING).setSortColumn("قدیمی ترین"));
+        objects.add(new SearchTypeModel().setSortColumn("Id").setSortType(SearchTypeModel.SORT_RANDOM).setSortColumn("به صورت تصادفی"));
         return objects;
     }
-    showFilter(){
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        bottomSheetDialog.setContentView(R.layout.sort_filter_bottom_dialog);
 
-        LinearLayout copy = bottomSheetDialog.findViewById(R.id.copyLinearLayout);
-        LinearLayout share = bottomSheetDialog.findViewById(R.id.shareLinearLayout);
-        LinearLayout upload = bottomSheetDialog.findViewById(R.id.uploadLinearLayout);
-        LinearLayout download = bottomSheetDialog.findViewById(R.id.download);
-        LinearLayout delete = bottomSheetDialog.findViewById(R.id.delete);
+    public void showFilter() {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(R.layout.sort_filter_bottom_dialog);
+        Typeface r1 = FontManager.T1_Typeface(this);
+        ((TextView) bottomSheetDialog.findViewById(R.id.title)).setTypeface(r1);
+        RecyclerView rc = bottomSheetDialog.findViewById(R.id.rc);
+        rc.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        rc.setAdapter(new SortingFilterAdapter(getSortList(), searchTypeModel -> {
+            sortFilter = searchTypeModel;
+            //refresh list
+            models.clear();
+            loadingMore = true;
+            init();
+
+        }));
 
         bottomSheetDialog.show();
     }

@@ -32,7 +32,7 @@ public class SortingFilterAdapter extends BaseRecyclerAdapter<SearchTypeModel, S
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
         SearchTypeModel item = getItem(position);
-        holder.tv.setText(item.DisplayName);
+        holder.tv.setText(item.getDisplayName());
         holder.itemView.setOnClickListener(view ->selectFunc.accept(item));
     }
 

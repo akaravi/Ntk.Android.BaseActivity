@@ -25,6 +25,7 @@ import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.SearchTypeModel;
+import ntk.android.base.entitymodel.enums.EnumSortType;
 import ntk.android.base.fragment.abstraction.AbstractionListFragment;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
@@ -37,7 +38,7 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
     protected RecyclerView.Adapter adapter;
     protected TREq request;
     protected boolean loadingMore = true;
-    SearchTypeModel sortFilter;
+    protected SearchTypeModel sortFilter;
 
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
         SwipeRefreshLayout Refresh = findViewById(R.id.swipRefresh);
         findViewById(R.id.imgBack).setOnClickListener(v -> ClickBack());
         findViewById(R.id.imgSearch).setOnClickListener(v -> ClickSearch());
-        if (getSortList()==null)
+        if (getSortList() == null)
             findViewById(R.id.imgSort).setVisibility(View.GONE);
         findViewById(R.id.imgSort).setOnClickListener(v -> showFilter());
         LblTitle.setTypeface(FontManager.T1_Typeface(this));
@@ -181,9 +182,9 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
 
     public List<SearchTypeModel> getSortList() {
         ArrayList<SearchTypeModel> objects = new ArrayList<>();
-        objects.add(new SearchTypeModel().setSortColumn("Id").setSortType(SearchTypeModel.SORT_ASCENDING).setSortColumn("جدیدترین"));
-        objects.add(new SearchTypeModel().setSortColumn("Id").setSortType(SearchTypeModel.SORT_DESCENDING).setSortColumn("قدیمی ترین"));
-        objects.add(new SearchTypeModel().setSortColumn("Id").setSortType(SearchTypeModel.SORT_RANDOM).setSortColumn("به صورت تصادفی"));
+        objects.add(new SearchTypeModel().setSortColumn("Id").setSortType(EnumSortType.Ascending.index()).setDisplayName("جدیدترین"));
+        objects.add(new SearchTypeModel().setSortColumn("Id").setSortType(EnumSortType.Descending.index()).setDisplayName("قدیمی ترین"));
+        objects.add(new SearchTypeModel().setSortColumn("Id").setSortType(EnumSortType.Random.index()).setDisplayName("به صورت تصادفی"));
         return objects;
     }
 
@@ -200,7 +201,7 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
             models.clear();
             loadingMore = true;
             init();
-
+            bottomSheetDialog.dismiss();
         }));
 
         bottomSheetDialog.show();

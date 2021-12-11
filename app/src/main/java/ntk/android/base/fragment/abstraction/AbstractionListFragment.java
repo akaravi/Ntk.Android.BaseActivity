@@ -1,5 +1,6 @@
 package ntk.android.base.fragment.abstraction;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -10,16 +11,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import java9.util.function.Function;
 import ntk.android.base.R;
+import ntk.android.base.adapter.SortingFilterAdapter;
 import ntk.android.base.config.ErrorExceptionObserver;
 import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
+import ntk.android.base.entitymodel.base.SearchTypeModel;
+import ntk.android.base.entitymodel.enums.EnumSortType;
 import ntk.android.base.fragment.BaseFragment;
 import ntk.android.base.utill.AppUtill;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
@@ -35,6 +41,7 @@ public abstract class AbstractionListFragment<TREq, TEntity> extends BaseFragmen
     protected RecyclerView.Adapter adapter;
     protected TREq request;
     protected boolean loadingMore = true;
+    protected SearchTypeModel sortFilter;
 
     @Override
     public void onCreated() {
@@ -76,6 +83,9 @@ public abstract class AbstractionListFragment<TREq, TEntity> extends BaseFragmen
         RecyclerView Rv = findViewById(R.id.recycler);
         SwipeRefreshLayout Refresh = findViewById(R.id.swipRefresh);
         findViewById(R.id.imgBack).setOnClickListener(v -> ClickBack());
+        if (getSortList() == null)
+            findViewById(R.id.imgSort).setVisibility(View.GONE);
+        findViewById(R.id.imgSort).setOnClickListener(v -> showFilter());
         findViewById(R.id.imgSearch).setOnClickListener(v -> ClickSearch());
         LblTitle.setTypeface(FontManager.T1_Typeface(getContext()));
         Rv.setHasFixedSize(true);
@@ -138,7 +148,6 @@ public abstract class AbstractionListFragment<TREq, TEntity> extends BaseFragmen
     }
 
 
-
     private void RestCall(int nextPage) {
         if (AppUtill.isNetworkAvailable(getContext())) {
             if (nextPage == 1)
@@ -175,6 +184,7 @@ public abstract class AbstractionListFragment<TREq, TEntity> extends BaseFragmen
     public void ClickBack() {
         getActivity().finish();
     }
+
     public void afterInit() {
 
     }
@@ -199,5 +209,31 @@ public abstract class AbstractionListFragment<TREq, TEntity> extends BaseFragmen
         public abstract boolean isShown();
 
         public abstract void changeVisibility(boolean isVisible);
+    }
+
+    public List<SearchTypeModel> getSortList() {
+        ArrayList<SearchTypeModel> objects = new ArrayList<>();
+        objects.add(new SearchTypeModel().setSortColumn("Id").setSortType(EnumSortType.Ascending.index()).setDisplayName("جدیدترین"));
+        objects.add(new SearchTypeModel().setSortColumn("Id").setSortType(EnumSortType.Descending.index()).setDisplayName("قدیمی ترین"));
+        objects.add(new SearchTypeModel().setSortColumn("Id").setSortType(EnumSortType.Random.index()).setDisplayName("به صورت تصادفی"));
+        return objects;
+    }
+
+    public void showFilter() {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+        bottomSheetDialog.setContentView(R.layout.sort_filter_bottom_dialog);
+        Typeface r1 = FontManager.T1_Typeface(getContext());
+        ((TextView) bottomSheetDialog.findViewById(R.id.title)).setTypeface(r1);
+        RecyclerView rc = bottomSheetDialog.findViewById(R.id.rc);
+        rc.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        rc.setAdapter(new SortingFilterAdapter(getSortList(), searchTypeModel -> {
+            sortFilter = searchTypeModel;
+            //refresh list
+            models.clear();
+            loadingMore = true;
+            init();
+            bottomSheetDialog.dismiss();
+        }));
+        bottomSheetDialog.show();
     }
 }

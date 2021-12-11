@@ -22,8 +22,14 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListA
     protected void requestOnIntent() {
         request = new FilterModel();
         request.RowPerPage = 20;
-        request.SortColumn = sortColumn();
-        request.SortType = EnumSortType.Descending.index();
+        if (sortFilter==null){
+            request.SortColumn = "Id";
+            request.SortType = EnumSortType.Descending.index();
+        }else
+        {
+            request.SortColumn=sortFilter.getSortColumn();
+            request.SortType=sortFilter.getSortType();
+        }
         if (getIntent() != null)
             if (getIntent().getExtras() != null) {
                 String reqString = getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG, "");
@@ -33,9 +39,6 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListA
             }
     }
 
-    protected String sortColumn() {
-        return "Id";
-    }
 
     @Override
     protected Function<Integer, Observable<ErrorException<TEntity>>> apiService() {

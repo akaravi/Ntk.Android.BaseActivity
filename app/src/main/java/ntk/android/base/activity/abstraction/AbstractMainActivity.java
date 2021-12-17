@@ -172,6 +172,8 @@ public class AbstractMainActivity extends BaseActivity {
             Bitmap bitmap = qrgEncoder.getBitmap();
             ImageView img = dialog.findViewById(R.id.qrCodeDialogQRCode);
             img.setImageBitmap(bitmap);
+            if (bitmap==null)
+                throw new Exception();
         } catch (Exception e) {
             String base64Image = qrCode.split(",")[1];
             byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);

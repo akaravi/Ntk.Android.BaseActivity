@@ -17,15 +17,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
@@ -35,7 +32,7 @@ import ntk.android.base.dtomodel.core.AuthUserSignUpModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.core.CoreUserModel;
 import ntk.android.base.services.core.CoreAuthService;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
 import ntk.android.base.view.CaptchaView;
@@ -119,7 +116,7 @@ public class RegisterMobileActivity extends BaseActivity {
             Toast.makeText(this,  R.string.plz_insert_capcha, Toast.LENGTH_SHORT).show();
         else {
             PhoneNumber = Txt.getText().toString();
-            if (AppUtill.isNetworkAvailable(this)) {
+            if (AppUtil.isNetworkAvailable(this)) {
                 if (CheckPermission()) {
                     Register();
                 } else {
@@ -133,7 +130,7 @@ public class RegisterMobileActivity extends BaseActivity {
 
 
     private void Register() {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             Loading.setVisibility(View.VISIBLE);
             findViewById(R.id.cardActRegister).setVisibility(View.GONE);
             AuthUserSignUpModel request = new AuthUserSignUpModel();

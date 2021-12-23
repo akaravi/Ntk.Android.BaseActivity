@@ -15,7 +15,7 @@ import java.util.List;
 import ntk.android.base.R;
 import ntk.android.base.dialog.DownloadFileDialog;
 import ntk.android.base.entitymodel.ticketing.TicketingAnswerModel;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.view.NViewUtils;
 
@@ -62,7 +62,7 @@ public class TicketAnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.desc.setText(Html.fromHtml(model.HtmlBody
                     .replace("<p>", "")
                     .replace("</p>", "")));
-            holder.date.setText(AppUtill.GregorianToPersian(model.CreatedDate) + "");
+            holder.date.setText(AppUtil.GregorianToPersian(model.CreatedDate) + "");
             if (model.LinkFileIdsSrc != null && model.LinkFileIdsSrc.size() != 0) {
                 holder.attach.setVisibility(View.VISIBLE);
                 holder.attach.setOnClickListener(v -> DownloadFileDialog.SHOW_DIALOG(v.getContext(), fm, model.LinkFileIdsSrc));
@@ -73,7 +73,7 @@ public class TicketAnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.desc.setText(Html.fromHtml(model.HtmlBody
                     .replace("<p>", "")
                     .replace("</p>", "")));
-            holder.date.setText(AppUtill.GregorianToPersian(model.CreatedDate) + "");
+            holder.date.setText(AppUtil.GregorianToPersian(model.CreatedDate) + "");
             if (model.LinkFileIdsSrc != null && model.LinkFileIdsSrc.size() != 0) {
                 holder.attach.setVisibility(View.VISIBLE);
                 holder.attach.setOnClickListener(v -> DownloadFileDialog.SHOW_DIALOG(v.getContext(), fm, model.LinkFileIdsSrc));

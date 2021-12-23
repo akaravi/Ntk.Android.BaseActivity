@@ -21,9 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
@@ -33,7 +31,7 @@ import ntk.android.base.dtomodel.core.AuthMobileConfirmDtoModel;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
 import ntk.android.base.event.MessageEvent;
 import ntk.android.base.services.core.CoreAuthService;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.prefrense.Preferences;
 import ntk.android.base.view.CaptchaView;
 
@@ -107,7 +105,7 @@ public class RegisterMobileConfirmActivity extends BaseActivity {
     }
 
     private void Verify() {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             Loading.setVisibility(View.VISIBLE);
 
             CaptchaView captchaView = (CaptchaView) findViewById(R.id.captchaView);

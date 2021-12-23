@@ -25,7 +25,7 @@ import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
 
@@ -67,7 +67,7 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
     }
 
     protected final void getContent() {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
 
             ServiceExecute.execute(getOneContentService().apply(Id))
                     .subscribe(new ErrorExceptionObserver<TEntity>(this::showError) {
@@ -91,7 +91,7 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
     }
 
     protected final void getContentOtherInfo(long ContentId) {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             ServiceExecute.execute(getOtherInfoListService().apply(ContentId))
                     .subscribe(new ErrorExceptionObserver<TOtherInfo>(this::showError) {
 
@@ -124,7 +124,7 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
     }
 
     public void ClickFav() {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             Pair<Function<Long, Observable<ErrorExceptionBase>>, Runnable> functionFunctionPair = getFavoriteService();
             ServiceExecute.execute(functionFunctionPair.first.apply(Id))
                     .subscribe(new NtkObserver<ErrorExceptionBase>() {

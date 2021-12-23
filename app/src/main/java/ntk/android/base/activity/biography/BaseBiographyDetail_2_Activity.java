@@ -56,7 +56,7 @@ import ntk.android.base.services.base.CmsApiScoreApi;
 import ntk.android.base.services.biography.BiographyCommentService;
 import ntk.android.base.services.biography.BiographyContentOtherInfoService;
 import ntk.android.base.services.biography.BiographyContentService;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 
 public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActivity<BiographyContentModel, BiographyCategoryModel, BiographyCommentModel, BiographyContentOtherInfoModel> {
@@ -154,7 +154,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
     }
 
     protected void setContentRate(ScoreClickDtoModel request) {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
 
             ServiceExecute.execute(new BiographyContentService(this).scoreClick(request))
                     .subscribe(new NtkObserver<ErrorExceptionBase>() {
@@ -195,7 +195,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
 
 
     private void HandelDataComment(long ContentId) {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             ServiceExecute.execute(getCommentListService().apply(ContentId))
                     .subscribe(new NtkObserver<ErrorException<BiographyCommentModel>>() {
                         @Override
@@ -338,7 +338,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
                 if (Txt[1].getText().toString().isEmpty()) {
                     Toast.makeText(BaseBiographyDetail_2_Activity.this, R.string.per_insert_num, Toast.LENGTH_SHORT).show();
                 } else {
-                    if (AppUtill.isNetworkAvailable(this)) {
+                    if (AppUtil.isNetworkAvailable(this)) {
 //                        BiographyCommentModel add = new BiographyCommentModel();
                         String writer = Txt[0].getText().toString();
                         String comment = Txt[1].getText().toString();
@@ -474,7 +474,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
     }
 
     private void getSimilarContent(long id) {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             ServiceExecute.execute(getSimilarContentService().apply(id))
                     .subscribe(new NtkObserver<ErrorException<BiographyContentModel>>() {
                         @Override
@@ -515,7 +515,7 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
 
 
     private void getSimilarCategoryContent(long id) {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             ServiceExecute.execute(getSimilarCategoryService().apply(id))
                     .subscribe(new NtkObserver<ErrorException<BiographyContentModel>>() {
                         @Override

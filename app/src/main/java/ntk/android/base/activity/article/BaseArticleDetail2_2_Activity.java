@@ -56,7 +56,7 @@ import ntk.android.base.services.article.ArticleCommentService;
 import ntk.android.base.services.article.ArticleContentOtherInfoService;
 import ntk.android.base.services.article.ArticleContentService;
 import ntk.android.base.services.base.CmsApiScoreApi;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 
 public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivity<ArticleContentModel, ArticleCategoryModel, ArticleCommentModel, ArticleContentOtherInfoModel> {
@@ -166,7 +166,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
     }
 
     protected void setContentRate(ScoreClickDtoModel request) {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
 
             ServiceExecute.execute(new ArticleContentService(this).scoreClick(request))
                     .subscribe(new NtkObserver<ErrorExceptionBase>() {
@@ -207,7 +207,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
 
 
     private void HandelDataComment(long ContentId) {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             ServiceExecute.execute(getCommentListService().apply(ContentId))
                     .subscribe(new NtkObserver<ErrorException<ArticleCommentModel>>() {
                         @Override
@@ -340,7 +340,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
                 if (Txt[1].getText().toString().isEmpty()) {
                     Toast.makeText(BaseArticleDetail2_2_Activity.this, R.string.per_insert_num, Toast.LENGTH_SHORT).show();
                 } else {
-                    if (AppUtill.isNetworkAvailable(this)) {
+                    if (AppUtil.isNetworkAvailable(this)) {
 //                        ArticleCommentModel add = new ArticleCommentModel();
                         String writer = Txt[0].getText().toString();
                         String comment = Txt[1].getText().toString();
@@ -480,7 +480,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
     }
 
     private void getSimilarContent(long id) {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             ServiceExecute.execute(getSimilarContentService().apply(id))
                     .subscribe(new NtkObserver<ErrorException<ArticleContentModel>>() {
                         @Override
@@ -515,7 +515,7 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
 
 
     private void getSimilarCategoryContent(long id) {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             FilterModel request = new FilterModel();
             ServiceExecute.execute(new ArticleContentService(this).getAllWithCategoryUsedInContent(id, request))
                     .subscribe(new NtkObserver<ErrorException<ArticleContentModel>>() {

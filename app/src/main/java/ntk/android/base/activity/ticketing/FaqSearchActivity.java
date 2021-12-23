@@ -16,15 +16,16 @@ import io.reactivex.disposables.Disposable;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.adapter.FaqAdapter;
-import ntk.android.base.api.utill.NTKUtill;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.entitymodel.base.FilterModel;
+import ntk.android.base.entitymodel.enums.EnumClauseType;
+import ntk.android.base.entitymodel.enums.EnumSearchType;
 import ntk.android.base.entitymodel.ticketing.TicketingFaqModel;
 import ntk.android.base.services.ticketing.TicketingFaqService;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 
 public class FaqSearchActivity extends BaseActivity {
@@ -68,21 +69,21 @@ public class FaqSearchActivity extends BaseActivity {
     private void Search() {
         if (!searchLock) {
             searchLock = true;
-            if (AppUtill.isNetworkAvailable(this)) {
+            if (AppUtil.isNetworkAvailable(this)) {
 
                 FilterModel request = new FilterModel();
                 FilterDataModel fa = new FilterDataModel();
                 fa.PropertyName = "Answer";
                 fa.setStringValue(Txt.getText().toString());
-                fa.ClauseType = NTKUtill.ClauseType_Or;
-                fa.SearchType = NTKUtill.Search_Type_Contains;
+                fa.ClauseType = EnumClauseType.Or.index();
+                fa.SearchType = EnumSearchType.Contains.index();
                 request.addFilter(fa);
 
                 FilterDataModel fq = new FilterDataModel();
                 fq.PropertyName = "Question";
                 fq.setStringValue(Txt.getText().toString());
-                fq.ClauseType = NTKUtill.ClauseType_Or;
-                fq.SearchType = NTKUtill.Search_Type_Contains;
+                fq.ClauseType = EnumClauseType.Or.index();
+                fq.SearchType = EnumSearchType.Contains.index();
                 request.addFilter(fq);
                 switcher.showProgressView();
                 ServiceExecute.execute(new TicketingFaqService(this).getAll(request))

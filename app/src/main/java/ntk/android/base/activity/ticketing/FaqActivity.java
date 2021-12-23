@@ -17,7 +17,7 @@ import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.ticketing.TicketingFaqModel;
 import ntk.android.base.services.ticketing.TicketingFaqService;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 
 public class FaqActivity extends BaseActivity {
@@ -45,7 +45,7 @@ public class FaqActivity extends BaseActivity {
         Lbl.setText(R.string.faq);
         Rv.setHasFixedSize(true);
         Rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             // show loading
             switcher.showProgressView();
 

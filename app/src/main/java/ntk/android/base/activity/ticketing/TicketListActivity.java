@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.adapter.common.TicketAdapter;
-import ntk.android.base.api.utill.NTKUtill;
 import ntk.android.base.config.ErrorExceptionObserver;
 import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.ServiceExecute;
@@ -25,7 +24,7 @@ import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.enums.EnumSortType;
 import ntk.android.base.entitymodel.ticketing.TicketingTaskModel;
 import ntk.android.base.services.ticketing.TicketingTaskService;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
 
 
@@ -106,7 +105,7 @@ public class TicketListActivity extends BaseActivity {
 
 
     private void HandelData(int nextPage) {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
 
             FilterModel request = new FilterModel();
             request.RowPerPage = 10;

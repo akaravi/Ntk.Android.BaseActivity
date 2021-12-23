@@ -37,7 +37,7 @@ import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.dtomodel.application.ApplicationScoreDtoModel;
 import ntk.android.base.entitymodel.base.ErrorExceptionBase;
 import ntk.android.base.services.application.ApplicationAppService;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
 
@@ -232,7 +232,7 @@ public class AbstractMainActivity extends BaseActivity {
             if (Txt.getText().toString().isEmpty()) {
                 Toasty.error(this, R.string.per_insert_comment, Toasty.LENGTH_LONG, true).show();
             } else {
-                if (AppUtill.isNetworkAvailable(this)) {
+                if (AppUtil.isNetworkAvailable(this)) {
                     request.ScoreComment = Txt.getText().toString();
                     request.LinkApiId = Preferences.with(AbstractMainActivity.this).appVariableInfo().appId();
                     //todo show loading

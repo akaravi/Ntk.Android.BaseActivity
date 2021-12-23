@@ -51,7 +51,7 @@ import ntk.android.base.service.FileManagerService;
 import ntk.android.base.services.file.FileUploaderService;
 import ntk.android.base.services.ticketing.TicketingDepartemenService;
 import ntk.android.base.services.ticketing.TicketingTaskService;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.Regex;
 import ntk.android.base.utill.prefrense.Preferences;
@@ -275,7 +275,7 @@ public class NewTicketActivity extends BaseActivity {
             return;
         }
         Preferences.with(this).ticketVariableInfo().setEmail(email.getText().toString());
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             //show dialog loading
             switcher.showLoadDialog(this, false);
             request.Email = email.getText().toString();
@@ -362,7 +362,7 @@ public class NewTicketActivity extends BaseActivity {
 
 
     private void UploadFileToServer(String url) {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             ServiceExecute.execute(new FileUploaderService(this).uploadFile(url))
                     .subscribe(new NtkObserver<FileUploadModel>() {
                         @Override

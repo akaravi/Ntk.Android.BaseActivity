@@ -17,7 +17,7 @@ import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.polling.PollingCategoryModel;
 import ntk.android.base.services.pooling.PollingCategoryService;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 
 public class PolingActivity extends BaseActivity {
@@ -40,7 +40,7 @@ public class PolingActivity extends BaseActivity {
         LblTitle.setTypeface(FontManager.T1_Typeface(this));
         Rv.setHasFixedSize(true);
         Rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             // show loading
             switcher.showProgressView();
             ServiceExecute.execute(new PollingCategoryService(this).getAll(new FilterModel()))

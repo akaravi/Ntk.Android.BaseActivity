@@ -48,7 +48,7 @@ import ntk.android.base.event.RemoveAttachEvent;
 import ntk.android.base.service.FileManagerService;
 import ntk.android.base.services.file.FileUploaderService;
 import ntk.android.base.services.ticketing.TicketingAnswerService;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
 import ntk.android.base.view.NViewUtils;
@@ -151,7 +151,7 @@ public class TicketAnswerActivity extends BaseActivity {
     }
 
     private void HandelData(int i) {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             switcher.showProgressView();
             FilterModel request = new FilterModel();
             request.RowPerPage = 100;
@@ -195,7 +195,7 @@ public class TicketAnswerActivity extends BaseActivity {
         if (txt.getText().toString().isEmpty()) {
 
         } else {
-            if (AppUtill.isNetworkAvailable(this)) {
+            if (AppUtil.isNetworkAvailable(this)) {
                 TicketingAnswerModel request = new TicketingAnswerModel();
                 request.HtmlBody = txt.getText().toString();
                 request.LinkTaskId = ticketId;
@@ -252,7 +252,7 @@ public class TicketAnswerActivity extends BaseActivity {
 
 
     private void UploadFileToServer(String url) {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             ServiceExecute.execute(new FileUploaderService(this).uploadFile(url))
                     .subscribe(new NtkObserver<FileUploadModel>() {
                         @Override

@@ -32,7 +32,6 @@ import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.RetrofitManager;
 import ntk.android.base.config.ServiceExecute;
-import ntk.android.base.dtomodel.application.AppThemeDtoModel;
 import ntk.android.base.entitymodel.application.ApplicationAppModel;
 import ntk.android.base.entitymodel.application.ApplicationThemeConfigModel;
 import ntk.android.base.entitymodel.base.ErrorException;
@@ -40,7 +39,7 @@ import ntk.android.base.entitymodel.base.TokenInfoModel;
 import ntk.android.base.services.application.ApplicationAppService;
 import ntk.android.base.services.application.ApplicationThemeService;
 import ntk.android.base.services.core.CoreAuthService;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.prefrense.Preferences;
 
 /**
@@ -139,7 +138,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
      */
     protected void getTokenDevice() {
         //check connectivity
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             switcher.showContentView();
             //show progress title
             TextView Lb2 = findViewById(R.id.lblWorkActSplash);
@@ -180,7 +179,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
      */
     private void themeApi() {
         //check connectivity
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             switcher.showContentView();
             //show progress
             TextView Lb2 = findViewById(R.id.lblWorkActSplash);
@@ -218,7 +217,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
      */
     private void getCurrentApp() {
 
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             switcher.showContentView();
             //show progress
             TextView Lb2 = findViewById(R.id.lblWorkActSplash);

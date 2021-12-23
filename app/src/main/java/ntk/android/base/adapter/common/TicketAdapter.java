@@ -26,7 +26,7 @@ import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.activity.ticketing.TicketAnswerActivity;
 import ntk.android.base.dialog.DownloadFileDialog;
 import ntk.android.base.entitymodel.ticketing.TicketingTaskModel;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 
 ;
@@ -55,7 +55,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
         TicketingTaskModel model = arrayList.get(position);
         holder.id.setText(context.getString(R.string.number_string) + model.Id);
         holder.Lbls.get(0).setText(model.Title);
-        holder.Lbls.get(2).setText(AppUtill.GregorianToPersian(model.CreatedDate) + "");
+        holder.Lbls.get(2).setText(AppUtil.GregorianToPersian(model.CreatedDate) + "");
         holder.webView.loadData("<html dir=\"rtl\" lang=\"\"><body>" + model.HtmlBody + "</body></html>", "text/html; charset=utf-8", "UTF-8");
         if (model.LinkFileIdsSrc != null && model.LinkFileIdsSrc.size() != 0) {
             holder.attachment.setVisibility(View.VISIBLE);

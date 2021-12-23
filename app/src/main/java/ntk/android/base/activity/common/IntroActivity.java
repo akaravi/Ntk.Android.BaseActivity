@@ -23,7 +23,7 @@ import ntk.android.base.entitymodel.application.ApplicationIntroModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.services.application.ApplicationIntroService;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
 
@@ -71,7 +71,7 @@ public class IntroActivity extends BaseActivity {
     }
 
     private void getdata() {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             switcher.showProgressView();
             ServiceExecute.execute(new ApplicationIntroService(this).getAll(new FilterModel()))
                     .subscribe(new NtkObserver<ErrorException<ApplicationIntroModel>>() {

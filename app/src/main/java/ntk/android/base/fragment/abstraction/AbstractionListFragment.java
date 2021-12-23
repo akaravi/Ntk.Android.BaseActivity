@@ -27,7 +27,7 @@ import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.SearchTypeModel;
 import ntk.android.base.entitymodel.enums.EnumSortType;
 import ntk.android.base.fragment.BaseFragment;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
 import ntk.android.base.utill.FontManager;
 
@@ -149,7 +149,7 @@ public abstract class AbstractionListFragment<TREq, TEntity> extends BaseFragmen
 
 
     private void RestCall(int nextPage) {
-        if (AppUtill.isNetworkAvailable(getContext())) {
+        if (AppUtil.isNetworkAvailable(getContext())) {
             if (nextPage == 1)
                 switcher.showProgressView();
             else

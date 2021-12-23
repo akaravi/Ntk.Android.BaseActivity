@@ -2,8 +2,6 @@ package ntk.android.base.activity.common;
 
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-
 import io.reactivex.Observable;
 import java9.util.function.Function;
 import ntk.android.base.Extras;
@@ -22,13 +20,9 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListA
     protected void requestOnIntent() {
         request = new FilterModel();
         request.RowPerPage = 20;
-        if (sortFilter==null){
+        if (sortFilter == null) {
             request.SortColumn = "Id";
-            request.SortType = EnumSortType.Descending.index();
-        }else
-        {
-            request.SortColumn=sortFilter.getSortColumn();
-            request.SortType=sortFilter.getSortType();
+            request.SortType = EnumSortType.Ascending.index();
         }
         if (getIntent() != null)
             if (getIntent().getExtras() != null) {
@@ -37,6 +31,10 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListA
                     request = new Gson().fromJson(reqString, FilterModel.class);
                 }
             }
+        if (sortFilter != null ) {
+            request.SortColumn = sortFilter.getSortColumn();
+            request.SortType = sortFilter.getSortType();
+        }
     }
 
 
@@ -44,6 +42,10 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListA
     protected Function<Integer, Observable<ErrorException<TEntity>>> apiService() {
         return newPage -> {
             request.CurrentPageNumber = newPage;
+            if (sortFilter != null ) {
+                request.SortColumn = sortFilter.getSortColumn();
+                request.SortType = sortFilter.getSortType();
+            }
             return getService().apply(request);
         };
     }

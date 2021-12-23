@@ -27,7 +27,7 @@ import ntk.android.base.dtomodel.core.AuthUserSignInBySmsDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.TokenInfoModel;
 import ntk.android.base.services.core.CoreAuthService;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
 import ntk.android.base.view.CaptchaView;
@@ -101,7 +101,7 @@ public class AuthWithSmsActivity extends BaseActivity {
 
 
     private void Register() {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             Loading.setVisibility(View.VISIBLE);
             findViewById(R.id.cardActRegister).setVisibility(View.GONE);
             AuthUserSignInBySmsDtoModel request = new AuthUserSignInBySmsDtoModel();

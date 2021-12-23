@@ -52,7 +52,7 @@ import ntk.android.base.services.base.CmsApiScoreApi;
 import ntk.android.base.services.news.NewsCommentService;
 import ntk.android.base.services.news.NewsContentOtherInfoService;
 import ntk.android.base.services.news.NewsContentService;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 
 public abstract class BaseNewsDetail_1_Activity extends
@@ -142,7 +142,7 @@ public abstract class BaseNewsDetail_1_Activity extends
     }
 
     protected void setContentRate(ScoreClickDtoModel request) {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
 
             ServiceExecute.execute(new NewsContentService(this).scoreClick(request))
                     .subscribe(new NtkObserver<ErrorExceptionBase>() {
@@ -183,7 +183,7 @@ public abstract class BaseNewsDetail_1_Activity extends
 
 
     private void HandelDataComment(long ContentId) {
-        if (AppUtill.isNetworkAvailable(this)) {
+        if (AppUtil.isNetworkAvailable(this)) {
             ServiceExecute.execute(getCommentListService().apply(ContentId))
                     .subscribe(new NtkObserver<ErrorException<NewsCommentModel>>() {
                         @Override
@@ -311,7 +311,7 @@ public abstract class BaseNewsDetail_1_Activity extends
                 if (Txt[1].getText().toString().isEmpty()) {
                     Toast.makeText(BaseNewsDetail_1_Activity.this, R.string.per_insert_num, Toast.LENGTH_SHORT).show();
                 } else {
-                    if (AppUtill.isNetworkAvailable(this)) {
+                    if (AppUtil.isNetworkAvailable(this)) {
 //                        NewsCommentModel add = new NewsCommentModel();
                         String writer = Txt[0].getText().toString();
                         String comment = Txt[1].getText().toString();

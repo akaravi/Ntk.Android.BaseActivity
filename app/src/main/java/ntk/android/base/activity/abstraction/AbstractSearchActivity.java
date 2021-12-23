@@ -17,14 +17,15 @@ import io.reactivex.annotations.NonNull;
 import java9.util.function.Function;
 import ntk.android.base.R;
 import ntk.android.base.activity.BaseActivity;
-import ntk.android.base.api.utill.NTKUtill;
 import ntk.android.base.config.ErrorExceptionObserver;
 import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.ServiceExecute;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterDataModel;
 import ntk.android.base.entitymodel.base.FilterModel;
-import ntk.android.base.utill.AppUtill;
+import ntk.android.base.entitymodel.enums.EnumClauseType;
+import ntk.android.base.entitymodel.enums.EnumSearchType;
+import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.EndlessRecyclerViewScrollListener;
 import ntk.android.base.utill.FontManager;
 
@@ -111,7 +112,7 @@ public abstract class AbstractSearchActivity<TEntity> extends BaseActivity {
     public void SearchPage(int nextPage) {
         if (!searchLock) {
             searchLock = true;
-            if (AppUtill.isNetworkAvailable(this)) {
+            if (AppUtil.isNetworkAvailable(this)) {
 
                 if (nextPage == 1)
                     switcher.showProgressView();
@@ -172,22 +173,22 @@ public abstract class AbstractSearchActivity<TEntity> extends BaseActivity {
         FilterDataModel ft = new FilterDataModel();
         ft.PropertyName = "Title";
         ft.setStringValue(stringValue);
-        ft.ClauseType = NTKUtill.ClauseType_Or;
-        ft.SearchType = NTKUtill.Search_Type_Contains;
+        ft.ClauseType = EnumClauseType.Or.index();
+        ft.SearchType = EnumSearchType.Contains.index();
         request.addFilter(ft);
 
         FilterDataModel fd = new FilterDataModel();
         fd.PropertyName = "Description";
         ft.setStringValue(stringValue);
-        fd.ClauseType = NTKUtill.ClauseType_Or;
-        fd.SearchType = NTKUtill.Search_Type_Contains;
+        ft.ClauseType = EnumClauseType.Or.index();
+        ft.SearchType = EnumSearchType.Contains.index();
         request.addFilter(fd);
 
         FilterDataModel fb = new FilterDataModel();
         fb.PropertyName = "Body";
         ft.setStringValue(stringValue);
-        fb.ClauseType = NTKUtill.ClauseType_Or;
-        fb.SearchType = NTKUtill.Search_Type_Contains;
+        ft.ClauseType = EnumClauseType.Or.index();
+        ft.SearchType = EnumSearchType.Contains.index();
         request.addFilter(fb);
         return request;
     }

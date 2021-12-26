@@ -99,6 +99,7 @@ dependencies {
 //    api 'com.github.akaravi:Ntk.Android.Base:1.4.400'
     api project(path: ':baseApi')
 //     full exoplayer library
+    // full exoplayer library
     implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
     //for gallery view
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'

@@ -32,6 +32,7 @@ import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.RetrofitManager;
 import ntk.android.base.config.ServiceExecute;
+import ntk.android.base.dtomodel.core.TokenDeviceModel;
 import ntk.android.base.entitymodel.application.ApplicationAppModel;
 import ntk.android.base.entitymodel.application.ApplicationThemeConfigModel;
 import ntk.android.base.entitymodel.base.ErrorException;
@@ -151,11 +152,12 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                 indicator.show();
             }
             ServiceExecute.execute(new CoreAuthService(this).getTokenDevice())
-                    .subscribe(new ErrorExceptionObserver<TokenInfoModel>(switcher::showErrorView) {
+                    .subscribe(new ErrorExceptionObserver<TokenDeviceModel>(switcher::showErrorView) {
                         @Override
-                        protected void SuccessResponse(ErrorException<TokenInfoModel> tokenInfoModelErrorException) {
+                        protected void SuccessResponse(ErrorException<TokenDeviceModel> tokenInfoModelErrorException) {
                             //go to next api
-                            themeApi();
+                            currentToken();
+
 
                         }
 
@@ -172,6 +174,38 @@ public abstract class AbstractSplashActivity extends BaseActivity {
             new GenericErrors().netError(switcher::showErrorView, this::getTokenDevice);
         }
 
+    }
+
+    private void currentToken() {
+        if (AppUtil.isNetworkAvailable(this)) {
+            switcher.showContentView();
+            //show progress
+            TextView Lb2 = findViewById(R.id.lblWorkActSplash);
+            if (Lb2 != null)
+                Lb2.setText(R.string.splashGetTheme);
+            LinearProgressIndicator indicator = findViewById(R.id.splashIndicator);
+            if (indicator != null) {
+                indicator.setProgress(30);
+            }
+            //call api
+            ServiceExecute.execute(new CoreAuthService(this).correctTokenInfo())
+                    .subscribe(new  ErrorExceptionObserver<TokenInfoModel>(switcher::showErrorView) {
+                        @Override
+                        protected void SuccessResponse(ErrorException<TokenInfoModel> response) {
+
+                            //next api
+                            themeApi();
+                        }
+
+                        @Override
+                        protected Runnable tryAgainMethod() {
+                            return  AbstractSplashActivity.this::themeApi;
+                        }
+                    });
+        } else {
+            //show generic net error
+            new GenericErrors().netError(switcher::showErrorView, this::themeApi);
+        }
     }
 
     /**
@@ -264,37 +298,37 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         long userId = Preferences.with(this).UserInfo().userId();
         Preferences.with(this).appVariableInfo().setApplicationAppModel(new Gson().toJson(model));
         //user has token and is login
-        if (userId > 0) {
-            TextView Lb2 = findViewById(R.id.lblWorkActSplash);
-            if (Lb2 != null)
-                Lb2.setText(R.string.splashGetUserInformationStep);
-            LinearProgressIndicator indicator = findViewById(R.id.splashIndicator);
-            if (indicator != null) {
-                indicator.setProgress(70);
-            }
-            //check user token is correct
-            ServiceExecute.execute(new CoreAuthService(this).correctTokenInfo())
-                    .subscribe(new NtkObserver<Boolean>() {
-                        @Override
-                        public void onNext(@NonNull Boolean aBoolean) {
-                            if (aBoolean)//user sign in and have valid token
-                                startNewActivity(NTKApplication.getApplicationStyle().getMainActivity());
-                            else//user token in invalid then go to register
-                            {
-                                //go to login page
-                                Preferences.with(AbstractSplashActivity.this).UserInfo().setUserId(0);
-                                Preferences.with(AbstractSplashActivity.this).appVariableInfo().setIsLogin(false);
-                                Toasty.warning(AbstractSplashActivity.this, R.string.per_navigate_login, Toasty.LENGTH_LONG, true).show();
-                                startNewActivity(AuthWithSmsActivity.class);
-                            }
-                        }
-
-                        @Override
-                        public void onError(@NonNull Throwable e) {
-                            switcher.showErrorView();
-                        }
-                    });
-        } else {//if user seen intro
+//        if (userId > 0) {
+//            TextView Lb2 = findViewById(R.id.lblWorkActSplash);
+//            if (Lb2 != null)
+//                Lb2.setText(R.string.splashGetUserInformationStep);
+//            LinearProgressIndicator indicator = findViewById(R.id.splashIndicator);
+//            if (indicator != null) {
+//                indicator.setProgress(70);
+//            }
+//            //check user token is correct
+//            ServiceExecute.execute(new CoreAuthService(this).correctTokenInfo())
+//                    .subscribe(new NtkObserver<Boolean>() {
+//                        @Override
+//                        public void onNext(@NonNull Boolean aBoolean) {
+//                            if (aBoolean)//user sign in and have valid token
+//                                startNewActivity(NTKApplication.getApplicationStyle().getMainActivity());
+//                            else//user token in invalid then go to register
+//                            {
+//                                //go to login page
+//                                Preferences.with(AbstractSplashActivity.this).UserInfo().setUserId(0);
+//                                Preferences.with(AbstractSplashActivity.this).appVariableInfo().setIsLogin(false);
+//                                Toasty.warning(AbstractSplashActivity.this, R.string.per_navigate_login, Toasty.LENGTH_LONG, true).show();
+//                                startNewActivity(AuthWithSmsActivity.class);
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onError(@NonNull Throwable e) {
+//                            switcher.showErrorView();
+//                        }
+//                    });
+//        } else {//if user seen intro
             if (Preferences.with(this).appVariableInfo().IntroSeen()) {
                 //if user not interested to login
                 if (NTKApplication.getApplicationStyle().show_NotInterested_Btn() & Preferences.with(this).appVariableInfo().isRegisterNotInterested())
@@ -306,7 +340,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                     startNewActivity(AuthWithSmsActivity.class);
             } else
                 startNewActivity(IntroActivity.class);
-        }
+//        }
     }
 
     /**

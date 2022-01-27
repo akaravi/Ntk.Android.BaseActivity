@@ -120,7 +120,8 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
             request.Code = Txt.getText().toString();
             request.Mobile = Preferences.with(this).UserInfo().mobile();
             request.SiteId = Preferences.with(this).UserInfo().siteId();
-//                    request.Password = Txt.getText().toString();
+            //disable click
+            findViewById(R.id.btnActRegister).setEnabled(false);
             ServiceExecute.execute(new CoreAuthService(this).signInUserBySMS(request))
                     .subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
                         @Override
@@ -143,7 +144,7 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
                         @Override
                         public void onError(@NonNull Throwable e) {
                             captchaView.getNewCaptcha();
-                            findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
+                            findViewById(R.id.btnActRegister).setEnabled(true);
                             Loading.setVisibility(View.GONE);
                             new GenericErrors().throwableException((error, tryAgain) -> Toasty.warning(AuthWithSmsConfirmActivity.this, error, Toasty.LENGTH_LONG, true).show()
                                     , e, () -> {

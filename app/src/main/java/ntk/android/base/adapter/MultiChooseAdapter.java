@@ -45,7 +45,7 @@ public class MultiChooseAdapter extends BaseRecyclerAdapter<String, MultiChooseA
             }else
                 index.remove(item);
             notifyItemChanged(list().indexOf(item));
-            notifyDataSetChanged();
+//            notifyDataSetChanged();
         });
     }
 

@@ -12,8 +12,9 @@ import java.util.ArrayList;
 
 import ntk.android.base.Extras;
 import ntk.android.base.R;
+import ntk.android.base.activity.BaseActivity;
 
- abstract class BaseGalleryActivity extends AppCompatActivity {
+abstract class BaseGalleryActivity extends BaseActivity {
     protected Toolbar mToolbar;
     protected ArrayList<String> imageURLs;
     private String title;

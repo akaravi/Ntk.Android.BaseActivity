@@ -31,6 +31,7 @@ import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.RetrofitManager;
 import ntk.android.base.config.ServiceExecute;
+import ntk.android.base.config.TokenDeviceExp;
 import ntk.android.base.dtomodel.core.TokenDeviceModel;
 import ntk.android.base.entitymodel.application.ApplicationAppModel;
 import ntk.android.base.entitymodel.application.ApplicationThemeConfigModel;
@@ -41,8 +42,6 @@ import ntk.android.base.services.application.ApplicationThemeService;
 import ntk.android.base.services.core.CoreAuthService;
 import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.prefrense.Preferences;
-import retrofit2.HttpException;
-
 /**
  * Splash screen of all app
  * important :
@@ -152,22 +151,24 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                 indicator.show();
             }
             ServiceExecute.execute(new CoreAuthService(this).getTokenDevice())
-                    .subscribe(new ErrorExceptionObserver<TokenDeviceModel>(switcher::showErrorView) {
+                    .subscribe(new NtkObserver<ErrorException<TokenDeviceModel>>() {
                         @Override
-                        protected void SuccessResponse(ErrorException<TokenDeviceModel> tokenInfoModelErrorException) {
-                            //go to next api
-                            currentToken();
-
-
+                        public void onNext(ErrorException<TokenDeviceModel> tokenDeviceModelErrorException) {
+                            if (tokenDeviceModelErrorException.IsSuccess)
+                                currentToken();
+                            else
+                                switcher.showErrorView(tokenDeviceModelErrorException.ErrorMessage,() -> getTokenDevice());
                         }
 
                         @Override
-                        protected Runnable tryAgainMethod() {
-                            //if error accrue call get token device again
-                            return AbstractSplashActivity.this::getTokenDevice;
+                        public void onError(Throwable e) {
+                            if (e instanceof TokenDeviceExp) {
+                                    //got to frist step
+                                    getTokenDevice();
+                                    return;
+                            }
+                            switcher.showErrorView(e.getMessage(), () -> getTokenDevice());
                         }
-
-
                     });
         } else {
             //show generic net error
@@ -200,12 +201,10 @@ public abstract class AbstractSplashActivity extends BaseActivity {
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            if (e instanceof HttpException) {
-                                if (((HttpException) e).code() == 401) {
-                                    //got to frist step
-                                    getTokenDevice();
-                                    return;
-                                }
+                            if (e instanceof TokenDeviceExp) {
+                                //got to frist step
+                                getTokenDevice();
+                                return;
                             }
                             switcher.showErrorView(e.getMessage(), () -> currentToken());
                         }

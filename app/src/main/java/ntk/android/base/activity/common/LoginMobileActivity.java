@@ -134,7 +134,7 @@ public class LoginMobileActivity extends BaseActivity {
                                 Toasty.error(LoginMobileActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
                                 return;
                             }
-                            Preferences.with(LoginMobileActivity.this).appVariableInfo().setIsLogin(true);
+
                             startActivity(new Intent(LoginMobileActivity.this, NTKApplication.getApplicationStyle().getMainActivity()));
                         }
 

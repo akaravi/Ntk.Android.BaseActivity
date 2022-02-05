@@ -10,14 +10,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.gson.Gson;
 import com.yariksoffice.lingver.Lingver;
 
-import es.dmoral.toasty.Toasty;
-import io.reactivex.annotations.NonNull;
 import ntk.android.base.ApplicationStaticParameter;
 import ntk.android.base.BaseNtkApplication;
 import ntk.android.base.NTKApplication;
@@ -42,6 +41,7 @@ import ntk.android.base.services.application.ApplicationThemeService;
 import ntk.android.base.services.core.CoreAuthService;
 import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.prefrense.Preferences;
+import retrofit2.HttpException;
 
 /**
  * Splash screen of all app
@@ -189,22 +189,30 @@ public abstract class AbstractSplashActivity extends BaseActivity {
             }
             //call api
             ServiceExecute.execute(new CoreAuthService(this).correctTokenInfo())
-                    .subscribe(new  ErrorExceptionObserver<TokenInfoModel>(switcher::showErrorView) {
+                    .subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
                         @Override
-                        protected void SuccessResponse(ErrorException<TokenInfoModel> response) {
-
-                            //next api
-                            themeApi();
+                        public void onNext(@NonNull ErrorException<TokenInfoModel> tokenInfoModelErrorException) {
+                            if (tokenInfoModelErrorException.IsSuccess)
+                                themeApi();
+                            else
+                                switcher.showErrorView(tokenInfoModelErrorException.ErrorMessage, () -> currentToken());
                         }
 
                         @Override
-                        protected Runnable tryAgainMethod() {
-                            return  AbstractSplashActivity.this::themeApi;
+                        public void onError(@NonNull Throwable e) {
+                            if (e instanceof HttpException) {
+                                if (((HttpException) e).code() == 401) {
+                                    //got to frist step
+                                    getTokenDevice();
+                                    return;
+                                }
+                            }
+                            switcher.showErrorView(e.getMessage(), () -> currentToken());
                         }
                     });
         } else {
             //show generic net error
-            new GenericErrors().netError(switcher::showErrorView, this::themeApi);
+            new GenericErrors().netError(switcher::showErrorView, this::currentToken);
         }
     }
 
@@ -225,7 +233,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
             }
             //call api
             ServiceExecute.execute(new ApplicationThemeService(this).getAppTheme())
-                    .subscribe(new  ErrorExceptionObserver<ApplicationThemeConfigModel>(switcher::showErrorView) {
+                    .subscribe(new ErrorExceptionObserver<ApplicationThemeConfigModel>(switcher::showErrorView) {
                         @Override
                         protected void SuccessResponse(ErrorException<ApplicationThemeConfigModel> response) {
                             //set thmeme of app
@@ -236,7 +244,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
 
                         @Override
                         protected Runnable tryAgainMethod() {
-                            return  AbstractSplashActivity.this::themeApi;
+                            return AbstractSplashActivity.this::themeApi;
                         }
                     });
         } else {
@@ -265,7 +273,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                     .subscribe(new ErrorExceptionObserver<ApplicationAppModel>(switcher::showErrorView) {
                         @Override
                         protected void SuccessResponse(ErrorException<ApplicationAppModel> response) {
-                           //set locale
+                            //set locale
                             NTKApplication.getApplicationStyle().setAppLanguage(response.Item.Lang);
                             Lingver.getInstance().setLocale(AbstractSplashActivity.this, (NTKApplication.getApplicationStyle().getAppLanguage()));
                             //add update response
@@ -329,22 +337,23 @@ public abstract class AbstractSplashActivity extends BaseActivity {
 //                        }
 //                    });
 //        } else {//if user seen intro
-            if (Preferences.with(this).appVariableInfo().IntroSeen()) {
-                //if user not interested to login
-                if (NTKApplication.getApplicationStyle().show_NotInterested_Btn() & Preferences.with(this).appVariableInfo().isRegisterNotInterested())
-                    startNewActivity(NTKApplication.getApplicationStyle().getMainActivity());
-                    //user maybe interest to login
-                else if (Preferences.with(this).appVariableInfo().isLogin())
-                    startNewActivity(NTKApplication.getApplicationStyle().getMainActivity());
-                else
-                    startNewActivity(AuthWithSmsActivity.class);
-            } else
-                startNewActivity(IntroActivity.class);
+        if (Preferences.with(this).appVariableInfo().IntroSeen()) {
+            //if user not interested to login
+            if (NTKApplication.getApplicationStyle().show_NotInterested_Btn() & Preferences.with(this).appVariableInfo().isRegisterNotInterested())
+                startNewActivity(NTKApplication.getApplicationStyle().getMainActivity());
+                //user maybe interest to login
+            else if (Preferences.with(this).appVariableInfo().isLogin())
+                startNewActivity(NTKApplication.getApplicationStyle().getMainActivity());
+            else
+                startNewActivity(AuthWithSmsActivity.class);
+        } else
+            startNewActivity(IntroActivity.class);
 //        }
     }
 
     /**
-     *  starting new activity at least 3 sec after seeing splash Screen
+     * starting new activity at least 3 sec after seeing splash Screen
+     *
      * @param c
      */
     public void startNewActivity(Class c) {

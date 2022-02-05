@@ -77,12 +77,14 @@ public class AbstractMainActivity extends BaseActivity {
         UpdateClass updateClass = Preferences.with(this).appVariableInfo().updateInfo();
         ApplicationParameter AppParams = BaseNtkApplication.get().getApplicationParameter();
         if (!AppParams.APPLICATION_ID().contains(".APPNTK")) {
-            if (updateClass.isForced) {
-                if (updateClass.version != AppParams.VERSION_CODE())
-                    UpdateFore(updateClass.url);
-            } else {
-                if (updateClass.version > AppParams.VERSION_CODE())
-                    Update(updateClass.url);
+            if (updateClass.checkUpdate) {
+                if (updateClass.isForced) {
+                    if (updateClass.version != AppParams.VERSION_CODE())
+                        UpdateFore(updateClass.url);
+                } else {
+                    if (updateClass.version > AppParams.VERSION_CODE())
+                        Update(updateClass.url);
+                }
             }
         }
     }
@@ -172,7 +174,7 @@ public class AbstractMainActivity extends BaseActivity {
             Bitmap bitmap = qrgEncoder.getBitmap();
             ImageView img = dialog.findViewById(R.id.qrCodeDialogQRCode);
             img.setImageBitmap(bitmap);
-            if (bitmap==null)
+            if (bitmap == null)
                 throw new Exception();
         } catch (Exception e) {
             String base64Image = qrCode.split(",")[1];
@@ -243,7 +245,7 @@ public class AbstractMainActivity extends BaseActivity {
                                 public void onNext(@NonNull ErrorExceptionBase response) {
                                     if (response.IsSuccess) {
                                         Preferences.with(AbstractMainActivity.this).appVariableInfo().setFeedback(request);
-                                        Toasty.success(AbstractMainActivity.this,  R.string.per_success, Toast.LENGTH_LONG, true).show();
+                                        Toasty.success(AbstractMainActivity.this, R.string.per_success, Toast.LENGTH_LONG, true).show();
                                     } else {
                                         Toasty.warning(AbstractMainActivity.this, response.ErrorMessage, Toast.LENGTH_LONG, true).show();
                                     }

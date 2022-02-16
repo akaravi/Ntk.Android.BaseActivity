@@ -8,9 +8,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
+import android.text.NoCopySpan;
 import android.util.Base64;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import androidmads.library.qrgenearator.QRGContents;
@@ -44,11 +48,17 @@ import ntk.android.base.utill.prefrense.Preferences;
 public class AbstractMainActivity extends BaseActivity {
     private long lastPressedTime;
     private static final int PERIOD = 2000;
-
+    public UpdateClass updateInfo;
     @Override
     protected void onStart() {
         super.onStart();
+
         CheckUpdate();
+    }
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        updateInfo = Preferences.with(this).appVariableInfo().updateInfo();
     }
 
 
@@ -156,7 +166,7 @@ public class AbstractMainActivity extends BaseActivity {
     }
 
     public void onInviteMethod() {
-        UpdateClass updateInfo = Preferences.with(this).appVariableInfo().updateInfo();
+
 
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -168,20 +178,30 @@ public class AbstractMainActivity extends BaseActivity {
         dialog.show();
         TextView Lbl = dialog.findViewById(R.id.lblTitleDialogQRCode);
         Lbl.setTypeface(FontManager.T1_Typeface(this));
-        String qrCode = Preferences.with(this).appVariableInfo().qrCode();
-        QRGEncoder qrgEncoder = new QRGEncoder(qrCode, null, QRGContents.Type.TEXT, 300);
-        try {
-            Bitmap bitmap = qrgEncoder.getBitmap();
-            ImageView img = dialog.findViewById(R.id.qrCodeDialogQRCode);
-            img.setImageBitmap(bitmap);
-            if (bitmap == null)
-                throw new Exception();
-        } catch (Exception e) {
-            String base64Image = qrCode.split(",")[1];
-            byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            ImageView img = dialog.findViewById(R.id.qrCodeDialogQRCode);
-            img.setImageBitmap(decodedByte);
+//        String qrCode = Preferences.with(this).appVariableInfo().qrCode();
+        if(updateInfo.downloadLinkSrcQRCodeBase64!=null && !updateInfo.downloadLinkSrcQRCodeBase64.isEmpty()) {
+            try {
+                String base64Image = updateInfo.downloadLinkSrcQRCodeBase64.split(",")[1];
+                byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                ImageView img = dialog.findViewById(R.id.qrCodeDialogQRCode);
+                img.setImageBitmap(decodedByte);
+            } catch (Exception e) {
+
+            }
+        }
+        else if(updateInfo.url!=null &&!updateInfo.url.isEmpty())
+        {
+            QRGEncoder qrgEncoder = new QRGEncoder(updateInfo.url, null, QRGContents.Type.TEXT, 300);
+            try {
+                Bitmap bitmap = qrgEncoder.getBitmap();
+                ImageView img = dialog.findViewById(R.id.qrCodeDialogQRCode);
+                img.setImageBitmap(bitmap);
+                if (bitmap == null)
+                    throw new Exception();
+            } catch (Exception e) {
+
+            }
         }
         dialog.findViewById(R.id.qrCodeDialogQRCode).setOnClickListener(v -> {
             ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -190,6 +210,7 @@ public class AbstractMainActivity extends BaseActivity {
             Toasty.success(AbstractMainActivity.this, R.string.per_link_download2, Toast.LENGTH_LONG, true).show();
         });
         Button Btn = dialog.findViewById(R.id.btnDialogQRCode);
+
         Btn.setTypeface(FontManager.T1_Typeface(this));
         Btn.setOnClickListener(v -> {
             dialog.dismiss();

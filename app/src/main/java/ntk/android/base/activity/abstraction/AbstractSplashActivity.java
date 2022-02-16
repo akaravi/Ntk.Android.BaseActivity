@@ -278,7 +278,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                             //add update response
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setUpdateInfo(new UpdateClass(response.Item));
                             //set qr code
-                            Preferences.with(AbstractSplashActivity.this).appVariableInfo().setQRCode(response.Item.DownloadLinkSrcByDomainQRCodeBase64);
+                            //Preferences.with(AbstractSplashActivity.this).appVariableInfo().setQRCode(response.Item.DownloadLinkSrcQRCodeBase64);
                             //set about us view
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setAboutUs(new AboutUsClass(response.Item));
                             //set app id

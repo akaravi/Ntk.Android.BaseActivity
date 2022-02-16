@@ -33,17 +33,23 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
     protected TEntity model;
     public long Id = -1;
     public WebView webViewBody;
-
+    public UpdateClass updateInfo ;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        updateInfo = Preferences.with(this).appVariableInfo().updateInfo();
         setContentView();
         initAbstractView();
     }
 
     private void initAbstractView() {
+
         setViewListener(findViewById(R.id.imgBackDetail), (v -> finish()));
         setViewListener(findViewById(R.id.imgCommentDetail), (v -> ClickCommentAdd()));
+        if(!updateInfo.allowDirectShareApp)
+        {
+            findViewById(R.id.imgShareDetail).setVisibility(View.GONE);
+        }
         setViewListener(findViewById(R.id.imgShareDetail), (v -> ClickShare()));
         setViewListener(findViewById(R.id.imgFavDetail), (v -> ClickFav()));
         webViewBody = findViewById(R.id.WebViewBodyDetail);
@@ -113,7 +119,7 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
 
 
     public void ClickShare() {
-        UpdateClass updateInfo = Preferences.with(this).appVariableInfo().updateInfo();
+
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         String message = createShareMassage();

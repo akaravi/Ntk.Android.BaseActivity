@@ -35,7 +35,7 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
     @Override
     public void onCreate() {
         super.onCreate();
-        Lingver.init(this, getLanguage());
+               Lingver.init(this, getLanguage());
         instance = this;
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .diskCache(new UnlimitedDiskCache(new File(getCacheDir(), "image")))

@@ -34,9 +34,9 @@ public class FirebaseService extends FirebaseMessagingService {
         }
         notification.Content = remoteMessage.getData().get("Content");
 
-        if (remoteMessage.getData().get("BigImageSrc")!=null) {
+        if (remoteMessage.getData().get("BigImageSrc") != null) {
             notification.BigImageSrc = remoteMessage.getData().get("BigImageSrc");
-        }else {
+        } else {
         }
         notification.IsRead = 0;
         RoomDb.getRoomDb(getApplicationContext()).NotificationDoa().Insert(notification);

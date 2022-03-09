@@ -139,11 +139,15 @@
 
         <TextView
             android:id="@+id/privacy"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="23dp"
-            android:text="حریم خصوصی" />
+            android:padding="8dp"
+            android:text="حریم خصوصی"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

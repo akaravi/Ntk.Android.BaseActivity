@@ -91,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
-              android:text="@string/submit_num"
+                android:text="@string/submit_num"
                 android:textColor="@color/colorWhite"
                 android:textSize="17sp"
                 android:textStyle="bold" />
@@ -136,5 +136,14 @@
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/privacy"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="23dp"
+            android:text="حریم خصوصی" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -23,6 +23,7 @@ import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
+import ntk.android.base.dialog.PrivacyDialog;
 import ntk.android.base.dtomodel.core.AuthUserSignInBySmsDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.TokenInfoModel;
@@ -37,7 +38,7 @@ public class AuthWithSmsActivity extends BaseActivity {
     ProgressBar Loading;
     EditText Txt;
     private String PhoneNumber = "";
-
+    String privacy;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,15 +51,12 @@ public class AuthWithSmsActivity extends BaseActivity {
             finish();
             return;
         }
-
-
         setContentView(R.layout.comon_auth_activity);
         initView();
         init();
     }
 
     private void initView() {
-
 
         Loading = findViewById(R.id.progressActRegister);
         Txt = findViewById(R.id.txtActRegister);
@@ -68,6 +66,13 @@ public class AuthWithSmsActivity extends BaseActivity {
         else
             findViewById(R.id.RowNoPhoneActRegister).setVisibility(View.GONE);
         findViewById(R.id.RowNoPhoneActRegister).setOnClickListener(v -> ClickNoPhone());
+        privacy = new Preferences.Builder(this).appVariableInfo().aboutUs().AboutUsPrivacyPolicyHtmlBody;
+        if (privacy.equalsIgnoreCase(""))
+            findViewById(R.id.privacy).setVisibility(View.GONE);
+        else {
+            findViewById(R.id.privacy).setVisibility(View.VISIBLE);
+            findViewById(R.id.privacy).setOnClickListener(view -> PrivacyDialog.showDialog(getSupportFragmentManager(), privacy));
+        }
     }
 
     private void init() {
@@ -87,7 +92,7 @@ public class AuthWithSmsActivity extends BaseActivity {
             Toast.makeText(this, R.string.plz_insert_num, Toast.LENGTH_SHORT).show();
         else if (!Txt.getText().toString().startsWith("09") || Txt.getText().toString().length() != 11) {
             Toasty.warning(this, R.string.plz_insert_mobile_correct, Toasty.LENGTH_LONG, true).show();
-        }else if (captchaView.getCaptchaText().isEmpty())
+        } else if (captchaView.getCaptchaText().isEmpty())
             Toast.makeText(this, R.string.plz_insert_capcha, Toast.LENGTH_SHORT).show();
         else {
             PhoneNumber = Txt.getText().toString();
@@ -139,8 +144,6 @@ public class AuthWithSmsActivity extends BaseActivity {
                             new GenericErrors().throwableException((error, tryAgain) -> Toasty.warning(AuthWithSmsActivity.this, error, Toasty.LENGTH_LONG, true).show()
                                     , e, () -> {
                                     });
-
-
                         }
                     });
         } else {

@@ -4,7 +4,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.yariksoffice.lingver.Lingver;
+//import com.yariksoffice.lingver.Lingver;
 
 import java.io.File;
 
@@ -35,7 +35,7 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
     @Override
     public void onCreate() {
         super.onCreate();
-               Lingver.init(this, getLanguage());
+//               Lingver.init(this, getLanguage());
         instance = this;
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .diskCache(new UnlimitedDiskCache(new File(getCacheDir(), "image")))

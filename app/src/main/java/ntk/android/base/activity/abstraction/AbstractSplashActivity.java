@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.gson.Gson;
-import com.yariksoffice.lingver.Lingver;
+//import com.yariksoffice.lingver.Lingver;
 
 import ntk.android.base.ApplicationStaticParameter;
 import ntk.android.base.BaseNtkApplication;
@@ -274,7 +274,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                         protected void SuccessResponse(ErrorException<ApplicationAppModel> response) {
                             //set locale
                             NTKApplication.getApplicationStyle().setAppLanguage(response.Item.Lang);
-                            Lingver.getInstance().setLocale(AbstractSplashActivity.this, (NTKApplication.getApplicationStyle().getAppLanguage()));
+//                            Lingver.getInstance().setLocale(AbstractSplashActivity.this, (NTKApplication.getApplicationStyle().getAppLanguage()));
                             //add update response
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setUpdateInfo(new UpdateClass(response.Item));
                             //set qr code

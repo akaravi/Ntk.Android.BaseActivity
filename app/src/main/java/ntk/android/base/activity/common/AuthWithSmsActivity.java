@@ -81,6 +81,7 @@ public class AuthWithSmsActivity extends BaseActivity {
         Loading.setVisibility(View.GONE);
 //        Loading.getIndeterminateDrawable().setColorFilter(getResources().getColor(ColorUtils.FETCH_Attr_COLOR(this, R.attr.colorAccent)), PorterDuff.Mode.SRC_IN);
         Txt.setTypeface(FontManager.T1_Typeface(this));
+        ((TextView) findViewById(R.id.privacy)).setTypeface(FontManager.T1_Typeface(this));
         ((TextView) findViewById(R.id.lblVerificationActRegister)).setTypeface(FontManager.T1_Typeface(this));
         ((Button) findViewById(R.id.btnActRegister)).setTypeface(FontManager.T1_Typeface(this));
     }

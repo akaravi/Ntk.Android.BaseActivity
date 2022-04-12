@@ -7,14 +7,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 //import com.yariksoffice.lingver.Lingver;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
+
 import ntk.android.base.NTKApplication;
 
 
-class BaseLocaleActivity extends AppCompatActivity {
+class BaseLocaleActivity extends LocalizationActivity {
 
-    @Override
+//    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLanguage("fa");
 //        Lingver.getInstance().setLocale(this, NTKApplication.getApplicationStyle().getAppLanguage());
     }
 }

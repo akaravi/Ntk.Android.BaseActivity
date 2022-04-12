@@ -17,7 +17,6 @@ class BaseLocaleActivity extends LocalizationActivity {
 //    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLanguage("fa");
 //        Lingver.getInstance().setLocale(this, NTKApplication.getApplicationStyle().getAppLanguage());
     }
 }

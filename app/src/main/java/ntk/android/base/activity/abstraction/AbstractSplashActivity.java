@@ -15,7 +15,6 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.gson.Gson;
-//import com.yariksoffice.lingver.Lingver;
 
 import ntk.android.base.ApplicationStaticParameter;
 import ntk.android.base.BaseNtkApplication;
@@ -42,6 +41,7 @@ import ntk.android.base.services.application.ApplicationThemeService;
 import ntk.android.base.services.core.CoreAuthService;
 import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.prefrense.Preferences;
+
 /**
  * Splash screen of all app
  * important :
@@ -157,15 +157,15 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                             if (tokenDeviceModelErrorException.IsSuccess)
                                 currentToken();
                             else
-                                switcher.showErrorView(tokenDeviceModelErrorException.ErrorMessage,() -> getTokenDevice());
+                                switcher.showErrorView(tokenDeviceModelErrorException.ErrorMessage, () -> getTokenDevice());
                         }
 
                         @Override
                         public void onError(Throwable e) {
                             if (e instanceof TokenDeviceExp) {
-                                    //got to frist step
-                                    getTokenDevice();
-                                    return;
+                                //got to frist step
+                                getTokenDevice();
+                                return;
                             }
                             switcher.showErrorView(e.getMessage(), () -> getTokenDevice());
                         }
@@ -274,6 +274,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                         protected void SuccessResponse(ErrorException<ApplicationAppModel> response) {
                             //set locale
                             NTKApplication.getApplicationStyle().setAppLanguage(response.Item.Lang);
+                            setLanguage(NTKApplication.get().getLanguage());
 //                            Lingver.getInstance().setLocale(AbstractSplashActivity.this, (NTKApplication.getApplicationStyle().getAppLanguage()));
                             //add update response
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setUpdateInfo(new UpdateClass(response.Item));

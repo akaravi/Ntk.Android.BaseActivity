@@ -9,11 +9,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.NoCopySpan;
 import android.util.Base64;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,6 +56,8 @@ public class AbstractMainActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //set locale
+//        setLanguage(NTKApplication.get().getLanguage());
         updateInfo = Preferences.with(this).appVariableInfo().updateInfo();
     }
 

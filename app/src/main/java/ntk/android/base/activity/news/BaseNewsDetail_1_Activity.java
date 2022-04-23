@@ -248,7 +248,7 @@ public abstract class BaseNewsDetail_1_Activity extends
         for (NewsContentOtherInfoModel ai : model.ListItems) {
             if (ai.TypeId == null)
                 Info.add(ai);
-            switch (ai.TypeId) {
+            else switch (ai.TypeId) {
                 case 21:
                     ((TextView) findViewById(R.id.lblAllMenuDetail)).setText(ai.Title);
                     ai.HtmlBody = ai.HtmlBody.replace("<p>", "");

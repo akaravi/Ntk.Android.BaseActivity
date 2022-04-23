@@ -246,6 +246,8 @@ public abstract class BaseNewsDetail_1_Activity extends
         List<NewsContentOtherInfoModel> Info = new ArrayList<>();
 
         for (NewsContentOtherInfoModel ai : model.ListItems) {
+            if (ai.TypeId == null)
+                Info.add(ai);
             switch (ai.TypeId) {
                 case 21:
                     ((TextView) findViewById(R.id.lblAllMenuDetail)).setText(ai.Title);
@@ -423,7 +425,8 @@ public abstract class BaseNewsDetail_1_Activity extends
             View videoPlay = findViewById(R.id.videPlayback);
             videoPlay.setVisibility(View.VISIBLE);
             videoPlay.setOnClickListener(v -> VideoPlayerActivity.VIDEO(this, model.Item.LinkFileMovieIdSrc));
-        } if (model.Item.LinkFilePodcastIdSrc != null && !model.Item.LinkFilePodcastIdSrc.equalsIgnoreCase("")) {
+        }
+        if (model.Item.LinkFilePodcastIdSrc != null && !model.Item.LinkFilePodcastIdSrc.equalsIgnoreCase("")) {
             View videoPlay = findViewById(R.id.musicPlayback);
             videoPlay.setVisibility(View.VISIBLE);
             videoPlay.setOnClickListener(v -> VideoPlayerActivity.PODCAST(this, model.Item.LinkFilePodcastIdSrc));

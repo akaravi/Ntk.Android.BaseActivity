@@ -1,6 +1,6 @@
 package ntk.android.base.utill;
 
-class imageCompressor {
+public class imageCompressor {
     public static String stringInsert( String  bag,  int index,String marble) {
         String bagBegin = bag.substring(0,index);
         String bagEnd = bag.substring(index);

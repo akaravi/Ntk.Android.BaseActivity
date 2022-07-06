@@ -95,4 +95,9 @@ public abstract class BaseFragment extends Fragment {
             throw new RuntimeException("findviewById call befor view create");
         return getView().findViewById(id);
     }
+
+    public static boolean isSafeFragment( Fragment frag )
+    {
+        return !(frag.isRemoving() || frag.getActivity() == null || frag.isDetached() || !frag.isAdded() || frag.getView() == null );
+    }
 }

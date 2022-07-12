@@ -33,6 +33,7 @@ public class MultiChooseAdapter extends BaseRecyclerAdapter<String, MultiChooseA
     public void onBindViewHolder(@NonNull MultiChooseAdapter.VH holder, int position) {
         String item = getItem(position);
         holder.title.setText(item);
+        holder.cb.setOnCheckedChangeListener(null);
         if (index.contains(item))
             holder.cb.setChecked(true);
         else
@@ -41,11 +42,15 @@ public class MultiChooseAdapter extends BaseRecyclerAdapter<String, MultiChooseA
         holder.itemView.setOnClickListener(view -> ((MaterialCheckBox) view.findViewById(R.id.cb)).toggle());
         holder.cb.setOnCheckedChangeListener((compoundButton, checked) -> {
             if (checked) {
-                index.add(item);
-            }else
+                if (!index.contains(item)) {
+                    index.add(item);
+                    notifyItemChanged(list().indexOf(item));
+                }
+            } else
+            if (index.contains(item)) {
                 index.remove(item);
-            notifyItemChanged(list().indexOf(item));
-//            notifyDataSetChanged();
+                notifyItemChanged(list().indexOf(item));
+            }
         });
     }
 

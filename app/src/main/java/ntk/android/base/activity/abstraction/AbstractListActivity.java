@@ -49,7 +49,7 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
         onCreated();
     }
 
-    protected int getResourceLayout() {
+    public  int getResourceLayout() {
         return R.layout.abstraction_list;
     }
 

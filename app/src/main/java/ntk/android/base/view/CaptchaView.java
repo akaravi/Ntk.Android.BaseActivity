@@ -1,14 +1,16 @@
 package ntk.android.base.view;
 
 import android.content.Context;
+import android.os.Looper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
 
 import ntk.android.base.R;
 import ntk.android.base.config.NtkObserver;
@@ -40,9 +42,27 @@ public class CaptchaView extends FrameLayout {
                 .subscribe(new NtkObserver<ErrorException<CaptchaModel>>() {
                     @Override
                     public void onNext(@io.reactivex.annotations.NonNull ErrorException<CaptchaModel> captchaResponce) {
+                        ((EditText) findViewById(R.id.txtCaptcha)).setText("");
+                        ((ImageView) findViewById(R.id.imgCaptcha)).setImageDrawable(null);
                         if (captchaResponce.IsSuccess) {
-                            ImageLoader.getInstance().displayImage(captchaResponce.Item.Image, (ImageView) findViewById(R.id.imgCaptcha));
                             captcha = captchaResponce.Item;
+//                            new Handler(Looper.getMainLooper()).post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    Glide.with(getContext())
+//                                            .load(captcha.Image)
+//                                            .into( ((ImageView) findViewById(R.id.imgCaptcha)));
+//                                }
+//                            });
+                            if (Looper.getMainLooper().getThread() == Thread.currentThread())
+                                Log.d("YES", "YESS00");
+                            ((ImageView) findViewById(R.id.imgCaptcha)).post(new Runnable() {
+                                public void run() {
+                                    Glide.with(getContext())
+                                            .load(captcha.Image)
+                                            .into(((ImageView) findViewById(R.id.imgCaptcha)));
+                                }
+                            });
                         } else {
                             ((ImageView) findViewById(R.id.imgCaptcha)).setImageResource(R.drawable.error_captcha);
                         }
@@ -68,6 +88,5 @@ public class CaptchaView extends FrameLayout {
             return captcha.Key;
         return "";
     }
-
 
 }

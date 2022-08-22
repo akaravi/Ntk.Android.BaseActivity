@@ -10,6 +10,7 @@ import androidx.multidex.MultiDex;
 import com.akexorcist.localizationactivity.core.LocalizationApplicationDelegate;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 //import com.yariksoffice.lingver.Lingver;
@@ -72,10 +73,7 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
         instance = this;
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .diskCache(new UnlimitedDiskCache(new File(getCacheDir(), "image")))
-                .diskCacheFileNameGenerator(imageUri -> {
-                    String[] Url = imageUri.split("/");
-                    return Url[Url.length];
-                })
+                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
                 .build();
         ImageLoader.getInstance().init(config);
 

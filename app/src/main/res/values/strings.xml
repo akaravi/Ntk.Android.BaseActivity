@@ -36,7 +36,7 @@
     <string name="plz_insert_num">شماره تلفن همراه خود را وارد نمایید</string>
     <string name="plz_insert_capcha">متن کپچا را وارد نمایید</string>
     <string name="plz_insert_mobile_correct">شماره تلفن همراه را به صورت صحیح وارد کنید</string>
-    <string name="plz_insert_code_login">\" کد اعتبار سنجی که برایتان ارسال شده است را وارد کنید\"</string>
+    <string name="plz_insert_code_login">\" کد اعتبار سنجی که برایتان ارسال می شود را وارد کنید\"</string>
     <string name="plz_insert_code">کد اعتبار سنجی را وارد نمایید</string>
     <string name="code_sent_again">کد اعتبار سنجی مجددا ارسال شد</string>
     <string name="login_code">کد اعتبار سنجی</string>

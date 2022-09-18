@@ -22,7 +22,7 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListA
         request.RowPerPage = 20;
         if (sortFilter == null) {
             request.SortColumn = "Id";
-            request.SortType = EnumSortType.Ascending.index();
+            request.SortType = EnumSortType.Descending.index();
         }
         if (getIntent() != null)
             if (getIntent().getExtras() != null) {

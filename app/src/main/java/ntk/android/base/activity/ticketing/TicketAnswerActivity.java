@@ -112,7 +112,7 @@ public class TicketAnswerActivity extends BaseActivity {
         answersRv.setHasFixedSize(true);
         answersRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         Long userId = Preferences.with(this).UserInfo().userId();
-        Long memberId = Preferences.with(this).UserInfo().memberUserId();
+        Long memberId = Preferences.with(this).UserInfo().memberId();
         adapter = new TicketAnswerAdapter(this, this.getSupportFragmentManager(), tickets, userId, memberId);
         answersRv.setAdapter(adapter);
         adapter.notifyDataSetChanged();

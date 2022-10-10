@@ -141,6 +141,7 @@
     <string name="splashGetCurrentAppStep">در حال گرفتن اطلاعات برنامه</string>
     <string name="splashGetUserInformationStep">در حال دریافت اطلاعات کاربری</string>
     <string name="splashGetTheme">در حال دریافت قالب</string>
+    <string name="splashRenewToken">در حال بررسی احراز هویت</string>
     <string name="sorting">به ترتیب . . .</string>
     <string name="send_report">ارسال گزارش</string>
 </resources>

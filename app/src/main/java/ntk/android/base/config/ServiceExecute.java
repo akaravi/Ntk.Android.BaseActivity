@@ -19,7 +19,6 @@ public class ServiceExecute<R> {
 
     public void subscribe(Observer<R> t) {
         o.subscribeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(t);
     }

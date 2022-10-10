@@ -32,6 +32,7 @@ import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
 import ntk.android.base.view.CaptchaView;
+import ntk.android.base.view.CaptchaViewVer2;
 
 public class AuthWithSmsActivity extends BaseActivity {
     private static final int REQ_PERMISSION = 100;
@@ -39,7 +40,7 @@ public class AuthWithSmsActivity extends BaseActivity {
     EditText Txt;
     private String PhoneNumber = "";
     String privacy;
-
+    CaptchaViewVer2 captcha=new CaptchaViewVer2();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,8 +77,8 @@ public class AuthWithSmsActivity extends BaseActivity {
     }
 
     private void init() {
-
-        ((CaptchaView) findViewById(R.id.captchaView)).getNewCaptcha();
+        captcha.bind(findViewById(R.id.captchaView));
+        captcha.getNewCaptcha();
         Loading.setVisibility(View.GONE);
 //        Loading.getIndeterminateDrawable().setColorFilter(getResources().getColor(ColorUtils.FETCH_Attr_COLOR(this, R.attr.colorAccent)), PorterDuff.Mode.SRC_IN);
         Txt.setTypeface(FontManager.T1_Typeface(this));

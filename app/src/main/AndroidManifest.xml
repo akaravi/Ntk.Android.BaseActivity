@@ -55,12 +55,12 @@
             android:name="ntk.android.base.activity.poling.PolingDetailActivity"
             android:screenOrientation="portrait"
             android:theme="?attr/Theme_NTK_Poll_Detail" />
-        <activity android:name=".activity.common.AuthWithSmsActivity" />
-        <activity android:name=".activity.common.AuthWithSmsConfirmActivity" />
-        <activity android:name=".activity.ticketing.NewTicketActivity" />
-        <activity android:name=".activity.common.FeedbackListActivity" />
-        <activity android:name=".activity.common.VideoPlayerActivity" />
-        <activity android:name=".activity.common.GalleryActivity" />
+        <activity android:name=".activity.common.AuthWithSmsActivity"     android:screenOrientation="portrait" />
+        <activity android:name=".activity.common.AuthWithSmsConfirmActivity"     android:screenOrientation="portrait" />
+        <activity android:name=".activity.ticketing.NewTicketActivity"      android:screenOrientation="portrait"/>
+        <activity android:name=".activity.common.FeedbackListActivity"     android:screenOrientation="portrait" />
+        <activity android:name=".activity.common.VideoPlayerActivity"   />
+        <activity android:name=".activity.common.GalleryActivity"     android:screenOrientation="portrait" />
 
 
         <service

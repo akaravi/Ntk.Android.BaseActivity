@@ -61,7 +61,8 @@ public class AuthWithSmsActivity extends BaseAuthActivity {
     }
 
     private void initView() {
-
+        //call captcha
+        getNewCaptcha();
         Loading = findViewById(R.id.progressOnBtn);
         //hide load on start
         Loading.setVisibility(View.GONE);
@@ -87,6 +88,8 @@ public class AuthWithSmsActivity extends BaseAuthActivity {
     }
 
     private void setFont() {
+       //title
+        ((TextView) findViewById(R.id.labelRegister)).setTypeface(FontManager.T1_Typeface(this));
         //mobile et
         ((TextInputLayout) findViewById(R.id.textInputLayout)).setTypeface(FontManager.T1_Typeface(this));
         mobileEditText.setTypeface(FontManager.T1_Typeface(this));

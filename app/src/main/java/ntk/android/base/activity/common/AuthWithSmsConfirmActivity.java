@@ -7,13 +7,15 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -25,7 +27,6 @@ import es.dmoral.toasty.Toasty;
 import io.reactivex.annotations.NonNull;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
-import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
@@ -36,14 +37,13 @@ import ntk.android.base.entitymodel.base.TokenInfoModel;
 import ntk.android.base.event.MessageEvent;
 import ntk.android.base.services.core.CoreAuthService;
 import ntk.android.base.utill.AppUtil;
+import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
 import ntk.android.base.view.CaptchaView;
 
-public class AuthWithSmsConfirmActivity extends BaseActivity {
+public class AuthWithSmsConfirmActivity extends BaseAuthActivity {
     final int timeSmsTryAgain = 1000 * 60;
-    ProgressBar Loading;
-    EditText Txt;
-    List<TextView> Lbls;
+    TextInputEditText authEdittext;
 
     private CountDownTimer Timer;
     private int getNewCodeCount;
@@ -52,57 +52,72 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.common_auth_confirm_activity);
-        initView();
-        init();
+        setContentView(R.layout.auth_smsconfirm_activity);
+        //initilize view
+         initView();
+        //set fonts
+        setFont();
 
     }
 
     private void initView() {
+        //call captcha
+        getNewCaptcha();
+        Loading = findViewById(R.id.progressOnBtn);
+        //hide load on start
+        Loading.setVisibility(View.GONE);
+        authEdittext = findViewById(R.id.CodeEt);
+        //login click listener
+        findViewById(R.id.submitBtn).setOnClickListener(v -> ClickBtn());
+        //countdown click listener
+        findViewById(R.id.countDownView).setOnClickListener(v -> ClickCounter());
 
-        Lbls = new ArrayList() {
-            {
-                add(findViewById(R.id.lblVerificationActRegister));
-                add(findViewById(R.id.lblCounterActRegister));
-                add(findViewById(R.id.txtCaptcha));
-            }
-        };
-
-        Loading = findViewById(R.id.progressActRegister);
-        Txt = findViewById(R.id.txtActRegister);
-        findViewById(R.id.btnActRegister).setOnClickListener(v -> ClickBtn());
-        findViewById(R.id.lblCounterActRegister).setOnClickListener(v -> ClickCounter());
-    }
-
-    private void init() {
-        ((CaptchaView) findViewById(R.id.captchaView)).getNewCaptcha();
+        //trick to get click
+        ((TextInputEditText) findViewById(R.id.nonFocusable)).setMovementMethod(null);
+        ((TextInputEditText) findViewById(R.id.nonFocusable)).setKeyListener(null);
+        findViewById(R.id.nonFocusable).setOnClickListener(v -> getNewCaptcha());
+        //set max length
         InputFilter[] filterArray = new InputFilter[1];
         filterArray[0] = new InputFilter.LengthFilter(4);
-        Txt.setFilters(filterArray);
-        Txt.setText("");
-        Txt.setHint(R.string.login_code);
-        ((Button) findViewById(R.id.btnActRegister)).setText(R.string.Continue_string);
-        Txt.setInputType(InputType.TYPE_CLASS_NUMBER);
+        authEdittext.setFilters(filterArray);
+        authEdittext.setText("");
+        //init timer
         Timer = new CountDownTimer(timeSmsTryAgain, 1000) {
             @Override
             public void onTick(long l) {
                 int seconds = (int) (l / 1000) % 60;
                 int minutes = (int) ((l / (1000 * 60)) % 60);
-                Lbls.get(1).setClickable(false);
-                Lbls.get(1).setText(getString(R.string.plz_wait_recieve_code) + String.format("%d:%d", minutes, seconds));
+                TextView countDownTv = findViewById(R.id.countDownTv);
+                countDownTv.setClickable(false);
+                countDownTv.setText( String.format("%d:%d", minutes, seconds)+"  "+ getString(R.string.plz_wait_recieve_code) );
             }
 
             @Override
             public void onFinish() {
-                Lbls.get(1).setText(R.string.send_login_code_again);
-                Lbls.get(1).setClickable(true);
+                TextView countDownTv = findViewById(R.id.countDownTv);
+                countDownTv.setText(R.string.send_login_code_again);
+                countDownTv.setClickable(true);
                 Timer.cancel();
             }
         }.start();
     }
 
+
+    private void setFont() {
+        //title
+        ((TextView) findViewById(R.id.labelRegister)).setTypeface(FontManager.T1_Typeface(this));
+
+        //mobile et
+        ((TextInputLayout) findViewById(R.id.textInputLayout)).setTypeface(FontManager.T1_Typeface(this));
+        authEdittext.setTypeface(FontManager.T1_Typeface(this));
+        //captcha et
+        ((TextInputLayout) findViewById(R.id.captchaTextInputLayout)).setTypeface(FontManager.T1_Typeface(this));
+        ((TextInputEditText) findViewById(R.id.txtCaptcha)).setTypeface(FontManager.T1_Typeface(this));
+        //buttons
+        ((MaterialButton) findViewById(R.id.submitBtn)).setTypeface(FontManager.T1_Typeface(this));
+    }
     private void ClickBtn() {
-        if (Txt.getText().toString().isEmpty()) {
+        if (authEdittext.getText().toString().isEmpty()) {
             Toast.makeText(this, R.string.plz_insert_code, Toast.LENGTH_SHORT).show();
         } else {
             Verify();
@@ -111,26 +126,27 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
 
     private void Verify() {
         if (AppUtil.isNetworkAvailable(this)) {
+            ////show loading
             Loading.setVisibility(View.VISIBLE);
-
-            CaptchaView captchaView = (CaptchaView) findViewById(R.id.captchaView);
+            //disable click
+            findViewById(R.id.submitBtn).setEnabled(false);
             AuthUserSignInBySmsDtoModel request = new AuthUserSignInBySmsDtoModel();
-            request.CaptchaKey = captchaView.getCaptchaKey();
-            request.CaptchaText = captchaView.getCaptchaText();
-            request.Code = Txt.getText().toString();
+            request.CaptchaKey = getCaptchaKey();
+            request.CaptchaText =getCaptchaText();
+            request.Code = authEdittext.getText().toString();
             request.Mobile = Preferences.with(this).UserInfo().mobile();
             request.SiteId = Preferences.with(this).UserInfo().siteId();
-            //disable click
-            findViewById(R.id.btnActRegister).setEnabled(false);
+            //call api
             ServiceExecute.execute(new CoreAuthService(this).signInUserBySMS(request))
                     .subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
                         @Override
                         public void onNext(@NonNull ErrorException<TokenInfoModel> response) {
-                            Loading.setVisibility(View.GONE);
+                          //show button
+                           Loading.setVisibility(View.GONE);
+                            findViewById(R.id.submitBtn).setEnabled(true);
                             if (!response.IsSuccess) {
-                                captchaView.getNewCaptcha();
+                                getNewCaptcha();
                                 Toasty.warning(AuthWithSmsConfirmActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
-                                findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
                                 return;
                             }
                             Preferences.with(AuthWithSmsConfirmActivity.this).appVariableInfo().setIsLogin(true);
@@ -143,17 +159,15 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            captchaView.getNewCaptcha();
-                            findViewById(R.id.btnActRegister).setEnabled(true);
+                           getNewCaptcha();
                             Loading.setVisibility(View.GONE);
+                            findViewById(R.id.submitBtn).setEnabled(true);
                             new GenericErrors().throwableException((error, tryAgain) -> Toasty.warning(AuthWithSmsConfirmActivity.this, error, Toasty.LENGTH_LONG, true).show()
                                     , e, () -> {
                                     });
                         }
                     });
         } else {
-            Loading.setVisibility(View.GONE);
-            findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
             new GenericErrors().netError((error, tryAgain) -> Toasty.warning(AuthWithSmsConfirmActivity.this, error, Toasty.LENGTH_LONG, true).show(), () -> {
             });
         }
@@ -223,7 +237,7 @@ public class AuthWithSmsConfirmActivity extends BaseActivity {
 
     @Subscribe
     public void SetMessage(MessageEvent event) {
-        Txt.setText(event.GetMessage());
+        authEdittext.setText(event.GetMessage());
     }
 
 }

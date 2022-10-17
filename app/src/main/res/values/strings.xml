@@ -42,7 +42,7 @@
     <string name="login_code">کد اعتبار سنجی</string>
     <string name="Continue_string">ادامــه</string>
     <string name="send_login_code_again">\"ارسال مجدد کد اعتبار سنجی \"</string>
-    <string name="plz_wait_recieve_code">\" لطفا منتظر دریافت کد اعتبار سنجی بمانید \"</string>
+    <string name="plz_wait_recieve_code">\" ثانیه تا درخواست مجدد کد \"</string>
     <string name="address">آدرس</string>
     <string name="contact_us">تماس با ما</string>
     <string name="call_number">\"َشماره تلفن تماس \"</string>

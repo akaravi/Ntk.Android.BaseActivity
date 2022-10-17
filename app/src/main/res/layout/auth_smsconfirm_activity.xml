@@ -23,7 +23,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="96dp"
                 android:layout_marginBottom="40dp"
-                android:text="@string/sign_up"
+                android:text="@string/submit_mobile"
                 android:textColor="@android:color/black"
                 android:textSize="23sp"
                 android:textStyle="bold" />
@@ -39,15 +39,15 @@
                 android:layout_marginEnd="35dp"
                 android:layout_marginRight="35dp"
                 android:layout_marginBottom="16dp"
-                android:hint="شماره تلفن همراه"
+                android:hint="کد ارسال شده"
                 app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/mobileEt"
+                    android:id="@+id/CodeEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="phone"
+                    android:inputType="number"
                     android:maxLines="1"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
@@ -146,7 +146,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="36dp"
                 android:layout_marginRight="36dp"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/submitBtn"
@@ -156,7 +157,7 @@
 
                     android:paddingLeft="86dp"
                     android:paddingRight="86dp"
-                    android:text="@string/submit_num"
+                    android:text="@string/Continue_string"
                     android:textColor="?colorOnPrimary"
                     android:textSize="17sp"
                     app:strokeColor="?colorAccent" />
@@ -172,58 +173,36 @@
                     app:trackColor="?colorAccent" />
             </LinearLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/notInterestedBtn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="36dp"
-                android:layout_marginRight="36dp"
-                android:layout_marginBottom="24dp"
-                android:paddingLeft="86dp"
-                android:paddingRight="86dp"
-                android:text="@string/not_interested"
-                android:textColor="?colorAccent"
-                android:textSize="17sp"
-                app:strokeColor="?colorAccent" />
-
 
             <LinearLayout
-                android:id="@+id/privacyView"
+                android:id="@+id/countDownView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:layout_gravity="center"
+                android:gravity="center"   android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/privacyTxt"
+                    android:id="@+id/countDownTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:padding="8dp"
-                    android:text="حریم خصوصی"
-                    android:textColor="@color/colorTextBlack"
+                    android:textColor="#a3a2a2"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
-                <RelativeLayout
-                    android:id="@+id/relativeLayout2"
-                    android:layout_width="wrap_content"
 
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/circle_gray_empty">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_centerInParent="true"
-                        android:contentDescription="@null"
-                        app:srcCompat="@drawable/ic_arrow_right"
-                        app:tint="#afafaf" />
-                </RelativeLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:contentDescription="@null"
+                    app:srcCompat="@drawable/bell"
+                    app:tint="#a3a2a2" />
 
             </LinearLayout>
 

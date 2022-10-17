@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/labelRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="96dp"
+            android:layout_marginBottom="40dp"
+            android:text="@string/sign_up"
+            android:textColor="@android:color/black"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblVerificationActRegister"
+            android:layout_marginStart="35dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="16dp"
+            android:hint="شماره تلفن همراه"
+            app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mobileEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:maxLines="1"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                tools:ignore="HardcodedText" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginLeft="35dp"
+                android:layout_weight="1">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="5dp">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/nonFocusable"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:focusable="false"
+                        android:hint="  "
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        tools:ignore="HardcodedText" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/imgCaptcha"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="2dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="2dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/captcha_holder" />
+
+                <View
+                    android:id="@+id/captchaRelativeView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </RelativeLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/captchaTextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginEnd="35dp"
+                android:layout_marginRight="35dp"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtCaptcha"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:hint="کد امنیتی"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    tools:ignore="HardcodedText" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="36dp"
+            android:layout_marginRight="36dp"
+            android:gravity="center">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submitBtn"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:paddingLeft="86dp"
+                android:paddingRight="86dp"
+                android:text="@string/submit_num"
+                android:textColor="?colorOnPrimary"
+                android:textSize="17sp"
+                app:strokeColor="?colorAccent" />
+
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progressOnBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp" />
+        </RelativeLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/notInterestedBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="36dp"
+            android:layout_marginRight="36dp"
+            android:layout_marginBottom="24dp"
+            android:paddingLeft="86dp"
+            android:paddingRight="86dp"
+            android:text="@string/not_interested"
+            android:textColor="?colorAccent"
+            android:textSize="17sp"
+            app:strokeColor="?colorAccent" />
+
+
+        <LinearLayout
+            android:id="@+id/privacyView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/privacyTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="8dp"
+                android:text="حریم خصوصی"
+                android:textColor="@color/colorTextBlack"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle_gray_empty">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@null"
+                    app:srcCompat="@drawable/ic_arrow_right"
+                    app:tint="#afafaf" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/fingerprint" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

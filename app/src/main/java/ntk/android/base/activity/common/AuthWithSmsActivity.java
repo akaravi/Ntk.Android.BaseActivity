@@ -7,8 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,10 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
 import es.dmoral.toasty.Toasty;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
-import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.config.GenericErrors;
 import ntk.android.base.config.NtkObserver;
 import ntk.android.base.config.ServiceExecute;
@@ -32,102 +33,114 @@ import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
 import ntk.android.base.view.CaptchaView;
-import ntk.android.base.view.CaptchaViewVer2;
 
-public class AuthWithSmsActivity extends BaseActivity {
+public class AuthWithSmsActivity extends BaseAuthActivity {
     private static final int REQ_PERMISSION = 100;
-    ProgressBar Loading;
-    EditText Txt;
+
+    TextInputEditText mobileEditText;
     private String PhoneNumber = "";
     String privacy;
-    CaptchaViewVer2 captcha=new CaptchaViewVer2();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Boolean islogin = Preferences.with(this).appVariableInfo().isLogin();
-        if (islogin) {
+        //check if login
+        boolean isLogin = Preferences.with(this).appVariableInfo().isLogin();
+        if (isLogin) {
             Intent intent = new Intent(AuthWithSmsActivity.this, NTKApplication.getApplicationStyle().getMainActivity());
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
             finish();
             return;
         }
-        setContentView(R.layout.comon_auth_activity);
+        setContentView(R.layout.auth_sms_activity);
+        //initilize view
         initView();
-        init();
+        //set fonts
+        setFont();
     }
 
     private void initView() {
 
-        Loading = findViewById(R.id.progressActRegister);
-        Txt = findViewById(R.id.txtActRegister);
-        findViewById(R.id.btnActRegister).setOnClickListener(v -> ClickBtn());
-        if (NTKApplication.getApplicationStyle().show_NotInterested_Btn())
-            findViewById(R.id.RowNoPhoneActRegister).setVisibility(View.VISIBLE);
-        else
-            findViewById(R.id.RowNoPhoneActRegister).setVisibility(View.GONE);
-        findViewById(R.id.RowNoPhoneActRegister).setOnClickListener(v -> ClickNoPhone());
+        Loading = findViewById(R.id.progressOnBtn);
+        //hide load on start
+        Loading.setVisibility(View.GONE);
+        mobileEditText = findViewById(R.id.mobileEt);
+        //login click listener
+        findViewById(R.id.submitBtn).setOnClickListener(v -> ClickBtn());
+        //not interested btn
+        findViewById(R.id.notInterestedBtn).setOnClickListener(v -> ClickNoPhone());
+        // check privacy
         privacy = new Preferences.Builder(this).appVariableInfo().aboutUs().AboutUsPrivacyPolicyHtmlBody;
         if (privacy.equalsIgnoreCase(""))
-            findViewById(R.id.privacy).setVisibility(View.GONE);
+            findViewById(R.id.privacyView).setVisibility(View.GONE);
         else {
-            findViewById(R.id.privacy).setVisibility(View.VISIBLE);
-            findViewById(R.id.privacy).setOnClickListener(view -> PrivacyDialog.showDialog(getSupportFragmentManager(), privacy));
+            findViewById(R.id.privacyView).setVisibility(View.VISIBLE);
+            findViewById(R.id.privacyView).setOnClickListener(view -> PrivacyDialog.showDialog(getSupportFragmentManager(), privacy));
         }
+
+        //trick to get click
+       ((TextInputEditText) findViewById(R.id.nonFocusable)).setMovementMethod(null);
+        ((TextInputEditText) findViewById(R.id.nonFocusable)).setKeyListener(null);
+        findViewById(R.id.nonFocusable).setOnClickListener(v -> getNewCaptcha());
+
     }
 
-    private void init() {
-        captcha.bind(findViewById(R.id.captchaView));
-        captcha.getNewCaptcha();
-        Loading.setVisibility(View.GONE);
-//        Loading.getIndeterminateDrawable().setColorFilter(getResources().getColor(ColorUtils.FETCH_Attr_COLOR(this, R.attr.colorAccent)), PorterDuff.Mode.SRC_IN);
-        Txt.setTypeface(FontManager.T1_Typeface(this));
-        ((TextView) findViewById(R.id.privacy)).setTypeface(FontManager.T1_Typeface(this));
-        ((TextView) findViewById(R.id.lblVerificationActRegister)).setTypeface(FontManager.T1_Typeface(this));
-        ((Button) findViewById(R.id.btnActRegister)).setTypeface(FontManager.T1_Typeface(this));
+    private void setFont() {
+        //mobile et
+        ((TextInputLayout) findViewById(R.id.textInputLayout)).setTypeface(FontManager.T1_Typeface(this));
+        mobileEditText.setTypeface(FontManager.T1_Typeface(this));
+        //captcha et
+        ((TextInputLayout) findViewById(R.id.captchaTextInputLayout)).setTypeface(FontManager.T1_Typeface(this));
+        ((TextInputEditText) findViewById(R.id.txtCaptcha)).setTypeface(FontManager.T1_Typeface(this));
+        //buttons
+        ((MaterialButton) findViewById(R.id.submitBtn)).setTypeface(FontManager.T1_Typeface(this));
+        ((MaterialButton) findViewById(R.id.notInterestedBtn)).setTypeface(FontManager.T1_Typeface(this));
+        //privacy
+        ((TextView) findViewById(R.id.privacyTxt)).setTypeface(FontManager.T1_Typeface(this));
     }
 
 
     public void ClickBtn() {
-        CaptchaView captchaView = (CaptchaView) findViewById(R.id.captchaView);
-        if (Txt.getText().toString().isEmpty())
+        if (mobileEditText.getText().toString().isEmpty())
             Toast.makeText(this, R.string.plz_insert_num, Toast.LENGTH_SHORT).show();
-        else if (!Txt.getText().toString().startsWith("09") || Txt.getText().toString().length() != 11) {
+        else if (!mobileEditText.getText().toString().startsWith("09") || mobileEditText.getText().toString().length() != 11) {
             Toasty.warning(this, R.string.plz_insert_mobile_correct, Toasty.LENGTH_LONG, true).show();
-        } else if (captchaView.getCaptchaText().isEmpty())
+        } else if (getCaptchaText().isEmpty())
             Toast.makeText(this, R.string.plz_insert_capcha, Toast.LENGTH_SHORT).show();
         else {
-            PhoneNumber = Txt.getText().toString();
+            PhoneNumber = mobileEditText.getText().toString();
+            //check sms permission
             if (CheckPermission()) {
-                Register();
+                RegisterApi();
             } else {
+                //call to get permission
                 ActivityCompat.requestPermissions(AuthWithSmsActivity.this, new String[]{Manifest.permission.RECEIVE_SMS}, REQ_PERMISSION);
             }
         }
     }
 
 
-    private void Register() {
+    private void RegisterApi() {
         if (AppUtil.isNetworkAvailable(this)) {
             Loading.setVisibility(View.VISIBLE);
-            findViewById(R.id.cardActRegister).setVisibility(View.GONE);
+            findViewById(R.id.submitBtn).setEnabled(false);
             AuthUserSignInBySmsDtoModel request = new AuthUserSignInBySmsDtoModel();
             if (PhoneNumber.length() == 0) {
-                PhoneNumber = Txt.getText().toString();
+                PhoneNumber = mobileEditText.getText().toString();
             }
-            CaptchaView captchaView = findViewById(R.id.captchaView);
             request.Mobile = PhoneNumber;
-            request.CaptchaText = captchaView.getCaptchaText();
-            request.CaptchaKey = captchaView.getCaptchaKey();
+            request.CaptchaText = getCaptchaText();
+            request.CaptchaKey = getCaptchaKey();
 
             ServiceExecute.execute(new CoreAuthService(this).signInUserBySMS(request))
                     .subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
                         @Override
                         public void onNext(@io.reactivex.annotations.NonNull ErrorException<TokenInfoModel> response) {
                             Loading.setVisibility(View.GONE);
-                            findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
+                            findViewById(R.id.submitBtn).setEnabled(true);
                             if (!response.IsSuccess) {
-                                ((CaptchaView) findViewById(R.id.captchaView)).getNewCaptcha();
+                                getNewCaptcha();
                                 Toasty.error(AuthWithSmsActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
                                 return;
                             }
@@ -140,16 +153,16 @@ public class AuthWithSmsActivity extends BaseActivity {
 
                         @Override
                         public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                            ((CaptchaView) findViewById(R.id.captchaView)).getNewCaptcha();
-                            findViewById(R.id.cardActRegister).setVisibility(View.VISIBLE);
                             Loading.setVisibility(View.GONE);
+                            findViewById(R.id.submitBtn).setEnabled(true);
+                            getNewCaptcha();
                             new GenericErrors().throwableException((error, tryAgain) -> Toasty.warning(AuthWithSmsActivity.this, error, Toasty.LENGTH_LONG, true).show()
                                     , e, () -> {
                                     });
                         }
                     });
         } else {
-            Loading.setVisibility(View.GONE);
+
             new GenericErrors().netError((error, tryAgain) -> Toasty.warning(AuthWithSmsActivity.this, error, Toasty.LENGTH_LONG, true).show(), () -> {
             });
         }
@@ -180,10 +193,8 @@ public class AuthWithSmsActivity extends BaseActivity {
             case REQ_PERMISSION:
                 if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this, R.string.plz_insert_code_login, Toast.LENGTH_SHORT).show();
-                    Register();
-                } else {
-                    Register();
                 }
+                RegisterApi();
                 break;
         }
     }

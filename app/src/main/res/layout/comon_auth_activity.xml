@@ -70,7 +70,7 @@
             app:cardCornerRadius="5dp"
             app:cardElevation="5dp">
 
-            <ntk.android.base.view.CaptchaView
+            <include layout="@layout/sub_base_captcha"
                 android:id="@+id/captchaView"
                 android:layout_width="match_parent"
                 android:layout_height="55dp" />

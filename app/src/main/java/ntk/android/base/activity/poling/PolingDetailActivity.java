@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,13 +58,7 @@ public class PolingDetailActivity extends BaseActivity {
     }
 
     private void HandelData() {
-        FilterModel request = new FilterModel();
-        FilterDataModel f = new FilterDataModel();
-        if (id > 0) {
-            f.PropertyName = "LinkCategoryId";
-            f.setIntValue(id);
-            request.addFilter(f);
-        }
+        FilterModel   request=  createFilterModel();
         ServiceExecute.execute(new PollingContentService(this).getAll(request))
                 .subscribe(new NtkObserver<ErrorException<PollingContentModel>>() {
 
@@ -90,6 +83,17 @@ public class PolingDetailActivity extends BaseActivity {
 
                     }
                 });
+    }
+
+    protected FilterModel createFilterModel() {
+        FilterModel request = new FilterModel();
+        FilterDataModel f = new FilterDataModel();
+        if (id > 0) {
+            f.PropertyName = "LinkCategoryId";
+            f.setIntValue(id);
+            request.addFilter(f);
+        }
+        return request;
     }
 
     public void ClickBack() {

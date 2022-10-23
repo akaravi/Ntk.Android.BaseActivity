@@ -32,7 +32,7 @@ public class DetailPolCategoryAdapter extends BaseRecyclerAdapter<PollingContent
         super(arrayList);
         this.context = context;
         int primaryColor = NViewUtils.getResIdFromAttribute(context, R.attr.colorPrimary);
-        color = NViewUtils.getColorWithAlpha(ContextCompat.getColor(context,primaryColor), 100);
+        color = NViewUtils.getColorWithAlpha(ContextCompat.getColor(context,primaryColor), 30);
     }
 
     @Override

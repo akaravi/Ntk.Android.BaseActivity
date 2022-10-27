@@ -49,7 +49,7 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
         onCreated();
     }
 
-    public  int getResourceLayout() {
+    public int getResourceLayout() {
         return R.layout.abstraction_list;
     }
 
@@ -110,6 +110,11 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
             init();
             Refresh.setRefreshing(false);
         });
+        if (showCategory()) {
+            View fab = findViewById(R.id.fabCategory);
+            fab.setVisibility(View.VISIBLE);
+            fab.setOnClickListener(v -> showCategoryListDialog());
+        }
         afterInit();
     }
 
@@ -168,6 +173,10 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
 
     }
 
+    protected boolean showCategory() {
+        return false;
+    }
+
     /**
      * this abstract method for creating Request Object
      * also can get from Intent
@@ -205,5 +214,8 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
         }));
 
         bottomSheetDialog.show();
+    }
+
+    public void showCategoryListDialog() {
     }
 }

@@ -1,14 +1,35 @@
 package ntk.android.base.activity.common;
 
+import android.app.Dialog;
+import android.view.Gravity;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.widget.LinearLayoutCompat;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
+import es.dmoral.toasty.Toasty;
 import io.reactivex.Observable;
 import java9.util.function.Function;
 import ntk.android.base.Extras;
+import ntk.android.base.R;
 import ntk.android.base.activity.abstraction.AbstractListActivity;
+import ntk.android.base.config.NtkObserver;
+import ntk.android.base.config.ServiceExecute;
+import ntk.android.base.dtomodel.core.CoreModuleReportAbuseDtoModel;
 import ntk.android.base.entitymodel.base.ErrorException;
 import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.enums.EnumSortType;
+import ntk.android.base.entitymodel.estate.EstatePropertyModel;
+import ntk.android.base.services.estate.EstatePropertyService;
+import ntk.android.base.utill.AppUtil;
+import ntk.android.base.utill.FontManager;
 
 public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListActivity<FilterModel, TEntity> {
     @Override
@@ -71,4 +92,6 @@ public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListA
 
     protected void onListCreate() {
     }
+
+
 }

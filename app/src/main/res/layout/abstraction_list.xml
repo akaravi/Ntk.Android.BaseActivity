@@ -78,11 +78,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/imgSearch"
                 android:layout_toRightOf="@+id/imgSearch"
                 app:mrl_rippleAlpha="0.05"
                 app:mrl_rippleColor="#10000000"
-                app:mrl_rippleRoundedCorners="100dp"
-                android:layout_toEndOf="@+id/imgSearch">
+                app:mrl_rippleRoundedCorners="100dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -147,5 +147,18 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true" />
 
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fabCategory"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="32dp"
+            android:visibility="gone"
+            app:backgroundTint="?colorAccent"
+            app:fabSize="normal"
+            app:icon="@drawable/categoty"
+            app:iconTint="@color/colorWhite" />
     </RelativeLayout>
 </LinearLayout>

@@ -6,6 +6,8 @@
         <item name="ntk_splash_lottie_loading">@raw/sub_loading</item>
         <item name="ntk_splash_lottie_logo">@raw/sub_loading</item>
         <item name="ntk_splash_logo">@drawable/ic_back</item>
+        <item name="ntk_auth_sms">@raw/sub_loading</item>
+        <item name="ntk_auth_sms_confirm">@raw/sub_loading</item>
         <item name="colorTextPrimary">#fff</item>
         <item name="ntk_notification_color">@color/colorWhite</item>
         <!-- Primary brand color. -->

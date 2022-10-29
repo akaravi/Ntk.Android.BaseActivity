@@ -216,5 +216,5 @@
         app:lottie_autoPlay="true"
         app:lottie_imageAssetsFolder="images"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/auth_confirm_sms" />
+        app:lottie_rawRes="?ntk_auth_sms_confirm" />
 </RelativeLayout>

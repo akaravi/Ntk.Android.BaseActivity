@@ -50,6 +50,8 @@ afterEvaluate {
     }
 }
 dependencies {
+    //for sentry
+    implementation 'io.sentry:sentry-android:6.6.0'
     //for result
     implementation "androidx.activity:activity:1.6.0"
     //for configHeader

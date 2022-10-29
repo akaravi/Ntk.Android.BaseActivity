@@ -10,6 +10,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
+import io.sentry.Sentry;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.view.ViewController;
@@ -28,7 +29,11 @@ public abstract class BaseActivity extends BaseLocaleActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
+                     if (resultInterface!=null)
                         resultInterface.onActivityResult(result);
+                     else{
+                         Sentry.captureMessage("resultInterface Is Null");
+                     }
                     }
                 }
         );
@@ -121,7 +126,7 @@ public abstract class BaseActivity extends BaseLocaleActivity {
     }
 
     public void lunchActivityForResult(Intent intent, ActivityResultCallback myInterface) {
-        resultInterface = myInterface;
+        this.resultInterface = myInterface;
         someActivityResultLauncher.launch(intent);
     }
 

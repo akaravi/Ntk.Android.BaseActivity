@@ -210,11 +210,11 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-
         app:lottie_autoPlay="true"
+        app:lottie_imageAssetsFolder="images"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/fingerprint" />
+        app:lottie_rawRes="@raw/auth_confirm_sms" />
 </RelativeLayout>

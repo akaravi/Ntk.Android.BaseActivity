@@ -9,5 +9,7 @@
     <item name="activity_BaseError" type="id" />
     <item name="activity_stub" type="id" />
     <item name="contentView" type="id" />
+    <item name="debugModeView" type="id" />
+    <item name="tvError" type="id" />
 
 </resources>

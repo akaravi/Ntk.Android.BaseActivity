@@ -52,6 +52,10 @@ public abstract class BaseFilterModelWithCategoryActivity<TENTITY, TCATEGORY> ex
 
     protected abstract void onCategoryResponse(ErrorException<TCATEGORY> response, Dialog dialog);
 
+    @Override
+    protected boolean showCategory() {
+        return true;
+    }
 
     public abstract Function<FilterModel, Observable<ErrorException<TCATEGORY>>> getCatService();
 

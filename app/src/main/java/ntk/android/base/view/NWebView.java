@@ -7,6 +7,10 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.webkit.WebView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+
 public class NWebView extends WebView {
 
     public NWebView(Context context) {

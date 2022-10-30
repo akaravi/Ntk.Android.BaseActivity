@@ -318,6 +318,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                         public void onNext(@NonNull ErrorException<TokenInfoModel> tokenInfoModelErrorException) {
                             if (tokenInfoModelErrorException.IsSuccess) {
                                 //user sign in and have valid token
+                                Preferences.with(AbstractSplashActivity.this).UserInfo().setTokenInfo(tokenInfoModelErrorException.Item);
                                 startNewActivity(NTKApplication.getApplicationStyle().getMainActivity());
                             } else//user token in invalid then go to register
                             {

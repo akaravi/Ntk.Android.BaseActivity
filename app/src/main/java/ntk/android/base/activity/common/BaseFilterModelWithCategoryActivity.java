@@ -2,6 +2,7 @@ package ntk.android.base.activity.common;
 
 import android.app.Dialog;
 import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,7 +23,7 @@ public abstract class BaseFilterModelWithCategoryActivity<TENTITY, TCATEGORY> ex
     public void showCategoryListDialog() {
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCanceledOnTouchOutside(false);
         Window window = dialog.getWindow();
         window.setLayout(LinearLayoutCompat.LayoutParams.WRAP_CONTENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
         window.setGravity(Gravity.CENTER);
@@ -32,6 +33,7 @@ public abstract class BaseFilterModelWithCategoryActivity<TENTITY, TCATEGORY> ex
 
         Button Btn = dialog.findViewById(R.id.btnSubmitDialogCategory);
         Btn.setTypeface(FontManager.T1_Typeface(this));
+        Btn.setOnClickListener(v -> dialog.dismiss());
         dialog.show();
         FilterModel filterModel = new FilterModel().setRowPerPage(1000);
         ServiceExecute.execute(getCatService().apply(filterModel))
@@ -39,7 +41,11 @@ public abstract class BaseFilterModelWithCategoryActivity<TENTITY, TCATEGORY> ex
 
                     @Override
                     protected void SuccessResponse(ErrorException<TCATEGORY> response) {
-                        onCategoryResponse(response,dialog);
+                        if (dialog.isShowing()) {
+                            dialog.findViewById(R.id.dialog_loading).setVisibility(View.GONE);
+                            onCategoryResponse(response, dialog);
+                            dialog.findViewById(R.id.btnSubmitDialogCategory).setVisibility(View.VISIBLE);
+                        }
                     }
 
                     @Override

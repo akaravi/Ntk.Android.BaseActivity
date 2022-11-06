@@ -55,7 +55,7 @@ dependencies {
     //for result
     implementation "androidx.activity:activity:1.6.1"
     //for configHeader
-    implementation 'com.google.firebase:firebase-messaging:23.1.0'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'//error cant be smaller than 19 api
     //image loader
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     //rxjava

@@ -49,7 +49,8 @@ public abstract class BaseSplashActivity extends AbstractSplashActivity {
                 TextView Lb2 = findViewById(R.id.lblWorkActSplash);
                 TextView Lbl = findViewById(R.id.lblVersionActSplash);
                 findViewById(R.id.splash_debugView).setOnClickListener(BaseSplashActivity.this::showDebugView);
-                findViewById(R.id.activity_BaseError).findViewById(R.id.debugModeView).setOnClickListener(BaseSplashActivity.this::showDebugView);
+                if (findViewById(R.id.activity_BaseError) != null)
+                    findViewById(R.id.activity_BaseError).setOnClickListener(BaseSplashActivity.this::showDebugView);
                 if (Lb2 != null)
                     Lb2.setTypeface(FontManager.T1_Typeface(BaseSplashActivity.this));
                 Lbl.setTypeface(FontManager.T1_Typeface(BaseSplashActivity.this));
@@ -71,7 +72,8 @@ public abstract class BaseSplashActivity extends AbstractSplashActivity {
                 TextView Lb2 = findViewById(R.id.lblWorkActSplash);
                 TextView Lbl = findViewById(R.id.lblVersionActSplash);
                 findViewById(R.id.splash_debugView).setOnClickListener(BaseSplashActivity.this::showDebugView);
-                findViewById(R.id.activity_BaseError).findViewById(R.id.debugModeView).setOnClickListener(BaseSplashActivity.this::showDebugView);
+                if (findViewById(R.id.activity_BaseError) != null)
+                    findViewById(R.id.activity_BaseError).setOnClickListener(BaseSplashActivity.this::showDebugView);
                 if (Lb2 != null)
                     Lb2.setTypeface(FontManager.T1_Typeface(BaseSplashActivity.this));
                 Lbl.setTypeface(FontManager.T1_Typeface(BaseSplashActivity.this));

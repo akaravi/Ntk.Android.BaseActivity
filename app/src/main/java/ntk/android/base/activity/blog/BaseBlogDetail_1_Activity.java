@@ -85,6 +85,11 @@ public abstract class BaseBlogDetail_1_Activity extends
         unFavoriteDrawableId = R.drawable.ic_fav;
     }
 
+    @Override
+    protected String getUrlShare() {
+        return model.UrlViewContent;
+    }
+
     @SuppressLint("SetJavaScriptEnabled")
     private void initView() {
         Progress = findViewById(R.id.progressDetail);

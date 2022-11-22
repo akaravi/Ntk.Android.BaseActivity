@@ -123,11 +123,13 @@ public abstract class AbstractDetailActivity<TEntity, TCategory, TComment, TOthe
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         String message = createShareMassage();
-        shareIntent.putExtra(Intent.EXTRA_TEXT, message + "\n\n\n" + this.getString(R.string.app_name) + "\n" + getString(R.string.per_download_link) + "\n" + updateInfo.url);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, message + "\n\n\n" + this.getString(R.string.app_name) + "\n" + getString(R.string.per_download_link) + "\n" + getUrlShare());
         shareIntent.setType("text/txt");
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         this.startActivity(Intent.createChooser(shareIntent, getString(R.string.per_share_to)));
     }
+
+    protected abstract String getUrlShare();
 
     public void ClickFav() {
         if (AppUtil.isNetworkAvailable(this)) {

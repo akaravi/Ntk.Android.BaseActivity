@@ -26,8 +26,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,6 +81,11 @@ public abstract class BaseArticleDetail_1_Activity extends
     protected void initChild() {
         favoriteDrawableId = R.drawable.ic_fav_full;
         unFavoriteDrawableId = R.drawable.ic_fav;
+    }
+
+    @Override
+    protected String getUrlShare() {
+        return model.UrlViewContent;
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -416,7 +419,8 @@ public abstract class BaseArticleDetail_1_Activity extends
             View videoPlay = findViewById(R.id.videPlayback);
             videoPlay.setVisibility(View.VISIBLE);
             videoPlay.setOnClickListener(v -> VideoPlayerActivity.VIDEO(this, model.Item.LinkFileMovieIdSrc));
-        } if (model.Item.LinkFilePodcastIdSrc != null && !model.Item.LinkFilePodcastIdSrc.equalsIgnoreCase("")) {
+        }
+        if (model.Item.LinkFilePodcastIdSrc != null && !model.Item.LinkFilePodcastIdSrc.equalsIgnoreCase("")) {
             View videoPlay = findViewById(R.id.musicPlayback);
             videoPlay.setVisibility(View.VISIBLE);
             videoPlay.setOnClickListener(v -> VideoPlayerActivity.PODCAST(this, model.Item.LinkFilePodcastIdSrc));

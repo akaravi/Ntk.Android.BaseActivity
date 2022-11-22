@@ -86,6 +86,11 @@ public abstract class BaseArticleDetail2_2_Activity extends AbstractDetailActivi
         initChild();
     }
 
+    @Override
+    protected String getUrlShare() {
+        return model.UrlViewContent;
+    }
+
     protected abstract void initChild();
 
     @SuppressLint("SetJavaScriptEnabled")

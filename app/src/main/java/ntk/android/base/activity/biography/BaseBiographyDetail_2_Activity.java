@@ -29,7 +29,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,6 +136,10 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
         });
     }
 
+    @Override
+    protected String getUrlShare() {
+        return model.UrlViewContent;
+    }
 
     @Override
     protected void showError(String toString, Runnable onTryingAgain) {
@@ -455,7 +458,8 @@ public abstract class BaseBiographyDetail_2_Activity extends AbstractDetailActiv
             View videoPlay = findViewById(R.id.videPlayback);
             videoPlay.setVisibility(View.VISIBLE);
             videoPlay.setOnClickListener(v -> VideoPlayerActivity.VIDEO(this, model.Item.LinkFileMovieIdSrc));
-        } if (model.Item.LinkFilePodcastIdSrc != null && !model.Item.LinkFilePodcastIdSrc.equalsIgnoreCase("")) {
+        }
+        if (model.Item.LinkFilePodcastIdSrc != null && !model.Item.LinkFilePodcastIdSrc.equalsIgnoreCase("")) {
             View videoPlay = findViewById(R.id.musicPlayback);
             videoPlay.setVisibility(View.VISIBLE);
             videoPlay.setOnClickListener(v -> VideoPlayerActivity.PODCAST(this, model.Item.LinkFilePodcastIdSrc));

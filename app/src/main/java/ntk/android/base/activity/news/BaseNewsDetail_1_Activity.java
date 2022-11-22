@@ -452,6 +452,11 @@ public abstract class BaseNewsDetail_1_Activity extends
     }
 
     @Override
+    protected String getUrlShare() {
+        return model.UrlViewContent;
+    }
+
+    @Override
     protected String createShareMassage() {
         String message = model.Title + "\n" + model.Description + "\n";
         if (model.Body != null) {

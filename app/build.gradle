@@ -49,6 +49,12 @@ afterEvaluate {
         }
     }
 }
+//note uncomment for debug
+//afterEvaluate {
+//    afterEvaluate {
+//        println("Components: " + components*.name)
+//    }
+//}
 dependencies {
     //for sentry
     implementation 'io.sentry:sentry-android:6.6.0'

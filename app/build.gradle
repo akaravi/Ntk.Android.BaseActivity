@@ -49,12 +49,12 @@ afterEvaluate {
         }
     }
 }
-////note uncomment for debug
+//note uncomment for debug
 //afterEvaluate {
 //    afterEvaluate {
 //        println("Components: " + components*.name)
 //    }
-//}
+}
 dependencies {
     //for sentry
     implementation 'io.sentry:sentry-android:6.6.0'
@@ -113,6 +113,6 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     //for locale
     implementation 'com.akexorcist:localization:1.2.11'
-    api 'com.github.akaravi:Ntk.Android.Base:1.5.508'
+    api 'com.github.akaravi:Ntk.Android.Base:1.5.510'
 //    api project(path: ':baseApi')
 }

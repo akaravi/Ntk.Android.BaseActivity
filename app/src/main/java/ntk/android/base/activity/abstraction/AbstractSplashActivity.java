@@ -179,7 +179,6 @@ public abstract class AbstractSplashActivity extends BaseActivity {
     }
 
 
-
     /**
      * getting application info
      */
@@ -200,8 +199,12 @@ public abstract class AbstractSplashActivity extends BaseActivity {
                         @Override
                         protected void SuccessResponse(ErrorException<ApplicationAppModel> response) {
                             //set locale
+                            String prevLang = NTKApplication.getApplicationStyle().getAppLanguage();
                             NTKApplication.getApplicationStyle().setAppLanguage(response.Item.Lang);
-                            setLanguage(NTKApplication.get().getLanguage());
+                            if (!NTKApplication.getApplicationStyle().getAppLanguage().equals(prevLang)){
+                                setLanguage(NTKApplication.get().getLanguage());
+                                Log.i("NTK LOCALE CHANGE",prevLang);
+                            }
 //                            Lingver.getInstance().setLocale(AbstractSplashActivity.this, (NTKApplication.getApplicationStyle().getAppLanguage()));
                             //add update response
                             Preferences.with(AbstractSplashActivity.this).appVariableInfo().setUpdateInfo(new UpdateClass(response.Item));
@@ -227,7 +230,6 @@ public abstract class AbstractSplashActivity extends BaseActivity {
             new GenericErrors().netError(switcher::showErrorView, this::getCurrentApp);
         }
     }
-
 
 
     /**
@@ -302,6 +304,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
 
         }
     }
+
     private void currentToken() {
         if (AppUtil.isNetworkAvailable(this)) {
             switcher.showContentView();
@@ -349,6 +352,7 @@ public abstract class AbstractSplashActivity extends BaseActivity {
             new GenericErrors().netError(switcher::showErrorView, this::currentToken);
         }
     }
+
     /**
      * starting new activity at least 3 sec after seeing splash Screen
      *

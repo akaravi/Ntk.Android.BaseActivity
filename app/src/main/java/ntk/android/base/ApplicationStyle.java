@@ -23,6 +23,12 @@ public abstract class ApplicationStyle extends StyleHelper {
     protected ThemeNameEnum theme;
 
     public void setAppLanguage(int enumLang) {
+        String appLanguage = language(enumLang);
+        EasyPreference.with(NTKApplication.instance.getApplicationContext()).addString("DEFUALT_APP_LANG", appLanguage);
+        APP_LANGUAGE = appLanguage.toLowerCase().trim();
+    }
+
+    public String language(int enumLang) {
         String appLanguage = "fa";
         if (enumLang == 0)
             appLanguage = "fa";
@@ -40,9 +46,7 @@ public abstract class ApplicationStyle extends StyleHelper {
             appLanguage = "jp";
         else if (enumLang == 7)
             appLanguage = "es";
-
-        EasyPreference.with(NTKApplication.instance.getApplicationContext()).addString("DEFUALT_APP_LANG", appLanguage);
-        APP_LANGUAGE = appLanguage.toLowerCase().trim();
+        return appLanguage;
     }
 
     public void setTheme(ApplicationThemeConfigModel appTheme) {

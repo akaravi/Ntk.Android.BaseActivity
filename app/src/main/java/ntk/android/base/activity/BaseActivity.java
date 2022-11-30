@@ -29,7 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param language
      */
     protected void setLanguage(String language) {
-        LocaleListCompat appLocale = LocaleListCompat.forLanguageTags("de");
+        LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(language);
 // Call this on the main thread as it may require Activity.restart()
         AppCompatDelegate.setApplicationLocales(appLocale);
     }

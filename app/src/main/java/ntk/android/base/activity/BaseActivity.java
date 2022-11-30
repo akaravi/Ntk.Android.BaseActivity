@@ -9,6 +9,9 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
 
 import io.sentry.Sentry;
 import ntk.android.base.NTKApplication;
@@ -16,11 +19,20 @@ import ntk.android.base.R;
 import ntk.android.base.view.ViewController;
 import ntk.android.base.view.swicherview.Switcher;
 
-public abstract class BaseActivity extends BaseLocaleActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     private ActivityResultCallback<ActivityResult> resultInterface;
     ActivityResultLauncher<Intent> someActivityResultLauncher;
     protected Switcher switcher;
 
+    /**
+     *
+     * @param language
+     */
+    protected void setLanguage(String language) {
+        LocaleListCompat appLocale = LocaleListCompat.forLanguageTags("de");
+// Call this on the main thread as it may require Activity.restart()
+        AppCompatDelegate.setApplicationLocales(appLocale);
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -29,11 +41,11 @@ public abstract class BaseActivity extends BaseLocaleActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                     if (resultInterface!=null)
-                        resultInterface.onActivityResult(result);
-                     else{
-                         Sentry.captureMessage("resultInterface Is Null");
-                     }
+                        if (resultInterface != null)
+                            resultInterface.onActivityResult(result);
+                        else {
+                            Sentry.captureMessage("resultInterface Is Null");
+                        }
                     }
                 }
         );

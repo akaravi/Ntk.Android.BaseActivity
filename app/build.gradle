@@ -37,24 +37,24 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 }
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                groupId = "ntk.android.base"
-                artifactId = 'baseActivity'
-                version = version
-            }
-        }
-    }
-}
-//note uncomment for debug
 //afterEvaluate {
-//    afterEvaluate {
-//        println("Components: " + components*.name)
+//    publishing {
+//        publications {
+//            release(MavenPublication) {
+//                from components.release
+//                groupId = "ntk.android.base"
+//                artifactId = 'baseActivity'
+//                version = version
+//            }
+//        }
 //    }
 //}
+//note uncomment for debug
+afterEvaluate {
+    afterEvaluate {
+        println("Components: " + components*.name)
+    }
+}
 dependencies {
     //for sentry
     implementation 'io.sentry:sentry-android:6.6.0'
@@ -77,7 +77,7 @@ dependencies {
     annotationProcessor 'androidx.room:room-compiler:2.4.3'
     implementation 'androidx.room:room-rxjava2:2.4.3'
     //compact
-    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0-alpha01'
     implementation 'com.google.android.material:material:1.6.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
@@ -111,8 +111,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.18.1'
     //for gallery view
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
-    //for locale
-    implementation 'com.akexorcist:localization:1.2.11'
-    api 'com.github.akaravi:Ntk.Android.Base:1.5.510'
-//    api project(path: ':baseApi')
+
+//    api 'com.github.akaravi:Ntk.Android.Base:1.5.510'
+    api project(path: ':baseApi')
 }

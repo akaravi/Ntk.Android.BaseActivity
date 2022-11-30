@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import androidx.annotation.NonNull;
 import androidx.multidex.MultiDex;
 
-import com.akexorcist.localizationactivity.core.LocalizationApplicationDelegate;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -30,7 +29,6 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
 
     protected static ApplicationStyle applicationStyle;
 
-    private LocalizationApplicationDelegate localizationDelegate = new LocalizationApplicationDelegate();
     @Override
     protected void attachBaseContext(Context base) {
         instance = this;
@@ -40,21 +38,6 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
 
     }
 
-    @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        localizationDelegate.onConfigurationChanged(this);
-    }
-
-    @Override
-    public Context getApplicationContext() {
-        return localizationDelegate.getApplicationContext(super.getApplicationContext());
-    }
-
-    @Override
-    public Resources getResources() {
-        return localizationDelegate.getResources(this, super.getResources());
-    }
 
     public static ApplicationStyle getApplicationStyle() {
         return applicationStyle;
@@ -69,7 +52,6 @@ public abstract class NTKApplication extends BaseNtkApplication implements Appli
     @Override
     public void onCreate() {
         super.onCreate();
-//               Lingver.init(this, getLanguage());
         instance = this;
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .diskCache(new UnlimitedDiskCache(new File(getCacheDir(), "image")))

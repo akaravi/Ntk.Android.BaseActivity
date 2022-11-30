@@ -228,6 +228,8 @@ public abstract class AbstractSplashActivity extends BaseActivity {
         }
     }
 
+
+
     /**
      * get theme of application
      */

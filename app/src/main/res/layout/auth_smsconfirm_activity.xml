@@ -132,7 +132,7 @@
                         android:inputType="number"
                         android:maxLines="1"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         tools:ignore="HardcodedText" />
 
@@ -172,7 +172,21 @@
                     app:indicatorColor="?colorAccent"
                     app:trackColor="?colorAccent" />
             </LinearLayout>
-
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/changeNumberBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="36dp"
+                android:layout_marginRight="36dp"
+                android:layout_marginBottom="24dp"
+                android:paddingLeft="86dp"
+                android:paddingRight="86dp"
+                android:text="تغییر شماره"
+                android:textColor="?colorAccent"
+                android:textSize="17sp"
+                app:strokeColor="?colorAccent" />
 
             <LinearLayout
                 android:id="@+id/countDownView"

@@ -23,6 +23,6 @@
         android:hint="کد امنیتی"
         android:inputType="number"
         android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:textSize="14sp"
         tools:ignore="HardcodedText" />
 </LinearLayout>

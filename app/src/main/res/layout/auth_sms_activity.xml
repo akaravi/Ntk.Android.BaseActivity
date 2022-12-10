@@ -86,7 +86,7 @@
                             android:inputType="number"
                             android:maxLines="1"
                             android:textColor="@android:color/black"
-                            android:textSize="18sp"
+                            android:textSize="12sp"
                             android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             tools:ignore="HardcodedText" />
 
@@ -132,7 +132,7 @@
                         android:inputType="number"
                         android:maxLines="1"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         tools:ignore="HardcodedText" />
 

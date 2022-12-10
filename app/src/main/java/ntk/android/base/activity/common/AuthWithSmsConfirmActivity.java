@@ -69,6 +69,8 @@ public class AuthWithSmsConfirmActivity extends BaseAuthActivity {
         authEdittext = findViewById(R.id.CodeEt);
         //login click listener
         findViewById(R.id.submitBtn).setOnClickListener(v -> ClickBtn());
+        //go back click listener
+        findViewById(R.id.changeNumberBtn).setOnClickListener(v -> changNumber());
         //countdown click listener
         findViewById(R.id.countDownView).setOnClickListener(v -> ClickCounter());
 
@@ -102,6 +104,13 @@ public class AuthWithSmsConfirmActivity extends BaseAuthActivity {
         }.start();
     }
 
+    private void changNumber() {
+        Intent intent = new Intent(this, AuthWithSmsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+        finish();
+    }
+
 
     private void setFont() {
         //title
@@ -115,6 +124,7 @@ public class AuthWithSmsConfirmActivity extends BaseAuthActivity {
         ((TextInputEditText) findViewById(R.id.txtCaptcha)).setTypeface(FontManager.T1_Typeface(this));
         //buttons
         ((MaterialButton) findViewById(R.id.submitBtn)).setTypeface(FontManager.T1_Typeface(this));
+        ((MaterialButton) findViewById(R.id.changeNumberBtn)).setTypeface(FontManager.T1_Typeface(this));
     }
     private void ClickBtn() {
         if (authEdittext.getText().toString().isEmpty()) {

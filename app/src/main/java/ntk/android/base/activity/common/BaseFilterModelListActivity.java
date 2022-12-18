@@ -11,10 +11,6 @@ import ntk.android.base.entitymodel.base.FilterModel;
 import ntk.android.base.entitymodel.enums.EnumSortType;
 
 public abstract class BaseFilterModelListActivity<TEntity> extends AbstractListActivity<FilterModel, TEntity> {
-    @Override
-    public void afterInit() {
-        super.afterInit();
-    }
 
     @Override
     protected void requestOnIntent() {

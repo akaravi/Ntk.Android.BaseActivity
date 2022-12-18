@@ -101,8 +101,8 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
             }
         };
         Rv.addOnScrollListener(scrollListener);
-
-        RestCall(1);
+        if (!callOtherApi())
+            RestCall(1);
 
         Refresh.setOnRefreshListener(() -> {
             models.clear();
@@ -116,6 +116,10 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
             fab.setOnClickListener(v -> showCategoryListDialog());
         }
         afterInit();
+    }
+
+    protected boolean callOtherApi() {
+        return false;
     }
 
     protected AbstractionListFragment.IntegrationView viewSyncOnScrolling() {
@@ -133,7 +137,7 @@ public abstract class AbstractListActivity<TREq, TEntity> extends BaseActivity {
     }
 
 
-    private void RestCall(int nextPage) {
+    protected void RestCall(int nextPage) {
         if (AppUtil.isNetworkAvailable(this)) {
             if (nextPage == 1)
                 switcher.showProgressView();

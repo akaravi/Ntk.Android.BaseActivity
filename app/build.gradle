@@ -49,7 +49,7 @@ afterEvaluate {
         }
     }
 }
-////note uncomment for debug
+//note uncomment for debug
 //afterEvaluate {
 //    afterEvaluate {
 //        println("Components: " + components*.name)
@@ -112,6 +112,6 @@ dependencies {
     //for gallery view
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 
-    api 'com.github.akaravi:Ntk.Android.Base:1.5.530'
+    api 'com.github.akaravi:Ntk.Android.Base:1.5.531'
 //    api project(path: ':baseApi')
 }

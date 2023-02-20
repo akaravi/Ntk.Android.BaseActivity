@@ -37,24 +37,24 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 }
-//afterEvaluate {
-//    publishing {
-//        publications {
-//            release(MavenPublication) {
-//                from components.release
-//                groupId = "ntk.android.base"
-//                artifactId = 'baseActivity'
-//                version = version
-//            }
-//        }
-//    }
-//}
-//note uncomment for debug
 afterEvaluate {
-    afterEvaluate {
-        println("Components: " + components*.name)
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = "ntk.android.base"
+                artifactId = 'baseActivity'
+                version = version
+            }
+        }
     }
 }
+//note uncomment for debug
+//afterEvaluate {
+//    afterEvaluate {
+//        println("Components: " + components*.name)
+//    }
+//}
 dependencies {
     //for sentry
     implementation 'io.sentry:sentry-android:6.6.0'
@@ -113,6 +113,6 @@ dependencies {
     //for gallery view
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 
-//    api 'com.github.akaravi:Ntk.Android.Base:1.5.531'
-    api project(path: ':baseApi')
+    api 'com.github.akaravi:Ntk.Android.Base:1.5.540'
+//    api project(path: ':baseApi')
 }

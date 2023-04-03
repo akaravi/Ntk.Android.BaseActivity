@@ -37,23 +37,23 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 }
-//afterEvaluate {
-//    publishing {
-//        publications {
-//            release(MavenPublication) {
-//                from components.release
-//                groupId = "ntk.android.base"
-//                artifactId = 'baseActivity'
-//                version = version
-//            }
-//        }
-//    }
-//}
-//note uncomment for debug
 afterEvaluate {
-    afterEvaluate {
-        println("Components: " + components*.name)
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = "ntk.android.base"
+                artifactId = 'baseActivity'
+                version = version
+            }
+        }
     }
+}
+//note uncomment for debug
+//afterEvaluate {
+//    afterEvaluate {
+//        println("Components: " + components*.name)
+//    }
 }
 dependencies {
     //for sentry

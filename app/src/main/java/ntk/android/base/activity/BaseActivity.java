@@ -1,6 +1,7 @@
 package ntk.android.base.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -8,12 +9,14 @@ import android.widget.RelativeLayout;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
 
 import io.sentry.Sentry;
+import java9.util.function.Consumer;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.view.ViewController;
@@ -22,10 +25,11 @@ import ntk.android.base.view.swicherview.Switcher;
 public abstract class BaseActivity extends AppCompatActivity {
     private ActivityResultCallback<ActivityResult> resultInterface;
     ActivityResultLauncher<Intent> someActivityResultLauncher;
+    ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     protected Switcher switcher;
+    Consumer<Uri> consumer;
 
     /**
-     *
      * @param language
      */
     protected void setLanguage(String language) {
@@ -33,6 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 // Call this on the main thread as it may require Activity.restart()
         AppCompatDelegate.setApplicationLocales(appLocale);
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -49,6 +54,12 @@ public abstract class BaseActivity extends AppCompatActivity {
                     }
                 }
         );
+        pickMedia =
+                registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                    // Callback is invoked after the user selects a media item or closes the
+                    // photo picker.
+                    if (consumer != null) consumer.accept(uri);
+                });
         initBase();
     }
 
@@ -140,6 +151,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void lunchActivityForResult(Intent intent, ActivityResultCallback myInterface) {
         this.resultInterface = myInterface;
         someActivityResultLauncher.launch(intent);
+    }
+
+    public void lunchActivityForMedia(PickVisualMediaRequest intent, Consumer myInterface) {
+        consumer=myInterface;
+        pickMedia.launch(intent);
     }
 
     private void BaseActivityResult(ActivityResult result, int readRequestCode) {

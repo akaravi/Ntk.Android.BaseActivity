@@ -19,6 +19,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import es.dmoral.toasty.Toasty;
+import ntk.android.base.Extras;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.config.GenericErrors;
@@ -81,14 +82,14 @@ public class AuthWithSmsActivity extends BaseAuthActivity {
         }
 
         //trick to get click
-       ((TextInputEditText) findViewById(R.id.nonFocusable)).setMovementMethod(null);
+        ((TextInputEditText) findViewById(R.id.nonFocusable)).setMovementMethod(null);
         ((TextInputEditText) findViewById(R.id.nonFocusable)).setKeyListener(null);
         findViewById(R.id.nonFocusable).setOnClickListener(v -> getNewCaptcha());
 
     }
 
     private void setFont() {
-       //title
+        //title
         ((TextView) findViewById(R.id.labelRegister)).setTypeface(FontManager.T1_Typeface(this));
         //mobile et
         ((TextInputLayout) findViewById(R.id.textInputLayout)).setTypeface(FontManager.T1_Typeface(this));
@@ -149,6 +150,9 @@ public class AuthWithSmsActivity extends BaseAuthActivity {
                             }
                             Preferences.with(AuthWithSmsActivity.this).UserInfo().setMobile(PhoneNumber);
                             Intent intent = new Intent(AuthWithSmsActivity.this, AuthWithSmsConfirmActivity.class);
+                            intent.putExtra(Extras.EXTRA_FIRST_ARG, getCaptchaKey());
+                            intent.putExtra(Extras.EXTRA_SECOND_ARG, getCaptchaText());
+                            intent.putExtra(Extras.Extra_THIRD_ARG, getCaptchaImageUrl());
                             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                             startActivity(intent);
                             finish();
@@ -170,6 +174,7 @@ public class AuthWithSmsActivity extends BaseAuthActivity {
             });
         }
     }
+
 
 
     public void ClickNoPhone() {

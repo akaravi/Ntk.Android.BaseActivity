@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.InputFilter;
-import android.text.InputType;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +18,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import es.dmoral.toasty.Toasty;
 import io.reactivex.annotations.NonNull;
+import ntk.android.base.Extras;
 import ntk.android.base.NTKApplication;
 import ntk.android.base.R;
 import ntk.android.base.config.GenericErrors;
@@ -39,7 +35,6 @@ import ntk.android.base.services.core.CoreAuthService;
 import ntk.android.base.utill.AppUtil;
 import ntk.android.base.utill.FontManager;
 import ntk.android.base.utill.prefrense.Preferences;
-import ntk.android.base.view.CaptchaView;
 
 public class AuthWithSmsConfirmActivity extends BaseAuthActivity {
     final int timeSmsTryAgain = 1000 * 60;
@@ -54,7 +49,7 @@ public class AuthWithSmsConfirmActivity extends BaseAuthActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auth_smsconfirm_activity);
         //initilize view
-         initView();
+        initView();
         //set fonts
         setFont();
 
@@ -62,7 +57,9 @@ public class AuthWithSmsConfirmActivity extends BaseAuthActivity {
 
     private void initView() {
         //call captcha
-        getNewCaptcha();
+        if (getIntent().getExtras() != null && !getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG).equals("")) {
+            setSavedCaptcha(getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG), getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG), getIntent().getExtras().getString(Extras.Extra_THIRD_ARG));
+        } else getNewCaptcha();
         Loading = findViewById(R.id.progressOnBtn);
         //hide load on start
         Loading.setVisibility(View.GONE);
@@ -91,7 +88,7 @@ public class AuthWithSmsConfirmActivity extends BaseAuthActivity {
                 int minutes = (int) ((l / (1000 * 60)) % 60);
                 TextView countDownTv = findViewById(R.id.countDownTv);
                 countDownTv.setClickable(false);
-                countDownTv.setText( String.format("%d:%d", minutes, seconds)+"  "+ getString(R.string.plz_wait_recieve_code) );
+                countDownTv.setText(String.format("%d:%d", minutes, seconds) + "  " + getString(R.string.plz_wait_recieve_code));
             }
 
             @Override
@@ -126,6 +123,7 @@ public class AuthWithSmsConfirmActivity extends BaseAuthActivity {
         ((MaterialButton) findViewById(R.id.submitBtn)).setTypeface(FontManager.T1_Typeface(this));
         ((MaterialButton) findViewById(R.id.changeNumberBtn)).setTypeface(FontManager.T1_Typeface(this));
     }
+
     private void ClickBtn() {
         if (authEdittext.getText().toString().isEmpty()) {
             Toast.makeText(this, R.string.plz_insert_code, Toast.LENGTH_SHORT).show();
@@ -142,41 +140,39 @@ public class AuthWithSmsConfirmActivity extends BaseAuthActivity {
             findViewById(R.id.submitBtn).setEnabled(false);
             AuthUserSignInBySmsDtoModel request = new AuthUserSignInBySmsDtoModel();
             request.CaptchaKey = getCaptchaKey();
-            request.CaptchaText =getCaptchaText();
+            request.CaptchaText = getCaptchaText();
             request.Code = authEdittext.getText().toString();
             request.Mobile = Preferences.with(this).UserInfo().mobile();
             request.SiteId = Preferences.with(this).UserInfo().siteId();
             //call api
-            ServiceExecute.execute(new CoreAuthService(this).signInUserBySMS(request))
-                    .subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
-                        @Override
-                        public void onNext(@NonNull ErrorException<TokenInfoModel> response) {
-                          //show button
-                           Loading.setVisibility(View.GONE);
-                            findViewById(R.id.submitBtn).setEnabled(true);
-                            if (!response.IsSuccess) {
-                                getNewCaptcha();
-                                Toasty.warning(AuthWithSmsConfirmActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
-                                return;
-                            }
-                            Preferences.with(AuthWithSmsConfirmActivity.this).appVariableInfo().setIsLogin(true);
-                            Preferences.with(AuthWithSmsConfirmActivity.this).UserInfo().setUserId(response.Item.UserId);
-                            Intent intent = new Intent(AuthWithSmsConfirmActivity.this, NTKApplication.getApplicationStyle().getMainActivity());
-                            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                            startActivity(intent);
-                            finish();
-                        }
+            ServiceExecute.execute(new CoreAuthService(this).signInUserBySMS(request)).subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
+                @Override
+                public void onNext(@NonNull ErrorException<TokenInfoModel> response) {
+                    //show button
+                    Loading.setVisibility(View.GONE);
+                    findViewById(R.id.submitBtn).setEnabled(true);
+                    if (!response.IsSuccess) {
+                        getNewCaptcha();
+                        Toasty.warning(AuthWithSmsConfirmActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
+                        return;
+                    }
+                    Preferences.with(AuthWithSmsConfirmActivity.this).appVariableInfo().setIsLogin(true);
+                    Preferences.with(AuthWithSmsConfirmActivity.this).UserInfo().setUserId(response.Item.UserId);
+                    Intent intent = new Intent(AuthWithSmsConfirmActivity.this, NTKApplication.getApplicationStyle().getMainActivity());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
+                    finish();
+                }
 
-                        @Override
-                        public void onError(@NonNull Throwable e) {
-                           getNewCaptcha();
-                            Loading.setVisibility(View.GONE);
-                            findViewById(R.id.submitBtn).setEnabled(true);
-                            new GenericErrors().throwableException((error, tryAgain) -> Toasty.warning(AuthWithSmsConfirmActivity.this, error, Toasty.LENGTH_LONG, true).show()
-                                    , e, () -> {
-                                    });
-                        }
+                @Override
+                public void onError(@NonNull Throwable e) {
+                    getNewCaptcha();
+                    Loading.setVisibility(View.GONE);
+                    findViewById(R.id.submitBtn).setEnabled(true);
+                    new GenericErrors().throwableException((error, tryAgain) -> Toasty.warning(AuthWithSmsConfirmActivity.this, error, Toasty.LENGTH_LONG, true).show(), e, () -> {
                     });
+                }
+            });
         } else {
             new GenericErrors().netError((error, tryAgain) -> Toasty.warning(AuthWithSmsConfirmActivity.this, error, Toasty.LENGTH_LONG, true).show(), () -> {
             });
@@ -199,34 +195,32 @@ public class AuthWithSmsConfirmActivity extends BaseAuthActivity {
                 request.CaptchaText = dialog.getCaptcha().getCaptchaText();
                 request.CaptchaKey = dialog.getCaptcha().getCaptchaKey();
                 dialog.lockButton(true);
-                ServiceExecute.execute(new CoreAuthService(this).signInUserBySMS(request))
-                        .subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
-                            @Override
-                            public void onNext(@io.reactivex.annotations.NonNull ErrorException<TokenInfoModel> response) {
-                                Loading.setVisibility(View.GONE);
-                                if (!response.IsSuccess) {
-                                    if (dialog.isShow()) {
-                                        dialog.getCaptcha().getNewCaptcha();
-                                        dialog.lockButton(false);
-                                    }
-                                    Toasty.error(AuthWithSmsConfirmActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
-                                    return;
-                                }
-                                Toasty.success(AuthWithSmsConfirmActivity.this, R.string.code_sent_again).show();
-                                Timer.start();
-                                if (dialog.isShow())
-                                    dialog.dismiss();
+                ServiceExecute.execute(new CoreAuthService(this).signInUserBySMS(request)).subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
+                    @Override
+                    public void onNext(@io.reactivex.annotations.NonNull ErrorException<TokenInfoModel> response) {
+                        Loading.setVisibility(View.GONE);
+                        if (!response.IsSuccess) {
+                            if (dialog.isShow()) {
+                                dialog.getCaptcha().getNewCaptcha();
+                                dialog.lockButton(false);
                             }
+                            Toasty.error(AuthWithSmsConfirmActivity.this, response.ErrorMessage, Toasty.LENGTH_LONG, true).show();
+                            return;
+                        }
+                        Toasty.success(AuthWithSmsConfirmActivity.this, R.string.code_sent_again).show();
+                        Timer.start();
+                        if (dialog.isShow()) dialog.dismiss();
+                    }
 
-                            @Override
-                            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                                if (dialog.isShow()) {
-                                    dialog.lockButton(false);
-                                    dialog.getCaptcha().getNewCaptcha();
-                                }
-                                Toasty.warning(AuthWithSmsConfirmActivity.this, R.string.error_raised, Toasty.LENGTH_LONG, true).show();
-                            }
-                        });
+                    @Override
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                        if (dialog.isShow()) {
+                            dialog.lockButton(false);
+                            dialog.getCaptcha().getNewCaptcha();
+                        }
+                        Toasty.warning(AuthWithSmsConfirmActivity.this, R.string.error_raised, Toasty.LENGTH_LONG, true).show();
+                    }
+                });
             });
 
 

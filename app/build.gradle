@@ -59,7 +59,7 @@ dependencies {
     //for sentry
     implementation 'io.sentry:sentry-android:6.6.0'
     //for result
-    implementation "androidx.activity:activity:1.6.1"
+    implementation "androidx.activity:activity:1.7.0"
     //for configHeader
 
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
@@ -78,8 +78,8 @@ dependencies {
     annotationProcessor 'androidx.room:room-compiler:2.4.3'
     implementation 'androidx.room:room-rxjava2:2.4.3'
     //compact
-    implementation 'androidx.appcompat:appcompat:1.7.0-alpha01'
-    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0-alpha02'
+    implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     //for retrofit

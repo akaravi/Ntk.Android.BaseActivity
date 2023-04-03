@@ -14,10 +14,14 @@ import android.provider.MediaStore;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import java9.util.function.Consumer;
 import ntk.android.base.activity.BaseActivity;
 import ntk.android.base.utill.FileUtils;
 
@@ -40,32 +44,63 @@ public class FileManagerService {
 
     public void clickAttach(BaseActivity activity, int readRequestCode) {
         if (CheckPermission(activity)) {
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("*/*");
-            activity.lunchActivityForResult(intent, readRequestCode);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                activity.lunchActivityForMedia(new PickVisualMediaRequest.Builder().setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE).build(), o -> {
+                    throw new RuntimeException("not implement");
+                });
+            } else {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("*/*");
+                activity.lunchActivityForResult(intent, readRequestCode);
+            }
+
         } else {
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 220);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+                activity.requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES}, readRequestCode);
+
+            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                activity.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, readRequestCode);
         }
     }
 
-    public void clickAttach(BaseActivity activity, ActivityResultCallback<ActivityResult> callback) {
+    public void clickAttach(BaseActivity activity, Consumer<Uri> callback) {
         if (CheckPermission(activity)) {
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("*/*");
-            activity.lunchActivityForResult(intent, callback);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                activity.lunchActivityForMedia(new PickVisualMediaRequest.Builder().setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE).build(), callback);
+            } else {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("*/*");
+                activity.lunchActivityForResult(intent, new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getData() != null) {
+                            Uri uri = result.getData().getData();
+                            callback.accept(uri);
+                        } else
+                            callback.accept(null);
+                    }
+                });
+            }
+
         } else {
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 220);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+                activity.requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES}, 220);
+
+            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                activity.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 220);
         }
+
     }
 
     private boolean CheckPermission(AppCompatActivity activity) {
-        if (Build.VERSION.SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            return activity.checkSelfPermission(Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED;
+
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             return activity.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        } else {
-            return true;
-        }
+        else return true;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -82,8 +117,7 @@ public class FileManagerService {
                 }
             } else if (isDownloadsDocument(uri)) {
                 final String id = DocumentsContract.getDocumentId(uri);
-                final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                final Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
                 return getDataColumn(context, contentUri, null, null);
             } else if (isMediaDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
@@ -98,9 +132,7 @@ public class FileManagerService {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
                 }
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[]{
-                        split[1]
-                };
+                final String[] selectionArgs = new String[]{split[1]};
                 return getDataColumn(context, contentUri, selection, selectionArgs);
             }
         } else if ("content".equalsIgnoreCase(uri.getScheme())) {
@@ -112,24 +144,19 @@ public class FileManagerService {
         return null;
     }
 
-    private static String getDataColumn(Context context, Uri uri, String selection,
-                                        String[] selectionArgs) {
+    private static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
         Cursor cursor = null;
         final String column = "_data";
-        final String[] projection = {
-                column
-        };
+        final String[] projection = {column};
 
         try {
-            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
-                    null);
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
             if (cursor != null && cursor.moveToFirst()) {
                 final int column_index = cursor.getColumnIndexOrThrow(column);
                 return cursor.getString(column_index);
             }
         } finally {
-            if (cursor != null)
-                cursor.close();
+            if (cursor != null) cursor.close();
         }
         return null;
     }

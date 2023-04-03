@@ -1,19 +1,11 @@
 package ntk.android.base.activity.common;
 
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-
-import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.signature.ObjectKey;
 
 import java.util.UUID;
@@ -37,35 +29,44 @@ public class BaseAuthActivity extends BaseActivity {
     }
 
     public String getCaptchaKey() {
-        if (captcha != null)
-            return captcha.Key;
+        if (captcha != null) return captcha.Key;
+        return "";
+    }
+    public String getCaptchaImageUrl() {
+        if (captcha != null) return captcha.Image;
         return "";
     }
 
     public void getNewCaptcha() {
-        ServiceExecute.execute(new CoreAuthService(this).getCaptcha())
-                .subscribe(new NtkObserver<ErrorException<CaptchaModel>>() {
-                    @Override
-                    public void onNext(@NonNull ErrorException<CaptchaModel> captchaResponce) {
-                        ((EditText) findViewById(R.id.txtCaptcha)).setText("");
-                        if (captchaResponce.IsSuccess) {
-                            captcha = captchaResponce.Item;
-                            Glide.with(NTKApplication.get())
-                                    .load(captchaResponce.Item.Image).placeholder(R.drawable.captcha_holder).
-                                    apply(new RequestOptions().signature(new ObjectKey(UUID.randomUUID().toString())))
-                                    .fitCenter() .into(((ImageView) findViewById(R.id.imgCaptcha)));
-                        } else {
-                            ((ImageView) findViewById(R.id.imgCaptcha)).setImageResource(R.drawable.error_captcha);
-                        }
-                    }
+        ServiceExecute.execute(new CoreAuthService(this).getCaptcha()).subscribe(new NtkObserver<ErrorException<CaptchaModel>>() {
+            @Override
+            public void onNext(@NonNull ErrorException<CaptchaModel> captchaResponce) {
+                ((EditText) findViewById(R.id.txtCaptcha)).setText("");
+                if (captchaResponce.IsSuccess) {
+                    captcha = captchaResponce.Item;
+                    Glide.with(NTKApplication.get()).load(captchaResponce.Item.Image).placeholder(R.drawable.captcha_holder).apply(new RequestOptions().signature(new ObjectKey(UUID.randomUUID().toString()))).fitCenter().into(((ImageView) findViewById(R.id.imgCaptcha)));
+                } else {
+                    ((ImageView) findViewById(R.id.imgCaptcha)).setImageResource(R.drawable.error_captcha);
+                }
+            }
 
-                    @Override
-                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                        ((ImageView) findViewById(R.id.imgCaptcha)).setImageResource(R.drawable.error_captcha);
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                ((ImageView) findViewById(R.id.imgCaptcha)).setImageResource(R.drawable.error_captcha);
 
-                    }
+            }
 
 
-                });
+        });
     }
+
+    public void setSavedCaptcha(String key, String text, String image) {
+        captcha = new CaptchaModel();
+        captcha.Key = key;
+        captcha.Image = image;
+        ((EditText) findViewById(R.id.txtCaptcha)).setText(text);
+        Glide.with(NTKApplication.get()).load(captcha.Image).placeholder(R.drawable.captcha_holder).apply(new RequestOptions().signature(new ObjectKey(UUID.randomUUID().toString()))).fitCenter().into(((ImageView) findViewById(R.id.imgCaptcha)));
+
+    }
+
 }

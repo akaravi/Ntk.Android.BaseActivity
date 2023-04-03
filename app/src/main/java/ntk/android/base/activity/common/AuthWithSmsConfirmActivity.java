@@ -58,7 +58,7 @@ public class AuthWithSmsConfirmActivity extends BaseAuthActivity {
     private void initView() {
         //call captcha
         if (getIntent().getExtras() != null && !getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG).equals("")) {
-            setSavedCaptcha(getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG), getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG), getIntent().getExtras().getString(Extras.Extra_THIRD_ARG));
+            setSavedCaptcha(getIntent().getExtras().getString(Extras.EXTRA_FIRST_ARG), getIntent().getExtras().getString(Extras.EXTRA_SECOND_ARG), getIntent().getExtras().getString(Extras.Extra_THIRD_ARG));
         } else getNewCaptcha();
         Loading = findViewById(R.id.progressOnBtn);
         //hide load on start

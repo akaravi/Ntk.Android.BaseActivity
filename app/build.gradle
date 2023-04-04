@@ -113,6 +113,6 @@ dependencies {
     //for gallery view
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 
-    api 'com.github.akaravi:Ntk.Android.Base:1.5.540'
+    api 'com.github.akaravi:Ntk.Android.Base:1.5.600'
 //    api project(path: ':baseApi')
 }

@@ -2,12 +2,12 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 
 android {
-    compileSdkVersion 33
-
+    compileSdkVersion 35
+    namespace 'ntk.android.base'
     defaultConfig {
 
         minSdkVersion 14
-        compileSdkVersion 33
+        targetSdkVersion 33
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -37,14 +37,28 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 }
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            release(MavenPublication) {
+//                from components.release
+//                groupId = "ntk.android.base"
+//                artifactId = 'baseActivity'
+//                version = version
+//            }
+//        }
+//    }
+//}
 afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                groupId = "ntk.android.base"
-                artifactId = 'baseActivity'
-                version = version
+    if (!plugins.hasPlugin("com.android.application") && !plugins.hasPlugin("com.android.library")) {
+        publishing {
+            publications {
+                release(MavenPublication) {
+                    from components.release
+                    groupId = "ntk.android.base"
+                    artifactId = 'baseActivity'
+                    version = version
+                }
             }
         }
     }
@@ -70,12 +84,12 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     //room
-    implementation 'androidx.room:room-runtime:2.4.3'
+    implementation 'androidx.room:room-runtime:2.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.github.bumptech.glide:glide:4.14.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.1'
 
-    annotationProcessor 'androidx.room:room-compiler:2.4.3'
+    annotationProcessor 'androidx.room:room-compiler:2.5.0'
     implementation 'androidx.room:room-rxjava2:2.4.3'
     //compact
     implementation 'androidx.appcompat:appcompat:1.7.0-alpha02'
@@ -113,6 +127,6 @@ dependencies {
     //for gallery view
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 
-    api 'com.github.akaravi:Ntk.Android.Base:1.5.600'
-//    api project(path: ':baseApi')
+//    api 'com.github.akaravi:Ntk.Android.Base:1.5.600'
+    api project(path: ':baseApi')
 }

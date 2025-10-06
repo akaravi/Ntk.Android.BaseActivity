@@ -3,8 +3,8 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
-
+    compileSdkVersion 35
+    namespace 'ntk.android.myapplication'
     defaultConfig {
         applicationId "ntk.android.myapplication"
         minSdkVersion 16

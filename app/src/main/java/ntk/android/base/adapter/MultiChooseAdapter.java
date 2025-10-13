@@ -25,12 +25,12 @@ public class MultiChooseAdapter extends BaseRecyclerAdapter<String, MultiChooseA
 
     @NonNull
     @Override
-    public MultiChooseAdapter.VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MultiChooseAdapter.VH(inflate(parent, R.layout.row__multi_choose_view));
+    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new VH(inflate(parent, R.layout.row__multi_choose_view));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MultiChooseAdapter.VH holder, int position) {
+    public void onBindViewHolder(@NonNull VH holder, int position) {
         String item = getItem(position);
         holder.title.setText(item);
         holder.cb.setOnCheckedChangeListener(null);

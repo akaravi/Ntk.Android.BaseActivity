@@ -475,7 +475,8 @@ public class AboutPage {
         }
 
         TypedValue outValue = new TypedValue();
-        mContext.getTheme().resolveAttribute(R.attr.selectableItemBackground, outValue, true);
+//  todo change      mContext.getTheme().resolveAttribute(R.attr.selectableItemBackground, outValue, true);
+        mContext.getTheme().resolveAttribute( android.R.attr.selectableItemBackground,  outValue, true);
         wrapper.setBackgroundResource(outValue.resourceId);
 
         int padding = mContext.getResources().getDimensionPixelSize(R.dimen.about_text_padding);

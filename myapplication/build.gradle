@@ -1,23 +1,22 @@
-plugins {
-    id 'com.android.application'
-}
+apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 35
     namespace 'ntk.android.myapplication'
+    compileSdk 35
+
     defaultConfig {
         applicationId "ntk.android.myapplication"
-        minSdkVersion 16
-        targetSdkVersion 33
+        minSdk 21
+        targetSdk 35
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -25,23 +24,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-}
-
-dependencies {
-    constraints {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
-            because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
-        }
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0") {
-            because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
-        }
+    dependencies {
+        api project(path: ':app')
     }
-    //for locale
-//    implementation 'com.akexorcist:localization:1.2.11'
-    implementation 'androidx.appcompat:appcompat:1.7.0-alpha02'
-//    implementation 'androidx.multidex:multidex:2.0.1'
-//    implementation 'com.google.android.material:material:1.8.0'
-//    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation project(path: ':app')
-
 }

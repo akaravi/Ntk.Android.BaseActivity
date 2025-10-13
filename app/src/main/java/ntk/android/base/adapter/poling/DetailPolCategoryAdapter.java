@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+//import ntk.android.base.R;
 import ntk.android.base.R;
 import ntk.android.base.adapter.BaseRecyclerAdapter;
 import ntk.android.base.entitymodel.polling.PollingContentModel;
@@ -31,7 +32,8 @@ public class DetailPolCategoryAdapter extends BaseRecyclerAdapter<PollingContent
     public DetailPolCategoryAdapter(Context context, List<PollingContentModel> arrayList) {
         super(arrayList);
         this.context = context;
-        int primaryColor = NViewUtils.getResIdFromAttribute(context, R.attr.colorPrimary);
+       //todo change int primaryColor = NViewUtils.getResIdFromAttribute(context, R.attr.colorPrimary);
+        int primaryColor = NViewUtils.getResIdFromAttribute(context, androidx.appcompat.R.attr.colorPrimary);
         color = NViewUtils.getColorWithAlpha(ContextCompat.getColor(context,primaryColor), 30);
     }
 

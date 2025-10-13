@@ -402,10 +402,10 @@ public abstract class BaseBlogDetail_1_Activity extends
             model.Favorited = !model.Favorited;
             if (model.Favorited) {
 
-                ((ImageView) findViewById(ntk.android.base.R.id.imgHeartDetail)).setImageResource(favoriteDrawableId);
+                ((ImageView) findViewById(R.id.imgHeartDetail)).setImageResource(favoriteDrawableId);
             } else {
 
-                ((ImageView) findViewById(ntk.android.base.R.id.imgHeartDetail)).setImageResource(unFavoriteDrawableId);
+                ((ImageView) findViewById(R.id.imgHeartDetail)).setImageResource(unFavoriteDrawableId);
             }
         });
     }

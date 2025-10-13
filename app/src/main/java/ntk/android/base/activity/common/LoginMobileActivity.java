@@ -94,7 +94,7 @@ public class LoginMobileActivity extends BaseActivity {
         ServiceExecute.execute(new CoreAuthService(this).getCaptcha())
                 .subscribe(new NtkObserver<ErrorException<CaptchaModel>>() {
                     @Override
-                    public void onNext(@io.reactivex.annotations.NonNull ErrorException<CaptchaModel> captchaResponce) {
+                    public void onNext(@NonNull ErrorException<CaptchaModel> captchaResponce) {
                         if (captchaResponce.IsSuccess) {
                             ImageLoader.getInstance().displayImage(captchaResponce.Item.Image, (ImageView) findViewById(R.id.imgCaptcha));
                             captcha = captchaResponce.Item;
@@ -102,7 +102,7 @@ public class LoginMobileActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                    public void onError(@NonNull Throwable e) {
 
                     }
 

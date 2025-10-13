@@ -192,7 +192,7 @@ public class NewTicketActivity extends BaseActivity {
                                 });
                                 spinner.setAdapter(adapter_dpartman);
                                 // Do something for lollipop and above versions
-                                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                                     //if departments is 0
                                     spinner.setText(adapter_dpartman.getItem(0), false);
                                     request.LinkTicketingDepartemenId = departments.get(0).Id;
@@ -219,7 +219,7 @@ public class NewTicketActivity extends BaseActivity {
         MaterialAutoCompleteTextView spinner = findViewById(R.id.SpinnerState);
         spinner.setAdapter(adapter_state);
         spinner.setOnItemClickListener((parent, view, position, id) -> request.Priority = (position + 1));
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             // Do something for lollipop and above versions
             if (request.Priority == 0) {
                 (spinner).setText(adapter_state.getItem(0), false);

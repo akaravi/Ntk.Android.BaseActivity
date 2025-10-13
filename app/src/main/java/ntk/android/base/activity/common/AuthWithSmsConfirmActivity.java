@@ -197,7 +197,7 @@ public class AuthWithSmsConfirmActivity extends BaseAuthActivity {
                 dialog.lockButton(true);
                 ServiceExecute.execute(new CoreAuthService(this).signInUserBySMS(request)).subscribe(new NtkObserver<ErrorException<TokenInfoModel>>() {
                     @Override
-                    public void onNext(@io.reactivex.annotations.NonNull ErrorException<TokenInfoModel> response) {
+                    public void onNext(@NonNull ErrorException<TokenInfoModel> response) {
                         Loading.setVisibility(View.GONE);
                         if (!response.IsSuccess) {
                             if (dialog.isShow()) {
@@ -213,7 +213,7 @@ public class AuthWithSmsConfirmActivity extends BaseAuthActivity {
                     }
 
                     @Override
-                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                    public void onError(@NonNull Throwable e) {
                         if (dialog.isShow()) {
                             dialog.lockButton(false);
                             dialog.getCaptcha().getNewCaptcha();

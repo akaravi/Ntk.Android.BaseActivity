@@ -1,5 +1,27 @@
-include ':myapplication'
+pluginManagement {
+    repositories {
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+rootProject.name = "Ntk.Android.BaseActivity"
 include ':app'
-//include ':sweetDialog'
+include ':myapplication'
 include ':baseApi'
- project(':baseApi').projectDir = new File('..\\Ntk.Android.Base\\api')
+project(':baseApi').projectDir = new File('..\\Ntk.Android.Base\\app')

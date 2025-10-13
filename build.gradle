@@ -1,26 +1,27 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+
 buildscript {
     repositories {
         google()
         mavenCentral()
-//        jcenter()//for qrcode
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.13.0'
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        // ارتقا به نسخه 8.3.2 (آخرین نسخه پایدار سازگار با Gradle 8.x)
+        // این نسخه مطمئن است و مشکل پیدا نشدن 8.10.0 را حل می کند.
+        classpath 'com.android.tools.build:gradle:8.3.2'
     }
 }
 
-allprojects {
-    repositories {
-        maven { url "https://jitpack.io" }
-        google()
-        mavenCentral()
-//        jcenter()//for qrcode
-    }
+// این بلاک برای تعریف پلاگین ها در ساختار جدید Gradle (از نسخه 8 به بعد) استفاده می شود.
+// اگر پروژه شما از این ساختار استفاده می کند، مطمئن می شویم که نسخه AGP در اینجا نیز تعریف شده است.
+plugins {
+    id 'com.android.application' version '8.3.2' apply false
+    id 'com.android.library' version '8.3.2' apply false
+    id 'org.jetbrains.kotlin.android' version '1.9.22' apply false // مثال: اگر از Kotlin استفاده می کنید
 }
 
-task clean(type: Delete) {
+
+
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }

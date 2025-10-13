@@ -51,7 +51,7 @@ public class BaseAuthActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+            public void onError(@NonNull Throwable e) {
                 ((ImageView) findViewById(R.id.imgCaptcha)).setImageResource(R.drawable.error_captcha);
 
             }

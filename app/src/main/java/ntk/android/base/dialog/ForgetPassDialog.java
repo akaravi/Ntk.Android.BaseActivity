@@ -93,7 +93,7 @@ public class ForgetPassDialog extends DialogFragment {
         ServiceExecute.execute(new CoreAuthService(getContext()).getCaptcha())
                 .subscribe(new NtkObserver<ErrorException<CaptchaModel>>() {
             @Override
-            public void onNext(@io.reactivex.annotations.NonNull ErrorException<CaptchaModel> captchaResponce) {
+            public void onNext(@NonNull ErrorException<CaptchaModel> captchaResponce) {
                 if (captchaResponce.IsSuccess) {
                     ImageLoader.getInstance().displayImage(captchaResponce.Item.Image, (ImageView) getView().findViewById(R.id.imgCaptcha));
                     captcha = captchaResponce.Item;
@@ -101,7 +101,7 @@ public class ForgetPassDialog extends DialogFragment {
             }
 
             @Override
-            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+            public void onError(@NonNull Throwable e) {
 
             }
 

@@ -26,5 +26,6 @@ android {
     }
     dependencies {
         api project(path: ':app')
+        implementation 'androidx.appcompat:appcompat:1.7.0'
     }
 }

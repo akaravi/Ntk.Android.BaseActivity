@@ -1,10 +1,9 @@
 package ntk.android.myapplication;
 
-import android.app.Activity;
 
-import ntk.android.base.activity.common.BaseSplashActivity;
+import ntk.android.base.activity.common.BaseAboutActivity;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseAboutActivity {
 
 
 }

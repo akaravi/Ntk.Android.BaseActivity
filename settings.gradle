@@ -22,6 +22,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Ntk.Android.BaseActivity"
 include ':app'
-include ':myapplication'
-include ':baseApi'
-project(':baseApi').projectDir = new File('..\\Ntk.Android.Base\\app')
+//include ':baseApi'
+//project(':baseApi').projectDir = new File('..\\Ntk.Android.Base\\app')

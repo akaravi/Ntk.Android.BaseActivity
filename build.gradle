@@ -1,24 +1,18 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+
 buildscript {
+    ext.kotlin_version = "1.8.20"
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        // ارتقا به نسخه 8.3.2 (آخرین نسخه پایدار سازگار با Gradle 8.x)
-        // این نسخه مطمئن است و مشکل پیدا نشدن 8.10.0 را حل می کند.
-        classpath 'com.android.tools.build:gradle:8.3.2'
+        classpath 'com.android.tools.build:gradle:8.0.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
-// این بلاک برای تعریف پلاگین ها در ساختار جدید Gradle (از نسخه 8 به بعد) استفاده می شود.
-// اگر پروژه شما از این ساختار استفاده می کند، مطمئن می شویم که نسخه AGP در اینجا نیز تعریف شده است.
-plugins {
-    id 'com.android.application' version '8.3.2' apply false
-    id 'com.android.library' version '8.3.2' apply false
-    id 'org.jetbrains.kotlin.android' version '1.9.22' apply false // مثال: اگر از Kotlin استفاده می کنید
-}
 
 
 

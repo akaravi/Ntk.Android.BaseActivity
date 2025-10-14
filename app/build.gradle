@@ -1,8 +1,11 @@
-apply plugin: 'com.android.library'
-apply plugin: 'maven-publish'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
+}
 android {
     // مقادیر SDK به صورت مستقیم درج شده‌اند:
-    compileSdkVersion 35
+    compileSdkVersion 34
     namespace 'ntk.android.base'
 
     defaultConfig {
@@ -100,6 +103,6 @@ dependencies {
     implementation 'net.sourceforge.streamsupport:android-retrostreams:1.7.2'
 
     // Base API
-//    api 'com.github.akaravi:Ntk.Android.Base:3'
-    api project(path: ':baseApi')
+    api 'com.github.akaravi:Ntk.Android.Base:3.7'
+//    api project(path: ':baseApi')
 }

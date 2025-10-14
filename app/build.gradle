@@ -111,7 +111,7 @@ publishing {
     publications {
         release(MavenPublication) {
             groupId = 'com.github.akaravi'
-            artifactId = 'Ntk.Android.Base'
+            artifactId = 'Ntk.Android.BaseActivty'
 
 
             afterEvaluate {

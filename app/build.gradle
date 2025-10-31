@@ -103,8 +103,8 @@ dependencies {
     implementation 'net.sourceforge.streamsupport:android-retrostreams:1.7.2'
 
     // Base API
-    api 'com.github.akaravi:Ntk.Android.Base:3.7'
-//    api project(path: ':baseApi')
+//    api 'com.github.akaravi:Ntk.Android.Base:3.7'
+    api project(path: ':baseApi')
 }
 
 publishing {

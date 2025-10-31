@@ -1,27 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.mxn.soul.flowingdrawer_core.FlowingMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/menuLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?toolbarColorBackground"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/container_menu"
+    <com.flaviofaria.kenburnsview.KenBurnsView
+        android:id="@+id/HeaderImage"
         android:layout_width="match_parent"
-        android:background="?toolbarColorBackground"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="120dp" />
 
-        <com.flaviofaria.kenburnsview.KenBurnsView
-            android:id="@+id/HeaderImage"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/RecyclerDrawer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none" />
-    </LinearLayout>
-
-</com.mxn.soul.flowingdrawer_core.FlowingMenuLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecyclerDrawer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" />
+</LinearLayout>

@@ -5,7 +5,7 @@ plugins {
 }
 android {
     // مقادیر SDK به صورت مستقیم درج شده‌اند:
-    compileSdkVersion 34
+    compileSdk 34
     namespace 'ntk.android.base'
 
     defaultConfig {
